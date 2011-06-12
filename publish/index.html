@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-skin-name" content="hadoop-pelt">
+<title>Welcome to Apache&trade; Hadoop&trade;!</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://www.apache.org"><img class="logoImage" alt="Apache" src="images/apache_feather.gif" title="Apache Software Foundation"></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Scalable Distributed Computing"></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://search-hadoop.com/" method="get">
+<input onFocus="getBlank (this, 'Search with Apache Solr');" size="25" name="q" id="query" type="text" value="Search with Apache Solr">&nbsp;
+		  <input value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li class="current">
+<a class="selected" href="index.html">Top</a>
+</li>
+<li>
+<a class="unselected" href="http://hadoop.apache.org/common/">Common</a>
+</li>
+<li>
+<a class="unselected" href="http://hadoop.apache.org/hdfs/">HDFS</a>
+</li>
+<li>
+<a class="unselected" href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">About</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Welcome</div>
+</div>
+<div class="menuitem">
+<a href="mailing_lists.html">Mailing Lists</a>
+</div>
+<div class="menuitem">
+<a href="who.html">Who We Are?</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/PoweredBy">Who Uses Hadoop?</a>
+</div>
+<div class="menuitem">
+<a href="http://www.cafepress.com/hadoop/">Buy Stuff</a>
+</div>
+<div class="menuitem">
+<a href="http://www.apache.org/foundation/sponsorship.html">Sponsor Apache</a>
+</div>
+<div class="menuitem">
+<a href="http://www.apache.org/foundation/thanks.html">Sponsors of Apache</a>
+</div>
+<div class="menuitem">
+<a href="privacy_policy.html">Privacy Policy</a>
+</div>
+<div class="menuitem">
+<a href="bylaws.html">Bylaws</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Sub-Projects</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="http://hadoop.apache.org/common/">Common</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/hdfs/">HDFS</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">Related Projects</div>
+<div id="menu_1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="http://avro.apache.org/">Avro</a>
+</div>
+<div class="menuitem">
+<a href="http://cassandra.apache.org/">Cassandra</a>
+</div>
+<div class="menuitem">
+<a href="http://incubator.apache.org/chukwa/">Chukwa</a>
+</div>
+<div class="menuitem">
+<a href="http://incubator.apache.org/hama/">Hama</a>
+</div>
+<div class="menuitem">
+<a href="http://hbase.apache.org/">HBase</a>
+</div>
+<div class="menuitem">
+<a href="http://hive.apache.org/">Hive</a>
+</div>
+<div class="menuitem">
+<a href="http://mahout.apache.org/">Mahout</a>
+</div>
+<div class="menuitem">
+<a href="http://pig.apache.org/">Pig</a>
+</div>
+<div class="menuitem">
+<a href="http://zookeeper.apache.org/">ZooKeeper</a>
+</div>
+</div>
+<div id="credit">
+<hr>
+<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
+</div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2"></div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="index.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Welcome to Apache&trade; Hadoop&trade;!</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#What+Is+Apache+Hadoop%3F">What Is Apache Hadoop?</a>
+</li>
+<li>
+<a href="#Who+Uses+Hadoop%3F">Who Uses Hadoop?</a>
+</li>
+<li>
+<a href="#News">News</a>
+<ul class="minitoc">
+<li>
+<a href="#March+2011+-+Apache+Hadoop+takes+top+prize+at+Media+Guardian+Innovation+Awards">March 2011 - Apache Hadoop takes top prize at Media Guardian Innovation Awards</a>
+</li>
+<li>
+<a href="#January+2011+-+ZooKeeper+Graduates">January 2011 - ZooKeeper Graduates</a>
+</li>
+<li>
+<a href="#September+2010+-+Hive+and+Pig+Graduate">September 2010 - Hive and Pig Graduate</a>
+</li>
+<li>
+<a href="#May+2010+-+Avro+and+HBase+Graduate">May 2010 - Avro and HBase Graduate</a>
+</li>
+<li>
+<a href="#July+2009+-+New+Hadoop+Subprojects">July 2009 - New Hadoop Subprojects</a>
+</li>
+<li>
+<a href="#March+2009+-+ApacheCon+EU">March 2009 - ApacheCon EU</a>
+</li>
+<li>
+<a href="#November+2008+-+ApacheCon+US">November 2008 - ApacheCon US</a>
+</li>
+<li>
+<a href="#July+2008+-+Hadoop+Wins+Terabyte+Sort+Benchmark">July 2008 - Hadoop Wins Terabyte Sort Benchmark</a>
+</li>
+</ul>
+</li>
+</ul>
+</div> 
+
+    
+<a name="N1000C"></a><a name="What+Is+Apache+Hadoop%3F"></a>
+<h2 class="h3">What Is Apache Hadoop?</h2>
+<div class="section">
+<p>
+      
+      The Apache&trade; Hadoop&trade; project develops open-source software for
+      reliable, scalable, distributed computing.
+
+      </p>
+<p>
+      
+      The Apache Hadoop software library is a framework that
+      allows for the distributed processing of large data sets across clusters
+      of computers using a simple programming model. It is designed to scale up
+      from single servers to thousands of machines, each offering local
+      computation and storage. Rather than rely on hardware to deliver
+      high-avaiability, the library itself is designed to detect and handle
+      failures at the application layer, so delivering a highly-availabile
+      service on top of a cluster of computers, each of which may be prone to
+      failures.
+      
+      </p>
+<p>
+      The project includes these subprojects:
+      </p>
+<ul>
+      
+<li>
+<a href="http://hadoop.apache.org/common/"><strong>Hadoop Common</strong></a>: 
+      The common utilities that support the other Hadoop subprojects. </li>
+
+      
+<li>
+<a href="http://hadoop.apache.org/hdfs/"><strong>Hadoop Distributed File System (HDFS&trade;)</strong></a>: 
+      A distributed file system that provides high-throughput access to application data.  </li>
+      
+      
+<li>
+<a href="http://hadoop.apache.org/mapreduce/"><strong>Hadoop MapReduce</strong></a>: 
+      A software framework for distributed processing of large data sets on compute clusters.  </li>
+      
+</ul>
+<p>Other Hadoop-related projects at Apache include:</p>
+<ul>
+
+      
+<li>
+<a href="http://avro.apache.org/"><strong>Avro&trade;</strong></a>: 
+      A data serialization system.</li>
+
+      
+<li>
+<a href="http://cassandra.apache.org/"><strong>Cassandra&trade;</strong></a>: 
+      A scalable multi-master database with no single points of failure.</li>
+
+      
+<li>
+<a href="http://incubator.apache.org/chukwa/"><strong>Chukwa&trade;</strong></a>: 
+      A data collection system for managing large distributed systems.  </li>
+
+      
+<li>
+<a href="http://hbase.apache.org/"><strong>HBase&trade;</strong></a>: 
+      A scalable, distributed database that supports structured data storage for large tables.  </li>
+
+      
+<li>
+<a href="http://hive.apache.org/"><strong>Hive&trade;</strong></a>:  
+      A data warehouse infrastructure that provides data summarization and ad hoc querying. </li>
+      
+      
+<li>
+<a href="http://mahout.apache.org/"><strong>Mahout&trade;</strong></a>:
+      A Scalable machine learning and data mining library. </li>
+      
+      
+<li>
+<a href="http://pig.apache.org/"><strong>Pig&trade;</strong></a>: 
+      A high-level data-flow language and execution framework for parallel computation.</li>
+      
+      
+<li>
+<a href="http://zookeeper.apache.org/"><strong>ZooKeeper&trade;</strong></a>: 
+      A high-performance coordination service for distributed applications. </li>
+
+      
+</ul>
+</div>
+
+    
+<a name="N10072"></a><a name="Who+Uses+Hadoop%3F"></a>
+<h2 class="h3">Who Uses Hadoop?</h2>
+<div class="section">
+<p>
+      A wide variety of companies and organizations use Hadoop for both research and production. 
+      Users are encouraged to add themselves to the Hadoop
+      <a href="http://wiki.apache.org/hadoop/PoweredBy">PoweredBy</a> wiki page.
+      </p>
+</div>
+
+    
+<a name="N10080"></a><a name="News"></a>
+<h2 class="h3">News</h2>
+<div class="section">
+<a name="N10086"></a><a name="March+2011+-+Apache+Hadoop+takes+top+prize+at+Media+Guardian+Innovation+Awards"></a>
+<h3 class="h4">March 2011 - Apache Hadoop takes top prize at Media Guardian Innovation Awards</h3>
+<p>
+       
+       Described by the judging panel as a "Swiss army knife of the 21st century",
+       Apache Hadoop picked up the <em>innovator of the year</em> award for having the
+       potential to change the face of media innovations.
+
+       </p>
+<p>See <a href="http://www.guardian.co.uk/technology/2011/mar/25/media-guardian-innovation-awards-apache-hadoop">
+       The Guardian web site</a>
+       
+</p>
+<a name="N1009A"></a><a name="January+2011+-+ZooKeeper+Graduates"></a>
+<h3 class="h4">January 2011 - ZooKeeper Graduates</h3>
+<p>Hadoop's ZooKeeper subproject has graduated to become a
+     top-level Apache project.</p>
+<p>Apache ZooKeeper can now be found
+     at <a href="http://zookeeper.apache.org/">http://zookeeper.apache.org/</a>
+</p>
+<a name="N100AA"></a><a name="September+2010+-+Hive+and+Pig+Graduate"></a>
+<h3 class="h4">September 2010 - Hive and Pig Graduate</h3>
+<p>Hadoop's Hive and Pig subprojects have graduated to become
+     top-level Apache projects.</p>
+<p>Apache Hive can now be found
+     at <a href="http://hive.apache.org/">http://hive.apache.org/</a>
+</p>
+<p>Pig can now be found
+     at <a href="http://pig.apache.org/">http://pig.apache.org/</a>
+</p>
+<a name="N100C0"></a><a name="May+2010+-+Avro+and+HBase+Graduate"></a>
+<h3 class="h4">May 2010 - Avro and HBase Graduate</h3>
+<p>Hadoop's Avro and HBase subprojects have graduated to become
+     top-level Apache projects.</p>
+<p>Apache Avro can now be found
+     at <a href="http://avro.apache.org/">http://avro.apache.org/</a>
+</p>
+<p>Apache HBase can now be found
+     at <a href="http://hbase.apache.org/">http://hbase.apache.org/</a>
+</p>
+<a name="N100D6"></a><a name="July+2009+-+New+Hadoop+Subprojects"></a>
+<h3 class="h4">July 2009 - New Hadoop Subprojects</h3>
+<p>Hadoop is getting bigger! </p>
+<ul>
+       
+<li>Hadoop Core is renamed Hadoop Common.</li>
+       
+<li>MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects.</li>
+       
+<li>Avro and Chukwa are new Hadoop subprojects.</li>
+     
+</ul>
+<p></p>
+<p>See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</p>
+<a name="N100F1"></a><a name="March+2009+-+ApacheCon+EU"></a>
+<h3 class="h4">March 2009 - ApacheCon EU</h3>
+<p>In case you missed it.... <a href="http://www.eu.apachecon.com/c/aceu2009/">ApacheCon Europe 2009</a> 
+</p>
+<a name="N100FF"></a><a name="November+2008+-+ApacheCon+US"></a>
+<h3 class="h4">November 2008 - ApacheCon US</h3>
+<p>In case you missed it.... <a href="http://us.apachecon.com/c/acus2008/">ApacheCon US 2008</a> 
+</p>
+<a name="N1010D"></a><a name="July+2008+-+Hadoop+Wins+Terabyte+Sort+Benchmark"></a>
+<h3 class="h4">July 2008 - Hadoop Wins Terabyte Sort Benchmark</h3>
+<p>
+     
+<a href="http://developer.yahoo.com/blogs/hadoop/2008/07/apache_hadoop_wins_terabyte_sort_benchmark.html">Hadoop Wins Terabyte Sort Benchmark</a>: 
+     One of Yahoo's Hadoop clusters sorted 1 terabyte of data in 209 seconds, which beat the previous record of 297 seconds in the annual general purpose
+     (Daytona) <a href="http://sortbenchmark.org/">terabyte sort benchmark</a>. This is the first time that either a Java or an open source program has won. 
+     </p>
+</div>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2011 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+<br>
+              Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
+              Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
+              Software Foundataion.
+            </div>
+<div id="logos"></div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7453027-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

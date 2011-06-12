@@ -1,0 +1,254 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+          "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document> 
+
+  <header> 
+    <title>Who We Are</title> 
+  </header> 
+
+  <body> 
+
+    <section>
+      <title>Apache Hadoop Project Members</title>
+
+      <p>Please see individual sub-projects for lists of their
+      committers.  We only here list the members of the top-level
+      Hadoop project.</p>
+
+      <p>
+      We ask that you please do not send us emails privately asking
+      for support. We are non-paid volunteers who help out with the
+      project and we do not necessarily have the time or energy to
+      help people on an individual basis. Instead, we have setup
+      mailing lists for each sub-project which often contain hundreds
+      of individuals who will help answer detailed requests for
+      help. The benefit of using mailing lists over private
+      communication is that it is a shared resource where others can
+      also learn from common mistakes and as a community we all grow
+      together.
+      </p>
+
+    </section>
+
+    <section>
+      <title>Hadoop PMC</title>
+
+      <p>
+      The Hadoop Project Management Committee contains (in alphabetical
+      order): 
+      </p>
+
+      <table>
+
+	<tr>
+	  <th>username</th>
+	  <th>name</th>
+	  <th>organization</th>
+	  <th>roles</th>
+	  <th>timezone</th>
+	</tr>
+
+	<tr>
+	  <td>acmurthy</td>
+	  <td><a href="http://people.apache.org/~acmurthy">Arun C Murthy</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+        <tr>
+          <td>cdouglas</td>
+	  <td><a href="http://people.apache.org/~cdouglas">Chris Douglas</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+        </tr>
+
+	<tr>
+	  <td>cutting</td>
+	  <td><a href="http://blog.lucene.com/">Doug Cutting</a></td>
+	  <td>Cloudera</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+          <td>ddas</td>
+          <td><a href="http://people.apache.org/~ddas">Devaraj Das</a></td>
+          <td>Yahoo!</td>
+          <td></td>
+          <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>dhruba</td>
+	  <td><a href="http://people.apache.org/~dhruba">Dhruba Borthakur</a></td>
+	  <td>Facebook</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+        <tr>
+          <td>eli</td>
+          <td><a href="http://people.apache.org/~eli">Eli Collins</a></td>
+          <td>Cloudera</td>
+          <td></td>
+          <td>-8</td>
+        </tr>
+
+	<tr>
+	  <td>enis</td>
+	  <td><a href="http://people.apache.org/~enis">Enis Soztutar</a></td>
+	  <td>Agmlab</td>
+	  <td></td>
+	  <td>+2</td>
+	</tr>
+
+	<tr>
+	  <td>hairong</td>
+	  <td>Hairong Kuang</td>
+	  <td>Facebook</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>ianh</td>
+	  <td><a href="http://people.apache.org/~ianh">Ian Holsman</a></td>
+	  <td>AOL</td>
+	  <td></td>
+	  <td>+10</td>
+	</tr>
+
+	<tr>
+	  <td>jghoman</td>
+	  <td><a href="http://people.apache.org/~jghoman">Jakob Homan</a></td>
+	  <td>LinkedIn</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+    <tr>
+        <td>mahadev</td>
+        <td>Mahadev Konar</td>
+        <td>Yahoo!</td>
+        <td></td>
+        <td>-8</td>
+    </tr>
+
+	<tr>
+	  <td>nigel</td>
+	  <td>Nigel Daley</td>
+	  <td>Proximal Labs</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>omalley</td>
+	  <td><a href="http://people.apache.org/~omalley">Owen O'Malley</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>phunt</td>
+	  <td><a href="http://people.apache.org/~phunt">Patrick Hunt</a></td>
+	  <td>Cloudera</td>
+	  <td>ZooKeeper</td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>rangadi</td>
+	  <td>Raghu Angadi</td>
+	  <td>Apple</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>shv</td>
+	  <td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
+	  <td>eBay</td>
+	  <td>HDFS</td>
+	  <td>-8</td>
+	</tr>
+
+    
+   	<tr>
+	  <td>sradia</td>
+	  <td><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr> 
+    
+	<tr>
+	  <td>stack</td>
+	  <td>Michael Stack</td>
+	  <td>StumbleUpon</td>
+	  <td>HBase</td>
+	  <td>-8</td>
+	</tr>
+	
+   	<tr>
+	  <td>suresh</td>
+	  <td><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr> 
+
+        <tr>
+          <td>szetszwo</td>
+	  <td><a href="http://people.apache.org/~szetszwo">Tsz Wo (Nicholas) Sze</a></td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>-8</td>
+        </tr>
+
+        <tr>
+          <td>todd</td>
+          <td><a href="http://people.apache.org/~todd">Todd Lipcon</a></td>
+          <td>Cloudera</td>
+          <td></td>
+          <td>-8</td>
+        </tr>
+
+	<tr>
+	  <td>tomwhite</td>
+	  <td><a href="http://weblogs.java.net/blog/tomwhite/">Tom White</a></td>
+	  <td>Cloudera</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>zshao</td>
+	  <td>Zheng Shao</td>
+	  <td>Facebook</td>
+	  <td></td>
+	  <td>-8</td>
+	</tr>
+
+      </table>
+      </section>
+
+    <section>
+      <title>Emeritus Hadoop PMC Members</title>
+
+      <ul>
+        <li>Andrzej Bialecki</li>
+        <li>Christophe Taton</li>
+        <li>Jim Kellerman</li>
+      </ul>
+   </section>
+
+</body>
+
+</document>

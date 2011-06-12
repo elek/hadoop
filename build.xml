@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<project name="site" default="update" basedir=".">
+  
+  <!-- Load all the default properties, and any the user wants    -->
+  <!-- to contribute (without having to type -D or edit this file -->
+  <property file="${user.home}/build.properties" />
+  <property file="${basedir}/build.properties" />
+
+  <target name="update" depends="clean">
+    <exec dir="author" executable="${forrest.home}/bin/forrest" 
+          failonerror="true">
+    </exec>
+    <copy todir="publish/">
+      <fileset dir="author/build/site/" />
+    </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="author/build"/>
+  </target>
+
+</project>

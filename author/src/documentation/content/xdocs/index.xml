@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+          "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document> 
+
+  <header> 
+    <title>Welcome to Apache&trade; Hadoop&trade;!</title> 
+  </header> 
+
+  <body> 
+
+    <section>
+      <title>What Is Apache Hadoop?</title>
+
+      <p>
+      
+      The Apache&trade; Hadoop&trade; project develops open-source software for
+      reliable, scalable, distributed computing.
+
+      </p>
+      
+      <p>
+      
+      The Apache Hadoop software library is a framework that
+      allows for the distributed processing of large data sets across clusters
+      of computers using a simple programming model. It is designed to scale up
+      from single servers to thousands of machines, each offering local
+      computation and storage. Rather than rely on hardware to deliver
+      high-avaiability, the library itself is designed to detect and handle
+      failures at the application layer, so delivering a highly-availabile
+      service on top of a cluster of computers, each of which may be prone to
+      failures.
+      
+      </p>
+      
+      <p>
+      The project includes these subprojects:
+      </p>
+
+      <ul>
+      <li><a href="ext:common"><strong>Hadoop Common</strong></a>: 
+      The common utilities that support the other Hadoop subprojects. </li>
+
+      <li><a href="ext:hdfs"><strong>Hadoop Distributed File System (HDFS&trade;)</strong></a>: 
+      A distributed file system that provides high-throughput access to application data.  </li>
+      
+      <li><a href="ext:mr"><strong>Hadoop MapReduce</strong></a>: 
+      A software framework for distributed processing of large data sets on compute clusters.  </li>
+      </ul>
+      
+      <p>Other Hadoop-related projects at Apache include:</p>
+      <ul>
+
+      <li><a href="ext:avro"><strong>Avro&trade;</strong></a>: 
+      A data serialization system.</li>
+
+      <li><a href="ext:cassandra"><strong>Cassandra&trade;</strong></a>: 
+      A scalable multi-master database with no single points of failure.</li>
+
+      <li><a href="ext:chukwa"><strong>Chukwa&trade;</strong></a>: 
+      A data collection system for managing large distributed systems.  </li>
+
+      <li><a href="ext:hbase"><strong>HBase&trade;</strong></a>: 
+      A scalable, distributed database that supports structured data storage for large tables.  </li>
+
+      <li><a href="ext:hive"><strong>Hive&trade;</strong></a>:  
+      A data warehouse infrastructure that provides data summarization and ad hoc querying. </li>
+      
+      <li><a href="ext:mahout"><strong>Mahout&trade;</strong></a>:
+      A Scalable machine learning and data mining library. </li>
+      
+      <li><a href="ext:pig"><strong>Pig&trade;</strong></a>: 
+      A high-level data-flow language and execution framework for parallel computation.</li>
+      
+      <li><a href="ext:zookeeper"><strong>ZooKeeper&trade;</strong></a>: 
+      A high-performance coordination service for distributed applications. </li>
+
+      </ul>
+
+
+    </section>
+
+    <section>
+      <title>Who Uses Hadoop?</title>
+      <p>
+      A wide variety of companies and organizations use Hadoop for both research and production. 
+      Users are encouraged to add themselves to the Hadoop
+      <a href="http://wiki.apache.org/hadoop/PoweredBy">PoweredBy</a> wiki page.
+      </p>
+    </section>
+
+    <section>
+    <title>News</title>
+
+     
+     <section>
+       <title>March 2011 - Apache Hadoop takes top prize at Media Guardian Innovation Awards</title>
+       <p>
+       
+       Described by the judging panel as a "Swiss army knife of the 21st century",
+       Apache Hadoop picked up the <em>innovator of the year</em> award for having the
+       potential to change the face of media innovations.
+
+       </p>
+       <p>See <a href="http://www.guardian.co.uk/technology/2011/mar/25/media-guardian-innovation-awards-apache-hadoop">
+       The Guardian web site</a>
+       </p>
+     </section>
+     
+     <section>
+     <title>January 2011 - ZooKeeper Graduates</title>
+     <p>Hadoop's ZooKeeper subproject has graduated to become a
+     top-level Apache project.</p>
+     <p>Apache ZooKeeper can now be found
+     at <a href="http://zookeeper.apache.org/">http://zookeeper.apache.org/</a></p>
+     </section>
+
+     <section>
+     <title>September 2010 - Hive and Pig Graduate</title>
+     <p>Hadoop's Hive and Pig subprojects have graduated to become
+     top-level Apache projects.</p>
+     <p>Apache Hive can now be found
+     at <a href="http://hive.apache.org/">http://hive.apache.org/</a></p>
+     <p>Pig can now be found
+     at <a href="http://pig.apache.org/">http://pig.apache.org/</a></p>
+     </section>
+
+     <section>
+     <title>May 2010 - Avro and HBase Graduate</title>
+     <p>Hadoop's Avro and HBase subprojects have graduated to become
+     top-level Apache projects.</p>
+     <p>Apache Avro can now be found
+     at <a href="http://avro.apache.org/">http://avro.apache.org/</a></p>
+     <p>Apache HBase can now be found
+     at <a href="http://hbase.apache.org/">http://hbase.apache.org/</a></p>
+     </section>
+      
+     <section>
+     <title>July 2009 - New Hadoop Subprojects</title>
+     <p>Hadoop is getting bigger! </p>
+     <ul>
+       <li>Hadoop Core is renamed Hadoop Common.</li>
+       <li>MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects.</li>
+       <li>Avro and Chukwa are new Hadoop subprojects.</li>
+     </ul>
+     <p></p>
+     <p>See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</p>
+     </section>
+      
+     <section>
+     <title>March 2009 - ApacheCon EU</title>
+     <p>In case you missed it.... <a href="http://www.eu.apachecon.com/c/aceu2009/">ApacheCon Europe 2009</a> </p>
+     </section>
+     
+     <section>
+     <title>November 2008 - ApacheCon US</title>
+     <p>In case you missed it.... <a href="http://us.apachecon.com/c/acus2008/">ApacheCon US 2008</a> </p>
+     </section>
+
+     <section>
+     <title>July 2008 - Hadoop Wins Terabyte Sort Benchmark</title>
+     <p>
+     <a href="http://developer.yahoo.com/blogs/hadoop/2008/07/apache_hadoop_wins_terabyte_sort_benchmark.html">Hadoop Wins Terabyte Sort Benchmark</a>: 
+     One of Yahoo's Hadoop clusters sorted 1 terabyte of data in 209 seconds, which beat the previous record of 297 seconds in the annual general purpose
+     (Daytona) <a href="http://sortbenchmark.org/">terabyte sort benchmark</a>. This is the first time that either a Java or an open source program has won. 
+     </p>
+     </section>
+
+    </section>
+  </body>
+</document>

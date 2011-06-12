@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<site label="Hadoop" href="" xmlns="http://apache.org/forrest/linkmap/1.0">
+
+  <project label="About">
+    <news       label="Welcome"          href="index.html" />    
+    <mail         label="Mailing Lists"     href="mailing_lists.html" />    
+    <general      href="general_lists.html" />    
+    <who         label="Who We Are?"   href="who.html" />    
+    <poweredby label="Who Uses Hadoop?" href="ext:poweredby" />
+    <store        label="Buy Stuff"         href="ext:store" />    
+    <sponsor    label="Sponsor Apache" href="ext:sponsor" />    
+    <thanks      label="Sponsors of Apache" href="ext:thanks" />    
+    <privacy      label="Privacy Policy" href="privacy_policy.html" />    
+    <bylaws       label="Bylaws" href="bylaws.html"/>
+  </project>
+
+  <docs label="Sub-Projects">    
+    <common       label="Common" href="ext:common" />  
+    <hdfs        label="HDFS" href="ext:hdfs" />  
+    <mr          label="MapReduce"  href="ext:mr" />
+  </docs>
+
+  <docs label="Related Projects">   
+    <avro    label="Avro" href="ext:avro" />  
+    <cassandra label="Cassandra" href="ext:cassandra" />   
+    <chukwa  label="Chukwa" href="ext:chukwa" />   
+    <hama    label="Hama" href="ext:hama" /> 
+    <hbase   label="HBase" href="ext:hbase" />   
+    <hive    label="Hive"  href="ext:hive" /> 
+    <mahout label="Mahout" href="ext:mahout" />    
+    <pig     label="Pig"  href="ext:pig" />    
+    <zookeeper   label="ZooKeeper"   href="ext:zookeeper" />    
+  </docs>
+
+  <external-refs>
+    <common      href="http://hadoop.apache.org/common/" />
+    <common-user href="http://hadoop.apache.org/common/mailing_lists.html#Users" />
+    <common-dev href="http://hadoop.apache.org/common/mailing_lists.html#Developers" />
+    <common-issues href="http://hadoop.apache.org/common/mailing_lists.html#Issues" />
+    <common-commits href="http://hadoop.apache.org/common/mailing_lists.html#Commits" />
+    <common-jira href="https://issues.apache.org/jira/browse/HADOOP" />
+    <avro      href="http://avro.apache.org/" />
+    <cassandra href="http://cassandra.apache.org/" />
+    <chukwa href="http://incubator.apache.org/chukwa/" />
+    <hama    href="http://incubator.apache.org/hama/" />
+    <hbase   href="http://hbase.apache.org/" />
+    <hdfs      href="http://hadoop.apache.org/hdfs/" />
+    <hdfs-user href="http://hadoop.apache.org/hdfs/mailing_lists.html#Users" />
+    <hdfs-dev href="http://hadoop.apache.org/hdfs/mailing_lists.html#Developers" />
+    <hdfs-issues href="http://hadoop.apache.org/hdfs/mailing_lists.html#Issues" />
+    <hdfs-commits href="http://hadoop.apache.org/hdfs/mailing_lists.html#Commits" />
+    <hdfs-jira href="https://issues.apache.org/jira/browse/HDFS" />
+    <hive      href="http://hive.apache.org/" />
+    <zookeeper href="http://zookeeper.apache.org/" />
+    <mahout    href="http://mahout.apache.org/"/>
+    <mr        href="http://hadoop.apache.org/mapreduce/"/>
+    <mr-user href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Users" />
+    <mr-dev href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Developers" />
+    <mr-issues href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Issues" />
+    <mr-commits href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Commits" />
+    <mr-jira href="https://issues.apache.org/jira/browse/MAPREDUCE" />
+    <pig       href="http://pig.apache.org/"/>
+    <poweredby href="http://wiki.apache.org/hadoop/PoweredBy"/>
+    <store     href="http://www.cafepress.com/hadoop/" />
+    <sponsor href="http://www.apache.org/foundation/sponsorship.html" />
+    <thanks   href="http://www.apache.org/foundation/thanks.html" />
+  </external-refs>
+ 
+</site>

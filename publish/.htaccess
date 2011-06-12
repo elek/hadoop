@@ -1,0 +1,18 @@
+# .htaccess for Hadoop
+RedirectMatch Permanent ^/core$ http://hadoop.apache.org/
+RedirectMatch Permanent ^/core/$ http://hadoop.apache.org/
+RedirectMatch Permanent ^/core/index.html$ http://hadoop.apache.org/index.html
+RedirectMatch Permanent ^/core/(.+)$ http://hadoop.apache.org/common/$1
+#
+# promote Avro to TLP
+RedirectMatch Permanent ^/avro/(.*)$ http://avro.apache.org/$1
+# promote Chukwa to TLP
+RedirectMatch Permanent ^/chukwa/(.*)$ http://incubator.apache.org/chukwa/$1
+# promote HBase to TLP
+RedirectMatch Permanent ^/hbase/(.*)$ http://hbase.apache.org/$1
+# promote Hive to TLP
+RedirectMatch Permanent ^/hive/(.*)$ http://hive.apache.org/$1
+# promote Pig to TLP
+RedirectMatch Permanent ^/pig/(.*)$ http://pig.apache.org/$1
+# promote ZooKeeper to TLP
+RedirectMatch Permanent ^/zookeeper/(.*)$ http://zookeeper.apache.org/$1

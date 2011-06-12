@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+          "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  
+  <header>
+    <title>Hadoop Project Mailing Lists</title>
+  </header>
+  
+  <body>
+  
+      <p>There are <strong>many mailing lists</strong> in the Hadoop project.
+      Please use the appropriate list described below. In most cases it is necessary to first subscribe to a list before posting to it.</p>
+
+      <section>
+      <title>User Mailing Lists</title>
+      <table>
+      <tr><th>Lists @hadoop.apache.org</th><th>Purpose</th></tr>
+      <tr><td>&nbsp; <strong><a href="ext:common-user">common-user@</a></strong></td><td>&nbsp; <strong>Primary list for Hadoop user questions.</strong></td></tr>
+      <tr><td>&nbsp; <strong><a href="ext:hdfs-user">hdfs-user@</a></strong></td><td>&nbsp; <strong>User questions related specifically to Hadoop HDFS.</strong></td></tr>
+      <tr><td>&nbsp; <strong><a href="ext:mr-user">mapreduce-user@</a></strong></td><td>&nbsp; <strong>User questions related specifically to Hadoop MapReduce.</strong></td></tr>
+      <tr><td>&nbsp; <strong><a href="site:general">security@</a></strong></td><td>&nbsp; A private list for security sensitive issues. You may post potential security vunerabilities here.</td></tr>
+      </table>
+      </section>
+
+      <section>
+      <title>Project Discussion/Annoucement Mailing Lists</title>
+      <table>
+      <tr><th>Lists @hadoop.apache.org</th><th>Purpose</th></tr>
+      <tr><td>&nbsp; <strong><a href="site:general">general@</a></strong></td><td>&nbsp; <strong>Hadoop project level annoucements and discussions.</strong> All Hadoop releases are announced on this list.  <br/>&nbsp; <strong>NOTE:</strong> This mailing list is not for end-user questions and discussion.  Please use a more-specific subproject's -user mailing list for such issues.</td></tr>
+      </table>
+      </section>
+
+      <section>
+      <title>Developer Mailing Lists</title>
+      <table>
+      <tr><th>Lists @hadoop.apache.org</th><th>Purpose</th></tr>
+      <tr><td>&nbsp; <a href="ext:common-dev">common-dev@</a></td><td>&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop Common project.</td></tr>
+      <tr><td>&nbsp; <a href="ext:hdfs-dev">hdfs-dev@</a></td><td>&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop HDFS project.</td></tr>
+      <tr><td>&nbsp; <a href="ext:mr-dev">mapreduce-dev@</a></td><td>&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop MapReduce project</td></tr>
+      </table>
+      </section>
+
+      <section>
+      <title>Developer Tracking Mailing Lists</title>
+      <table>
+      <tr><th>Lists @hadoop.apache.org</th><th>Purpose</th></tr>
+      <tr><td>&nbsp; <a href="ext:common-issues">common-issues@</a></td><td>&nbsp; View all Jira issue changes made in the <a href="ext:common-jira">Hadoop Common Jira</a>. No direct posting allowed.</td></tr>
+      <tr><td>&nbsp; <a href="ext:common-commits">common-commits@</a></td><td>&nbsp; View all code changes (diffs) made in the Hadoop Common project. No direct posting allowed.</td></tr>
+      <tr><td>&nbsp; <a href="ext:hdfs-issues">hdfs-issues@</a></td><td>&nbsp; View all Jira issue changes made in the <a href="ext:hdfs-jira">Hadoop HDFS Jira</a>. No direct posting allowed.</td></tr>
+      <tr><td>&nbsp; <a href="ext:hdfs-commits">hdfs-commits@</a></td><td>&nbsp; View all code changes (diffs) made in the Hadoop HDFS project. No direct posting allowed.</td></tr>
+      <tr><td>&nbsp; <a href="ext:mr-issues">mapreduce-issues@</a></td><td>&nbsp; View all Jira issue changes made in the <a href="ext:mr-jira">Hadoop MapReduce Jira</a>. No direct posting allowed.</td></tr>
+      <tr><td>&nbsp; <a href="ext:mr-commits">mapreduce-commits@</a></td><td>&nbsp; View all code changes (diffs) made in the Hadoop MapReduce project. No direct posting allowed.</td></tr>
+      </table>
+      </section>
+
+  </body>
+  
+</document>
