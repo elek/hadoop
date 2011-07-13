@@ -54,9 +54,17 @@
 	<tr>
 	  <td>acmurthy</td>
 	  <td><a href="http://people.apache.org/~acmurthy">Arun C Murthy</a></td>
-	  <td>Yahoo!</td>
+	  <td>HortonWorks</td>
 	  <td></td>
 	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>amareshwari</td>
+	  <td>Amareshwari Sri Ramadasu</td>
+	  <td>Yahoo!</td>
+	  <td></td>
+	  <td>+5.5</td>
 	</tr>
 
         <tr>
@@ -78,7 +86,7 @@
 	<tr>
           <td>ddas</td>
           <td><a href="http://people.apache.org/~ddas">Devaraj Das</a></td>
-          <td>Yahoo!</td>
+          <td>HortonWorks</td>
           <td></td>
           <td>-8</td>
 	</tr>
@@ -134,7 +142,7 @@
     <tr>
         <td>mahadev</td>
         <td>Mahadev Konar</td>
-        <td>Yahoo!</td>
+        <td>HortonWorks</td>
         <td></td>
         <td>-8</td>
     </tr>
@@ -142,7 +150,7 @@
 	<tr>
 	  <td>nigel</td>
 	  <td>Nigel Daley</td>
-	  <td>Proximal Labs</td>
+	  <td>Jive</td>
 	  <td></td>
 	  <td>-8</td>
 	</tr>
@@ -150,7 +158,7 @@
 	<tr>
 	  <td>omalley</td>
 	  <td><a href="http://people.apache.org/~omalley">Owen O'Malley</a></td>
-	  <td>Yahoo!</td>
+	  <td>HortonWorks</td>
 	  <td></td>
 	  <td>-8</td>
 	</tr>
@@ -166,9 +174,17 @@
 	<tr>
 	  <td>rangadi</td>
 	  <td>Raghu Angadi</td>
-	  <td>Apple</td>
+	  <td>Twitter</td>
 	  <td></td>
 	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>sharad</td>
+	  <td>Sharad Agarwal</td>
+	  <td>HortonWorks</td>
+	  <td></td>
+	  <td>+5.5</td>
 	</tr>
 
 	<tr>
@@ -183,7 +199,7 @@
    	<tr>
 	  <td>sradia</td>
 	  <td><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
-	  <td>Yahoo!</td>
+	  <td>HortonWorks</td>
 	  <td></td>
 	  <td>-8</td>
 	</tr> 
@@ -199,7 +215,7 @@
    	<tr>
 	  <td>suresh</td>
 	  <td><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
-	  <td>Yahoo!</td>
+	  <td>HortonWorks</td>
 	  <td></td>
 	  <td>-8</td>
 	</tr> 
@@ -207,7 +223,7 @@
         <tr>
           <td>szetszwo</td>
 	  <td><a href="http://people.apache.org/~szetszwo">Tsz Wo (Nicholas) Sze</a></td>
-	  <td>Yahoo!</td>
+	  <td>HortonWorks</td>
 	  <td></td>
 	  <td>-8</td>
         </tr>
@@ -226,6 +242,22 @@
 	  <td>Cloudera</td>
 	  <td></td>
 	  <td>-8</td>
+	</tr>
+
+	<tr>
+	  <td>vinodkv</td>
+	  <td>Vinod Kumar Vavilapalli</td>
+	  <td>HortonWorks</td>
+	  <td></td>
+	  <td>+5.5</td>
+	</tr>
+
+	<tr>
+	  <td>yhemanth</td>
+	  <td>Hemanth Yamijala</td>
+	  <td></td>
+	  <td></td>
+	  <td>+5.5</td>
 	</tr>
 
 	<tr>
