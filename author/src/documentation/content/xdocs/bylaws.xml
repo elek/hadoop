@@ -243,7 +243,9 @@
             content, etc.</p>
 
             <p>Lazy consensus of active committers, but with a minimum of
-            one +1. The code can be committed after the first +1.</p></li>
+            one +1. The code can be committed after the first +1, unless
+            the code change represents a merge from a branch, in which case
+            three +1s are required.</p></li>
 
          <li> <strong>Release Plan</strong>
 
