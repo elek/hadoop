@@ -338,7 +338,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
               </xsl:choose><br/>
               Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
               Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
-              Software Foundataion.
+              Software Foundation.
             </div>
           </xsl:if>
           <xsl:if test="$filename = 'index.html'">

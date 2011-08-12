@@ -41,7 +41,7 @@ with @role='pdf' is present, that is used instead.  Eg:
           select="//skinconfig/vendor"/>
 <xsl:text>    Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
               Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
-              Software Foundataion.
+              Software Foundation.
 </xsl:text>
       </xsl:if>
     </xsl:variable>
