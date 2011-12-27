@@ -75,6 +75,7 @@
     <mr-issues href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Issues" />
     <mr-commits href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Commits" />
     <mr-jira href="https://issues.apache.org/jira/browse/MAPREDUCE" />
+    <news href="http://hadoop.apache.org/common/releases.html#News" />
     <pig       href="http://pig.apache.org/"/>
     <poweredby href="http://wiki.apache.org/hadoop/PoweredBy"/>
     <store     href="http://www.cafepress.com/hadoop/" />
