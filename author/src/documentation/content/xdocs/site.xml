@@ -19,6 +19,7 @@
 
   <project label="About">
     <news       label="Welcome"          href="index.html" />    
+    <releases   label="Releases"         href="ext:common-releases" />
     <mail         label="Mailing Lists"     href="mailing_lists.html" />    
     <general      href="general_lists.html" />    
     <who         label="Who We Are?"   href="who.html" />    
@@ -55,6 +56,7 @@
     <common-issues href="http://hadoop.apache.org/common/mailing_lists.html#Issues" />
     <common-commits href="http://hadoop.apache.org/common/mailing_lists.html#Commits" />
     <common-jira href="https://issues.apache.org/jira/browse/HADOOP" />
+    <common-releases href="http://hadoop.apache.org/common/releases.html" />
     <avro      href="http://avro.apache.org/" />
     <cassandra href="http://cassandra.apache.org/" />
     <chukwa href="http://incubator.apache.org/chukwa/" />

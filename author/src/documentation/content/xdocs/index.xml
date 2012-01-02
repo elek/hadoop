@@ -81,6 +81,13 @@
 
 
     </section>
+    
+    <section>
+      <title>Download Hadoop</title>
+      <p>
+        Please head to the <a href="ext:common-releases">releases</a> page to download a release of Apache Hadoop.
+      </p>
+    </section>
 
     <section>
       <title>Who Uses Hadoop?</title>
