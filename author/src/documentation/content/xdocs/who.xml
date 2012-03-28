@@ -67,13 +67,21 @@
 	  <td>+5.5</td>
 	</tr>
 
-        <tr>
-          <td>cdouglas</td>
-	  <td><a href="http://people.apache.org/~cdouglas">Chris Douglas</a></td>
-	  <td>Yahoo!</td>
-	  <td></td>
-	  <td>-8</td>
-        </tr>
+  <tr>
+    <td>atm</td>
+    <td><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
+    <td>Cloudera</td>
+    <td></td>
+    <td>-8</td>
+  </tr>
+
+  <tr>
+    <td>cdouglas</td>
+    <td><a href="http://people.apache.org/~cdouglas">Chris Douglas</a></td>
+    <td>Yahoo!</td>
+    <td></td>
+    <td>-8</td>
+  </tr>
 
 	<tr>
 	  <td>cutting</td>
