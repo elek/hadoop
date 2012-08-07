@@ -29,6 +29,30 @@
       <ul>
         <li><a href="mailto:general-subscribe@hadoop.apache.org">Subscribe to List</a></li>
         <li><a href="mailto:general-unsubscribe@hadoop.apache.org">Unsubscribe from List</a></li>
+        <li><a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/">Archives</a></li>
+      </ul>
+
+      <p>In order to post to the list, it is necessary to first subscribe to it.</p>
+    </section>
+
+  
+    <section>
+      <title>User</title>
+
+      <p>The user@ mailing list is the preferred mailing list for end-user questions and
+      discussion.</p>  
+      
+      <note>Please use the specific subproject's -dev@ mailing list to address
+      developers on a specific technical question.</note>
+
+      <p>
+        The Hadoop user mailing list is :
+        <a href="mailto:user@hadoop.apache.org">user@hadoop.apache.org</a>.
+      </p>      
+      <ul>
+        <li><a href="mailto:user-subscribe@hadoop.apache.org">Subscribe to List</a></li>
+        <li><a href="mailto:user-unsubscribe@hadoop.apache.org">Unsubscribe from List</a></li>
+        <li><a href="http://mail-archives.apache.org/mod_mbox/hadoop-user/">Archives</a></li>
       </ul>
 
       <p>In order to post to the list, it is necessary to first subscribe to it.</p>

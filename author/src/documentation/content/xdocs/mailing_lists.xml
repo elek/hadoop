@@ -18,9 +18,7 @@
       <title>User Mailing Lists</title>
       <table>
       <tr><th>Lists @hadoop.apache.org</th><th>Purpose</th></tr>
-      <tr><td>&nbsp; <strong><a href="ext:common-user">common-user@</a></strong></td><td>&nbsp; <strong>Primary list for Hadoop user questions.</strong></td></tr>
-      <tr><td>&nbsp; <strong><a href="ext:hdfs-user">hdfs-user@</a></strong></td><td>&nbsp; <strong>User questions related specifically to Hadoop HDFS.</strong></td></tr>
-      <tr><td>&nbsp; <strong><a href="ext:mr-user">mapreduce-user@</a></strong></td><td>&nbsp; <strong>User questions related specifically to Hadoop MapReduce.</strong></td></tr>
+      <tr><td>&nbsp; <strong><a href="site:general">user@</a></strong></td><td>&nbsp; <strong>Primary list for Hadoop user questions.</strong></td></tr>
       <tr><td>&nbsp; <strong><a href="site:general">security@</a></strong></td><td>&nbsp; A private list for security sensitive issues. You may post potential security vunerabilities here.</td></tr>
       </table>
       </section>

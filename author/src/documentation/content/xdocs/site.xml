@@ -51,7 +51,6 @@
 
   <external-refs>
     <common      href="http://hadoop.apache.org/common/" />
-    <common-user href="http://hadoop.apache.org/common/mailing_lists.html#Users" />
     <common-dev href="http://hadoop.apache.org/common/mailing_lists.html#Developers" />
     <common-issues href="http://hadoop.apache.org/common/mailing_lists.html#Issues" />
     <common-commits href="http://hadoop.apache.org/common/mailing_lists.html#Commits" />
@@ -63,7 +62,6 @@
     <hama    href="http://incubator.apache.org/hama/" />
     <hbase   href="http://hbase.apache.org/" />
     <hdfs      href="http://hadoop.apache.org/hdfs/" />
-    <hdfs-user href="http://hadoop.apache.org/hdfs/mailing_lists.html#Users" />
     <hdfs-dev href="http://hadoop.apache.org/hdfs/mailing_lists.html#Developers" />
     <hdfs-issues href="http://hadoop.apache.org/hdfs/mailing_lists.html#Issues" />
     <hdfs-commits href="http://hadoop.apache.org/hdfs/mailing_lists.html#Commits" />
@@ -72,7 +70,6 @@
     <zookeeper href="http://zookeeper.apache.org/" />
     <mahout    href="http://mahout.apache.org/"/>
     <mr        href="http://hadoop.apache.org/mapreduce/"/>
-    <mr-user href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Users" />
     <mr-dev href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Developers" />
     <mr-issues href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Issues" />
     <mr-commits href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Commits" />
