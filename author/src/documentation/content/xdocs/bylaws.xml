@@ -64,10 +64,9 @@
    <li> <strong>Committers</strong>
 
         <p>The project's Committers are responsible for the project's
-        technical management. Committers have access to a specified
-        set of subprojects' subversion repositories. Committers on
-        subprojects may cast binding votes on any technical discussion
-        regarding that subproject.</p>
+        technical management. Committers have access to all subproject
+        subversion repositories. Committers may cast binding votes on
+        any technical discussion regarding any subproject.</p>
 
         <p>Committer access is by invitation only and must be approved by
         lazy consensus of the active PMC members. A Committer is
