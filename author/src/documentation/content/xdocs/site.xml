@@ -65,7 +65,6 @@
     <zookeeper href="http://zookeeper.apache.org/" />
     <mahout    href="http://mahout.apache.org/"/>
     <mr-jira href="https://issues.apache.org/jira/browse/MAPREDUCE" />
-    <news href="http://hadoop.apache.org/releases.html#News" />
     <pig       href="http://pig.apache.org/"/>
     <poweredby href="http://wiki.apache.org/hadoop/PoweredBy"/>
     <store     href="http://www.cafepress.com/hadoop/" />
