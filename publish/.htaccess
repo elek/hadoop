@@ -7,7 +7,9 @@ RedirectMatch Permanent ^/core/(.+)$ http://hadoop.apache.org/common/$1
 # Redirect former subprojects to the main site.
 RedirectMatch Permanent ^/common/credits.html$ http://hadoop.apache.org/who.html$1
 RedirectMatch Permanent ^/common/(.+)$ http://hadoop.apache.org/$1
+RedirectMatch Permanent ^/hdfs/docs/(.+)$ http://hadoop.apache.org/docs/hdfs/$1
 RedirectMatch Permanent ^/hdfs/(.+)$ http://hadoop.apache.org/$1
+RedirectMatch Permanent ^/mapreduce/docs/(.+)$ http://hadoop.apache.org/docs/mapreduce/$1
 RedirectMatch Permanent ^/mapreduce/(.+)$ http://hadoop.apache.org/$1
 
 # promote Avro to TLP
