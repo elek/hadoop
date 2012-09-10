@@ -210,7 +210,7 @@
 	<tr>
 	  <td>shv</td>
 	  <td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
-	  <td>eBay</td>
+	  <td></td>
 	  <td>HDFS</td>
 	  <td>-8</td>
 	</tr>
@@ -391,7 +391,7 @@
        <tr>
          <td>cdouglas</td>
          <td>Chris Douglas</td>
-         <td>Yahoo!</td>
+         <td>Microsoft</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -519,7 +519,7 @@
        <tr>
          <td>johan</td>
          <td><a href="http://people.apache.org/~johan">Johan Oskarsson</a></td>
-         <td>Last fm</td>
+         <td>Twitter</td>
          <td></td>
          <td>0</td>
        </tr>
@@ -542,7 +542,7 @@
        <tr>
          <td>lohit</td>
          <td><a href="http://people.apache.org/~lohit">Lohit Vijayarenu</a></td>
-         <td>Quantcast</td>
+         <td>MapR</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -662,7 +662,7 @@
        <tr>
          <td>sseth</td>
          <td>Siddharth Seth</td>
-         <td>Yahoo!</td>
+         <td>Hortonworks</td>
          <td></td>
          <td>-8</td>
        </tr>
