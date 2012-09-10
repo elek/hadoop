@@ -3,7 +3,10 @@ RedirectMatch Permanent ^/core$ http://hadoop.apache.org/
 RedirectMatch Permanent ^/core/$ http://hadoop.apache.org/
 RedirectMatch Permanent ^/core/index.html$ http://hadoop.apache.org/index.html
 RedirectMatch Permanent ^/core/(.+)$ http://hadoop.apache.org/common/$1
-#
+
+# Redirect common to the main site.
+RedirectMatch Permanent ^/common/(.+)$ http://hadoop.apache.org/$1
+
 # promote Avro to TLP
 RedirectMatch Permanent ^/avro/(.*)$ http://avro.apache.org/$1
 # promote Chukwa to TLP

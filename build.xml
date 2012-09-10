@@ -10,6 +10,7 @@
   <target name="update" depends="clean">
     <exec dir="author" executable="${forrest.home}/bin/forrest" 
           failonerror="true">
+      <arg value="-Dforrest.validate.xdocs.failonerror=false"/>
     </exec>
     <copy todir="publish/">
       <fileset dir="author/build/site/" />

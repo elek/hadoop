@@ -19,9 +19,9 @@
 
   <project label="About">
     <news       label="Welcome"          href="index.html" />    
-    <releases   label="Releases"         href="ext:common-releases" />
+    <releases   label="Releases"         href="releases.html" />
     <mail         label="Mailing Lists"     href="mailing_lists.html" />    
-    <general      href="general_lists.html" />    
+    <issues      label="Issue Tracking" href="issue_tracking.html" />    
     <who         label="Who We Are?"   href="who.html" />    
     <poweredby label="Who Uses Hadoop?" href="ext:poweredby" />
     <store        label="Buy Stuff"         href="ext:store" />    
@@ -31,13 +31,17 @@
     <bylaws       label="Bylaws" href="bylaws.html"/>
   </project>
 
-  <docs label="Sub-Projects">    
-    <common       label="Common" href="ext:common" />  
-    <hdfs        label="HDFS" href="ext:hdfs" />  
-    <mr          label="MapReduce"  href="ext:mr" />
+  <docs label="Documentation"> 
+    <current label="Current" href="ext:docs/current/"/>
+    <r1.0.3 label="Release 1.0.3" href="ext:docs/r1.0.3/"/>
+    <r0.20.2   label="Release 0.20.2"     href="ext:docs/r0.20.2/"/>
+    <r0.20.203.0 label="Release 0.20.203.0" href="ext:docs/r0.20.203.0/"/>
+    <r0.22.0 label="Release 0.22.0" href="ext:docs/r0.22.0/"/>
+    <r0.23.1 label="Release 0.23.1" href="ext:docs/r0.23.1/"/>
+    <r2.0.0-alpha label="Release 2.0.0-alpha" href="ext:docs/r2.0.0-alpha/"/>
   </docs>
 
-  <docs label="Related Projects">   
+  <related label="Related Projects">   
     <avro    label="Avro" href="ext:avro" />  
     <cassandra label="Cassandra" href="ext:cassandra" />   
     <chukwa  label="Chukwa" href="ext:chukwa" />   
@@ -47,39 +51,37 @@
     <mahout label="Mahout" href="ext:mahout" />    
     <pig     label="Pig"  href="ext:pig" />    
     <zookeeper   label="ZooKeeper"   href="ext:zookeeper" />    
-  </docs>
+  </related>
 
   <external-refs>
-    <common      href="http://hadoop.apache.org/common/" />
-    <common-dev href="http://hadoop.apache.org/common/mailing_lists.html#Developers" />
-    <common-issues href="http://hadoop.apache.org/common/mailing_lists.html#Issues" />
-    <common-commits href="http://hadoop.apache.org/common/mailing_lists.html#Commits" />
     <common-jira href="https://issues.apache.org/jira/browse/HADOOP" />
-    <common-releases href="http://hadoop.apache.org/common/releases.html" />
     <avro      href="http://avro.apache.org/" />
     <cassandra href="http://cassandra.apache.org/" />
     <chukwa href="http://incubator.apache.org/chukwa/" />
     <hama    href="http://incubator.apache.org/hama/" />
     <hbase   href="http://hbase.apache.org/" />
-    <hdfs      href="http://hadoop.apache.org/hdfs/" />
-    <hdfs-dev href="http://hadoop.apache.org/hdfs/mailing_lists.html#Developers" />
-    <hdfs-issues href="http://hadoop.apache.org/hdfs/mailing_lists.html#Issues" />
-    <hdfs-commits href="http://hadoop.apache.org/hdfs/mailing_lists.html#Commits" />
     <hdfs-jira href="https://issues.apache.org/jira/browse/HDFS" />
     <hive      href="http://hive.apache.org/" />
     <zookeeper href="http://zookeeper.apache.org/" />
     <mahout    href="http://mahout.apache.org/"/>
-    <mr        href="http://hadoop.apache.org/mapreduce/"/>
-    <mr-dev href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Developers" />
-    <mr-issues href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Issues" />
-    <mr-commits href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Commits" />
     <mr-jira href="https://issues.apache.org/jira/browse/MAPREDUCE" />
-    <news href="http://hadoop.apache.org/common/releases.html#News" />
+    <news href="http://hadoop.apache.org/releases.html#News" />
     <pig       href="http://pig.apache.org/"/>
     <poweredby href="http://wiki.apache.org/hadoop/PoweredBy"/>
     <store     href="http://www.cafepress.com/hadoop/" />
     <sponsor href="http://www.apache.org/foundation/sponsorship.html" />
     <thanks   href="http://www.apache.org/foundation/thanks.html" />
+
+    <docs href="http://hadoop.apache.org/docs/">
+      <current href="current/"/>
+      <r1.0.3 href="r1.0.3/"/>
+      <r0.20.2 href="r0.20.2/"/>
+      <r0.20.203.0 href="r0.20.203.0/"/>
+      <r0.22.0 href="r0.22.0/"/>
+      <r0.23.1 href="r0.23.1/"/>
+      <r2.0.0-alpha href="r2.0.0-alpha/"/>
+    </docs>
+
   </external-refs>
  
 </site>

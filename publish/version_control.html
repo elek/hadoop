@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9">
 <meta name="Forrest-skin-name" content="hadoop-pelt">
-<title>Privacy Policy</title>
+<title>Hadoop Version Control System</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
@@ -113,8 +113,8 @@ document.write("Last Published: " + document.lastModified);
     |start Menu
     +-->
 <div id="menu">
-<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">About</div>
-<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">About</div>
+<div id="menu_1.1" class="menuitemgroup">
 <div class="menuitem">
 <a href="index.html">Welcome</a>
 </div>
@@ -142,8 +142,8 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="http://www.apache.org/foundation/thanks.html">Sponsors of Apache</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">Privacy Policy</div>
+<div class="menuitem">
+<a href="privacy_policy.html">Privacy Policy</a>
 </div>
 <div class="menuitem">
 <a href="bylaws.html">Bylaws</a>
@@ -219,55 +219,74 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="privacy_policy.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="version_control.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Privacy Policy</h1>
+<h1>Hadoop Version Control System</h1>
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
-<a href="#Privacy+Policy">Privacy Policy</a>
+<a href="#Overview">Overview</a>
+</li>
+<li>
+<a href="#Web+Access+%28read-only%29">Web Access (read-only)</a>
+</li>
+<li>
+<a href="#Anonymous+Access+%28read-only%29">Anonymous Access (read-only)</a>
+</li>
+<li>
+<a href="#Committer+Access+%28read-write%29">Committer Access (read-write)</a>
 </li>
 </ul>
 </div>
   
     
-<a name="N1000D"></a><a name="Privacy+Policy"></a>
-<h2 class="h3">Privacy Policy</h2>
+<a name="N1000D"></a><a name="Overview"></a>
+<h2 class="h3">Overview</h2>
 <div class="section">
-<p>Information about your use of this website is collected using server
-      access logs and a tracking cookie. The collected information consists of
-      the following:</p>
-<ol>
-        
-<li>The IP address from which you access the website;</li>
-        
-<li>The type of browser and operating system you use to access our
-        site;</li>
-        
-<li>The date and time you access our site;</li>
-        
-<li>The pages you visit; and</li>
-
-        
-<li>The addresses of pages from where you followed a link to our
-        site.</li>
-      
-</ol>
-<p>Part of this information is gathered using a tracking cookie set by the
-      <a href="http://www.google.com/analytics/">Google Analytics</a>
-      service and handled by Google as
-      described in their <a href="http://www.google.com/privacy.html">privacy policy</a>.
-      See your browser documentation for instructions on how to disable the
-      cookie if you prefer not to share this data with Google.</p>
-<p>We use the gathered information to help us make our site more useful to
-      visitors and to better understand how and when our site is used. We do not
-      track or collect personally identifiable information or associate gathered
-      data with any personally identifying information from other sources.</p>
-<p>By using this website, you consent to the collection of this data in
-      the manner and for the purpose described above.</p>
+<p>
+        The Hadoop source code resides in the Apache <a href="http://subversion.tigris.org/">Subversion (SVN)</a>
+        repository.  The command-line SVN client can be obtained <a href="http://subversion.tigris.org/project_packages.html">here</a>.
+        The TortoiseSVN GUI client for Windows can be obtained <a href="http://tortoisesvn.tigris.org/">here</a>. There are also
+        SVN plugins available for both <a href="http://subclipse.tigris.org/">Eclipse</a> and <a href="http://svnup.tigris.org/">IntelliJ IDEA</a>.
+      </p>
 </div>
-  
+    
+    
+<a name="N1002B"></a><a name="Web+Access+%28read-only%29"></a>
+<h2 class="h3">Web Access (read-only)</h2>
+<div class="section">
+<p>
+        The source code can be browsed via the Web at 
+        <a href="http://svn.apache.org/viewcvs.cgi/hadoop/common/trunk/">http://svn.apache.org/viewcvs.cgi/hadoop/common/trunk/</a>.
+        No SVN client software is required.
+      </p>
+</div>
+    
+    
+<a name="N10039"></a><a name="Anonymous+Access+%28read-only%29"></a>
+<h2 class="h3">Anonymous Access (read-only)</h2>
+<div class="section">
+<p>
+        The SVN URL for anonymous users is 
+        <a href="http://svn.apache.org/repos/asf/hadoop/common/trunk/">http://svn.apache.org/repos/asf/hadoop/common/trunk/</a>.
+        Instructions for anonymous SVN access are 
+        <a href="http://www.apache.org/dev/version-control.html#anon-svn">here</a>.
+      </p>
+</div>
+    
+    
+<a name="N1004B"></a><a name="Committer+Access+%28read-write%29"></a>
+<h2 class="h3">Committer Access (read-write)</h2>
+<div class="section">
+<p>
+        The SVN URL for committers is 
+        <a href="https://svn.apache.org/repos/asf/hadoop/common/trunk/">https://svn.apache.org/repos/asf/hadoop/common/trunk/</a>.
+        Instructions for committer SVN access are 
+        <a href="http://www.apache.org/dev/version-control.html#https-svn">here</a>.
+      </p>
+</div>
+    
   
 </div>
 <!--+

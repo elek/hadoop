@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.9">
 <meta name="Forrest-skin-name" content="hadoop-pelt">
 <title>Who We Are</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
@@ -78,13 +78,7 @@
 <a class="selected" href="index.html">Top</a>
 </li>
 <li>
-<a class="unselected" href="http://hadoop.apache.org/common/">Common</a>
-</li>
-<li>
-<a class="unselected" href="http://hadoop.apache.org/hdfs/">HDFS</a>
-</li>
-<li>
-<a class="unselected" href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
 </li>
 </ul>
 <!--+
@@ -125,10 +119,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="index.html">Welcome</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/common/releases.html">Releases</a>
+<a href="releases.html">Releases</a>
 </div>
 <div class="menuitem">
 <a href="mailing_lists.html">Mailing Lists</a>
+</div>
+<div class="menuitem">
+<a href="issue_tracking.html">Issue Tracking</a>
 </div>
 <div class="menupage">
 <div class="menupagetitle">Who We Are?</div>
@@ -152,16 +149,28 @@ document.write("Last Published: " + document.lastModified);
 <a href="bylaws.html">Bylaws</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Sub-Projects</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Documentation</div>
 <div id="menu_1.2" class="menuitemgroup">
 <div class="menuitem">
-<a href="http://hadoop.apache.org/common/">Common</a>
+<a href="http://hadoop.apache.org/docs/current/">Current</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/hdfs/">HDFS</a>
+<a href="http://hadoop.apache.org/docs/r1.0.3/">Release 1.0.3</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+<a href="http://hadoop.apache.org/docs/r0.20.2/">Release 0.20.2</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.20.203.0/">Release 0.20.203.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.22.0/">Release 0.22.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.23.1/">Release 0.23.1</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r2.0.0-alpha/">Release 2.0.0-alpha</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">Related Projects</div>
@@ -225,22 +234,25 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <a href="#Emeritus+Hadoop+PMC+Members">Emeritus Hadoop PMC Members</a>
 </li>
+<li>
+<a href="#Hadoop+Committers">Hadoop Committers</a>
+</li>
+<li>
+<a href="#Emeritus+Hadoop+Committers">Emeritus Hadoop Committers</a>
+</li>
 </ul>
 </div> 
 
     
-<a name="N1000C"></a><a name="Apache+Hadoop+Project+Members"></a>
+<a name="N1000D"></a><a name="Apache+Hadoop+Project+Members"></a>
 <h2 class="h3">Apache Hadoop Project Members</h2>
 <div class="section">
-<p>Please see individual sub-projects for lists of their
-      committers.  We only here list the members of the top-level
-      Hadoop project.</p>
 <p>
       We ask that you please do not send us emails privately asking
       for support. We are non-paid volunteers who help out with the
       project and we do not necessarily have the time or energy to
       help people on an individual basis. Instead, we have setup
-      mailing lists for each sub-project which often contain hundreds
+      mailing lists for each module which often contain hundreds
       of individuals who will help answer detailed requests for
       help. The benefit of using mailing lists over private
       communication is that it is a shared resource where others can
@@ -250,7 +262,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
     
-<a name="N10019"></a><a name="Hadoop+PMC"></a>
+<a name="N10017"></a><a name="Hadoop+PMC"></a>
 <h2 class="h3">Hadoop PMC</h2>
 <div class="section">
 <p>
@@ -617,7 +629,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
     
-<a name="N103AF"></a><a name="Emeritus+Hadoop+PMC+Members"></a>
+<a name="N103AD"></a><a name="Emeritus+Hadoop+PMC+Members"></a>
 <h2 class="h3">Emeritus Hadoop PMC Members</h2>
 <div class="section">
 <ul>
@@ -628,6 +640,633 @@ document.write("Last Published: " + document.lastModified);
         
 <li>Jim Kellerman</li>
       
+</ul>
+</div>
+
+   
+<a name="N103C0"></a><a name="Hadoop+Committers"></a>
+<h2 class="h3">Hadoop Committers</h2>
+<div class="section">
+<p>Hadoop's active committers include:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+       
+<tr>
+         
+<th colspan="1" rowspan="1">username</th>
+         <th colspan="1" rowspan="1">name</th>
+         <th colspan="1" rowspan="1">organization</th>
+         <th colspan="1" rowspan="1">roles</th>
+         <th colspan="1" rowspan="1">timezone</th>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">ab</td>
+         <td colspan="1" rowspan="1">Andrzej Bialecki</td>
+         <td colspan="1" rowspan="1">Getopt</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+1</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">acmurthy</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~acmurthy">Arun C Murthy</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">amareshwari</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~amareshwari">Amareshwari Sriramadasu</a></td>
+         <td colspan="1" rowspan="1">InMobi</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+5.5</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">amarrk</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~amarrk">Amar Ramesh Kamat</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+5.5</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">atm</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">aw</td>
+         <td colspan="1" rowspan="1">Allen Wittenauer</td>
+         <td colspan="1" rowspan="1">LinkedIn</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">bobby</td>
+         <td colspan="1" rowspan="1">Robert(Bobby) Evans</td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-6</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">boryas</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~boryas">Boris Shkolnik</a></td>
+         <td colspan="1" rowspan="1">LinkedIn</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">cdouglas</td>
+         <td colspan="1" rowspan="1">Chris Douglas</td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">cos</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~cos">Konstantin Boudnik</a></td>
+         <td colspan="1" rowspan="1">Karmasphere</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">cutting</td>
+         <td colspan="1" rowspan="1"><a href="http://blog.lucene.com/">Doug Cutting</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">daryn</td>
+         <td colspan="1" rowspan="1">Daryn Sharp</td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-6</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">ddas</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~ddas">Devaraj Das</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">dhruba</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~dhruba">Dhruba Borthakur</a></td>
+         <td colspan="1" rowspan="1">Facebook</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">eli</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~eli">Eli Collins</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">enis</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~enis">Enis Soztutar</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">eyang</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~eyang">Eric Yang</a></td>
+         <td colspan="1" rowspan="1">IBM</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">gkesavan</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~gkesavan">Giridharan Kesavan</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1">RE</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">hitesh</td>
+         <td colspan="1" rowspan="1">Hitesh Shah</td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">hairong</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~hairong">Hairong Kuang</a></td>
+         <td colspan="1" rowspan="1">Facebook</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">harsh</td>
+         <td colspan="1" rowspan="1"><a href="http://harshj.com/">Harsh J</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+5.5</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">jeagles</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~jeagles">Jonathan Eagles</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-6</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">jghoman</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~jghoman">Jakob Homan</a></td>
+         <td colspan="1" rowspan="1">LinkedIn</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">jitendra</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~jitendra">Jitendra Nath Pandey</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">johan</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~johan">Johan Oskarsson</a></td>
+         <td colspan="1" rowspan="1">Last fm</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">0</td>
+       
+</tr>
+       
+<tr>
+         
+<td colspan="1" rowspan="1">knoguchi</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~knoguchi">Koji Noguchi</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">kzhang</td>
+         <td colspan="1" rowspan="1">Kan Zhang</td>
+         <td colspan="1" rowspan="1">IBM</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">lohit</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~lohit">Lohit Vijayarenu</a></td>
+         <td colspan="1" rowspan="1">Quantcast</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">llu</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~llu">Luke Lu</a></td>
+         <td colspan="1" rowspan="1">IBM</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">mahadev</td>
+         <td colspan="1" rowspan="1">Mahadev Konar</td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">matei</td>
+         <td colspan="1" rowspan="1"><a href="http://www.cs.berkeley.edu/~matei">Matei Zaharia</a></td>
+         <td colspan="1" rowspan="1">UC Berkeley</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">mattf</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~mattf">Matthew Foley</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">molkov</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~molkov">Dmytro Molkov</a></td>
+         <td colspan="1" rowspan="1">Facebook</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">mukund</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~mukund">Mukund Madhugiri</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1">QA</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">nigel</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~nigel">Nigel Daley</a></td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">QA</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+       
+       
+<tr>
+         
+<td colspan="1" rowspan="1">omalley</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~omalley">Owen O'Malley</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">rangadi</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~rangadi">Raghu Angadi</a></td>
+         <td colspan="1" rowspan="1">Twitter</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">ramya</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~ramya">Ramya Sunil</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">schen</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~schen">Scott Chun-Yang Chen</a></td>
+         <td colspan="1" rowspan="1">Facebook</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">sharad</td>
+         <td colspan="1" rowspan="1">Sharad Agarwal</td>
+         <td colspan="1" rowspan="1">InMobi</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+5.5</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">shv</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">sradia</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">sseth</td>
+         <td colspan="1" rowspan="1">Siddharth Seth</td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">suresh</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">szetszwo</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~szetszwo">Tsz Wo (Nicholas) Sze</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">tanping</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~tanping">Tanping Wang</a></td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">taton</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~taton">Christophe Taton</a></td>
+         <td colspan="1" rowspan="1">INRIA</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">+1</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">tgraves</td>
+         <td colspan="1" rowspan="1">Thomas Graves</td>
+         <td colspan="1" rowspan="1">Yahoo!</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-6</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">todd</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~todd">Todd Lipcon</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+       
+       
+<tr>
+         
+<td colspan="1" rowspan="1">tomwhite</td>
+         <td colspan="1" rowspan="1"><a href="http://www.lexemetech.com">Tom White</a></td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">tucu</td>
+         <td colspan="1" rowspan="1">Alejandro Abdelnur</td>
+         <td colspan="1" rowspan="1">Cloudera</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">umamahesh</td>
+         <td colspan="1" rowspan="1"><a href="https://people.apache.org/~umamahesh/umamahesh.html">Uma Maheswara Rao G</a></td>
+         <td colspan="1" rowspan="1">Huawei</td>
+         <td colspan="1" rowspan="1">HDFS</td>
+         <td colspan="1" rowspan="1">+5.5</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">vinodkv</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~vinodkv">Vinod Kumar Vavilapalli</a></td>
+         <td colspan="1" rowspan="1">Hortonworks</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+       
+<tr>
+         
+<td colspan="1" rowspan="1">zshao</td>
+         <td colspan="1" rowspan="1"><a href="http://people.apache.org/~zshao">Zheng Shao</a></td>
+         <td colspan="1" rowspan="1">Facebook</td>
+         <td colspan="1" rowspan="1"></td>
+         <td colspan="1" rowspan="1">-8</td>
+       
+</tr>
+
+     
+</table>
+</div>
+
+   
+<a name="N109F7"></a><a name="Emeritus+Hadoop+Committers"></a>
+<h2 class="h3">Emeritus Hadoop Committers</h2>
+<div class="section">
+<p>Hadoop committers who are no longer active include:</p>
+<ul>
+       
+<li>Mike Cafarella</li>
+     
 </ul>
 </div>
 
@@ -649,7 +1288,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="copyright">
         Copyright &copy;
-         2011 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+         2012 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
 <br>
               Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
               Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 

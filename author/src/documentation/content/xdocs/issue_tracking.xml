@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  
+  <header>
+    <title>Hadoop Issue Tracking</title>
+  </header>
+  
+  <body>
+    <p>Hadoop tracks both bugs and enhancement requests using JIRA.</p>
+    
+    <p>We welcome input, however, <strong>before filing a
+    request,</strong> please make sure you do the following:</p>
+    <ul>
+      <li>Search the Apache JIRA database.</li>
+      <li>Check the users <a href="mailing_lists.html#Users">mailing lists</a>, both by searching the archives and by asking questions.</li>
+    </ul>
+
+    <section>
+      <title>Common</title>
+      <p>Hadoop Common issues are tracked in the <a
+      href="http://issues.apache.org/jira/browse/HADOOP">HADOOP</a>
+      Jira instance.
+      </p>
+    </section>
+
+    <section>
+      <title>HDFS</title>
+      <p>HDFS issues are tracked in the <a
+      href="http://issues.apache.org/jira/browse/HDFS">HDFS</a>
+      Jira instance.
+      </p>
+    </section>
+
+    <section>
+      <title>YARN</title>
+      <p>YARN issues are tracked in the <a
+      href="http://issues.apache.org/jira/browse/YARN">YARN</a>
+      Jira instance.
+      </p>
+    </section>
+
+    <section>
+      <title>MapReduce</title>
+      <p>MapReduce issues are tracked in the <a
+      href="http://issues.apache.org/jira/browse/MAPREDUCE">MAPREDUCE</a>
+      Jira instance.
+      </p>
+    </section>
+
+  </body>
+  
+</document>

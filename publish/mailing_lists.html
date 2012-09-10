@@ -3,9 +3,9 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-version" content="0.9">
 <meta name="Forrest-skin-name" content="hadoop-pelt">
-<title>Hadoop Project Mailing Lists</title>
+<title>Hadoop Mailing Lists</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
@@ -78,13 +78,7 @@
 <a class="selected" href="index.html">Top</a>
 </li>
 <li>
-<a class="unselected" href="http://hadoop.apache.org/common/">Common</a>
-</li>
-<li>
-<a class="unselected" href="http://hadoop.apache.org/hdfs/">HDFS</a>
-</li>
-<li>
-<a class="unselected" href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
 </li>
 </ul>
 <!--+
@@ -125,10 +119,13 @@ document.write("Last Published: " + document.lastModified);
 <a href="index.html">Welcome</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/common/releases.html">Releases</a>
+<a href="releases.html">Releases</a>
 </div>
 <div class="menupage">
 <div class="menupagetitle">Mailing Lists</div>
+</div>
+<div class="menuitem">
+<a href="issue_tracking.html">Issue Tracking</a>
 </div>
 <div class="menuitem">
 <a href="who.html">Who We Are?</a>
@@ -152,16 +149,28 @@ document.write("Last Published: " + document.lastModified);
 <a href="bylaws.html">Bylaws</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Sub-Projects</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Documentation</div>
 <div id="menu_1.2" class="menuitemgroup">
 <div class="menuitem">
-<a href="http://hadoop.apache.org/common/">Common</a>
+<a href="http://hadoop.apache.org/docs/current/">Current</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/hdfs/">HDFS</a>
+<a href="http://hadoop.apache.org/docs/r1.0.3/">Release 1.0.3</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/mapreduce/">MapReduce</a>
+<a href="http://hadoop.apache.org/docs/r0.20.2/">Release 0.20.2</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.20.203.0/">Release 0.20.203.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.22.0/">Release 0.22.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.23.1/">Release 0.23.1</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r2.0.0-alpha/">Release 2.0.0-alpha</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">Related Projects</div>
@@ -213,128 +222,461 @@ document.write("Last Published: " + document.lastModified);
 <a class="dida" href="mailing_lists.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Hadoop Project Mailing Lists</h1>
+<h1>Hadoop Mailing Lists</h1>
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
-<a href="#User+Mailing+Lists">User Mailing Lists</a>
+<a href="#General">General</a>
 </li>
 <li>
-<a href="#Project+Discussion%2FAnnoucement+Mailing+Lists">Project Discussion/Annoucement Mailing Lists</a>
+<a href="#User">User</a>
 </li>
 <li>
-<a href="#Developer+Mailing+Lists">Developer Mailing Lists</a>
+<a href="#Security">Security</a>
 </li>
 <li>
-<a href="#Developer+Tracking+Mailing+Lists">Developer Tracking Mailing Lists</a>
+<a href="#Common">Common</a>
+<ul class="minitoc">
+<li>
+<a href="#Developers">Developers</a>
+</li>
+<li>
+<a href="#Commits">Commits</a>
+</li>
+<li>
+<a href="#Issues">Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#HDFS">HDFS</a>
+<ul class="minitoc">
+<li>
+<a href="#Developers-N100FD">Developers</a>
+</li>
+<li>
+<a href="#Commits-N10120">Commits</a>
+</li>
+<li>
+<a href="#Issues-N10147">Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#YARN">YARN</a>
+<ul class="minitoc">
+<li>
+<a href="#Developers-N10175">Developers</a>
+</li>
+<li>
+<a href="#Commits-N10198">Commits</a>
+</li>
+<li>
+<a href="#Issues-N101BF">Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#MapReduce">MapReduce</a>
+<ul class="minitoc">
+<li>
+<a href="#Developers-N101ED">Developers</a>
+</li>
+<li>
+<a href="#Commits-N10210">Commits</a>
+</li>
+<li>
+<a href="#Issues-N10237">Issues</a>
+</li>
+</ul>
 </li>
 </ul>
 </div>
+
+    
+<a name="N1000D"></a><a name="General"></a>
+<h2 class="h3">General</h2>
+<div class="section">
+<p>The general mailing list is for discussion of
+      Hadoop-related issues that are not specific to a Hadoop
+      module.  All Hadoop releases are announced on this list.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">This mailing list is <strong>NOT</strong> for end-user
+      questions and discussion.  Please use the user mailing list for
+      such issues.</div>
+</div>
+<p>
+        The Hadoop general mailing list is :
+        <a href="mailto:general@hadoop.apache.org">general@hadoop.apache.org</a>.
+      </p>
+<ul>
+        
+<li>
+<a href="mailto:general-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+        
+<li>
+<a href="mailto:general-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+        
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/">Archives</a>
+</li>
+      
+</ul>
+<p>In order to post to the list, it is necessary to first subscribe to it.</p>
+</div>
+
   
-      
-<p>There are <strong>many mailing lists</strong> in the Hadoop project.
-      Please use the appropriate list described below. In most cases it is necessary to first subscribe to a list before posting to it.</p>
-
-      
-<a name="N10012"></a><a name="User+Mailing+Lists"></a>
-<h2 class="h3">User Mailing Lists</h2>
+    
+<a name="N10039"></a><a name="User"></a>
+<h2 class="h3">User</h2>
 <div class="section">
-<table class="ForrestTable" cellspacing="1" cellpadding="4">
+<p>The user@ mailing list is the preferred mailing list for end-user questions and
+      discussion.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">Please use the specific module's -dev@ mailing list to address
+      developers on a specific technical question.</div>
+</div>
+<p>
+        The Hadoop user mailing list is :
+        <a href="mailto:user@hadoop.apache.org">user@hadoop.apache.org</a>.
+      </p>
+<ul>
+        
+<li>
+<a href="mailto:user-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+        
+<li>
+<a href="mailto:user-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+        
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-user/">Archives</a>
+</li>
       
-<tr>
-<th colspan="1" rowspan="1">Lists @hadoop.apache.org</th><th colspan="1" rowspan="1">Purpose</th>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <strong><a href="general_lists.html">user@</a></strong></td><td colspan="1" rowspan="1">&nbsp; <strong>Primary list for Hadoop user questions.</strong></td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <strong><a href="general_lists.html">security@</a></strong></td><td colspan="1" rowspan="1">&nbsp; A private list for security sensitive issues. You may post potential security vunerabilities here.</td>
-</tr>
-      
-</table>
+</ul>
+<p>In order to post to the list, it is necessary to first subscribe to it.</p>
 </div>
 
-      
-<a name="N10044"></a><a name="Project+Discussion%2FAnnoucement+Mailing+Lists"></a>
-<h2 class="h3">Project Discussion/Annoucement Mailing Lists</h2>
+  
+    
+<a name="N10062"></a><a name="Security"></a>
+<h2 class="h3">Security</h2>
 <div class="section">
-<table class="ForrestTable" cellspacing="1" cellpadding="4">
-      
-<tr>
-<th colspan="1" rowspan="1">Lists @hadoop.apache.org</th><th colspan="1" rowspan="1">Purpose</th>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <strong><a href="general_lists.html">general@</a></strong></td><td colspan="1" rowspan="1">&nbsp; <strong>Hadoop project level annoucements and discussions.</strong> All Hadoop releases are announced on this list.  <br>&nbsp; <strong>NOTE:</strong> This mailing list is not for end-user questions and discussion.  Please use a more-specific subproject's -user mailing list for such issues.</td>
-</tr>
-      
-</table>
+<p>The security mailing list is a private list for discussion of
+      potential security vunerability issues. Please post potential security vunerabilities to this list
+      so that they may be investigated and fixed before the vunerability is published.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">This mailing list is <strong>NOT</strong> for end-user
+      questions and discussion on security.  Please use the user
+      mailing list for such issues.</div>
+</div>
+<p>
+        The Hadoop security mailing list is :
+        <a href="mailto:security@hadoop.apache.org">security@hadoop.apache.org</a>.
+      </p>
+<p>In order to post to the list, it is <strong>NOT</strong> necessary to first subscribe to it.</p>
 </div>
 
-      
-<a name="N1006E"></a><a name="Developer+Mailing+Lists"></a>
-<h2 class="h3">Developer Mailing Lists</h2>
+    
+<a name="N1007F"></a><a name="Common"></a>
+<h2 class="h3">Common</h2>
 <div class="section">
-<table class="ForrestTable" cellspacing="1" cellpadding="4">
-      
-<tr>
-<th colspan="1" rowspan="1">Lists @hadoop.apache.org</th><th colspan="1" rowspan="1">Purpose</th>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/common/mailing_lists.html#Developers">common-dev@</a></td><td colspan="1" rowspan="1">&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop Common project.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/hdfs/mailing_lists.html#Developers">hdfs-dev@</a></td><td colspan="1" rowspan="1">&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop HDFS project.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Developers">mapreduce-dev@</a></td><td colspan="1" rowspan="1">&nbsp; For those contributing to the development (code, documentation and tests) of the Hadoop MapReduce project</td>
-</tr>
-      
-</table>
+<a name="N10085"></a><a name="Developers"></a>
+<h3 class="h4">Developers</h3>
+<p>If you'd like to contribute to Hadoop Common, please
+        subscribe to the Hadoop developer mailing list.</p>
+<p>The Hadoop Common developer mailing list is:
+          <a href="mailto:common-dev@hadoop.apache.org">common-dev@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:common-dev-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:common-dev-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-common-dev/">Archives</a>
+</li>
+        
+</ul>
+<a name="N100A8"></a><a name="Commits"></a>
+<h3 class="h4">Commits</h3>
+<p>If you'd like to see changes made in the Hadoop Common <a href="version_control.html">version control system</a>, please
+        subscribe to the Hadoop Common commits mailing list.</p>
+<p>The Hadoop Common commits mailing list is:
+          <a href="mailto:common-commits@hadoop.apache.org">common-commits@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:common-commits-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:common-commits-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-common-commits/">Archives</a>
+</li>
+        
+</ul>
+<a name="N100CF"></a><a name="Issues"></a>
+<h3 class="h4">Issues</h3>
+<p>If you'd like to see changes made in the Hadoop Common <a href="issue_tracking.html">issue tracking system</a>, please
+        subscribe to the Hadoop Common issues mailing list.</p>
+<p>The Hadoop Common issues mailing list is:
+          <a href="mailto:common-issues@hadoop.apache.org">common-issues@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:common-issues-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:common-issues-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-common-issues/">Archives</a>
+</li>
+        
+</ul>
 </div>
 
-      
-<a name="N100A9"></a><a name="Developer+Tracking+Mailing+Lists"></a>
-<h2 class="h3">Developer Tracking Mailing Lists</h2>
+    
+<a name="N100F7"></a><a name="HDFS"></a>
+<h2 class="h3">HDFS</h2>
 <div class="section">
-<table class="ForrestTable" cellspacing="1" cellpadding="4">
-      
-<tr>
-<th colspan="1" rowspan="1">Lists @hadoop.apache.org</th><th colspan="1" rowspan="1">Purpose</th>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/common/mailing_lists.html#Issues">common-issues@</a></td><td colspan="1" rowspan="1">&nbsp; View all Jira issue changes made in the <a href="https://issues.apache.org/jira/browse/HADOOP">Hadoop Common Jira</a>. No direct posting allowed.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/common/mailing_lists.html#Commits">common-commits@</a></td><td colspan="1" rowspan="1">&nbsp; View all code changes (diffs) made in the Hadoop Common project. No direct posting allowed.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/hdfs/mailing_lists.html#Issues">hdfs-issues@</a></td><td colspan="1" rowspan="1">&nbsp; View all Jira issue changes made in the <a href="https://issues.apache.org/jira/browse/HDFS">Hadoop HDFS Jira</a>. No direct posting allowed.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/hdfs/mailing_lists.html#Commits">hdfs-commits@</a></td><td colspan="1" rowspan="1">&nbsp; View all code changes (diffs) made in the Hadoop HDFS project. No direct posting allowed.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Issues">mapreduce-issues@</a></td><td colspan="1" rowspan="1">&nbsp; View all Jira issue changes made in the <a href="https://issues.apache.org/jira/browse/MAPREDUCE">Hadoop MapReduce Jira</a>. No direct posting allowed.</td>
-</tr>
-      
-<tr>
-<td colspan="1" rowspan="1">&nbsp; <a href="http://hadoop.apache.org/mapreduce/mailing_lists.html#Commits">mapreduce-commits@</a></td><td colspan="1" rowspan="1">&nbsp; View all code changes (diffs) made in the Hadoop MapReduce project. No direct posting allowed.</td>
-</tr>
-      
-</table>
+<a name="N100FD"></a><a name="Developers-N100FD"></a>
+<h3 class="h4">Developers</h3>
+<p>If you'd like to contribute to HDFS, please subscribe to
+        the HDFS developer mailing list.</p>
+<p>
+          The HDFS developer mailing list is:
+          <a href="mailto:hdfs-dev@hadoop.apache.org">hdfs-dev@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:hdfs-dev-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:hdfs-dev-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-hdfs-dev/">Archives</a>
+</li>
+        
+</ul>
+<a name="N10120"></a><a name="Commits-N10120"></a>
+<h3 class="h4">Commits</h3>
+<p>If you'd like to see changes made in the HDFS <a href="version_control.html">version control system</a>, please
+        subscribe to the HDFS commits mailing list.</p>
+<p>The HDFS commits mailing list is:
+          <a href="mailto:hdfs-commits@hadoop.apache.org">hdfs-commits@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:hdfs-commits-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:hdfs-commits-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-hdfs-commits/">Archives</a>
+</li>
+        
+</ul>
+<a name="N10147"></a><a name="Issues-N10147"></a>
+<h3 class="h4">Issues</h3>
+<p>If you'd like to see changes made in the Hadoop
+	HDFS <a href="issue_tracking.html">issue tracking system</a>,
+	please subscribe to the Hadoop Hdfs issues mailing list.</p>
+<p>
+          The Hadoop HDFS issues mailing list is:
+          <a href="mailto:hdfs-issues@hadoop.apache.org">hdfs-issues@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:hdfs-issues-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:hdfs-issues-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-hdfs-issues/">Archives</a>
+</li>
+        
+</ul>
 </div>
 
+    
+<a name="N1016F"></a><a name="YARN"></a>
+<h2 class="h3">YARN</h2>
+<div class="section">
+<a name="N10175"></a><a name="Developers-N10175"></a>
+<h3 class="h4">Developers</h3>
+<p>If you'd like to contribute to YARN, please subscribe to the YARN developer mailing list.</p>
+<p>
+          The YARN developer mailing list is:
+          <a href="mailto:yarn-dev@hadoop.apache.org">yarn-dev@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:yarn-dev-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:yarn-dev-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-yarn-dev/">Archives</a>
+</li>
+        
+</ul>
+<a name="N10198"></a><a name="Commits-N10198"></a>
+<h3 class="h4">Commits</h3>
+<p>If you'd like to see changes made in the YARN <a href="version_control.html">version control system</a>,
+        please subscribe to the YARN commits mailing list.</p>
+<p>The YARN commits mailing list is:
+          <a href="mailto:yarn-commits@hadoop.apache.org">yarn-commits@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:yarn-commits-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:yarn-commits-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-yarn-commits/">Archives</a>
+</li>
+        
+</ul>
+<a name="N101BF"></a><a name="Issues-N101BF"></a>
+<h3 class="h4">Issues</h3>
+<p>If you'd like to see changes made in the Hadoop
+	YARN <a href="issue_tracking.html">issue tracking system</a>,
+	please subscribe to the Hadoop Yarn issues mailing list.</p>
+<p>
+          The Hadoop YARN issues mailing list is:
+          <a href="mailto:yarn-issues@hadoop.apache.org">yarn-issues@hadoop.apache.org</a>.
+        </p>
+<ul>
+          
+<li>
+<a href="mailto:yarn-issues-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+          
+<li>
+<a href="mailto:yarn-issues-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+          
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-yarn-issues/">Archives</a>
+</li>
+        
+</ul>
+</div>
+
+    
+<a name="N101E7"></a><a name="MapReduce"></a>
+<h2 class="h3">MapReduce</h2>
+<div class="section">
+<a name="N101ED"></a><a name="Developers-N101ED"></a>
+<h3 class="h4">Developers</h3>
+<p>If you'd like to contribute to Hadoop MapReduce, please
+       subscribe to the Hadoop developer mailing list.</p>
+<p>
+         The Hadoop MapReduce developer mailing list is:
+         <a href="mailto:mapreduce-dev@hadoop.apache.org">mapreduce-dev@hadoop.apache.org</a>.
+       </p>
+<ul>
+         
+<li>
+<a href="mailto:mapreduce-dev-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+         
+<li>
+<a href="mailto:mapreduce-dev-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+         
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-mapreduce-dev/">Archives</a>
+</li>
+       
+</ul>
+<a name="N10210"></a><a name="Commits-N10210"></a>
+<h3 class="h4">Commits</h3>
+<p>If you'd like to see changes made in the Hadoop MapReduce <a href="version_control.html">version control system</a>, please
+       subscribe to the Hadoop MapReduce commits mailing list.</p>
+<p>The Hadoop MapReduce commits mailing list is: <a href="mailto:mapreduce-commits@hadoop.apache.org">mapreduce-commits@hadoop.apache.org</a>.
+       </p>
+<ul>
+         
+<li>
+<a href="mailto:mapreduce-commits-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+         
+<li>
+<a href="mailto:mapreduce-commits-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+         
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-mapreduce-commits/">Archives</a>
+</li>
+       
+</ul>
+<a name="N10237"></a><a name="Issues-N10237"></a>
+<h3 class="h4">Issues</h3>
+<p>If you'd like to see changes made in the Hadoop
+       MapReduce <a href="issue_tracking.html">issue tracking system</a>,
+       please subscribe to the Hadoop MapReduce issues mailing list.</p>
+<p>The Hadoop MapReduce issues mailing list is:
+       <a href="mailto:mapreduce-issues@hadoop.apache.org">mapreduce-issues@hadoop.apache.org</a>.
+       </p>
+<ul>
+         
+<li>
+<a href="mailto:mapreduce-issues-subscribe@hadoop.apache.org">Subscribe to List</a>
+</li>
+         
+<li>
+<a href="mailto:mapreduce-issues-unsubscribe@hadoop.apache.org">Unsubscribe from List</a>
+</li>
+         
+<li>
+<a href="http://mail-archives.apache.org/mod_mbox/hadoop-mapreduce-issues/">Archives</a>
+</li>
+       
+</ul>
+</div>
+  
   
 </div>
 <!--+
@@ -353,7 +695,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="copyright">
         Copyright &copy;
-         2011 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+         2012 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
 <br>
               Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
               Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 

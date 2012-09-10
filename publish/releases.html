@@ -1,0 +1,879 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.9">
+<meta name="Forrest-skin-name" content="hadoop-pelt">
+<title>Hadoop Releases</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7453027-1']);
+  _gaq.push(['_setDomainName', 'apache.org']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+        </script>
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://www.apache.org"><img class="logoImage" alt="Apache" src="images/apache_feather.gif" title="Apache Software Foundation"></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Scalable Distributed Computing"></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://search-hadoop.com/" method="get">
+<input onFocus="getBlank (this, 'Search with Apache Solr');" size="25" name="q" id="query" type="text" value="Search with Apache Solr">&nbsp;
+		  <input value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li class="current">
+<a class="selected" href="index.html">Top</a>
+</li>
+<li>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">About</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">Welcome</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Releases</div>
+</div>
+<div class="menuitem">
+<a href="mailing_lists.html">Mailing Lists</a>
+</div>
+<div class="menuitem">
+<a href="issue_tracking.html">Issue Tracking</a>
+</div>
+<div class="menuitem">
+<a href="who.html">Who We Are?</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/PoweredBy">Who Uses Hadoop?</a>
+</div>
+<div class="menuitem">
+<a href="http://www.cafepress.com/hadoop/">Buy Stuff</a>
+</div>
+<div class="menuitem">
+<a href="http://www.apache.org/foundation/sponsorship.html">Sponsor Apache</a>
+</div>
+<div class="menuitem">
+<a href="http://www.apache.org/foundation/thanks.html">Sponsors of Apache</a>
+</div>
+<div class="menuitem">
+<a href="privacy_policy.html">Privacy Policy</a>
+</div>
+<div class="menuitem">
+<a href="bylaws.html">Bylaws</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Documentation</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/current/">Current</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r1.0.3/">Release 1.0.3</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.20.2/">Release 0.20.2</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.20.203.0/">Release 0.20.203.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.22.0/">Release 0.22.0</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r0.23.1/">Release 0.23.1</a>
+</div>
+<div class="menuitem">
+<a href="http://hadoop.apache.org/docs/r2.0.0-alpha/">Release 2.0.0-alpha</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">Related Projects</div>
+<div id="menu_1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="http://avro.apache.org/">Avro</a>
+</div>
+<div class="menuitem">
+<a href="http://cassandra.apache.org/">Cassandra</a>
+</div>
+<div class="menuitem">
+<a href="http://incubator.apache.org/chukwa/">Chukwa</a>
+</div>
+<div class="menuitem">
+<a href="http://incubator.apache.org/hama/">Hama</a>
+</div>
+<div class="menuitem">
+<a href="http://hbase.apache.org/">HBase</a>
+</div>
+<div class="menuitem">
+<a href="http://hive.apache.org/">Hive</a>
+</div>
+<div class="menuitem">
+<a href="http://mahout.apache.org/">Mahout</a>
+</div>
+<div class="menuitem">
+<a href="http://pig.apache.org/">Pig</a>
+</div>
+<div class="menuitem">
+<a href="http://zookeeper.apache.org/">ZooKeeper</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2"></div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="releases.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Hadoop Releases</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Download">Download</a>
+</li>
+<li>
+<a href="#News">News</a>
+<ul class="minitoc">
+<li>
+<a href="#26+July%2C+2012%3A+Release+2.0.1-alpha+available">26 July, 2012: Release 2.0.1-alpha available </a>
+</li>
+<li>
+<a href="#23+May%2C+2012%3A+Release+2.0.0-alpha+available">23 May, 2012: Release 2.0.0-alpha available </a>
+</li>
+<li>
+<a href="#16+May%2C+2012%3A+Release+1.0.3+available">16 May, 2012: Release 1.0.3 available </a>
+</li>
+<li>
+<a href="#3+Apr%2C+2012%3A+Release+1.0.2+available">3 Apr, 2012: Release 1.0.2 available </a>
+</li>
+<li>
+<a href="#10+Mar%2C+2012%3A+Release+1.0.1+available">10 Mar, 2012: Release 1.0.1 available </a>
+</li>
+<li>
+<a href="#27+Feb%2C+2012%3A+release+0.23.1+available">27 Feb, 2012: release 0.23.1 available </a>
+</li>
+<li>
+<a href="#27+December%2C+2011%3A+release+1.0.0+available">27 December, 2011: release 1.0.0 available </a>
+</li>
+<li>
+<a href="#10+December%2C+2011%3A+release+0.22.0+available">10 December, 2011: release 0.22.0 available </a>
+</li>
+<li>
+<a href="#11+Nov%2C+2011%3A+release+0.23.0+available">11 Nov, 2011: release 0.23.0 available </a>
+</li>
+<li>
+<a href="#17+Oct%2C+2011%3A+release+0.20.205.0+available">17 Oct, 2011: release 0.20.205.0 available </a>
+</li>
+<li>
+<a href="#5+Sep%2C+2011%3A+release+0.20.204.0+available">5 Sep, 2011: release 0.20.204.0 available </a>
+</li>
+<li>
+<a href="#11+May%2C+2011%3A+release+0.20.203.0+available">11 May, 2011: release 0.20.203.0 available </a>
+</li>
+<li>
+<a href="#23+August%2C+2010%3A+release+0.21.0+available">23 August, 2010: release 0.21.0 available </a>
+</li>
+<li>
+<a href="#26+February%2C+2010%3A+release+0.20.2+available">26 February, 2010: release 0.20.2 available </a>
+</li>
+<li>
+<a href="#14+September%2C+2009%3A+release+0.20.1+available">14 September, 2009: release 0.20.1 available </a>
+</li>
+<li>
+<a href="#23+July%2C+2009%3A+release+0.19.2+available">23 July, 2009: release 0.19.2 available </a>
+</li>
+<li>
+<a href="#22+April%2C+2009%3A+release+0.20.0+available">22 April, 2009: release 0.20.0 available </a>
+</li>
+<li>
+<a href="#24+February%2C+2009%3A+release+0.19.1+available">24 February, 2009: release 0.19.1 available </a>
+</li>
+<li>
+<a href="#29+January%2C+2009%3A+release+0.18.3+available">29 January, 2009: release 0.18.3 available </a>
+</li>
+<li>
+<a href="#21+November%2C+2008%3A+release+0.19.0+available">21 November, 2008: release 0.19.0 available </a>
+</li>
+<li>
+<a href="#3+November%2C+2008%3A+release+0.18.2+available">3 November, 2008: release 0.18.2 available </a>
+</li>
+<li>
+<a href="#17+September%2C+2008%3A+release+0.18.1+available">17 September, 2008: release 0.18.1 available </a>
+</li>
+<li>
+<a href="#22+August%2C+2008%3A+release+0.18.0+available">22 August, 2008: release 0.18.0 available </a>
+</li>
+<li>
+<a href="#19+August%2C+2008%3A+release+0.17.2+available">19 August, 2008: release 0.17.2 available </a>
+</li>
+<li>
+<a href="#23+June%2C+2008%3A+release+0.17.1+available">23 June, 2008: release 0.17.1 available </a>
+</li>
+<li>
+<a href="#20+May%2C+2008%3A+release+0.17.0+available">20 May, 2008: release 0.17.0 available </a>
+</li>
+<li>
+<a href="#5+May%2C+2008%3A+release+0.16.4+available">5 May, 2008: release 0.16.4 available </a>
+</li>
+<li>
+<a href="#16+April%2C+2008%3A+release+0.16.3+available">16 April, 2008: release 0.16.3 available </a>
+</li>
+<li>
+<a href="#2+April%2C+2008%3A+release+0.16.2+available">2 April, 2008: release 0.16.2 available </a>
+</li>
+<li>
+<a href="#13+March%2C+2008%3A+release+0.16.1+available">13 March, 2008: release 0.16.1 available </a>
+</li>
+<li>
+<a href="#7+February%2C+2008%3A+release+0.16.0+available">7 February, 2008: release 0.16.0 available </a>
+</li>
+<li>
+<a href="#18+January%2C+2008%3A+release+0.15.3+available">18 January, 2008: release 0.15.3 available </a>
+</li>
+<li>
+<a href="#2+January%2C+2008%3A+release+0.15.2+available">2 January, 2008: release 0.15.2 available </a>
+</li>
+<li>
+<a href="#27+November%2C+2007%3A+release+0.15.1+available">27 November, 2007: release 0.15.1 available </a>
+</li>
+<li>
+<a href="#26+November%2C+2007%3A+release+0.14.4+available">26 November, 2007: release 0.14.4 available </a>
+</li>
+<li>
+<a href="#29+October+2007%3A+release+0.15.0+available">29 October 2007: release 0.15.0 available </a>
+</li>
+<li>
+<a href="#19+October%2C+2007%3A+release+0.14.3+available">19 October, 2007: release 0.14.3 available </a>
+</li>
+<li>
+<a href="#4+September%2C+2007%3A+release+0.14.1+available"> 4 September, 2007: release 0.14.1 available </a>
+</li>
+</ul>
+</li>
+</ul>
+</div> 
+
+    
+<a name="N1000D"></a><a name="Download"></a>
+<h2 class="h3">Download</h2>
+<div class="section">
+<ul>
+        
+<li>
+<strong>1.0.X - </strong> current stable version, 1.0 release</li>
+        
+<li>
+<strong>1.1.X - </strong> current beta version, 1.1 release</li>
+        
+<li>
+<strong>2.X.X - </strong> current alpha version</li>
+        
+<li>
+<strong>0.22.X - </strong> does not include security</li>
+        
+<li>
+<strong>0.20.203.X - </strong> legacy stable version</li>
+        
+<li>
+<strong>0.20.X - </strong> legacy version</li>
+      
+</ul>
+<p>Releases may be downloaded from Apache mirrors.</p>
+<p>
+      
+<a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/">
+      <strong>Download a release now!</strong></a>
+      
+</p>
+<p>On the mirror, all recent releases are available.</p>
+<p>Third parties may distribute products that include Apache Hadoop and derived works, under the Apache License.
+      Some of these are listed on the <a href="http://wiki.apache.org/hadoop/Distribution">Distributions wiki page</a>.</p>
+</div>
+
+    
+<a name="N1004B"></a><a name="News"></a>
+<h2 class="h3">News</h2>
+<div class="section">
+<a name="N10051"></a><a name="26+July%2C+2012%3A+Release+2.0.1-alpha+available"></a>
+<h3 class="h4">26 July, 2012: Release 2.0.1-alpha available </h3>
+<p>     This release contains important security fixes over hadoop-2.0.0-alpha. 
+        </p>
+<p>     Please see the <a href="http://hadoop.apache.org/docs/r2.0.1-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.0.1-alpha Release Notes</a> for details.  
+        </p>
+<a name="N10062"></a><a name="23+May%2C+2012%3A+Release+2.0.0-alpha+available"></a>
+<h3 class="h4">23 May, 2012: Release 2.0.0-alpha available </h3>
+<p>     This is the first (alpha) version in the hadoop-2.x series.
+        </p>
+<p>     This delivers significant major features over the currently 
+                stable hadoop-1.x series including: 
+                <ul>
+		            
+<li> HDFS HA for NameNode (manual failover) </li>
+		            
+<li> YARN aka NextGen MapReduce </li>
+		            
+<li> HDFS Federation </li>
+                
+<li> Performance </li>
+                
+<li> Wire-compatibility for both HDFS and YARN/MapReduce (using protobufs) </li>
+                
+</ul>
+        
+</p>
+<p>     Please see the <a href="http://hadoop.apache.org/docs/r2.0.0-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.0.0-alpha Release Notes</a> for details.  
+        </p>
+<a name="N10088"></a><a name="16+May%2C+2012%3A+Release+1.0.3+available"></a>
+<h3 class="h4">16 May, 2012: Release 1.0.3 available </h3>
+<p>     This is a bug fix release for version 1.0.
+        </p>
+<p>     Bug fixes and feature enhancements in this minor release include:
+                <ul>
+		  
+<li>4 patches in support of non-Oracle JDKs </li>
+		  
+<li>several patches to clean up error handling and log messages </li>
+		  
+<li>various production issue fixes </li>
+                
+</ul>
+        
+</p>
+<p>     Please see the <a href="http://hadoop.apache.org/docs/r1.0.3/releasenotes.html">
+                Hadoop 1.0.3 Release Notes</a> for details.  
+        </p>
+<a name="N100A8"></a><a name="3+Apr%2C+2012%3A+Release+1.0.2+available"></a>
+<h3 class="h4">3 Apr, 2012: Release 1.0.2 available </h3>
+<p>     This is a bug fix release for version 1.0.
+        </p>
+<p>     Bug fixes and feature enhancements in this minor release include:
+                <ul>
+                  
+<li>Snappy compressor/decompressor is available</li>
+                  
+<li>Occassional deadlock in metrics serving thread fixed</li>
+                  
+<li>64-bit secure datanodes failed to start, now fixed</li>
+                  
+<li>Changed package names for 64-bit rpm/debs to use ".x86_64." instead of ".amd64."</li>
+                
+</ul>
+        
+</p>
+<p>     Please see the <a href="http://hadoop.apache.org/docs/r1.0.2/releasenotes.html">
+                Hadoop 1.0.2 Release Notes</a> for details.  
+        </p>
+<a name="N100CB"></a><a name="10+Mar%2C+2012%3A+Release+1.0.1+available"></a>
+<h3 class="h4">10 Mar, 2012: Release 1.0.1 available </h3>
+<p>     This is a bug fix release for version 1.0.
+                This release is now considered stable, replacing the
+                long-standing 0.20.203.  
+        </p>
+<p>     Bug fixes in this minor release include:
+                <ul>
+                  
+<li>Added hadoop-client and hadoop-minicluster artifacts for 
+                      ease of client install and testing</li>
+                  
+<li>Support run-as-user in non-secure mode</li>
+                  
+<li>Better compatibility with Ganglia, HBase, and Sqoop</li>
+                
+</ul>
+        
+</p>
+<p>     Please see the <a href="http://hadoop.apache.org/docs/r1.0.1/releasenotes.html">
+                Hadoop 1.0.1 Release Notes</a> for details.  
+        </p>
+<a name="N100EB"></a><a name="27+Feb%2C+2012%3A+release+0.23.1+available"></a>
+<h3 class="h4">27 Feb, 2012: release 0.23.1 available </h3>
+<p>     This is the second alpha version of the hadoop-0.23 major
+                release after the first alpha 0.23.0. This release
+                has significant improvements compared to 0.23.0 but should still
+                be considered as alpha-quality and not for production use.
+        </p>
+<p>     hadoop-0.23.1 contains several major advances from 0.23.0:
+                <ul>
+                  
+<li>Lots of bug fixes and improvements in both HDFS and MapReduce</li>
+                  
+<li>Major performance work to make this release either match
+                  or exceed performance of Hadoop-1 in most aspects of both
+                  HDFS and MapReduce.</li>
+                  
+<li>Several downstream projects like HBase, Pig, Oozie, Hive
+                  etc. are better integrated with this release</li>
+                
+</ul>
+
+        
+</p>
+<p>     See the <a href="http://hadoop.apache.org/docs/r0.23.1/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.1 Release Notes</a> for details.  
+        </p>
+<a name="N1010B"></a><a name="27+December%2C+2011%3A+release+1.0.0+available"></a>
+<h3 class="h4">27 December, 2011: release 1.0.0 available </h3>
+<p>     After six years of gestation, Hadoop reaches 1.0.0!
+	        This release is from the 0.20-security code line, and includes
+	        support for:
+	        <ul>
+		  
+<li>security</li>
+		  
+<li>HBase (append/hsynch/hflush, and security)</li>
+		  
+<li>webhdfs (with full support for security)</li>
+		  
+<li>performance enhanced access to local files for HBase</li>
+		  
+<li>other performance enhancements, bug fixes, and features</li>
+		
+</ul>
+        
+</p>
+<p>     Please see the complete <a href="http://hadoop.apache.org/docs/r1.0.0/releasenotes.html">
+                Hadoop 1.0.0 Release Notes</a> for details.  
+        </p>
+<a name="N1012E"></a><a name="10+December%2C+2011%3A+release+0.22.0+available"></a>
+<h3 class="h4">10 December, 2011: release 0.22.0 available </h3>
+<p> This release contains many bug fixes and optimizations compared to 
+        its predecessor 0.21.0. See the 
+        <a href="http://hadoop.apache.org/docs/r0.22.0/releasenotes.html">Hadoop 0.22.0 Release Notes</a>
+         for details. Alternatively, you can look at the complete 
+        <a href="http://hadoop.apache.org/docs/r0.22.0/changes.html">change log for this release</a>
+        
+</p>
+<p>Notes:</p>
+<p>The following features are not supported in Hadoop 0.22.0.</p>
+<ul>
+        
+<li>Security.</li>
+        
+<li>Latest optimizations of the MapReduce framework introduced
+        in the Hadoop 0.20.security line of releases.</li>
+        
+<li>Disk-fail-in-place.</li>
+        
+<li>JMX-based metrics v2.</li>
+        
+</ul>
+<p>Hadoop 0.22.0 features</p>
+<ul>
+        
+<li>HBase support with <span class="codefrag">hflush</span> and <span class="codefrag">hsync</span>.</li>
+        
+<li>New implementation of file append.</li>
+        
+<li>Symbolic links.</li>
+        
+<li>BackupNode and CheckpointNode.</li>
+        
+<li>Hierarchical job queues.</li>
+        
+<li>Job limits per queue/pool.</li>
+        
+<li>Dynamically stop/start job queues.</li>
+        
+<li>Andvances in new mapreduce API: Input/Output formats, ChainMapper/Reducer.</li>
+        
+<li>TaskTracker blacklisting.</li>
+        
+<li>DistributedCache sharing.</li>
+        
+</ul>
+<a name="N1017F"></a><a name="11+Nov%2C+2011%3A+release+0.23.0+available"></a>
+<h3 class="h4">11 Nov, 2011: release 0.23.0 available </h3>
+<p>     This is the alpha version of the hadoop-0.23 major
+                release. This is the first release we've made off
+                Apache Hadoop trunk in a long while. This release is
+                alpha-quality and not yet ready for serious use.
+        </p>
+<p>     hadoop-0.23 contains several major advances:
+                <ul>
+                  
+<li>HDFS Federation</li>
+                  
+<li>NextGen MapReduce (YARN)</li>
+                
+</ul>
+
+                It also has several major performance improvements to 
+                both HDFS and MapReduce.
+        </p>
+<p>     See the <a href="http://hadoop.apache.org/docs/r0.23.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.0 Release Notes</a> for details.  
+        </p>
+<a name="N1019C"></a><a name="17+Oct%2C+2011%3A+release+0.20.205.0+available"></a>
+<h3 class="h4">17 Oct, 2011: release 0.20.205.0 available </h3>
+<p>     This release contains improvements, new features, bug 
+                fixes and optimizations. This release includes rpms and 
+                debs, all duly checksummed and securely signed.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.205.0/releasenotes.html">Hadoop 0.20.205.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.205.0/changes.html">change log for this release</a>.</p>
+<p>Notes:<ul>
+           
+<li> This release includes a merge of append/hsynch/hflush capabilities from 0.20-append branch, to support HBase in secure mode.</li>
+           
+<li> This release includes the new webhdfs file system, but webhdfs write calls currently fail in secure mode.</li>
+	
+</ul>
+</p>
+<a name="N101BC"></a><a name="5+Sep%2C+2011%3A+release+0.20.204.0+available"></a>
+<h3 class="h4">5 Sep, 2011: release 0.20.204.0 available </h3>
+<p>     This release contains improvements, new features, bug 
+                fixes and optimizations. This release includes rpms and 
+                debs for the first time.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.204.0/releasenotes.html">Hadoop 0.20.204.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.204.0/changes.html">change log for this release</a>.</p>
+<p>Notes:<ul>
+           
+<li> The RPMs don't work with security turned on. (HADOOP-7599)</li>
+           
+<li> The NameNode's edit log needs to be merged into the image 
+                via</li>
+           
+<ul>
+             
+<li> put the NameNode into safe mode</li>
+             
+<li> run dfsadmin savenamespace command</li>
+             
+<li> perform a normal upgrade</li>
+           
+</ul>
+</ul>
+</p>
+<a name="N101E7"></a><a name="11+May%2C+2011%3A+release+0.20.203.0+available"></a>
+<h3 class="h4">11 May, 2011: release 0.20.203.0 available </h3>
+<p>	This release contains many improvements, new features, bug
+	        fixes and optimizations. It is stable and has been deployed
+                in large (4,500 machine) production clusters.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.203.0/releasenotes.html">Hadoop 0.20.203.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.203.0/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N10200"></a><a name="23+August%2C+2010%3A+release+0.21.0+available"></a>
+<h3 class="h4">23 August, 2010: release 0.21.0 available </h3>
+<p>	This release contains many improvements, new features, bug
+	        fixes and optimizations. It has not undergone testing at scale and should not be considered stable or suitable for production.
+	This release is being classified as a minor release, which means that it should be API compatible with 0.20.2.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.21.0/releasenotes.html">Hadoop 0.21.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.21.0/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N10219"></a><a name="26+February%2C+2010%3A+release+0.20.2+available"></a>
+<h3 class="h4">26 February, 2010: release 0.20.2 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.2/releasenotes.html">Hadoop 0.20.2 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.2/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N10232"></a><a name="14+September%2C+2009%3A+release+0.20.1+available"></a>
+<h3 class="h4">14 September, 2009: release 0.20.1 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.1/releasenotes.html">Hadoop 0.20.1 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.1/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N1024B"></a><a name="23+July%2C+2009%3A+release+0.19.2+available"></a>
+<h3 class="h4">23 July, 2009: release 0.19.2 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.19.2/releasenotes.html">Hadoop 0.19.2 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.19.2/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N10264"></a><a name="22+April%2C+2009%3A+release+0.20.0+available"></a>
+<h3 class="h4">22 April, 2009: release 0.20.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.0/releasenotes.html">Hadoop 0.20.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.0/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N1027D"></a><a name="24+February%2C+2009%3A+release+0.19.1+available"></a>
+<h3 class="h4">24 February, 2009: release 0.19.1 available </h3>
+<p>This release contains many critical bug fixes, including <strong>some data loss issues</strong>. 
+           The release also introduces an <strong>incompatible change</strong> by disabling the 
+           file append API (<a href="http://issues.apache.org/jira/browse/HADOOP-5224">HADOOP-5224</a>) 
+           until it can be stabilized.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.19.1/releasenotes.html">Hadoop 0.19.1 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.19.1/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N102A0"></a><a name="29+January%2C+2009%3A+release+0.18.3+available"></a>
+<h3 class="h4">29 January, 2009: release 0.18.3 available </h3>
+<p>This release contains many critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.18.3/releasenotes.html">Hadoop 0.18.3 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.18.3/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N102B9"></a><a name="21+November%2C+2008%3A+release+0.19.0+available"></a>
+<h3 class="h4">21 November, 2008: release 0.19.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.19.0/releasenotes.html">Hadoop 0.19.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.19.0/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N102D2"></a><a name="3+November%2C+2008%3A+release+0.18.2+available"></a>
+<h3 class="h4">3 November, 2008: release 0.18.2 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.18.2/releasenotes.html">Hadoop 0.18.2 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.18.2/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N102EB"></a><a name="17+September%2C+2008%3A+release+0.18.1+available"></a>
+<h3 class="h4">17 September, 2008: release 0.18.1 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.18.1/releasenotes.html">Hadoop 0.18.1 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.18.1/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N10304"></a><a name="22+August%2C+2008%3A+release+0.18.0+available"></a>
+<h3 class="h4">22 August, 2008: release 0.18.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the <a href="http://hadoop.apache.org/docs/r0.18.0/releasenotes.html">Hadoop 0.18.0 Release Notes</a> for details.  
+           Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.18.0/changes.html">change log for this release</a> or the
+           <a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">
+           Jira issue log for all releases</a>.</p>
+<a name="N1031D"></a><a name="19+August%2C+2008%3A+release+0.17.2+available"></a>
+<h3 class="h4">19 August, 2008: release 0.17.2 available </h3>
+<p>This release contains several critical bug fixes.</p>
+<p>See the Hadoop 0.17.2 Notes for details.</p>
+<a name="N1032A"></a><a name="23+June%2C+2008%3A+release+0.17.1+available"></a>
+<h3 class="h4">23 June, 2008: release 0.17.1 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the Hadoop 0.17.1 Notes for details.</p>
+<a name="N10337"></a><a name="20+May%2C+2008%3A+release+0.17.0+available"></a>
+<h3 class="h4">20 May, 2008: release 0.17.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the Hadoop 0.17.0 Release Notes for details.</p>
+<a name="N10344"></a><a name="5+May%2C+2008%3A+release+0.16.4+available"></a>
+<h3 class="h4">5 May, 2008: release 0.16.4 available </h3>
+<p>This release fixes 4 critical bugs in release 0.16.3.</p>
+<a name="N1034E"></a><a name="16+April%2C+2008%3A+release+0.16.3+available"></a>
+<h3 class="h4">16 April, 2008: release 0.16.3 available </h3>
+<p>This release fixes critical bugs in release 0.16.2.</p>
+<a name="N10358"></a><a name="2+April%2C+2008%3A+release+0.16.2+available"></a>
+<h3 class="h4">2 April, 2008: release 0.16.2 available </h3>
+<p>This release fixes critical bugs in release 0.16.1.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">HBase has been removed from this release.  HBase releases are now maintained at
+        <a href="http://hadoop.apache.org/hbase/">http://hadoop.apache.org/hbase/</a>
+</div>
+</div>
+<a name="N10368"></a><a name="13+March%2C+2008%3A+release+0.16.1+available"></a>
+<h3 class="h4">13 March, 2008: release 0.16.1 available </h3>
+<p>This release fixes critical bugs in release 0.16.0.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">HBase releases are now maintained at
+        <a href="http://hadoop.apache.org/hbase/">http://hadoop.apache.org/hbase/</a>
+</div>
+</div>
+<a name="N10378"></a><a name="7+February%2C+2008%3A+release+0.16.0+available"></a>
+<h3 class="h4">7 February, 2008: release 0.16.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>See the release notes (above) for details.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">When upgrading an existing HDFS filesystem to a 0.16.x
+	release from an earlier release, you should first start HDFS
+	with 'bin/start-dfs.sh -upgrade'.  See the <a href="http://wiki.apache.org/hadoop/Hadoop_Upgrade">Hadoop
+	Upgrade</a> page for details.</div>
+</div>
+<a name="N1038C"></a><a name="18+January%2C+2008%3A+release+0.15.3+available"></a>
+<h3 class="h4">18 January, 2008: release 0.15.3 available </h3>
+<p>This release fixes critical bugs in release 0.15.3.</p>
+<a name="N10396"></a><a name="2+January%2C+2008%3A+release+0.15.2+available"></a>
+<h3 class="h4">2 January, 2008: release 0.15.2 available </h3>
+<p>This release fixes critical bugs in release 0.15.1.</p>
+<a name="N103A0"></a><a name="27+November%2C+2007%3A+release+0.15.1+available"></a>
+<h3 class="h4">27 November, 2007: release 0.15.1 available </h3>
+<p>This release fixes critical bugs in release 0.15.0.</p>
+<a name="N103AA"></a><a name="26+November%2C+2007%3A+release+0.14.4+available"></a>
+<h3 class="h4">26 November, 2007: release 0.14.4 available </h3>
+<p>This release fixes critical bugs in release 0.14.3.</p>
+<a name="N103B4"></a><a name="29+October+2007%3A+release+0.15.0+available"></a>
+<h3 class="h4">29 October 2007: release 0.15.0 available </h3>
+<p>This release contains many improvements, new features, bug
+        fixes and optimizations.</p>
+<p>Notably, this contains the first working version of <a href="http://wiki.apache.org/hadoop/Hbase">HBase</a>.</p>
+<p>See the release notes (above) for details.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">When upgrading an existing HDFS filesystem to a 0.15.x
+	release from an earlier release, you should first start HDFS
+	with 'bin/start-dfs.sh -upgrade'.  See the <a href="http://wiki.apache.org/hadoop/Hadoop_Upgrade">Hadoop
+	Upgrade</a> page for details.</div>
+</div>
+<a name="N103CF"></a><a name="19+October%2C+2007%3A+release+0.14.3+available"></a>
+<h3 class="h4">19 October, 2007: release 0.14.3 available </h3>
+<p>This release fixes critical bugs in release 0.14.2.</p>
+<a name="N103D9"></a><a name="4+September%2C+2007%3A+release+0.14.1+available"></a>
+<h3 class="h4"> 4 September, 2007: release 0.14.1 available </h3>
+<p>New features in release 0.14 include:</p>
+<ul>
+	  
+<li>Better checksums in HDFS.  Checksums are no longer
+	  stored in parallel HDFS files, but are stored directly by
+	  datanodes alongside blocks.  This is more efficient for the
+	  namenode and also improves data integrity.</li>
+
+	  
+<li>Pipes: A C++ API for MapReduce</li>
+
+	  
+<li>Eclipse Plugin, including HDFS browsing, job
+	  monitoring, etc.</li>
+
+	  
+<li>File modification times in HDFS.</li>
+	
+</ul>
+<p>There are many other improvements, bug fixes, optimizations
+	and new features.  Performance and reliability are better than
+	ever.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">When upgrading an existing HDFS filesystem to a 0.14.x
+	release from a 0.13.x or earlier release, you should first
+	start HDFS with 'bin/start-dfs.sh -upgrade'.  See the <a href="http://wiki.apache.org/hadoop/Hadoop_0.14_Upgrade">Hadoop
+	0.14 Upgrade</a> page for details.</div>
+</div>
+</div>
+
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2012 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+<br>
+              Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
+              Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
+              Software Foundation.
+            </div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
