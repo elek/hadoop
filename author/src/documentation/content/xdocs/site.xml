@@ -37,7 +37,7 @@
     <r0.20.2   label="Release 0.20.2"     href="ext:docs/r0.20.2/"/>
     <r0.20.203.0 label="Release 0.20.203.0" href="ext:docs/r0.20.203.0/"/>
     <r0.22.0 label="Release 0.22.0" href="ext:docs/r0.22.0/"/>
-    <r0.23.1 label="Release 0.23.1" href="ext:docs/r0.23.1/"/>
+    <r0.23.3 label="Release 0.23.3" href="ext:docs/r0.23.3/"/>
     <r2.0.0-alpha label="Release 2.0.0-alpha" href="ext:docs/r2.0.0-alpha/"/>
   </docs>
 
@@ -77,7 +77,7 @@
       <r0.20.2 href="r0.20.2/"/>
       <r0.20.203.0 href="r0.20.203.0/"/>
       <r0.22.0 href="r0.22.0/"/>
-      <r0.23.1 href="r0.23.1/"/>
+      <r0.23.3 href="r0.23.3/"/>
       <r2.0.0-alpha href="r2.0.0-alpha/"/>
     </docs>
 

@@ -18,6 +18,7 @@
         <li><strong>1.0.X - </strong> current stable version, 1.0 release</li>
         <li><strong>1.1.X - </strong> current beta version, 1.1 release</li>
         <li><strong>2.X.X - </strong> current alpha version</li>
+        <li><strong>0.23.X - </strong> simmilar to 2.X.X but missing NN HA.</li>
         <li><strong>0.22.X - </strong> does not include security</li>
         <li><strong>0.20.203.X - </strong> legacy stable version</li>
         <li><strong>0.20.X - </strong> legacy version</li>
@@ -38,6 +39,16 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>17 September, 2012: Release 0.23.3 available </title>
+        <p>     This release contains YARN and MRv2 but does not have Name Node High Avalability 
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.3/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.3 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
         <title>26 July, 2012: Release 2.0.1-alpha available </title>
