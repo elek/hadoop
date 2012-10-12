@@ -41,6 +41,20 @@
       <title>News</title>
 
       <section>
+        <title>9 October, 2012: Release 2.0.2-alpha available </title>
+        <p>     This is the second (alpha) version in the hadoop-2.x series.
+        </p>
+        <p>     This delivers significant enhancements to HDFS HA. Also it has a 
+                significantly more stable version of YARN which, at the time of 
+                release, has already been deployed on a 2000 node cluster.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.0.2-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.0.2-alpha Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>17 September, 2012: Release 0.23.3 available </title>
         <p>     This release contains YARN and MRv2 but does not have Name Node High Avalability 
         </p>

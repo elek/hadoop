@@ -38,7 +38,7 @@
     <r0.20.203.0 label="Release 0.20.203.0" href="ext:docs/r0.20.203.0/"/>
     <r0.22.0 label="Release 0.22.0" href="ext:docs/r0.22.0/"/>
     <r0.23.3 label="Release 0.23.3" href="ext:docs/r0.23.3/"/>
-    <r2.0.0-alpha label="Release 2.0.0-alpha" href="ext:docs/r2.0.0-alpha/"/>
+    <r2.0.2-alpha label="Release 2.0.2-alpha" href="ext:docs/r2.0.2-alpha/"/>
   </docs>
 
   <related label="Related Projects">   
@@ -78,7 +78,7 @@
       <r0.20.203.0 href="r0.20.203.0/"/>
       <r0.22.0 href="r0.22.0/"/>
       <r0.23.3 href="r0.23.3/"/>
-      <r2.0.0-alpha href="r2.0.0-alpha/"/>
+      <r2.0.2-alpha href="r2.0.2-alpha/"/>
     </docs>
 
   </external-refs>
