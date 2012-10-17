@@ -41,6 +41,45 @@
       <title>News</title>
 
       <section>
+        <title>13 October, 2012: Release 1.1.0 available </title>
+        <p>     This is a beta release for version 1.1.
+        </p>
+        <p>     This release has approximately 135 enhancements and bug fixes compared to Hadoop-1.0.4, including:
+                <ul>
+                  <li>Many performance improvements in HDFS, backported from trunk </li>
+                  <li>Improvements in Security to use SPNEGO instead of Kerberized SSL for HTTP transactions </li>
+                  <li>Lower default minimum heartbeat for task trackers from 3 sec to 300msec to increase job throughput on small clusters </li>
+                  <li>Port of Gridmix v3 </li>
+                  <li>Set MALLOC_ARENA_MAX in hadoop-config.sh to resolve problems with glibc in RHEL-6 </li>
+                  <li>Splittable bzip2 files </li>
+                  <li>Of course it also has the same security fix as release 1.0.4. </li>
+                </ul>
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r1.1.0/releasenotes.html">
+                Hadoop 1.1.0 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
+        <title>12 October, 2012: Release 1.0.4 available </title>
+        <p>     This is a Security Patch release for version 1.0.
+        </p>
+        <p>     There are four bug fixes and feature enhancements in this minor release:
+                <ul>
+                  <li>Security issue CVE-2012-4449: Hadoop tokens use a 20-bit secret </li>
+                  <li>HADOOP-7154 - set MALLOC_ARENA_MAX in hadoop-config.sh to resolve problems with glibc in RHEL-6 </li>
+                  <li>HDFS-3652 - FSEditLog failure removes the wrong edit stream when storage dirs have same name </li>
+                  <li>MAPREDUCE-4399 - Fix (up to 3x) performance regression in shuffle </li>
+                </ul>
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r1.0.4/releasenotes.html">
+                Hadoop 1.0.4 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>9 October, 2012: Release 2.0.2-alpha available </title>
         <p>     This is the second (alpha) version in the hadoop-2.x series.
         </p>

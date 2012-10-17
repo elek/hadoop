@@ -33,12 +33,14 @@
 
   <docs label="Documentation"> 
     <current label="Current" href="ext:docs/current/"/>
-    <r1.0.3 label="Release 1.0.3" href="ext:docs/r1.0.3/"/>
-    <r0.20.2   label="Release 0.20.2"     href="ext:docs/r0.20.2/"/>
-    <r0.20.203.0 label="Release 0.20.203.0" href="ext:docs/r0.20.203.0/"/>
-    <r0.22.0 label="Release 0.22.0" href="ext:docs/r0.22.0/"/>
-    <r0.23.3 label="Release 0.23.3" href="ext:docs/r0.23.3/"/>
+    <stable label="Stable" href="ext:docs/stable/"/>
+    <r1.0.4 label="Release 1.0.4" href="ext:docs/r1.0.4/"/>
+    <r1.1.0 label="Release 1.1.0" href="ext:docs/r1.1.0/"/>
     <r2.0.2-alpha label="Release 2.0.2-alpha" href="ext:docs/r2.0.2-alpha/"/>
+    <r0.23.3 label="Release 0.23.3" href="ext:docs/r0.23.3/"/>
+    <r0.22.0 label="Release 0.22.0" href="ext:docs/r0.22.0/"/>
+    <r0.20.203.0 label="Release 0.20.203.0" href="ext:docs/r0.20.203.0/"/>
+    <r0.20.2   label="Release 0.20.2"     href="ext:docs/r0.20.2/"/>
   </docs>
 
   <related label="Related Projects">   
@@ -73,12 +75,14 @@
 
     <docs href="http://hadoop.apache.org/docs/">
       <current href="current/"/>
-      <r1.0.3 href="r1.0.3/"/>
-      <r0.20.2 href="r0.20.2/"/>
-      <r0.20.203.0 href="r0.20.203.0/"/>
-      <r0.22.0 href="r0.22.0/"/>
-      <r0.23.3 href="r0.23.3/"/>
+      <stable href="stable/"/>
+      <r1.0.4 href="r1.0.4/"/>
+      <r1.1.0 href="r1.1.0/"/>
       <r2.0.2-alpha href="r2.0.2-alpha/"/>
+      <r0.23.3 href="r0.23.3/"/>
+      <r0.22.0 href="r0.22.0/"/>
+      <r0.20.203.0 href="r0.20.203.0/"/>
+      <r0.20.2 href="r0.20.2/"/>
     </docs>
 
   </external-refs>
