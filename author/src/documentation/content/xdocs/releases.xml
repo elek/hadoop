@@ -41,6 +41,17 @@
       <title>News</title>
 
       <section>
+        <title>15 October, 2012: Release 0.23.4 available </title>
+        <p>     A point release for the 0.23.X line.  Most notably this release now incluses support for upgrading
+                a 1.X HDFS cluster with append/synch enabled. 
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.4/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.4 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>13 October, 2012: Release 1.1.0 available </title>
         <p>     This is a beta release for version 1.1.
         </p>
