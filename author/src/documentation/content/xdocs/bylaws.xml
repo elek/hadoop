@@ -131,9 +131,11 @@
         developments within the Hadoop project.</p>
 
 	<p>The chair of the PMC is rotated annually. When the chair is
-	rotated or when the current chair of the PMC resigns, the PMC
-	votes to recommend a new chair using lazy consensus, but the
-	decision must be ratified by the Apache board.</p></li>
+	rotated or if the current chair of the PMC resigns, the PMC
+	votes to recommend a new chair using Single Transferable Vote
+	(STV) voting. See http://wiki.apache.org/general/BoardVoting
+	for specifics. The decision must be ratified by the Apache
+	board.</p></li>
    </ul>
 </section>
 
