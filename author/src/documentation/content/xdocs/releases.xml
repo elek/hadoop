@@ -15,7 +15,8 @@
       <title>Download</title>
 
       <ul>
-        <li><strong>1.1.X - </strong> current stable version, 1.1 release</li>
+        <li><strong>1.0.X - </strong> current stable version, 1.0 release</li>
+        <li><strong>1.1.X - </strong> current beta version, 1.1 release</li>
         <li><strong>2.X.X - </strong> current alpha version</li>
         <li><strong>0.23.X - </strong> simmilar to 2.X.X but missing NN HA.</li>
         <li><strong>0.22.X - </strong> does not include security</li>
@@ -41,7 +42,7 @@
 
       <section>
         <title>1 December, 2012: Release 1.1.1 available </title>
-        <p>     Stable point release for the 1.1.X line. Bug fixes and improvements, as documented in the <a 
+        <p>     Point release for the 1.1.X line. Bug fixes and improvements, as documented in the <a 
                 href="http://hadoop.apache.org/docs/r1.1.1/releasenotes.html">
                 Hadoop 1.1.1 Release Notes</a>. 
         </p>
