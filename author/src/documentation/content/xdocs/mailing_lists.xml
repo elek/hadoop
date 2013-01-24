@@ -12,31 +12,6 @@
   <body>
 
     <section>
-      <title>General</title>
-
-      <p>The general mailing list is for discussion of
-      Hadoop-related issues that are not specific to a Hadoop
-      module.  All Hadoop releases are announced on this list.</p>
-
-      <note>This mailing list is <strong>NOT</strong> for end-user
-      questions and discussion.  Please use the user mailing list for
-      such issues.</note>
-
-      <p>
-        The Hadoop general mailing list is :
-        <a href="mailto:general@hadoop.apache.org">general@hadoop.apache.org</a>.
-      </p>      
-      <ul>
-        <li><a href="mailto:general-subscribe@hadoop.apache.org">Subscribe to List</a></li>
-        <li><a href="mailto:general-unsubscribe@hadoop.apache.org">Unsubscribe from List</a></li>
-        <li><a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/">Archives</a></li>
-      </ul>
-
-      <p>In order to post to the list, it is necessary to first subscribe to it.</p>
-    </section>
-
-  
-    <section>
       <title>User</title>
 
       <p>The user@ mailing list is the preferred mailing list for end-user questions and
@@ -77,6 +52,31 @@
 
       <p>In order to post to the list, it is <strong>NOT</strong> necessary to first subscribe to it.</p>
     </section>
+
+    <section>
+      <title>General</title>
+
+      <note>This mailing list is <strong>NOT</strong> for end-user
+      questions and discussion.  Please use the user mailing list for
+      such issues.</note>
+
+      <p>The general mailing list is for announcements and project
+          management. All Apache Hadoop releases are also announced
+          on this list.</p>
+
+      <p>
+        The Hadoop general mailing list is :
+        <a href="mailto:general@hadoop.apache.org">general@hadoop.apache.org</a>.
+      </p>      
+      <ul>
+        <li><a href="mailto:general-subscribe@hadoop.apache.org">Subscribe to List</a></li>
+        <li><a href="mailto:general-unsubscribe@hadoop.apache.org">Unsubscribe from List</a></li>
+        <li><a href="http://mail-archives.apache.org/mod_mbox/hadoop-general/">Archives</a></li>
+      </ul>
+
+      <p>In order to post to the list, it is necessary to first subscribe to it.</p>
+    </section>
+
 
     <section>
       <title>Common</title>
