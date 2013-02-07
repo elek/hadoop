@@ -37,6 +37,16 @@
       Some of these are listed on the <a href="http://wiki.apache.org/hadoop/Distribution">Distributions wiki page</a>.</p>
     </section>
 
+      <section>
+        <title>7 February, 2013: Release 0.23.6 available </title>
+        <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.6/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.6 Release Notes</a> for details.  
+        </p>
+      </section>
+
     <section>
       <title>News</title>
 
