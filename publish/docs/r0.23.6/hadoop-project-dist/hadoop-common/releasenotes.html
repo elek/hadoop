@@ -1,0 +1,356 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  0.23.6 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  0.23.6 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 0.23.5</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-354">YARN-354</a>.
+     Blocker bug reported by Liang Xie and fixed by Liang Xie <br>
+     <b>WebAppProxyServer exits immediately after startup</b><br>
+     <blockquote>Please see HDFS-4426 for detail, i found the yarn WebAppProxyServer is broken by HADOOP-9181 as well, here's the hot fix, and i verified manually in our test cluster.
+
+I'm really applogized for bring about such trouble...</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-334">YARN-334</a>.
+     Critical bug reported by Thomas Graves and fixed by Thomas Graves <br>
+     <b>Maven RAT plugin is not checking all source files</b><br>
+     <blockquote>yarn side of HADOOP-9097
+
+
+
+Running 'mvn apache-rat:check' passes, but running RAT by hand (by downloading the JAR) produces some warnings for Java files, amongst others.
+</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-325">YARN-325</a>.
+     Blocker bug reported by Jason Lowe and fixed by Arun C Murthy (capacityscheduler)<br>
+     <b>RM CapacityScheduler can deadlock when getQueueInfo() is called and a container is completing</b><br>
+     <blockquote>If a client calls getQueueInfo on a parent queue (e.g.: the root queue) and containers are completing then the RM can deadlock.  getQueueInfo() locks the ParentQueue and then calls the child queues' getQueueInfo() methods in turn.  However when a container completes, it locks the LeafQueue then calls back into the ParentQueue.  When the two mix, it's a recipe for deadlock.
+
+Stacktrace to follow.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-320">YARN-320</a>.
+     Blocker bug reported by Daryn Sharp and fixed by Daryn Sharp (resourcemanager)<br>
+     <b>RM should always be able to renew its own tokens</b><br>
+     <blockquote>YARN-280 introduced fast-fail for job submissions with bad tokens.  Unfortunately, other stack components like oozie and customers are acquiring RM tokens with a hardcoded dummy renewer value.  These jobs would fail after 24 hours because the RM token couldn't be renewed, but fast-fail is failing them immediately.  The RM should always be able to renew its own tokens submitted with a job.  The renewer field may continue to specify an external user who can renew.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-293">YARN-293</a>.
+     Critical bug reported by Devaraj K and fixed by Robert Joseph Evans (nodemanager)<br>
+     <b>Node Manager leaks LocalizerRunner object for every Container </b><br>
+     <blockquote>Node Manager creates a new LocalizerRunner object for every container and puts in ResourceLocalizationService.LocalizerTracker.privLocalizers map but it never removes from the map.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-285">YARN-285</a>.
+     Major improvement reported by Derek Dagit and fixed by Derek Dagit <br>
+     <b>RM should be able to provide a tracking link for apps that have already been purged</b><br>
+     <blockquote>As applications complete, the RM tracks their IDs in a completed list.  This list is routinely truncated to limit the total number of application remembered by the RM.
+
+When a user clicks the History for a job, either the browser is redirected to the application's tracking link obtained from the stored application instance.  But when the application has been purged from the RM, an error is displayed.
+
+In very busy clusters the rate at which applications complete can cause applications to be purged from the RM's internal list within hours, which breaks the proxy URLs users have saved for their jobs.
+
+We would like the RM to provide valid tracking links persist so that users are not frustrated by broken links.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-280">YARN-280</a>.
+     Major sub-task reported by Daryn Sharp and fixed by Daryn Sharp (resourcemanager)<br>
+     <b>RM does not reject app submission with invalid tokens</b><br>
+     <blockquote>The RM will launch an app with invalid tokens.  The tasks will languish with failed connection retries, followed by task reattempts, followed by app reattempts.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-266">YARN-266</a>.
+     Critical bug reported by Ravi Prakash and fixed by Ravi Prakash (resourcemanager)<br>
+     <b>RM and JHS Web UIs are blank because AppsBlock is not escaping string properly</b><br>
+     <blockquote>e.g. Job names with a line feed "\n" are causing a line feed in the JSON array being written out (since we are only using StringEscapeUtils.escapeHtml() ) and the Javascript parser complains that string quotes are unclosed. This </blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-258">YARN-258</a>.
+     Major bug reported by Ravi Prakash and fixed by Ravi Prakash (resourcemanager)<br>
+     <b>RM web page UI shows Invalid Date for start and finish times</b><br>
+     <blockquote>Whenever the number of jobs was greater than a 100, two javascript arrays were being populated. appsData and appsTableData. appsData was winning out (because it was coming out later) and so renderHadoopDate was trying to render a &lt;br title=""...&gt; string.
+</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-251">YARN-251</a>.
+     Major bug reported by Tom White and fixed by Tom White (resourcemanager)<br>
+     <b>Proxy URI generation fails for blank tracking URIs</b><br>
+     <blockquote>If the URI is an empty string (the default if not set), then a warning is displayed. A null URI displays no such warning. These two cases should be handled in the same way.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-225">YARN-225</a>.
+     Critical bug reported by Devaraj K and fixed by Devaraj K (resourcemanager)<br>
+     <b>Proxy Link in RM UI thows NPE in Secure mode</b><br>
+     <blockquote>{code:xml}
+java.lang.NullPointerException
+	at org.apache.hadoop.yarn.server.webproxy.WebAppProxyServlet.doGet(WebAppProxyServlet.java:241)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221)
+	at org.apache.hadoop.http.lib.StaticUserWebFilter$StaticUserFilter.doFilter(StaticUserWebFilter.java:109)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.apache.hadoop.http.HttpServer$QuotingInputFilter.doFilter(HttpServer.java:975)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+
+
+{code}</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-223">YARN-223</a>.
+     Critical bug reported by Radim Kolar and fixed by Radim Kolar <br>
+     <b>Change processTree interface to work better with native code</b><br>
+     <blockquote>Problem is that on every update of processTree new object is required. This is undesired when working with processTree implementation in native code.
+
+replace ProcessTree.getProcessTree() with updateProcessTree(). No new object allocation is needed and it simplify application code a bit.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-204">YARN-204</a>.
+     Major bug reported by Aleksey Gorshkov and fixed by Aleksey Gorshkov (applications)<br>
+     <b>test coverage for org.apache.hadoop.tools</b><br>
+     <blockquote>Added some tests for org.apache.hadoop.tools</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-170">YARN-170</a>.
+     Major bug reported by Sandy Ryza and fixed by Sandy Ryza (nodemanager)<br>
+     <b>NodeManager stop() gets called twice on shutdown</b><br>
+     <blockquote>The stop method in the NodeManager gets called twice when the NodeManager is shut down via the shutdown hook.
+
+The first is the stop that gets called directly by the shutdown hook.  The second occurs when the NodeStatusUpdaterImpl is stopped.  The NodeManager responds to the NodeStatusUpdaterImpl stop stateChanged event by stopping itself.  This is so that NodeStatusUpdaterImpl can notify the NodeManager to stop, by stopping itself in response to a request from the ResourceManager
+
+This could be avoided if the NodeStatusUpdaterImpl were to stop the NodeManager by calling its stop method directly.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-80">YARN-80</a>.
+     Major improvement reported by Todd Lipcon and fixed by Arun C Murthy (capacityscheduler)<br>
+     <b>Support delay scheduling for node locality in MR2's capacity scheduler</b><br>
+     <blockquote>The capacity scheduler in MR2 doesn't support delay scheduling for achieving node-level locality. So, jobs exhibit poor data locality even if they have good rack locality. Especially on clusters where disk throughput is much better than network capacity, this hurts overall job performance. We should optionally support node-level delay scheduling heuristics similar to what the fair scheduler implements in MR1.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-72">YARN-72</a>.
+     Major bug reported by Hitesh Shah and fixed by Sandy Ryza (nodemanager)<br>
+     <b>NM should handle cleaning up containers when it shuts down</b><br>
+     <blockquote>Ideally, the NM should wait for a limited amount of time when it gets a shutdown signal for existing containers to complete and kill the containers ( if we pick an aggressive approach ) after this time interval. 
+
+For NMs which come up after an unclean shutdown, the NM should look through its directories for existing container.pids and try and kill an existing containers matching the pids found. </blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-50">YARN-50</a>.
+     Blocker sub-task reported by Siddharth Seth and fixed by Siddharth Seth <br>
+     <b>Implement renewal / cancellation of Delegation Tokens</b><br>
+     <blockquote>Currently, delegation tokens issues by the RM and History server cannot be renewed or cancelled. This needs to be implemented.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4934">MAPREDUCE-4934</a>.
+     Critical bug reported by Thomas Graves and fixed by Thomas Graves (build)<br>
+     <b>Maven RAT plugin is not checking all source files</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4925">MAPREDUCE-4925</a>.
+     Major bug reported by Karthik Kambatla and fixed by Karthik Kambatla (examples)<br>
+     <b>The pentomino option parser may be buggy</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4921">MAPREDUCE-4921</a>.
+     Blocker bug reported by Daryn Sharp and fixed by Daryn Sharp (client)<br>
+     <b>JobClient should acquire HS token with RM principal</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4913">MAPREDUCE-4913</a>.
+     Major bug reported by Jason Lowe and fixed by Jason Lowe (mr-am)<br>
+     <b>TestMRAppMaster#testMRAppMasterMissingStaging occasionally exits</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4902">MAPREDUCE-4902</a>.
+     Trivial bug reported by Albert Chu and fixed by Albert Chu <br>
+     <b>Fix typo "receievd" should be "received" in log output</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4899">MAPREDUCE-4899</a>.
+     Major improvement reported by Derek Dagit and fixed by Derek Dagit <br>
+     <b>Provide a plugin to the Yarn Web App Proxy to generate tracking links for M/R appllications given the ID</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4895">MAPREDUCE-4895</a>.
+     Major bug reported by Dennis Y and fixed by Dennis Y <br>
+     <b>Fix compilation failure of org.apache.hadoop.mapred.gridmix.TestResourceUsageEmulators</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4894">MAPREDUCE-4894</a>.
+     Blocker bug reported by Siddharth Seth and fixed by Siddharth Seth (jobhistoryserver , mrv2)<br>
+     <b>Renewal / cancellation of JobHistory tokens</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4890">MAPREDUCE-4890</a>.
+     Critical bug reported by Jason Lowe and fixed by Jason Lowe (mr-am)<br>
+     <b>Invalid TaskImpl state transitions when task fails while speculating</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4861">MAPREDUCE-4861</a>.
+     Major bug reported by Karthik Kambatla and fixed by Karthik Kambatla <br>
+     <b>Cleanup: Remove unused mapreduce.security.token.DelegationTokenRenewal</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4856">MAPREDUCE-4856</a>.
+     Major bug reported by Sandy Ryza and fixed by Sandy Ryza (test)<br>
+     <b>TestJobOutputCommitter uses same directory as TestJobCleanup</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4848">MAPREDUCE-4848</a>.
+     Major bug reported by Jason Lowe and fixed by Jerry Chen (mr-am)<br>
+     <b>TaskAttemptContext cast error during AM recovery</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4845">MAPREDUCE-4845</a>.
+     Major improvement reported by Sandy Ryza and fixed by Sandy Ryza (client)<br>
+     <b>ClusterStatus.getMaxMemory() and getUsedMemory() exist in MR1 but not MR2 </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4842">MAPREDUCE-4842</a>.
+     Blocker bug reported by Jason Lowe and fixed by Mariappan Asokan (mrv2)<br>
+     <b>Shuffle race can hang reducer</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4836">MAPREDUCE-4836</a>.
+     Major bug reported by Ravi Prakash and fixed by Ravi Prakash <br>
+     <b>Elapsed time for running tasks on AM web UI tasks page is 0</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4833">MAPREDUCE-4833</a>.
+     Critical bug reported by Robert Joseph Evans and fixed by Robert Parker (applicationmaster , mrv2)<br>
+     <b>Task can get stuck in FAIL_CONTAINER_CLEANUP</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4832">MAPREDUCE-4832</a>.
+     Critical bug reported by Robert Joseph Evans and fixed by Jason Lowe (applicationmaster)<br>
+     <b>MR AM can get in a split brain situation</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4825">MAPREDUCE-4825</a>.
+     Major bug reported by Jason Lowe and fixed by Jason Lowe (mr-am)<br>
+     <b>JobImpl.finished doesn't expect ERROR as a final job state</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4819">MAPREDUCE-4819</a>.
+     Blocker bug reported by Jason Lowe and fixed by Bikas Saha (mr-am)<br>
+     <b>AM can rerun job after reporting final job status to the client</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4817">MAPREDUCE-4817</a>.
+     Critical bug reported by Jason Lowe and fixed by Thomas Graves (applicationmaster , mr-am)<br>
+     <b>Hardcoded task ping timeout kills tasks localizing large amounts of data</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4813">MAPREDUCE-4813</a>.
+     Critical bug reported by Jason Lowe and fixed by Jason Lowe (applicationmaster)<br>
+     <b>AM timing out during job commit</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4811">MAPREDUCE-4811</a>.
+     Minor improvement reported by Ravi Prakash and fixed by Ravi Prakash (jobhistoryserver , mrv2)<br>
+     <b>JobHistoryServer should show when it was started in WebUI About page</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4810">MAPREDUCE-4810</a>.
+     Minor improvement reported by Jason Lowe and fixed by Jerry Chen (applicationmaster)<br>
+     <b>Add admin command options for ApplicationMaster</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4764">MAPREDUCE-4764</a>.
+     Major improvement reported by Ivan A. Veselovsky and fixed by  <br>
+     <b>repair test org.apache.hadoop.mapreduce.security.TestBinaryTokenFile</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4678">MAPREDUCE-4678</a>.
+     Minor bug reported by Chris McConnell and fixed by Chris McConnell (examples)<br>
+     <b>Running the Pentomino example with defaults throws java.lang.NegativeArraySizeException</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4279">MAPREDUCE-4279</a>.
+     Major bug reported by Rahul Jain and fixed by Devaraj K (jobtracker)<br>
+     <b>getClusterStatus() fails with null pointer exception when running jobs in local mode</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4426">HDFS-4426</a>.
+     Blocker bug reported by Jason Lowe and fixed by Arpit Agarwal (namenode)<br>
+     <b>Secondary namenode shuts down immediately after startup</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4385">HDFS-4385</a>.
+     Critical bug reported by Thomas Graves and fixed by Thomas Graves (build)<br>
+     <b>Maven RAT plugin is not checking all source files</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4315">HDFS-4315</a>.
+     Major bug reported by Aaron T. Myers and fixed by Aaron T. Myers (datanode)<br>
+     <b>DNs with multiple BPs can have BPOfferServices fail to start due to unsynchronized map access</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4270">HDFS-4270</a>.
+     Minor bug reported by Derek Dagit and fixed by Derek Dagit (namenode)<br>
+     <b>Replications of the highest priority should be allowed to choose a source datanode that has reached its max replication limit</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4254">HDFS-4254</a>.
+     Major bug reported by Kihwal Lee and fixed by Kihwal Lee (test)<br>
+     <b>testAllEditsDirsFailOnFlush makes subsequent test cases fail (0.23.6 only)</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4248">HDFS-4248</a>.
+     Blocker sub-task reported by Daryn Sharp and fixed by Daryn Sharp (namenode)<br>
+     <b>Renames may remove file leases</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4247">HDFS-4247</a>.
+     Blocker sub-task reported by Daryn Sharp and fixed by Daryn Sharp (namenode)<br>
+     <b>saveNamespace should be tolerant of dangling lease</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4242">HDFS-4242</a>.
+     Major bug reported by Tsz Wo (Nicholas), SZE and fixed by Tsz Wo (Nicholas), SZE (namenode)<br>
+     <b>Map.Entry is incorrectly used in LeaseManager</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4233">HDFS-4233</a>.
+     Blocker bug reported by Kihwal Lee and fixed by Kihwal Lee (namenode)<br>
+     <b>NN keeps serving even after no journals started while rolling edit</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4232">HDFS-4232</a>.
+     Blocker bug reported by Daryn Sharp and fixed by Daryn Sharp (namenode)<br>
+     <b>NN fails to write a fsimage with stale leases</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4186">HDFS-4186</a>.
+     Critical bug reported by Kihwal Lee and fixed by Kihwal Lee (namenode)<br>
+     <b>logSync() is called with the write lock held while releasing lease</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-2757">HDFS-2757</a>.
+     Major bug reported by Jean-Daniel Cryans and fixed by Jean-Daniel Cryans <br>
+     <b>Cannot read a local block that's being written to when using the local read short circuit</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9255">HADOOP-9255</a>.
+     Critical bug reported by Thomas Graves and fixed by Thomas Graves (scripts)<br>
+     <b>relnotes.py missing last jira</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9217">HADOOP-9217</a>.
+     Major test reported by Andrey Klochkov and fixed by Andrey Klochkov (test)<br>
+     <b>Print thread dumps when hadoop-common tests fail</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9181">HADOOP-9181</a>.
+     Major bug reported by Liang Xie and fixed by Liang Xie <br>
+     <b>Set daemon flag for HttpServer's QueuedThreadPool</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9169">HADOOP-9169</a>.
+     Major bug reported by Robert Joseph Evans and fixed by Robert Joseph Evans <br>
+     <b>Bring branch-0.23 ExitUtil up to same level as branch-2</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9152">HADOOP-9152</a>.
+     Minor bug reported by Brock Noland and fixed by Brock Noland (fs)<br>
+     <b>HDFS can report negative DFS Used on clusters with very small amounts of data</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9135">HADOOP-9135</a>.
+     Trivial bug reported by Colin Patrick McCabe and fixed by Colin Patrick McCabe (security)<br>
+     <b>JniBasedUnixGroupsMappingWithFallback should log at debug rather than info during fallback</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9108">HADOOP-9108</a>.
+     Major bug reported by Kihwal Lee and fixed by Kihwal Lee (util)<br>
+     <b>Add a method to clear terminateCalled to ExitUtil for test cases</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9105">HADOOP-9105</a>.
+     Major bug reported by Daryn Sharp and fixed by Daryn Sharp (fs)<br>
+     <b>FsShell -moveFromLocal erroneously fails</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9097">HADOOP-9097</a>.
+     Critical bug reported by Tom White and fixed by Thomas Graves (build)<br>
+     <b>Maven RAT plugin is not checking all source files</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9072">HADOOP-9072</a>.
+     Major bug reported by Robert Parker and fixed by Robert Parker <br>
+     <b>Hadoop-Common-0.23-Build Fails to build in Jenkins</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9038">HADOOP-9038</a>.
+     Minor test reported by Ivan A. Veselovsky and fixed by Ivan A. Veselovsky <br>
+     <b>provide unit-test coverage of class org.apache.hadoop.fs.LocalDirAllocator.AllocatorPerContext.PathIterator</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9020">HADOOP-9020</a>.
+     Major sub-task reported by Daryn Sharp and fixed by Daryn Sharp (ipc , security)<br>
+     <b>Add a SASL PLAIN server</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-8992">HADOOP-8992</a>.
+     Minor improvement reported by Ivan A. Veselovsky and fixed by Ivan A. Veselovsky <br>
+     <b>Enhance unit-test coverage of class HarFileSystem</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-8931">HADOOP-8931</a>.
+     Trivial improvement reported by Eli Collins and fixed by Eli Collins <br>
+     <b>Add Java version to startup message</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-8561">HADOOP-8561</a>.
+     Major improvement reported by Luke Lu and fixed by Yu Gao (security)<br>
+     <b>Introduce HADOOP_PROXY_USER for secure impersonation in child hadoop client processes</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-8427">HADOOP-8427</a>.
+     Major task reported by Eli Collins and fixed by Andy Isaacson (documentation)<br>
+     <b>Convert Forrest docs to APT, incremental</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-7868">HADOOP-7868</a>.
+     Major bug reported by James Page and fixed by Trevor Robinson (native)<br>
+     <b>Hadoop native fails to compile when default linker option is -Wl,--as-needed</b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>
