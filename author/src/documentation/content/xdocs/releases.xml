@@ -37,6 +37,36 @@
       Some of these are listed on the <a href="http://wiki.apache.org/hadoop/Distribution">Distributions wiki page</a>.</p>
     </section>
 
+    <section>
+      <title>News</title>
+
+      <section>
+        <title>14 February, 2013: Release 2.0.3-alpha available </title>
+        <p>     This is the latest (alpha) version in the hadoop-2.x series.
+        </p>
+        <p>     This release delivers significant major features and stability
+                over previous releases in hadoop-2.x series:
+                <ul>
+		            <li> QJM for HDFS HA for NameNode</li>
+		            <li> Multi-resource scheduling (CPU and memory) for YARN</li>
+		            <li> YARN ResourceManager Restart</li>
+                <li> Significant stability at scale for YARN (over 30,000 nodes 
+                     and 14 million applications so far, at time of release)
+                </li>
+                </ul>
+                This release, like previous releases in hadoop-2.x series is 
+                still considered <em>alpha</em> primarily since some of APIs
+                aren't fully-baked and we expect some churn in future. 
+                Furthermore, please note that there are some API changes from
+                previous hadoop-2.0.2-alpha release and applications will need 
+                to recompile against hadoop-2.0.3-alpha.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.0.3-alpha Release Notes</a> for details.  
+        </p>
+      </section>
+
       <section>
         <title>7 February, 2013: Release 0.23.6 available </title>
         <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
@@ -46,9 +76,6 @@
                 Hadoop 0.23.6 Release Notes</a> for details.  
         </p>
       </section>
-
-    <section>
-      <title>News</title>
 
       <section>
         <title>1 December, 2012: Release 1.1.1 available </title>
