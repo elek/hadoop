@@ -56,6 +56,14 @@
       <p>Other Hadoop-related projects at Apache include:</p>
       <ul>
 
+      <li><a href="ext:ambari"><strong>Ambari&trade;</strong></a>: 
+      A web-based tool for provisioning, managing, and monitoring Apache Hadoop 
+      clusters which includes support for Hadoop HDFS, Hadoop MapReduce, Hive, 
+      HCatalog, HBase, ZooKeeper, Oozie, Pig and Sqoop. Ambari also provides
+      a dashboard for viewing cluster health such as heatmaps and ability to
+      view MapReduce, Pig and Hive applications visually alongwith features to 
+      diagnose their performance characteristics in a user-friendly manner.</li> 
+
       <li><a href="ext:avro"><strong>Avro&trade;</strong></a>: 
       A data serialization system.</li>
 

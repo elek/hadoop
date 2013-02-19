@@ -41,6 +41,7 @@
   </docs>
 
   <related label="Related Projects">   
+    <ambari label="Ambari" href="ext:ambari" />  
     <avro    label="Avro" href="ext:avro" />  
     <cassandra label="Cassandra" href="ext:cassandra" />   
     <chukwa  label="Chukwa" href="ext:chukwa" />   
@@ -54,6 +55,7 @@
 
   <external-refs>
     <common-jira href="https://issues.apache.org/jira/browse/HADOOP" />
+    <ambari href="http://incubator.apache.org/ambari/" />
     <avro      href="http://avro.apache.org/" />
     <cassandra href="http://cassandra.apache.org/" />
     <chukwa href="http://incubator.apache.org/chukwa/" />
