@@ -24,3 +24,6 @@ RedirectMatch Permanent ^/hive/(.*)$ http://hive.apache.org/$1
 RedirectMatch Permanent ^/pig/(.*)$ http://pig.apache.org/$1
 # promote ZooKeeper to TLP
 RedirectMatch Permanent ^/zookeeper/(.*)$ http://zookeeper.apache.org/$1
+
+# Redirect HDFS javadoc links to HDFS user guide
+RedirectMatch Permanent ^/docs/(.+)/api/org/apache/hadoop/hdfs/.* http://hadoop.apache.org/docs/$1/hdfs_user_guide.html
