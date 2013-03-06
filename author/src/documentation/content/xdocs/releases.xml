@@ -41,6 +41,14 @@
       <title>News</title>
 
       <section>
+        <title>15 February, 2013: Release 1.1.2 available </title>
+        <p>     Point release for the 1.1.X line. Bug fixes and improvements, as documented in the <a 
+                href="http://hadoop.apache.org/docs/r1.1.2/releasenotes.html">
+                Hadoop 1.1.2 Release Notes</a>. 
+        </p>
+      </section>
+
+      <section>
         <title>14 February, 2013: Release 2.0.3-alpha available </title>
         <p>     This is the latest (alpha) version in the hadoop-2.x series.
         </p>
