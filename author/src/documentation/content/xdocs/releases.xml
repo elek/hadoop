@@ -41,6 +41,16 @@
       <title>News</title>
 
       <section>
+        <title>18 April, 2013: Release 0.23.7 available </title>
+        <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.7/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.7 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>15 February, 2013: Release 1.1.2 available </title>
         <p>     Point release for the 1.1.X line. Bug fixes and improvements, as documented in the <a 
                 href="http://hadoop.apache.org/docs/r1.1.2/releasenotes.html">
