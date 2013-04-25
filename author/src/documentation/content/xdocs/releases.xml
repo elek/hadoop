@@ -41,6 +41,17 @@
       <title>News</title>
 
       <section>
+        <title>25 April, 2013: Release 2.0.4-alpha available </title>
+        <p>     This release delivers a number of critical bug-fixes for 
+                hadoop-2.x uncovered during integration testing. 
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.0.4-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.0.4-alpha Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>18 April, 2013: Release 0.23.7 available </title>
         <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
         </p>
