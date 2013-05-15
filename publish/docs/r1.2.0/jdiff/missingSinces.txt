@@ -1,0 +1,98 @@
+NO DOC BLOCK: org.apache.hadoop.util.ClassUtil Class
+NO DOC BLOCK: org.apache.hadoop.mapred.CleanupQueue Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.HasFileDescriptor Interface
+NO DOC BLOCK: org.apache.hadoop.security.JniBasedUnixGroupsMappingWithFallback Class
+NO DOC BLOCK: org.apache.hadoop.security.JniBasedUnixGroupsNetgroupMappingWithFallback Class
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobTrackerNotYetInitializedException Class
+MISSING @SINCE TAG: org.apache.hadoop.mapred.LocalJobRunner Class
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopologyWithNodeGroup Class
+MISSING @SINCE TAG: org.apache.hadoop.util.ServicePlugin Interface
+NO DOC BLOCK: org.apache.hadoop.tools.rumen.Hadoop20JHParser Constructor (org.apache.hadoop.util.LineReader)
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Constructor (org.apache.hadoop.mapreduce.JobID, java.lang.String, java.lang.String, long, java.lang.String, java.util.Map, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Constructor (org.apache.hadoop.mapreduce.JobID, java.lang.String, java.lang.String, long, java.lang.String, java.util.Map, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.util.LineReader Constructor (java.io.InputStream, byte[])
+MISSING @SINCE TAG: org.apache.hadoop.util.LineReader Constructor (java.io.InputStream, int, byte[])
+MISSING @SINCE TAG: org.apache.hadoop.util.LineReader Constructor (java.io.InputStream, org.apache.hadoop.conf.Configuration, byte[])
+NO DOC BLOCK: org.apache.hadoop.ipc.Server Method addTerseExceptions(java.lang.Class[])
+MISSING @SINCE TAG: org.apache.hadoop.ipc.RPC Method checkVersion(java.lang.Class, long, org.apache.hadoop.ipc.VersionedProtocol)
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.HistoryCleaner Method clean(long)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.security.TokenCache Method cleanUpTokenReferral(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method concat(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.Path[])
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method concat(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.Path[])
+MISSING @SINCE TAG: org.apache.hadoop.mapred.lib.aggregate.ValueAggregatorJob Method createValueAggregatorJob(java.lang.String[], java.lang.Class)
+NO DOC BLOCK: org.apache.hadoop.mapred.lib.aggregate.ValueAggregatorJob Method createValueAggregatorJob(java.lang.String[], java.lang.Class[], java.lang.Class)
+MISSING @SINCE TAG: org.apache.hadoop.filecache.TrackerDistributedCacheManager Method determineTimestampsAndCacheVisibilities(org.apache.hadoop.conf.Configuration)
+NO DOC BLOCK: org.apache.hadoop.io.SortedMapWritable Method equals(java.lang.Object)
+MISSING @SINCE TAG: org.apache.hadoop.io.UTF8 Method fromBytes(byte[])
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.TaskAttemptStartedEvent Method getAvataar()
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CompressionCodecFactory Method getCodecByClassName(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CompressionCodecFactory Method getCodecByName(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CompressionCodecFactory Method getCodecClassByName(java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.BufferedFSInputStream Method getFileDescriptor()
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method getFileDescriptor()
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getFirstHalf(java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.FsShell Method getFS()
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method getInstance()
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method getInstance(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method getInstance(org.apache.hadoop.conf.Configuration, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getInstance(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.RunningJob Method getJobStatus()
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getLastHalf(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getLeaves(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.TaskAttemptStartedEvent Method getLocality()
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getNodeForNetworkLocation(org.apache.hadoop.net.Node)
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method getRack(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.CounterGroup Method getResourceBundle(java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.FsShell Method getTrash()
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobHistory.JobInfo Method getWorkflowAdjacencies(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Method getWorkflowAdjacencies()
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Method getWorkflowId()
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Method getWorkflowName()
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Method getWorkflowNodeName()
+MISSING @SINCE TAG: org.apache.hadoop.tools.rumen.JobSubmittedEvent Method getWorkflowTags()
+NO DOC BLOCK: org.apache.hadoop.io.SortedMapWritable Method hashCode()
+MISSING @SINCE TAG: org.apache.hadoop.http.HttpServer Method isInstrumentationAccessAllowed(javax.servlet.ServletContext, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+NO DOC BLOCK: org.apache.hadoop.mapred.JobTracker Method isNodeGroupAware()
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method isNodeGroupAware()
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method isOnSameNodeGroup(org.apache.hadoop.net.Node, org.apache.hadoop.net.Node)
+MISSING @SINCE TAG: org.apache.hadoop.net.NetworkTopology Method isSameParents(org.apache.hadoop.net.Node, org.apache.hadoop.net.Node)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobHistory.MapAttempt Method logStarted(org.apache.hadoop.mapred.TaskAttemptID, long, java.lang.String, int, java.lang.String, org.apache.hadoop.mapred.Locality, org.apache.hadoop.mapred.Avataar)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobHistory.ReduceAttempt Method logStarted(org.apache.hadoop.mapred.TaskAttemptID, long, java.lang.String, int, java.lang.String, org.apache.hadoop.mapred.Locality, org.apache.hadoop.mapred.Avataar)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobInProgress Method obtainNewMapTaskCommon(org.apache.hadoop.mapred.TaskTrackerStatus, int, int, int)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.MetricsSystem Method publishMetricsNow()
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.impl.MetricsSystemImpl Method publishMetricsNow()
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.DefaultMetricsSystem Method publishMetricsNow()
+NO DOC BLOCK: org.apache.hadoop.net.NetworkTopology Method swap(org.apache.hadoop.net.Node[], int, int)
+MISSING @SINCE TAG: org.apache.hadoop.io.UTF8 Method toStringChecked()
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method unset(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.io.IOUtils Method wrappedReadForCompressedData(java.io.InputStream, byte[], int, int)
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field AVATAAR
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeys Field DEFAULT_HADOOP_JETTY_LOGS_SERVE_ALIASES
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field DEFAULT_MAPREDUCE_RECOVER_JOB
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory Field DONE
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory Field DONEDIR_FS
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeys Field HADOOP_JETTY_LOGS_SERVE_ALIASES
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeys Field HADOOP_SECURITY_INSTRUMENTATION_REQUIRES_ADMIN
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeys Field HADOOP_SKIP_VERSION_CHECK_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeys Field HADOOP_SKIP_VERSION_CHECK_KEY
+NO DOC BLOCK: org.apache.hadoop.mapred.JobLocalizer Field JOB_LOCAL_CTXT
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field LOCALITY
+NO DOC BLOCK: org.apache.hadoop.mapred.JobEndNotifier Field MAPREDUCE_JOBEND_NOTIFICATION_TIMEOUT_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field MAPREDUCE_RECOVER_JOB
+NO DOC BLOCK: org.apache.hadoop.net.NetworkTopology Field netlock
+NO DOC BLOCK: org.apache.hadoop.mapred.JobInProgress.Counter Field NODEGROUP_LOCAL_MAPS
+MISSING @SINCE TAG: org.apache.hadoop.security.token.delegation.AbstractDelegationTokenSecretManager Field noInterruptsLock
+NO DOC BLOCK: org.apache.hadoop.net.NetworkTopology Field numOfRacks
+NO DOC BLOCK: org.apache.hadoop.net.NetworkTopology Field r
+NO DOC BLOCK: org.apache.hadoop.mapred.JobLocalizer Field ttConf
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field WORKFLOW_ADJACENCIES
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_ADJACENCY_PREFIX_PATTERN
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_ADJACENCY_PREFIX_STRING
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_ID
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field WORKFLOW_ID
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_NAME
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field WORKFLOW_NAME
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_NODE_NAME
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field WORKFLOW_NODE_NAME
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Field WORKFLOW_TAGS
+NO DOC BLOCK: org.apache.hadoop.mapred.JobHistory.Keys Field WORKFLOW_TAGS
