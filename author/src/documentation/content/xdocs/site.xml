@@ -34,8 +34,8 @@
   <docs label="Documentation"> 
     <current label="Current" href="ext:docs/current/"/>
     <stable label="Stable" href="ext:docs/stable/"/>
-    <r1.0.4 label="Release 1.0.4" href="ext:docs/r1.0.4/"/>
     <r1.1.2 label="Release 1.1.2" href="ext:docs/r1.1.2/"/>
+    <r1.2.0 label="Release 1.2.0" href="ext:docs/r1.2.0/"/>
     <r2.0.4-alpha label="Release 2.0.4-alpha" href="ext:docs/r2.0.4-alpha/"/>
     <r0.23.7 label="Release 0.23.7" href="ext:docs/r0.23.7/"/>
   </docs>
@@ -75,8 +75,8 @@
     <docs href="http://hadoop.apache.org/docs/">
       <current href="current/"/>
       <stable href="stable/"/>
-      <r1.0.4 href="r1.0.4/"/>
       <r1.1.2 href="r1.1.2/"/>
+      <r1.2.0 href="r1.2.0/"/>
       <r2.0.4-alpha href="r2.0.4-alpha/"/>
       <r0.23.7 href="r0.23.7/"/>
       <r0.22.0 href="r0.22.0/"/>

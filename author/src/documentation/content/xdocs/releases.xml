@@ -15,8 +15,8 @@
       <title>Download</title>
 
       <ul>
-        <li><strong>1.0.X - </strong> current stable version, 1.0 release</li>
-        <li><strong>1.1.X - </strong> current beta version, 1.1 release</li>
+        <li><strong>1.1.X - </strong> current stable version, 1.1 release</li>
+        <li><strong>1.2.X - </strong> current beta version, 1.2 release</li>
         <li><strong>2.X.X - </strong> current alpha version</li>
         <li><strong>0.23.X - </strong> simmilar to 2.X.X but missing NN HA.</li>
         <li><strong>0.22.X - </strong> does not include security</li>
@@ -39,6 +39,30 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>13 May, 2013: Release 1.2.0 available </title>
+	<p>     This is a beta release for version 1.2.
+	</p>
+        <p>     This release delivers over 200 enhancements and bug-fixes, 
+	        compared to the previous 1.1.2 release.
+	        Major enhancements include:
+	        <ul>
+		  <li>DistCp v2 backported</li>
+		  <li>Web services for JobTracker</li>
+		  <li>WebHDFS enhancements</li>
+		  <li>Extensions of task placement and replica placement policy interfaces</li>
+		  <li>Offline Image Viewer backported</li>
+		  <li>Namenode more robust in case of edit log corruption</li>
+		  <li>Add NodeGroups level to NetworkTopology</li>
+		  <li>Add "unset" to Configuration API</li>
+		</ul>
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r1.2.0/releasenotes.html">
+                Hadoop 1.2.0 Release Notes</a> for more details.
+        </p>
+      </section>
 
       <section>
         <title>25 April, 2013: Release 2.0.4-alpha available </title>
