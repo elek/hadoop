@@ -1,0 +1,134 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  0.23.8 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  0.23.8 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 0.23.7</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-690">YARN-690</a>.
+     Blocker bug reported by Daryn Sharp and fixed by Daryn Sharp (resourcemanager)<br>
+     <b>RM exits on token cancel/renew problems</b><br>
+     <blockquote>The DelegationTokenRenewer thread is critical to the RM.  When a non-IOException occurs, the thread calls System.exit to prevent the RM from running w/o the thread.  It should be exiting only on non-RuntimeExceptions.
+
+The problem is especially bad in 23 because the yarn protobuf layer converts IOExceptions into UndeclaredThrowableExceptions (RuntimeException) which causes the renewer to abort the process.  An UnknownHostException takes down the RM...</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-548">YARN-548</a>.
+     Major sub-task reported by Vadim Bondarev and fixed by Vadim Bondarev <br>
+     <b>Add tests for YarnUncaughtExceptionHandler</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-476">YARN-476</a>.
+     Minor bug reported by Jason Lowe and fixed by Sandy Ryza <br>
+     <b>ProcfsBasedProcessTree info message confuses users</b><br>
+     <blockquote>ProcfsBasedProcessTree has a habit of emitting not-so-helpful messages such as the following:
+
+{noformat}
+2013-03-13 12:41:51,957 INFO [communication thread] org.apache.hadoop.yarn.util.ProcfsBasedProcessTree: The process 28747 may have finished in the interim.
+2013-03-13 12:41:51,958 INFO [communication thread] org.apache.hadoop.yarn.util.ProcfsBasedProcessTree: The process 28978 may have finished in the interim.
+2013-03-13 12:41:51,958 INFO [communication thread] org.apache.hadoop.yarn.util.ProcfsBasedProcessTree: The process 28979 may have finished in the interim.
+{noformat}
+
+As described in MAPREDUCE-4570, this is something that naturally occurs in the process of monitoring processes via procfs.  It's uninteresting at best and can confuse users who think it's a reason their job isn't running as expected when it appears in their logs.
+
+We should either make this DEBUG or remove it entirely.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-363">YARN-363</a>.
+     Major bug reported by Jason Lowe and fixed by Kenji Kikushima <br>
+     <b>yarn proxyserver fails to find webapps/proxy directory on startup</b><br>
+     <blockquote>Starting up the proxy server fails with this error:
+
+{noformat}
+2013-01-29 17:37:41,357 FATAL webproxy.WebAppProxy (WebAppProxy.java:start(99)) - Could not start proxy web server
+java.io.FileNotFoundException: webapps/proxy not found in CLASSPATH
+	at org.apache.hadoop.http.HttpServer.getWebAppsPath(HttpServer.java:533)
+	at org.apache.hadoop.http.HttpServer.&lt;init&gt;(HttpServer.java:225)
+	at org.apache.hadoop.http.HttpServer.&lt;init&gt;(HttpServer.java:164)
+	at org.apache.hadoop.yarn.server.webproxy.WebAppProxy.start(WebAppProxy.java:90)
+	at org.apache.hadoop.yarn.service.CompositeService.start(CompositeService.java:68)
+	at org.apache.hadoop.yarn.server.webproxy.WebAppProxyServer.main(WebAppProxyServer.java:94)
+{noformat}
+</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-71">YARN-71</a>.
+     Critical bug reported by Vinod Kumar Vavilapalli and fixed by Xuan Gong (nodemanager)<br>
+     <b>Ensure/confirm that the NodeManager cleans up local-dirs on restart</b><br>
+     <blockquote>We have to make sure that NodeManagers cleanup their local files on restart.
+
+It may already be working like that in which case we should have tests validating this.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5211">MAPREDUCE-5211</a>.
+     Blocker bug reported by Jason Lowe and fixed by Jason Lowe (mrv2)<br>
+     <b>Reducer intermediate files can collide during merge</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5168">MAPREDUCE-5168</a>.
+     Critical bug reported by Jason Lowe and fixed by Jason Lowe (mrv2)<br>
+     <b>Reducer can OOM during shuffle because on-disk output stream not released</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5147">MAPREDUCE-5147</a>.
+     Major bug reported by Robert Parker and fixed by Robert Parker (mrv2)<br>
+     <b>Maven build should create hadoop-mapreduce-client-app-VERSION.jar directly</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5065">MAPREDUCE-5065</a>.
+     Major bug reported by Mithun Radhakrishnan and fixed by Mithun Radhakrishnan (distcp)<br>
+     <b>DistCp should skip checksum comparisons if block-sizes are different on source/target.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5059">MAPREDUCE-5059</a>.
+     Major bug reported by Jason Lowe and fixed by Omkar Vinit Joshi (jobhistoryserver , webapps)<br>
+     <b>Job overview shows average merge time larger than for any reduce attempt</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5015">MAPREDUCE-5015</a>.
+     Major test reported by Aleksey Gorshkov and fixed by Aleksey Gorshkov <br>
+     <b>Coverage fix for org.apache.hadoop.mapreduce.tools.CLI</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4927">MAPREDUCE-4927</a>.
+     Major bug reported by Jason Lowe and fixed by Ashwin Shankar (jobhistoryserver)<br>
+     <b>Historyserver 500 error due to NPE when accessing specific counters page for failed job</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4383">MAPREDUCE-4383</a>.
+     Minor bug reported by Andy Isaacson and fixed by Andy Isaacson (pipes)<br>
+     <b>HadoopPipes.cc needs to include unistd.h</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4835">HDFS-4835</a>.
+     Critical bug reported by Robert Parker and fixed by Robert Parker (webhdfs)<br>
+     <b>Port trunk WebHDFS changes to branch-0.23 </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4807">HDFS-4807</a>.
+     Major bug reported by Kihwal Lee and fixed by Cristina L. Abad <br>
+     <b>DFSOutputStream.createSocketForPipeline() should not include timeout extension on connect</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4714">HDFS-4714</a>.
+     Major bug reported by Kihwal Lee and fixed by  (namenode)<br>
+     <b>Log short messages in Namenode RPC server for exceptions meant for clients</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4699">HDFS-4699</a>.
+     Major bug reported by Chris Nauroth and fixed by Chris Nauroth (test)<br>
+     <b>TestPipelinesFailover#testPipelineRecoveryStress fails sporadically</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4690">HDFS-4690</a>.
+     Critical bug reported by Daryn Sharp and fixed by Daryn Sharp (namenode , security)<br>
+     <b>Namenode exits if entering safemode while secret manager is edit logging</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4477">HDFS-4477</a>.
+     Critical bug reported by Kihwal Lee and fixed by Daryn Sharp (security)<br>
+     <b>Secondary namenode may retain old tokens</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-3875">HDFS-3875</a>.
+     Critical bug reported by Todd Lipcon and fixed by Kihwal Lee (datanode , hdfs-client)<br>
+     <b>Issue handling checksum errors in write pipeline</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9469">HADOOP-9469</a>.
+     Major bug reported by Thomas Graves and fixed by Robert Parker <br>
+     <b>mapreduce/yarn source jars not included in dist tarball</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9233">HADOOP-9233</a>.
+     Major test reported by Vadim Bondarev and fixed by Vadim Bondarev <br>
+     <b>Cover package org.apache.hadoop.io.compress.zlib with unit tests</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9222">HADOOP-9222</a>.
+     Major test reported by Vadim Bondarev and fixed by Vadim Bondarev <br>
+     <b>Cover package with org.apache.hadoop.io.lz4 unit tests</b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>

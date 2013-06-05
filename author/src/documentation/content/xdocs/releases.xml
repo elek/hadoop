@@ -41,6 +41,16 @@
       <title>News</title>
 
       <section>
+        <title>5 June, 2013: Release 0.23.8 available </title>
+        <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.8/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.8 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>13 May, 2013: Release 1.2.0 available </title>
 	<p>     This is a beta release for version 1.2.
 	</p>
