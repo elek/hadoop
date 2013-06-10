@@ -437,9 +437,25 @@
        </tr>
 
        <tr>
+         <td>brandonli</td>
+         <td>Brandon Li</td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
          <td>cdouglas</td>
          <td>Chris Douglas</td>
          <td>Microsoft</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
+         <td>cnauroth</td>
+         <td>Chris Nauroth</td>
+         <td>Hortonworks</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -560,6 +576,14 @@
          <td>jghoman</td>
          <td><a href="http://people.apache.org/~jghoman">Jakob Homan</a></td>
          <td>LinkedIn</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
+         <td>jing9</td>
+         <td>Jing Zhao</td>
+         <td>Hortonworks</td>
          <td></td>
          <td>-8</td>
        </tr>
