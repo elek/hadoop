@@ -1,0 +1,95 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  0.23.9 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  0.23.9 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 0.23.8</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-742">YARN-742</a>.
+     Major bug reported by Kihwal Lee and fixed by Jason Lowe (nodemanager)<br>
+     <b>Log aggregation causes a lot of redundant setPermission calls</b><br>
+     <blockquote>In one of our clusters, namenode RPC is spending 45% of its time on serving setPermission calls. Further investigation has revealed that most calls are redundantly made on /mapred/logs/&lt;user&gt;/logs. Also mkdirs calls are made before this.
+</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-478">YARN-478</a>.
+     Major sub-task reported by Aleksey Gorshkov and fixed by Aleksey Gorshkov <br>
+     <b>fix coverage org.apache.hadoop.yarn.webapp.log</b><br>
+     <blockquote>fix coverage org.apache.hadoop.yarn.webapp.log
+one patch for trunk, branch-2, branch-0.23</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-427">YARN-427</a>.
+     Major sub-task reported by Aleksey Gorshkov and fixed by Aleksey Gorshkov <br>
+     <b>Coverage fix for org.apache.hadoop.yarn.server.api.*</b><br>
+     <blockquote>Coverage fix for org.apache.hadoop.yarn.server.api.*
+
+patch YARN-427-trunk.patch for trunk
+patch YARN-427-branch-2.patch for branch-2 and branch-0.23</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-169">YARN-169</a>.
+     Minor improvement reported by Anthony Rojas and fixed by Anthony Rojas (nodemanager)<br>
+     <b>Update log4j.appender.EventCounter to use org.apache.hadoop.log.metrics.EventCounter</b><br>
+     <blockquote>We should update the log4j.appender.EventCounter in hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/resources/container-log4j.properties to use *org.apache.hadoop.log.metrics.EventCounter* rather than *org.apache.hadoop.metrics.jvm.EventCounter* to avoid triggering the following warning:
+
+{code}WARNING: org.apache.hadoop.metrics.jvm.EventCounter is deprecated. Please use org.apache.hadoop.log.metrics.EventCounter in all the log4j.properties files{code}</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5316">MAPREDUCE-5316</a>.
+     Major bug reported by Ashwin Shankar and fixed by Ashwin Shankar (client)<br>
+     <b>job -list-attempt-ids command does not handle illegal task-state</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5315">MAPREDUCE-5315</a>.
+     Critical bug reported by Mithun Radhakrishnan and fixed by Mithun Radhakrishnan (distcp)<br>
+     <b>DistCp reports success even on failure.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5308">MAPREDUCE-5308</a>.
+     Major bug reported by Nathan Roberts and fixed by Nathan Roberts <br>
+     <b>Shuffling to memory can get out-of-sync when fetching multiple compressed map outputs</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5268">MAPREDUCE-5268</a>.
+     Major improvement reported by Jason Lowe and fixed by Karthik Kambatla (jobhistoryserver)<br>
+     <b>Improve history server startup performance</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5084">MAPREDUCE-5084</a>.
+     Major test reported by Aleksey Gorshkov and fixed by Aleksey Gorshkov <br>
+     <b>fix coverage  org.apache.hadoop.mapreduce.v2.app.webapp and org.apache.hadoop.mapreduce.v2.hs.webapp</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4019">MAPREDUCE-4019</a>.
+     Minor bug reported by B Anil Kumar and fixed by Ashwin Shankar (client)<br>
+     <b>-list-attempt-ids  is not working</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4878">HDFS-4878</a>.
+     Major bug reported by Tao Luo and fixed by Tao Luo (namenode)<br>
+     <b>On Remove Block, Block is not Removed from neededReplications queue</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4867">HDFS-4867</a>.
+     Major bug reported by Kihwal Lee and fixed by Plamen Jeliazkov (namenode)<br>
+     <b>metaSave NPEs when there are invalid blocks in repl queue.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4862">HDFS-4862</a>.
+     Major bug reported by Ravi Prakash and fixed by Ravi Prakash <br>
+     <b>SafeModeInfo.isManual() returns true when resources are low even if it wasn't entered into manually</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4832">HDFS-4832</a>.
+     Critical bug reported by Ravi Prakash and fixed by Ravi Prakash <br>
+     <b>Namenode doesn't change the number of missing blocks in safemode when DNs rejoin or leave</b><br>
+     <blockquote>This change makes name node keep its internal replication queues and data node state updated in manual safe mode. This allows metrics and UI to present up-to-date information while in safe mode. The behavior during start-up safe mode is unchanged. </blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4765">HDFS-4765</a>.
+     Major bug reported by Andrew Wang and fixed by Andrew Wang (namenode)<br>
+     <b>Permission check of symlink deletion incorrectly throws UnresolvedLinkException</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4205">HDFS-4205</a>.
+     Major bug reported by Andy Isaacson and fixed by Jason Lowe (hdfs-client)<br>
+     <b>fsck fails with symlinks</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9582">HADOOP-9582</a>.
+     Major bug reported by Ashwin Shankar and fixed by Ashwin Shankar (conf)<br>
+     <b>Non-existent file to "hadoop fs -conf" doesn't throw error</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9581">HADOOP-9581</a>.
+     Major bug reported by Ashwin Shankar and fixed by Ashwin Shankar (scripts)<br>
+     <b>hadoop --config non-existent directory should result in error </b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>

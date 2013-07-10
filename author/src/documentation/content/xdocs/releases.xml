@@ -41,6 +41,16 @@
       <title>News</title>
 
       <section>
+        <title>8 July, 2013: Release 0.23.9 available </title>
+        <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.9/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.9 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>6 June, 2013: Release 2.0.5-alpha available </title>
         <p>     This release delivers a number of critical bug-fixes for 
                 hadoop-2.x uncovered during integration testing of previous
