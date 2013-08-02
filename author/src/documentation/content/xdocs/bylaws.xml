@@ -76,6 +76,13 @@
         commit access from the PMC. Such reinstatement is subject to
         consensus approval of active PMC members.</p>
 
+        <p>Significant, pervasive features are often developed in a speculative
+        branch of the repository. The PMC may grant commit rights on the
+        branch to its consistent contributors, while the initiative is active.
+        Branch committers are responsible for shepherding their feature into
+        an active release and do not cast binding votes or vetoes in the
+        project.</p>
+
         <p>All Apache committers are required to have a signed Contributor
         License Agreement (CLA) on file with the Apache Software
         Foundation. There is a <a
@@ -220,6 +227,9 @@
              Consensus approval requires 3 binding +1 votes
              and no binding vetoes.</li>
 
+        <li> <strong>Lazy Consensus -</strong>
+             Lazy consensus requires no -1 votes ('silence gives assent').</li>
+
         <li> <strong>Lazy Majority - </strong>
              A lazy majority vote requires 3 binding +1
              votes and more binding +1 votes than -1 votes.</li>
@@ -279,6 +289,12 @@
 
             <p>Lazy 2/3 majority of PMC members</p></li>
 
+         <li> <strong>New Branch Committer</strong>
+
+            <p>When a branch committer is proposed for the PMC</p>
+
+            <p>Lazy consensus of active PMC members</p></li>
+
          <li> <strong>New Committer</strong>
 
             <p>When a new committer is proposed for the project</p>
@@ -290,6 +306,13 @@
             <p>When a committer is proposed for the PMC</p>
 
             <p>Consensus approval of active PMC members</p></li>
+
+         <li> <strong>Branch Committer Removal</strong>
+
+            <p>When removal of commit privileges is sought <strong>or</strong>
+               when the branch is merged to the mainline</p>
+
+            <p>Lazy 2/3 majority of active PMC members</p></li>
 
          <li> <strong>Committer Removal</strong>
 
