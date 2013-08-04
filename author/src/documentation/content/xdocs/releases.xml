@@ -15,10 +15,9 @@
       <title>Download</title>
 
       <ul>
-        <li><strong>1.1.X - </strong> current stable version, 1.1 release</li>
-        <li><strong>1.2.X - </strong> current beta version, 1.2 release</li>
+        <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
         <li><strong>2.X.X - </strong> current alpha version</li>
-        <li><strong>0.23.X - </strong> simmilar to 2.X.X but missing NN HA.</li>
+        <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
         <li><strong>0.22.X - </strong> does not include security</li>
         <li><strong>0.20.203.X - </strong> old legacy stable version</li>
         <li><strong>0.20.X - </strong> old legacy version</li>
@@ -39,6 +38,16 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>1 Aug, 2013: Release 1.2.1 (stable) available </title>
+        <p>     A point release for the 1.2 line. This release is now considered stable.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r1.2.1/releasenotes.html">
+                Hadoop 1.2.1 Release Notes</a> for the list of 18 bug fixes and patches since the previous release 1.2.0.
+        </p>
+      </section>
 
       <section>
         <title>8 July, 2013: Release 0.23.9 available </title>
