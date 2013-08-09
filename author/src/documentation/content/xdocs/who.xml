@@ -287,6 +287,14 @@
 	  <td>HBase</td>
 	  <td>-8</td>
 	</tr>
+
+	<tr>
+	  <td>stevel</td>
+	  <td>Steve Loughran</td>
+	  <td>Hortonworks</td>
+	  <td></td>
+	  <td>0</td>
+	</tr>
 	
    	<tr>
 	  <td>suresh</td>
@@ -803,6 +811,14 @@
          <td></td>
          <td>-8</td>
        </tr>
+
+     	<tr>
+     	  <td>stevel</td>
+     	  <td>Steve Loughran</td>
+     	  <td>Hortonworks</td>
+     	  <td></td>
+     	  <td>0</td>
+     	</tr>
 
        <tr>
          <td>suresh</td>
