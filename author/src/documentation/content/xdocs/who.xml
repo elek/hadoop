@@ -435,7 +435,15 @@
          <td></td>
          <td>+5.5</td>
        </tr>
-       
+
+       <tr>
+         <td>arp</td>
+         <td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
        <tr>
          <td>arpit</td>
          <td><a href="http://people.apache.org/~arpit">Arpit Gupta</a></td>
