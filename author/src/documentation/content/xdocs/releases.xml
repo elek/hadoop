@@ -38,6 +38,17 @@
 
     <section>
       <title>News</title>
+       <section>
+        <title>23 August, 2013: Release 2.0.6-alpha available </title>
+        <p>     This release delivers a number of critical bug-fixes for
+                hadoop-2.x uncovered during integration testing of previous
+                release.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.0.6-alpha/hadoop-project-dist/hadoop-co++++mmon/releasenotes.html">
+                Hadoop 2.0.6-alpha Release Notes</a> for details.
+        </p>
+      </section>
 
       <section>
         <title>1 Aug, 2013: Release 1.2.1 (stable) available </title>
