@@ -45,7 +45,7 @@
                 release.
         </p>
         <p>     Please see the <a 
-                href="http://hadoop.apache.org/docs/r2.0.6-alpha/hadoop-project-dist/hadoop-co++++mmon/releasenotes.html">
+                href="http://hadoop.apache.org/docs/r2.0.6-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
                 Hadoop 2.0.6-alpha Release Notes</a> for details.
         </p>
       </section>
