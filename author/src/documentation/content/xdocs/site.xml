@@ -35,6 +35,7 @@
     <current label="Current" href="ext:docs/current/"/>
     <stable label="Stable" href="ext:docs/stable/"/>
     <r1.2.1 label="Release 1.2.1" href="ext:docs/r1.2.1/"/>
+    <r2.1.0-beta label="Release 2.1.0-beta" href="ext:docs/r2.1.0-beta/"/>
     <r2.0.6-alpha label="Release 2.0.6-alpha" href="ext:docs/r2.0.6-alpha/"/>
     <r0.23.9 label="Release 0.23.9" href="ext:docs/r0.23.9/"/>
   </docs>
@@ -77,6 +78,7 @@
       <r1.1.2 href="r1.1.2/"/>
       <r1.2.0 href="r1.2.0/"/>
       <r1.2.1 href="r1.2.1/"/>
+      <r2.1.0-beta href="r2.1.0-beta/"/>
       <r2.0.6-alpha href="r2.0.6-alpha/"/>
       <r0.23.9 href="r0.23.9/"/>
       <r0.22.0 href="r0.22.0/"/>

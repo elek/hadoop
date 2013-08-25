@@ -16,7 +16,7 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-        <li><strong>2.X.X - </strong> current alpha version</li>
+        <li><strong>2.X.X - </strong> current beta version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
         <li><strong>0.22.X - </strong> does not include security</li>
         <li><strong>0.20.203.X - </strong> old legacy stable version</li>
@@ -38,6 +38,37 @@
 
     <section>
       <title>News</title>
+
+       <section>
+        <title>25 August, 2013: Release 2.1.0-beta available</title>
+        <p>     Apache Hadoop 2.1.0-beta is the <strong>beta</strong> 
+                release of Apache Hadoop 2.x.
+        </p>
+
+        <p>     Users are encouraged to immediately move to 2.1.0-beta since 
+                this release is significantly more stable and has completley 
+                whetted set of APIs and wire-protocols for future compatibility.
+        </p>
+
+        <p>     In addition, this release has a number of other significant 
+                highlights:
+        </p>
+
+        <ul>
+                <li>HDFS Snapshots</li>
+                <li>Support for running Hadoop on Microsoft Windows</li>
+                <li>YARN API stabilization</li>
+                <li>Binary Compatibility for MapReduce applications built on hadoop-1.x</li>
+                <li>Substantial amount of integration testing with rest of projects in the ecosystem
+                </li>
+        </ul>
+        
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.1.0-beta/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.1.0-beta Release Notes</a> for details.
+        </p>
+      </section>
+
        <section>
         <title>23 August, 2013: Release 2.0.6-alpha available </title>
         <p>     This release delivers a number of critical bug-fixes for
