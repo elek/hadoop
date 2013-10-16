@@ -16,11 +16,8 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-        <li><strong>2.X.X - </strong> current beta version</li>
+        <li><strong>2.2.X - </strong> current stable 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
-        <li><strong>0.22.X - </strong> does not include security</li>
-        <li><strong>0.20.203.X - </strong> old legacy stable version</li>
-        <li><strong>0.20.X - </strong> old legacy version</li>
       </ul>
 
       <p>Releases may be downloaded from Apache mirrors.</p>
@@ -39,7 +36,58 @@
     <section>
       <title>News</title>
 
-       <section>
+      <section>
+        <title>15 October, 2013: Release 2.2.0 available</title>
+        <p>     Apache Hadoop 2.2.0 is the <strong>GA</strong> 
+                release of Apache Hadoop 2.x.
+        </p>
+
+        <p>     Users are encouraged to immediately move to 2.2.0 since 
+                this release is significantly more stable and is guaranteed to remain
+                compatible in terms of both APIs and protocols.
+        </p>
+
+        <p>     To recap, this release has a number of significant 
+                highlights compared to Hadoop 1.x:
+        </p>
+
+        <ul>
+                <li>YARN - A general purpose resource management system for Hadoop to allow MapReduce and other other data processing frameworks and services</li>
+                <li>High Availability for HDFS</li>
+                <li>HDFS Federation</li>
+                <li>HDFS Snapshots</li>
+                <li>NFSv3 access to data in HDFS</li>
+                <li>Support for running Hadoop on Microsoft Windows</li>
+                <li>Binary Compatibility for MapReduce applications built on hadoop-1.x</li>
+                <li>Substantial amount of integration testing with rest of projects in the ecosystem</li>
+        </ul>
+        
+        <p>     A couple of important points to note while upgrading to hadoop-2.2.0: 
+        </p>
+
+        <ul>
+                <li>HDFS - The HDFS community decided to push the symlinks feature out to a future 2.3.0 release and is currently disabled.</li> 
+                <li>YARN/MapReduce - Users need to change ShuffleHandler service name from mapreduce.shuffle to mapreduce_shuffle.</li>
+        </ul>
+
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.2.0 Release Notes</a> for details.
+        </p>
+      </section>
+
+      <section>
+        <title>23 September, 2013: Release 2.1.1-beta available</title>
+        <p>     Apache Hadoop 2.1.1-beta is a bug-fix version of the beta
+                release of Apache Hadoop 2.x.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.1.1-beta/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.1.1-beta Release Notes</a> for details.
+        </p>
+      </section>
+
+      <section>
         <title>25 August, 2013: Release 2.1.0-beta available</title>
         <p>     Apache Hadoop 2.1.0-beta is the <strong>beta</strong> 
                 release of Apache Hadoop 2.x.

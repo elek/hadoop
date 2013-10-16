@@ -125,7 +125,24 @@
     <section>
     <title>News</title>
 
-     
+      <section>
+        <title>15 October, 2013: release 2.2.0 available </title>
+        <p>     Apache Hadoop 2.x reaches GA milestone! 
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>25 August, 2013: release 2.1.0-beta available </title>
+        <p>     Apache Hadoop 2.x reaches beta milestone! 
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
       <section>
         <title>27 December, 2011: release 1.0.0 available </title>
         <p>     Hadoop reaches 1.0.0!
