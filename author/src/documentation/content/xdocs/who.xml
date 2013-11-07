@@ -933,6 +933,14 @@
        </tr>
 
        <tr>
+         <td>cmccabe</td>
+         <td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
+         <td>Cloudera</td>
+         <td>HDFS</td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
          <td>zshao</td>
          <td><a href="http://people.apache.org/~zshao">Zheng Shao</a></td>
          <td>Facebook</td>
