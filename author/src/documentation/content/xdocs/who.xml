@@ -509,6 +509,14 @@
        </tr>
 
        <tr>
+         <td>cmccabe</td>
+         <td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
+         <td>Cloudera</td>
+         <td>HDFS</td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
          <td>cnauroth</td>
          <td>Chris Nauroth</td>
          <td>Hortonworks</td>
@@ -678,7 +686,7 @@
 
        <tr>
          <td>kasha</td>
-         <td><a href="http://kambatla.github.io/index.html">Karthik Kambatla</a></td>
+         <td><a href="http://people.apache.org/~kasha">Karthik Kambatla</a></td>
          <td>Cloudera</td>
          <td></td>
          <td>-8</td>
@@ -937,14 +945,6 @@
          <td>Andrew Wang</td>
          <td>Cloudera</td>
          <td></td>
-         <td>-8</td>
-       </tr>
-
-       <tr>
-         <td>cmccabe</td>
-         <td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
-         <td>Cloudera</td>
-         <td>HDFS</td>
          <td>-8</td>
        </tr>
 
