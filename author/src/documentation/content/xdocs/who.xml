@@ -200,6 +200,14 @@
         </tr>
 
         <tr>
+          <td>llu</td>
+          <td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
+          <td>VMware</td>
+          <td></td>
+          <td>-8</td>
+        </tr>
+
+        <tr>
           <td>mahadev</td>
           <td>Mahadev Konar</td>
           <td>Hortonworks</td>
@@ -685,6 +693,14 @@
        </tr>
 
        <tr>
+         <td>junping_du</td>
+         <td>Junping Du</td>
+         <td>VMware</td>
+         <td></td>
+         <td>+8</td>
+       </tr>
+
+       <tr>
          <td>kasha</td>
          <td><a href="http://people.apache.org/~kasha">Karthik Kambatla</a></td>
          <td>Cloudera</td>
@@ -727,7 +743,7 @@
        <tr>
          <td>llu</td>
          <td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
-         <td>IBM</td>
+         <td>VMware</td>
          <td></td>
          <td>-8</td>
        </tr>
