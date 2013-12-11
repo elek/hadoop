@@ -37,6 +37,16 @@
       <title>News</title>
 
       <section>
+        <title>11 December, 2013: Release 0.23.10 available </title>
+        <p>     A point release for the 0.23.X line. Bug fixes to continue stabilization.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r0.23.10/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 0.23.10 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>15 October, 2013: Release 2.2.0 available</title>
         <p>     Apache Hadoop 2.2.0 is the <strong>GA</strong> 
                 release of Apache Hadoop 2.x.
