@@ -781,6 +781,14 @@
        </tr>
 
        <tr>
+         <td>mayank</td>
+         <td><a href="http://people.apache.org/~mayank">Mayank Bansal</a></td>
+         <td>ebay</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+       
+	   <tr>
          <td>molkov</td>
          <td><a href="http://people.apache.org/~molkov">Dmytro Molkov</a></td>
          <td>Facebook</td>
@@ -1004,14 +1012,6 @@
          <td>-8</td>
        </tr>
 		
-       <tr>
-         <td>mayank</td>
-         <td><a href="http://people.apache.org/~mayank">Mayank Bansal</a></td>
-         <td>ebay</td>
-         <td></td>
-         <td>-8</td>
-       </tr>
-
      </table>
    </section>
 
