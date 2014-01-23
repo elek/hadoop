@@ -84,7 +84,12 @@
       
       <li><a href="ext:pig"><strong>Pig&trade;</strong></a>: 
       A high-level data-flow language and execution framework for parallel computation.</li>
-      
+
+      <li><a href="ext:spark"><strong>Spark&trade;</strong></a>:
+      A fast and general compute engine for Hadoop data. Spark provides a simple and
+      expressive programming model that supports a wide range of applications,
+      including ETL, machine learning, stream processing, and graph computation.</li>
+
       <li><a href="ext:zookeeper"><strong>ZooKeeper&trade;</strong></a>: 
       A high-performance coordination service for distributed applications. </li>
 
