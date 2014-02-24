@@ -17,6 +17,7 @@
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
         <li><strong>2.2.X - </strong> current stable 2.x version</li>
+        <li><strong>2.3.X - </strong> current 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
@@ -35,6 +36,24 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>20 February, 2014: Release 2.3.0 available </title>
+        <p>     Apache Hadoop 2.3.0 contains a number of significant 
+                enhancements such as:
+        </p>
+
+        <ul>
+          <li>Support for Heterogeneous Storage hierarchy in HDFS.</li>
+          <li>In-memory cache for HDFS data with centralized administration and management.</li>   
+          <li>Simplified distribution of MapReduce binaries via HDFS in YARN Distributed Cache.</li>
+        </ul>
+
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.3.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.3.0 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
         <title>11 December, 2013: Release 0.23.10 available </title>
