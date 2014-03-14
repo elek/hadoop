@@ -25,10 +25,11 @@
     <who         label="Who We Are?"   href="who.html" />    
     <poweredby label="Who Uses Hadoop?" href="ext:poweredby" />
     <store        label="Buy Stuff"         href="ext:store" />    
-    <sponsor    label="Sponsor Apache" href="ext:sponsor" />    
-    <thanks      label="Sponsors of Apache" href="ext:thanks" />    
+    <sponsor    label="Sponsorship" href="ext:sponsor" />
+    <thanks      label="Thanks" href="ext:thanks" />
     <privacy      label="Privacy Policy" href="privacy_policy.html" />    
     <bylaws       label="Bylaws" href="bylaws.html"/>
+    <license label="License" href="ext:license" />
   </project>
 
   <docs label="Documentation"> 
@@ -73,6 +74,7 @@
     <store     href="http://www.cafepress.com/hadoop/" />
     <sponsor href="http://www.apache.org/foundation/sponsorship.html" />
     <thanks   href="http://www.apache.org/foundation/thanks.html" />
+    <license href="http://www.apache.org/licenses/" />
 
     <docs href="http://hadoop.apache.org/docs/">
       <current href="current/"/>
