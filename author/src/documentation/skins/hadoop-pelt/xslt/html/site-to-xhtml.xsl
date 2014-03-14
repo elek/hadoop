@@ -350,9 +350,10 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
                   <xsl:value-of select="$config/vendor"/>
                 </xsl:otherwise>
               </xsl:choose><br/>
-              Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
-              Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
-              Software Foundation.
+              Apache Hadoop, Hadoop, Apache, the Apache feather logo, and the Apache
+              Hadoop project logo are either registered trademarks or trademarks of
+              the Apache Software Foundation in the United States and other
+              countries.
             </div>
           </xsl:if>
           <xsl:if test="$filename = 'index.html'">

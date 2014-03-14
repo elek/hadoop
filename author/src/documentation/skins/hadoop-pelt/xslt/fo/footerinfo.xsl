@@ -39,9 +39,10 @@ with @role='pdf' is present, that is used instead.  Eg:
 <xsl:text>Copyright &#169; </xsl:text>
         <xsl:value-of select="//skinconfig/year"/>&#160;<xsl:value-of
           select="//skinconfig/vendor"/>
-<xsl:text>    Apache Hadoop, Hadoop, HDFS, Avro, Cassandra, Chukwa, HBase, 
-              Hive, Mahout, Pig, Zookeeper are trademarks of the Apache 
-              Software Foundation.
+<xsl:text>    Apache Hadoop, Hadoop, Apache, the Apache feather logo, and the Apache
+              Hadoop project logo are either registered trademarks or trademarks of
+              the Apache Software Foundation in the United States and other
+              countries.
 </xsl:text>
       </xsl:if>
     </xsl:variable>
