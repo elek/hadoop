@@ -90,6 +90,14 @@
       expressive programming model that supports a wide range of applications,
       including ETL, machine learning, stream processing, and graph computation.</li>
 
+      <li><a href="ext:tez"><strong>Tez&trade;</strong></a>:
+      A generalized data-flow programming framework, built on Hadoop YARN, 
+      which provides a powerful and flexible engine to execute an arbitrary 
+      DAG of tasks to process data for both batch and interactive use-cases. 
+      Tez is being adopted by Hive&trade;, Pig&trade; and other frameworks in 
+      the Hadoop ecosystem, and also by other commercial software (e.g. ETL tools), 
+      to replace Hadoop&trade; MapReduce as the underlying execution engine.</li> 
+
       <li><a href="ext:zookeeper"><strong>ZooKeeper&trade;</strong></a>: 
       A high-performance coordination service for distributed applications. </li>
 
