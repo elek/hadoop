@@ -38,6 +38,28 @@
       <title>News</title>
 
       <section>
+        <title>07 April, 2014: Release 2.4.0 available </title>
+        <p>     Apache Hadoop 2.4.0 contains a number of significant 
+                enhancements such as:
+        </p>
+
+        <ul>
+          <li>Support for Access Control Lists in HDFS</li>
+          <li>Native support for Rolling Upgrades in HDFS</li>
+          <li>Usage of protocol-buffers for HDFS FSImage for smooth operational upgrades</li>
+          <li>Complete HTTPS support in HDFS</li>
+          <li>Support for Automatic Failover of the YARN ResourceManager</li>
+          <li>Enhanced support for new applications on YARN with Application History Server and Application Timeline Server</li>
+          <li>Support for strong SLAs in YARN CapacityScheduler via Preemption</li>
+        </ul>
+
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.4.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.4.0 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>20 February, 2014: Release 2.3.0 available </title>
         <p>     Apache Hadoop 2.3.0 contains a number of significant 
                 enhancements such as:
