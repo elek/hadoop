@@ -16,8 +16,10 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-        <li><strong>2.2.X - </strong> current stable 2.x version</li>
+        <li><strong>2.4.X - </strong> current stable 2.x version</li>
+        <!--
         <li><strong>2.3.X - </strong> current 2.x version</li>
+        -->
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
@@ -36,6 +38,26 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>30 June, 2014: Release 2.4.1 available </title>
+        <p>     Apache Hadoop 2.4.1 is a bug-fix release for the stable 2.4.x
+                line.
+        </p>
+        <p>     There is also a security bug fix in this minor release.
+                <ul>
+                  <li>CVE-2014-0229: Add privilege checks to HDFS admin 
+                    sub-commands refreshNamenodes, deleteBlockPool and 
+                    shutdownDatanode.</li>
+                </ul>
+        </p>
+        <p>     Users are encouraged to immediately move to 2.4.1.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.4.1 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
         <title>07 April, 2014: Release 2.4.0 available </title>
