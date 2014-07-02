@@ -63,6 +63,14 @@
 	  <td>+5.5</td>
 	</tr>
 
+    <tr>
+        <td>arp</td>
+        <td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
+        <td>Hortonworks</td>
+        <td></td>
+        <td>-8</td>
+    </tr>
+
   <tr>
     <td>atm</td>
     <td><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
@@ -79,12 +87,36 @@
          <td>-6</td>
        </tr>
 
+       <tr>
+         <td>brandonli</td>
+         <td>Brandon Li</td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
   <tr>
     <td>cdouglas</td>
     <td><a href="http://people.apache.org/~cdouglas">Chris Douglas</a></td>
     <td>Microsoft</td>
     <td></td>
     <td>-8</td>
+  </tr>
+
+  <tr>
+      <td>cmccabe</td>
+      <td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
+      <td>Cloudera</td>
+      <td>HDFS</td>
+      <td>-8</td>
+  </tr>
+
+  <tr>
+      <td>cnauroth</td>
+      <td>Chris Nauroth</td>
+      <td>Hortonworks</td>
+      <td></td>
+      <td>-8</td>
   </tr>
 
 	<tr>
@@ -174,6 +206,14 @@
 	  <td></td>
 	  <td>-8</td>
 	</tr>
+
+       <tr>
+         <td>jing9</td>
+         <td>Jing Zhao</td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
 
 	<tr>
 	  <td>jitendra</td>
@@ -271,7 +311,14 @@
 	  <td>-8</td>
 	</tr>
 
-    
+    <tr>
+        <td>sandy</td>
+        <td><a href="http://people.apache.org/~sandy">Sandy Ryza</a></td>
+        <td>Cloudera</td>
+        <td></td>
+        <td>-8</td>
+    </tr>
+
    	<tr>
 	  <td>sradia</td>
 	  <td><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
@@ -375,6 +422,14 @@
 	  <td></td>
 	  <td>+5.5</td>
 	</tr>
+
+       <tr>
+         <td>wang</td>
+         <td>Andrew Wang</td>
+         <td>Cloudera</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
 
 	<tr>
 	  <td>zshao</td>
