@@ -63,13 +63,13 @@
 	  <td>+5.5</td>
 	</tr>
 
-    <tr>
-        <td>arp</td>
-        <td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
-        <td>Hortonworks</td>
-        <td></td>
-        <td>-8</td>
-    </tr>
+  <tr>
+    <td>arp</td>
+    <td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
+    <td>Hortonworks</td>
+    <td></td>
+    <td>-8</td>
+  </tr>
 
   <tr>
     <td>atm</td>
@@ -79,21 +79,29 @@
     <td>-8</td>
   </tr>
 
-       <tr>
-         <td>bobby</td>
-         <td>Robert(Bobby) Evans</td>
-         <td>Yahoo!</td>
-         <td></td>
-         <td>-6</td>
-       </tr>
+  <tr>
+    <td>bikas</td>
+    <td>Bikas Saha</td>
+    <td>Hortonworks</td>
+    <td></td>
+    <td>-8</td>
+  </tr>
 
-       <tr>
-         <td>brandonli</td>
-         <td>Brandon Li</td>
-         <td>Hortonworks</td>
-         <td></td>
-         <td>-8</td>
-       </tr>
+  <tr>
+    <td>bobby</td>
+    <td>Robert(Bobby) Evans</td>
+    <td>Yahoo!</td>
+    <td></td>
+    <td>-6</td>
+  </tr>
+
+  <tr>
+    <td>brandonli</td>
+    <td>Brandon Li</td>
+    <td>Hortonworks</td>
+    <td></td>
+    <td>-8</td>
+  </tr>
 
   <tr>
     <td>cdouglas</td>
