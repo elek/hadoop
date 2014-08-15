@@ -1,0 +1,876 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    package org.apache.hadoop.hdfs;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    import java.io.BufferedOutputStream;<a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.DataInputStream;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.DataOutputStream;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.io.FileInputStream;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.io.IOException;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.net.InetSocketAddress;<a name="line.25"></a>
+<FONT color="green">026</FONT>    <a name="line.26"></a>
+<FONT color="green">027</FONT>    import org.apache.commons.lang.mutable.MutableBoolean;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import org.apache.commons.logging.Log;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import org.apache.hadoop.hdfs.net.DomainPeer;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.hadoop.hdfs.net.Peer;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.hadoop.hdfs.protocol.DatanodeInfo;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.hadoop.hdfs.protocol.ExtendedBlock;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.hadoop.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.hadoop.hdfs.protocol.datatransfer.Sender;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.hdfs.protocolPB.PBHelper;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.hdfs.shortcircuit.DomainSocketFactory;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.ShortCircuitReplicaCreator;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo;<a name="line.47"></a>
+<FONT color="green">048</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.Slot;<a name="line.48"></a>
+<FONT color="green">049</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.SlotId;<a name="line.49"></a>
+<FONT color="green">050</FONT>    import org.apache.hadoop.io.IOUtils;<a name="line.50"></a>
+<FONT color="green">051</FONT>    import org.apache.hadoop.ipc.RemoteException;<a name="line.51"></a>
+<FONT color="green">052</FONT>    import org.apache.hadoop.net.unix.DomainSocket;<a name="line.52"></a>
+<FONT color="green">053</FONT>    import org.apache.hadoop.security.AccessControlException;<a name="line.53"></a>
+<FONT color="green">054</FONT>    import org.apache.hadoop.security.UserGroupInformation;<a name="line.54"></a>
+<FONT color="green">055</FONT>    import org.apache.hadoop.security.token.SecretManager.InvalidToken;<a name="line.55"></a>
+<FONT color="green">056</FONT>    import org.apache.hadoop.security.token.Token;<a name="line.56"></a>
+<FONT color="green">057</FONT>    import org.apache.hadoop.util.Time;<a name="line.57"></a>
+<FONT color="green">058</FONT>    <a name="line.58"></a>
+<FONT color="green">059</FONT>    import com.google.common.annotations.VisibleForTesting;<a name="line.59"></a>
+<FONT color="green">060</FONT>    import com.google.common.base.Preconditions;<a name="line.60"></a>
+<FONT color="green">061</FONT>    <a name="line.61"></a>
+<FONT color="green">062</FONT>    <a name="line.62"></a>
+<FONT color="green">063</FONT>    /** <a name="line.63"></a>
+<FONT color="green">064</FONT>     * Utility class to create BlockReader implementations.<a name="line.64"></a>
+<FONT color="green">065</FONT>     */<a name="line.65"></a>
+<FONT color="green">066</FONT>    @InterfaceAudience.Private<a name="line.66"></a>
+<FONT color="green">067</FONT>    public class BlockReaderFactory implements ShortCircuitReplicaCreator {<a name="line.67"></a>
+<FONT color="green">068</FONT>      static final Log LOG = LogFactory.getLog(BlockReaderFactory.class);<a name="line.68"></a>
+<FONT color="green">069</FONT>    <a name="line.69"></a>
+<FONT color="green">070</FONT>      @VisibleForTesting<a name="line.70"></a>
+<FONT color="green">071</FONT>      static ShortCircuitReplicaCreator<a name="line.71"></a>
+<FONT color="green">072</FONT>          createShortCircuitReplicaInfoCallback = null;<a name="line.72"></a>
+<FONT color="green">073</FONT>    <a name="line.73"></a>
+<FONT color="green">074</FONT>      private final DFSClient.Conf conf;<a name="line.74"></a>
+<FONT color="green">075</FONT>    <a name="line.75"></a>
+<FONT color="green">076</FONT>      /**<a name="line.76"></a>
+<FONT color="green">077</FONT>       * The file name, for logging and debugging purposes.<a name="line.77"></a>
+<FONT color="green">078</FONT>       */<a name="line.78"></a>
+<FONT color="green">079</FONT>      private String fileName;<a name="line.79"></a>
+<FONT color="green">080</FONT>    <a name="line.80"></a>
+<FONT color="green">081</FONT>      /**<a name="line.81"></a>
+<FONT color="green">082</FONT>       * The block ID and block pool ID to use.<a name="line.82"></a>
+<FONT color="green">083</FONT>       */<a name="line.83"></a>
+<FONT color="green">084</FONT>      private ExtendedBlock block;<a name="line.84"></a>
+<FONT color="green">085</FONT>    <a name="line.85"></a>
+<FONT color="green">086</FONT>      /**<a name="line.86"></a>
+<FONT color="green">087</FONT>       * The block token to use for security purposes.<a name="line.87"></a>
+<FONT color="green">088</FONT>       */<a name="line.88"></a>
+<FONT color="green">089</FONT>      private Token&lt;BlockTokenIdentifier&gt; token;<a name="line.89"></a>
+<FONT color="green">090</FONT>    <a name="line.90"></a>
+<FONT color="green">091</FONT>      /**<a name="line.91"></a>
+<FONT color="green">092</FONT>       * The offset within the block to start reading at.<a name="line.92"></a>
+<FONT color="green">093</FONT>       */<a name="line.93"></a>
+<FONT color="green">094</FONT>      private long startOffset;<a name="line.94"></a>
+<FONT color="green">095</FONT>    <a name="line.95"></a>
+<FONT color="green">096</FONT>      /**<a name="line.96"></a>
+<FONT color="green">097</FONT>       * If false, we won't try to verify the block checksum.<a name="line.97"></a>
+<FONT color="green">098</FONT>       */<a name="line.98"></a>
+<FONT color="green">099</FONT>      private boolean verifyChecksum;<a name="line.99"></a>
+<FONT color="green">100</FONT>    <a name="line.100"></a>
+<FONT color="green">101</FONT>      /**<a name="line.101"></a>
+<FONT color="green">102</FONT>       * The name of this client.<a name="line.102"></a>
+<FONT color="green">103</FONT>       */<a name="line.103"></a>
+<FONT color="green">104</FONT>      private String clientName; <a name="line.104"></a>
+<FONT color="green">105</FONT>    <a name="line.105"></a>
+<FONT color="green">106</FONT>      /**<a name="line.106"></a>
+<FONT color="green">107</FONT>       * The DataNode we're talking to.<a name="line.107"></a>
+<FONT color="green">108</FONT>       */<a name="line.108"></a>
+<FONT color="green">109</FONT>      private DatanodeInfo datanode;<a name="line.109"></a>
+<FONT color="green">110</FONT>    <a name="line.110"></a>
+<FONT color="green">111</FONT>      /**<a name="line.111"></a>
+<FONT color="green">112</FONT>       * If false, we won't try short-circuit local reads.<a name="line.112"></a>
+<FONT color="green">113</FONT>       */<a name="line.113"></a>
+<FONT color="green">114</FONT>      private boolean allowShortCircuitLocalReads;<a name="line.114"></a>
+<FONT color="green">115</FONT>    <a name="line.115"></a>
+<FONT color="green">116</FONT>      /**<a name="line.116"></a>
+<FONT color="green">117</FONT>       * The ClientContext to use for things like the PeerCache.<a name="line.117"></a>
+<FONT color="green">118</FONT>       */<a name="line.118"></a>
+<FONT color="green">119</FONT>      private ClientContext clientContext;<a name="line.119"></a>
+<FONT color="green">120</FONT>    <a name="line.120"></a>
+<FONT color="green">121</FONT>      /**<a name="line.121"></a>
+<FONT color="green">122</FONT>       * Number of bytes to read.  -1 indicates no limit.<a name="line.122"></a>
+<FONT color="green">123</FONT>       */<a name="line.123"></a>
+<FONT color="green">124</FONT>      private long length = -1;<a name="line.124"></a>
+<FONT color="green">125</FONT>    <a name="line.125"></a>
+<FONT color="green">126</FONT>      /**<a name="line.126"></a>
+<FONT color="green">127</FONT>       * Caching strategy to use when reading the block.<a name="line.127"></a>
+<FONT color="green">128</FONT>       */<a name="line.128"></a>
+<FONT color="green">129</FONT>      private CachingStrategy cachingStrategy;<a name="line.129"></a>
+<FONT color="green">130</FONT>    <a name="line.130"></a>
+<FONT color="green">131</FONT>      /**<a name="line.131"></a>
+<FONT color="green">132</FONT>       * Socket address to use to connect to peer.<a name="line.132"></a>
+<FONT color="green">133</FONT>       */<a name="line.133"></a>
+<FONT color="green">134</FONT>      private InetSocketAddress inetSocketAddress;<a name="line.134"></a>
+<FONT color="green">135</FONT>    <a name="line.135"></a>
+<FONT color="green">136</FONT>      /**<a name="line.136"></a>
+<FONT color="green">137</FONT>       * Remote peer factory to use to create a peer, if needed.<a name="line.137"></a>
+<FONT color="green">138</FONT>       */<a name="line.138"></a>
+<FONT color="green">139</FONT>      private RemotePeerFactory remotePeerFactory;<a name="line.139"></a>
+<FONT color="green">140</FONT>    <a name="line.140"></a>
+<FONT color="green">141</FONT>      /**<a name="line.141"></a>
+<FONT color="green">142</FONT>       * UserGroupInformation  to use for legacy block reader local objects, if needed.<a name="line.142"></a>
+<FONT color="green">143</FONT>       */<a name="line.143"></a>
+<FONT color="green">144</FONT>      private UserGroupInformation userGroupInformation;<a name="line.144"></a>
+<FONT color="green">145</FONT>    <a name="line.145"></a>
+<FONT color="green">146</FONT>      /**<a name="line.146"></a>
+<FONT color="green">147</FONT>       * Configuration to use for legacy block reader local objects, if needed.<a name="line.147"></a>
+<FONT color="green">148</FONT>       */<a name="line.148"></a>
+<FONT color="green">149</FONT>      private Configuration configuration;<a name="line.149"></a>
+<FONT color="green">150</FONT>    <a name="line.150"></a>
+<FONT color="green">151</FONT>      /**<a name="line.151"></a>
+<FONT color="green">152</FONT>       * Information about the domain socket path we should use to connect to the<a name="line.152"></a>
+<FONT color="green">153</FONT>       * local peer-- or null if we haven't examined the local domain socket.<a name="line.153"></a>
+<FONT color="green">154</FONT>       */<a name="line.154"></a>
+<FONT color="green">155</FONT>      private DomainSocketFactory.PathInfo pathInfo;<a name="line.155"></a>
+<FONT color="green">156</FONT>    <a name="line.156"></a>
+<FONT color="green">157</FONT>      /**<a name="line.157"></a>
+<FONT color="green">158</FONT>       * The remaining number of times that we'll try to pull a socket out of the<a name="line.158"></a>
+<FONT color="green">159</FONT>       * cache.<a name="line.159"></a>
+<FONT color="green">160</FONT>       */<a name="line.160"></a>
+<FONT color="green">161</FONT>      private int remainingCacheTries;<a name="line.161"></a>
+<FONT color="green">162</FONT>    <a name="line.162"></a>
+<FONT color="green">163</FONT>      public BlockReaderFactory(DFSClient.Conf conf) {<a name="line.163"></a>
+<FONT color="green">164</FONT>        this.conf = conf;<a name="line.164"></a>
+<FONT color="green">165</FONT>        this.remainingCacheTries = conf.nCachedConnRetry;<a name="line.165"></a>
+<FONT color="green">166</FONT>      }<a name="line.166"></a>
+<FONT color="green">167</FONT>    <a name="line.167"></a>
+<FONT color="green">168</FONT>      public BlockReaderFactory setFileName(String fileName) {<a name="line.168"></a>
+<FONT color="green">169</FONT>        this.fileName = fileName;<a name="line.169"></a>
+<FONT color="green">170</FONT>        return this;<a name="line.170"></a>
+<FONT color="green">171</FONT>      }<a name="line.171"></a>
+<FONT color="green">172</FONT>    <a name="line.172"></a>
+<FONT color="green">173</FONT>      public BlockReaderFactory setBlock(ExtendedBlock block) {<a name="line.173"></a>
+<FONT color="green">174</FONT>        this.block = block;<a name="line.174"></a>
+<FONT color="green">175</FONT>        return this;<a name="line.175"></a>
+<FONT color="green">176</FONT>      }<a name="line.176"></a>
+<FONT color="green">177</FONT>    <a name="line.177"></a>
+<FONT color="green">178</FONT>      public BlockReaderFactory setBlockToken(Token&lt;BlockTokenIdentifier&gt; token) {<a name="line.178"></a>
+<FONT color="green">179</FONT>        this.token = token;<a name="line.179"></a>
+<FONT color="green">180</FONT>        return this;<a name="line.180"></a>
+<FONT color="green">181</FONT>      }<a name="line.181"></a>
+<FONT color="green">182</FONT>    <a name="line.182"></a>
+<FONT color="green">183</FONT>      public BlockReaderFactory setStartOffset(long startOffset) {<a name="line.183"></a>
+<FONT color="green">184</FONT>        this.startOffset = startOffset;<a name="line.184"></a>
+<FONT color="green">185</FONT>        return this;<a name="line.185"></a>
+<FONT color="green">186</FONT>      }<a name="line.186"></a>
+<FONT color="green">187</FONT>    <a name="line.187"></a>
+<FONT color="green">188</FONT>      public BlockReaderFactory setVerifyChecksum(boolean verifyChecksum) {<a name="line.188"></a>
+<FONT color="green">189</FONT>        this.verifyChecksum = verifyChecksum;<a name="line.189"></a>
+<FONT color="green">190</FONT>        return this;<a name="line.190"></a>
+<FONT color="green">191</FONT>      }<a name="line.191"></a>
+<FONT color="green">192</FONT>    <a name="line.192"></a>
+<FONT color="green">193</FONT>      public BlockReaderFactory setClientName(String clientName) {<a name="line.193"></a>
+<FONT color="green">194</FONT>        this.clientName = clientName;<a name="line.194"></a>
+<FONT color="green">195</FONT>        return this;<a name="line.195"></a>
+<FONT color="green">196</FONT>      }<a name="line.196"></a>
+<FONT color="green">197</FONT>    <a name="line.197"></a>
+<FONT color="green">198</FONT>      public BlockReaderFactory setDatanodeInfo(DatanodeInfo datanode) {<a name="line.198"></a>
+<FONT color="green">199</FONT>        this.datanode = datanode;<a name="line.199"></a>
+<FONT color="green">200</FONT>        return this;<a name="line.200"></a>
+<FONT color="green">201</FONT>      }<a name="line.201"></a>
+<FONT color="green">202</FONT>    <a name="line.202"></a>
+<FONT color="green">203</FONT>      public BlockReaderFactory setAllowShortCircuitLocalReads(<a name="line.203"></a>
+<FONT color="green">204</FONT>          boolean allowShortCircuitLocalReads) {<a name="line.204"></a>
+<FONT color="green">205</FONT>        this.allowShortCircuitLocalReads = allowShortCircuitLocalReads;<a name="line.205"></a>
+<FONT color="green">206</FONT>        return this;<a name="line.206"></a>
+<FONT color="green">207</FONT>      }<a name="line.207"></a>
+<FONT color="green">208</FONT>    <a name="line.208"></a>
+<FONT color="green">209</FONT>      public BlockReaderFactory setClientCacheContext(<a name="line.209"></a>
+<FONT color="green">210</FONT>          ClientContext clientContext) {<a name="line.210"></a>
+<FONT color="green">211</FONT>        this.clientContext = clientContext;<a name="line.211"></a>
+<FONT color="green">212</FONT>        return this;<a name="line.212"></a>
+<FONT color="green">213</FONT>      }<a name="line.213"></a>
+<FONT color="green">214</FONT>    <a name="line.214"></a>
+<FONT color="green">215</FONT>      public BlockReaderFactory setLength(long length) {<a name="line.215"></a>
+<FONT color="green">216</FONT>        this.length = length;<a name="line.216"></a>
+<FONT color="green">217</FONT>        return this;<a name="line.217"></a>
+<FONT color="green">218</FONT>      }<a name="line.218"></a>
+<FONT color="green">219</FONT>    <a name="line.219"></a>
+<FONT color="green">220</FONT>      public BlockReaderFactory setCachingStrategy(<a name="line.220"></a>
+<FONT color="green">221</FONT>          CachingStrategy cachingStrategy) {<a name="line.221"></a>
+<FONT color="green">222</FONT>        this.cachingStrategy = cachingStrategy;<a name="line.222"></a>
+<FONT color="green">223</FONT>        return this;<a name="line.223"></a>
+<FONT color="green">224</FONT>      }<a name="line.224"></a>
+<FONT color="green">225</FONT>    <a name="line.225"></a>
+<FONT color="green">226</FONT>      public BlockReaderFactory setInetSocketAddress (<a name="line.226"></a>
+<FONT color="green">227</FONT>          InetSocketAddress inetSocketAddress) {<a name="line.227"></a>
+<FONT color="green">228</FONT>        this.inetSocketAddress = inetSocketAddress;<a name="line.228"></a>
+<FONT color="green">229</FONT>        return this;<a name="line.229"></a>
+<FONT color="green">230</FONT>      }<a name="line.230"></a>
+<FONT color="green">231</FONT>    <a name="line.231"></a>
+<FONT color="green">232</FONT>      public BlockReaderFactory setUserGroupInformation(<a name="line.232"></a>
+<FONT color="green">233</FONT>          UserGroupInformation userGroupInformation) {<a name="line.233"></a>
+<FONT color="green">234</FONT>        this.userGroupInformation = userGroupInformation;<a name="line.234"></a>
+<FONT color="green">235</FONT>        return this;<a name="line.235"></a>
+<FONT color="green">236</FONT>      }<a name="line.236"></a>
+<FONT color="green">237</FONT>    <a name="line.237"></a>
+<FONT color="green">238</FONT>      public BlockReaderFactory setRemotePeerFactory(<a name="line.238"></a>
+<FONT color="green">239</FONT>          RemotePeerFactory remotePeerFactory) {<a name="line.239"></a>
+<FONT color="green">240</FONT>        this.remotePeerFactory = remotePeerFactory;<a name="line.240"></a>
+<FONT color="green">241</FONT>        return this;<a name="line.241"></a>
+<FONT color="green">242</FONT>      }<a name="line.242"></a>
+<FONT color="green">243</FONT>    <a name="line.243"></a>
+<FONT color="green">244</FONT>      public BlockReaderFactory setConfiguration(<a name="line.244"></a>
+<FONT color="green">245</FONT>          Configuration configuration) {<a name="line.245"></a>
+<FONT color="green">246</FONT>        this.configuration = configuration;<a name="line.246"></a>
+<FONT color="green">247</FONT>        return this;<a name="line.247"></a>
+<FONT color="green">248</FONT>      }<a name="line.248"></a>
+<FONT color="green">249</FONT>    <a name="line.249"></a>
+<FONT color="green">250</FONT>      /**<a name="line.250"></a>
+<FONT color="green">251</FONT>       * Build a BlockReader with the given options.<a name="line.251"></a>
+<FONT color="green">252</FONT>       *<a name="line.252"></a>
+<FONT color="green">253</FONT>       * This function will do the best it can to create a block reader that meets<a name="line.253"></a>
+<FONT color="green">254</FONT>       * all of our requirements.  We prefer short-circuit block readers<a name="line.254"></a>
+<FONT color="green">255</FONT>       * (BlockReaderLocal and BlockReaderLocalLegacy) over remote ones, since the<a name="line.255"></a>
+<FONT color="green">256</FONT>       * former avoid the overhead of socket communication.  If short-circuit is<a name="line.256"></a>
+<FONT color="green">257</FONT>       * unavailable, our next fallback is data transfer over UNIX domain sockets,<a name="line.257"></a>
+<FONT color="green">258</FONT>       * if dfs.client.domain.socket.data.traffic has been enabled.  If that doesn't<a name="line.258"></a>
+<FONT color="green">259</FONT>       * work, we will try to create a remote block reader that operates over TCP<a name="line.259"></a>
+<FONT color="green">260</FONT>       * sockets.<a name="line.260"></a>
+<FONT color="green">261</FONT>       *<a name="line.261"></a>
+<FONT color="green">262</FONT>       * There are a few caches that are important here.<a name="line.262"></a>
+<FONT color="green">263</FONT>       *<a name="line.263"></a>
+<FONT color="green">264</FONT>       * The ShortCircuitCache stores file descriptor objects which have been passed<a name="line.264"></a>
+<FONT color="green">265</FONT>       * from the DataNode. <a name="line.265"></a>
+<FONT color="green">266</FONT>       *<a name="line.266"></a>
+<FONT color="green">267</FONT>       * The DomainSocketFactory stores information about UNIX domain socket paths<a name="line.267"></a>
+<FONT color="green">268</FONT>       * that we not been able to use in the past, so that we don't waste time<a name="line.268"></a>
+<FONT color="green">269</FONT>       * retrying them over and over.  (Like all the caches, it does have a timeout,<a name="line.269"></a>
+<FONT color="green">270</FONT>       * though.)<a name="line.270"></a>
+<FONT color="green">271</FONT>       *<a name="line.271"></a>
+<FONT color="green">272</FONT>       * The PeerCache stores peers that we have used in the past.  If we can reuse<a name="line.272"></a>
+<FONT color="green">273</FONT>       * one of these peers, we avoid the overhead of re-opening a socket.  However,<a name="line.273"></a>
+<FONT color="green">274</FONT>       * if the socket has been timed out on the remote end, our attempt to reuse<a name="line.274"></a>
+<FONT color="green">275</FONT>       * the socket may end with an IOException.  For that reason, we limit our<a name="line.275"></a>
+<FONT color="green">276</FONT>       * attempts at socket reuse to dfs.client.cached.conn.retry times.  After<a name="line.276"></a>
+<FONT color="green">277</FONT>       * that, we create new sockets.  This avoids the problem where a thread tries<a name="line.277"></a>
+<FONT color="green">278</FONT>       * to talk to a peer that it hasn't talked to in a while, and has to clean out<a name="line.278"></a>
+<FONT color="green">279</FONT>       * every entry in a socket cache full of stale entries.<a name="line.279"></a>
+<FONT color="green">280</FONT>       *<a name="line.280"></a>
+<FONT color="green">281</FONT>       * @return The new BlockReader.  We will not return null.<a name="line.281"></a>
+<FONT color="green">282</FONT>       *<a name="line.282"></a>
+<FONT color="green">283</FONT>       * @throws InvalidToken<a name="line.283"></a>
+<FONT color="green">284</FONT>       *             If the block token was invalid.<a name="line.284"></a>
+<FONT color="green">285</FONT>       *         InvalidEncryptionKeyException<a name="line.285"></a>
+<FONT color="green">286</FONT>       *             If the encryption key was invalid.<a name="line.286"></a>
+<FONT color="green">287</FONT>       *         Other IOException<a name="line.287"></a>
+<FONT color="green">288</FONT>       *             If there was another problem.<a name="line.288"></a>
+<FONT color="green">289</FONT>       */<a name="line.289"></a>
+<FONT color="green">290</FONT>      public BlockReader build() throws IOException {<a name="line.290"></a>
+<FONT color="green">291</FONT>        BlockReader reader = null;<a name="line.291"></a>
+<FONT color="green">292</FONT>    <a name="line.292"></a>
+<FONT color="green">293</FONT>        Preconditions.checkNotNull(configuration);<a name="line.293"></a>
+<FONT color="green">294</FONT>        if (conf.shortCircuitLocalReads &amp;&amp; allowShortCircuitLocalReads) {<a name="line.294"></a>
+<FONT color="green">295</FONT>          if (clientContext.getUseLegacyBlockReaderLocal()) {<a name="line.295"></a>
+<FONT color="green">296</FONT>            reader = getLegacyBlockReaderLocal();<a name="line.296"></a>
+<FONT color="green">297</FONT>            if (reader != null) {<a name="line.297"></a>
+<FONT color="green">298</FONT>              if (LOG.isTraceEnabled()) {<a name="line.298"></a>
+<FONT color="green">299</FONT>                LOG.trace(this + ": returning new legacy block reader local.");<a name="line.299"></a>
+<FONT color="green">300</FONT>              }<a name="line.300"></a>
+<FONT color="green">301</FONT>              return reader;<a name="line.301"></a>
+<FONT color="green">302</FONT>            }<a name="line.302"></a>
+<FONT color="green">303</FONT>          } else {<a name="line.303"></a>
+<FONT color="green">304</FONT>            reader = getBlockReaderLocal();<a name="line.304"></a>
+<FONT color="green">305</FONT>            if (reader != null) {<a name="line.305"></a>
+<FONT color="green">306</FONT>              if (LOG.isTraceEnabled()) {<a name="line.306"></a>
+<FONT color="green">307</FONT>                LOG.trace(this + ": returning new block reader local.");<a name="line.307"></a>
+<FONT color="green">308</FONT>              }<a name="line.308"></a>
+<FONT color="green">309</FONT>              return reader;<a name="line.309"></a>
+<FONT color="green">310</FONT>            }<a name="line.310"></a>
+<FONT color="green">311</FONT>          }<a name="line.311"></a>
+<FONT color="green">312</FONT>        }<a name="line.312"></a>
+<FONT color="green">313</FONT>        if (conf.domainSocketDataTraffic) {<a name="line.313"></a>
+<FONT color="green">314</FONT>          reader = getRemoteBlockReaderFromDomain();<a name="line.314"></a>
+<FONT color="green">315</FONT>          if (reader != null) {<a name="line.315"></a>
+<FONT color="green">316</FONT>            if (LOG.isTraceEnabled()) {<a name="line.316"></a>
+<FONT color="green">317</FONT>              LOG.trace(this + ": returning new remote block reader using " +<a name="line.317"></a>
+<FONT color="green">318</FONT>                  "UNIX domain socket on " + pathInfo.getPath());<a name="line.318"></a>
+<FONT color="green">319</FONT>            }<a name="line.319"></a>
+<FONT color="green">320</FONT>            return reader;<a name="line.320"></a>
+<FONT color="green">321</FONT>          }<a name="line.321"></a>
+<FONT color="green">322</FONT>        }<a name="line.322"></a>
+<FONT color="green">323</FONT>        Preconditions.checkState(!DFSInputStream.tcpReadsDisabledForTesting,<a name="line.323"></a>
+<FONT color="green">324</FONT>            "TCP reads were disabled for testing, but we failed to " +<a name="line.324"></a>
+<FONT color="green">325</FONT>            "do a non-TCP read.");<a name="line.325"></a>
+<FONT color="green">326</FONT>        return getRemoteBlockReaderFromTcp();<a name="line.326"></a>
+<FONT color="green">327</FONT>      }<a name="line.327"></a>
+<FONT color="green">328</FONT>    <a name="line.328"></a>
+<FONT color="green">329</FONT>      /**<a name="line.329"></a>
+<FONT color="green">330</FONT>       * Get {@link BlockReaderLocalLegacy} for short circuited local reads.<a name="line.330"></a>
+<FONT color="green">331</FONT>       * This block reader implements the path-based style of local reads<a name="line.331"></a>
+<FONT color="green">332</FONT>       * first introduced in HDFS-2246.<a name="line.332"></a>
+<FONT color="green">333</FONT>       */<a name="line.333"></a>
+<FONT color="green">334</FONT>      private BlockReader getLegacyBlockReaderLocal() throws IOException {<a name="line.334"></a>
+<FONT color="green">335</FONT>        if (LOG.isTraceEnabled()) {<a name="line.335"></a>
+<FONT color="green">336</FONT>          LOG.trace(this + ": trying to construct BlockReaderLocalLegacy");<a name="line.336"></a>
+<FONT color="green">337</FONT>        }<a name="line.337"></a>
+<FONT color="green">338</FONT>        if (!DFSClient.isLocalAddress(inetSocketAddress)) {<a name="line.338"></a>
+<FONT color="green">339</FONT>          if (LOG.isTraceEnabled()) {<a name="line.339"></a>
+<FONT color="green">340</FONT>            LOG.trace(this + ": can't construct BlockReaderLocalLegacy because " +<a name="line.340"></a>
+<FONT color="green">341</FONT>                "the address " + inetSocketAddress + " is not local");<a name="line.341"></a>
+<FONT color="green">342</FONT>          }<a name="line.342"></a>
+<FONT color="green">343</FONT>          return null;<a name="line.343"></a>
+<FONT color="green">344</FONT>        }<a name="line.344"></a>
+<FONT color="green">345</FONT>        if (clientContext.getDisableLegacyBlockReaderLocal()) {<a name="line.345"></a>
+<FONT color="green">346</FONT>          if (LOG.isTraceEnabled()) {<a name="line.346"></a>
+<FONT color="green">347</FONT>            LOG.trace(this + ": can't construct BlockReaderLocalLegacy because " +<a name="line.347"></a>
+<FONT color="green">348</FONT>                "disableLegacyBlockReaderLocal is set.");<a name="line.348"></a>
+<FONT color="green">349</FONT>          }<a name="line.349"></a>
+<FONT color="green">350</FONT>          return null;<a name="line.350"></a>
+<FONT color="green">351</FONT>        }<a name="line.351"></a>
+<FONT color="green">352</FONT>        IOException ioe = null;<a name="line.352"></a>
+<FONT color="green">353</FONT>        try {<a name="line.353"></a>
+<FONT color="green">354</FONT>          return BlockReaderLocalLegacy.newBlockReader(conf,<a name="line.354"></a>
+<FONT color="green">355</FONT>              userGroupInformation, configuration, fileName, block, token,<a name="line.355"></a>
+<FONT color="green">356</FONT>              datanode, startOffset, length);<a name="line.356"></a>
+<FONT color="green">357</FONT>        } catch (RemoteException remoteException) {<a name="line.357"></a>
+<FONT color="green">358</FONT>          ioe = remoteException.unwrapRemoteException(<a name="line.358"></a>
+<FONT color="green">359</FONT>                    InvalidToken.class, AccessControlException.class);<a name="line.359"></a>
+<FONT color="green">360</FONT>        } catch (IOException e) {<a name="line.360"></a>
+<FONT color="green">361</FONT>          ioe = e;<a name="line.361"></a>
+<FONT color="green">362</FONT>        }<a name="line.362"></a>
+<FONT color="green">363</FONT>        if ((!(ioe instanceof AccessControlException)) &amp;&amp;<a name="line.363"></a>
+<FONT color="green">364</FONT>            isSecurityException(ioe)) {<a name="line.364"></a>
+<FONT color="green">365</FONT>          // Handle security exceptions.<a name="line.365"></a>
+<FONT color="green">366</FONT>          // We do not handle AccessControlException here, since<a name="line.366"></a>
+<FONT color="green">367</FONT>          // BlockReaderLocalLegacy#newBlockReader uses that exception to indicate<a name="line.367"></a>
+<FONT color="green">368</FONT>          // that the user is not in dfs.block.local-path-access.user, a condition<a name="line.368"></a>
+<FONT color="green">369</FONT>          // which requires us to disable legacy SCR.<a name="line.369"></a>
+<FONT color="green">370</FONT>          throw ioe;<a name="line.370"></a>
+<FONT color="green">371</FONT>        }<a name="line.371"></a>
+<FONT color="green">372</FONT>        LOG.warn(this + ": error creating legacy BlockReaderLocal.  " +<a name="line.372"></a>
+<FONT color="green">373</FONT>            "Disabling legacy local reads.", ioe);<a name="line.373"></a>
+<FONT color="green">374</FONT>        clientContext.setDisableLegacyBlockReaderLocal();<a name="line.374"></a>
+<FONT color="green">375</FONT>        return null;<a name="line.375"></a>
+<FONT color="green">376</FONT>      }<a name="line.376"></a>
+<FONT color="green">377</FONT>    <a name="line.377"></a>
+<FONT color="green">378</FONT>      private BlockReader getBlockReaderLocal() throws InvalidToken {<a name="line.378"></a>
+<FONT color="green">379</FONT>        if (LOG.isTraceEnabled()) {<a name="line.379"></a>
+<FONT color="green">380</FONT>          LOG.trace(this + ": trying to construct a BlockReaderLocal " +<a name="line.380"></a>
+<FONT color="green">381</FONT>              "for short-circuit reads.");<a name="line.381"></a>
+<FONT color="green">382</FONT>        }<a name="line.382"></a>
+<FONT color="green">383</FONT>        if (pathInfo == null) {<a name="line.383"></a>
+<FONT color="green">384</FONT>          pathInfo = clientContext.getDomainSocketFactory().<a name="line.384"></a>
+<FONT color="green">385</FONT>                          getPathInfo(inetSocketAddress, conf);<a name="line.385"></a>
+<FONT color="green">386</FONT>        }<a name="line.386"></a>
+<FONT color="green">387</FONT>        if (!pathInfo.getPathState().getUsableForShortCircuit()) {<a name="line.387"></a>
+<FONT color="green">388</FONT>          if (LOG.isTraceEnabled()) {<a name="line.388"></a>
+<FONT color="green">389</FONT>            LOG.trace(this + ": " + pathInfo + " is not " +<a name="line.389"></a>
+<FONT color="green">390</FONT>                "usable for short circuit; giving up on BlockReaderLocal.");<a name="line.390"></a>
+<FONT color="green">391</FONT>          }<a name="line.391"></a>
+<FONT color="green">392</FONT>          return null;<a name="line.392"></a>
+<FONT color="green">393</FONT>        }<a name="line.393"></a>
+<FONT color="green">394</FONT>        ShortCircuitCache cache = clientContext.getShortCircuitCache();<a name="line.394"></a>
+<FONT color="green">395</FONT>        ExtendedBlockId key = new ExtendedBlockId(block.getBlockId(), block.getBlockPoolId());<a name="line.395"></a>
+<FONT color="green">396</FONT>        ShortCircuitReplicaInfo info = cache.fetchOrCreate(key, this);<a name="line.396"></a>
+<FONT color="green">397</FONT>        InvalidToken exc = info.getInvalidTokenException();<a name="line.397"></a>
+<FONT color="green">398</FONT>        if (exc != null) {<a name="line.398"></a>
+<FONT color="green">399</FONT>          if (LOG.isTraceEnabled()) {<a name="line.399"></a>
+<FONT color="green">400</FONT>            LOG.trace(this + ": got InvalidToken exception while trying to " +<a name="line.400"></a>
+<FONT color="green">401</FONT>                "construct BlockReaderLocal via " + pathInfo.getPath());<a name="line.401"></a>
+<FONT color="green">402</FONT>          }<a name="line.402"></a>
+<FONT color="green">403</FONT>          throw exc;<a name="line.403"></a>
+<FONT color="green">404</FONT>        }<a name="line.404"></a>
+<FONT color="green">405</FONT>        if (info.getReplica() == null) {<a name="line.405"></a>
+<FONT color="green">406</FONT>          if (LOG.isTraceEnabled()) {<a name="line.406"></a>
+<FONT color="green">407</FONT>            LOG.trace(this + ": failed to get ShortCircuitReplica.  " +<a name="line.407"></a>
+<FONT color="green">408</FONT>                "Cannot construct BlockReaderLocal via " + pathInfo.getPath());<a name="line.408"></a>
+<FONT color="green">409</FONT>          }<a name="line.409"></a>
+<FONT color="green">410</FONT>          return null;<a name="line.410"></a>
+<FONT color="green">411</FONT>        }<a name="line.411"></a>
+<FONT color="green">412</FONT>        return new BlockReaderLocal.Builder(conf).<a name="line.412"></a>
+<FONT color="green">413</FONT>            setFilename(fileName).<a name="line.413"></a>
+<FONT color="green">414</FONT>            setBlock(block).<a name="line.414"></a>
+<FONT color="green">415</FONT>            setStartOffset(startOffset).<a name="line.415"></a>
+<FONT color="green">416</FONT>            setShortCircuitReplica(info.getReplica()).<a name="line.416"></a>
+<FONT color="green">417</FONT>            setVerifyChecksum(verifyChecksum).<a name="line.417"></a>
+<FONT color="green">418</FONT>            setCachingStrategy(cachingStrategy).<a name="line.418"></a>
+<FONT color="green">419</FONT>            build();<a name="line.419"></a>
+<FONT color="green">420</FONT>      }<a name="line.420"></a>
+<FONT color="green">421</FONT>    <a name="line.421"></a>
+<FONT color="green">422</FONT>      /**<a name="line.422"></a>
+<FONT color="green">423</FONT>       * Fetch a pair of short-circuit block descriptors from a local DataNode.<a name="line.423"></a>
+<FONT color="green">424</FONT>       *<a name="line.424"></a>
+<FONT color="green">425</FONT>       * @return    Null if we could not communicate with the datanode,<a name="line.425"></a>
+<FONT color="green">426</FONT>       *            a new ShortCircuitReplicaInfo object otherwise.<a name="line.426"></a>
+<FONT color="green">427</FONT>       *            ShortCircuitReplicaInfo objects may contain either an InvalidToken<a name="line.427"></a>
+<FONT color="green">428</FONT>       *            exception, or a ShortCircuitReplica object ready to use.<a name="line.428"></a>
+<FONT color="green">429</FONT>       */<a name="line.429"></a>
+<FONT color="green">430</FONT>      @Override<a name="line.430"></a>
+<FONT color="green">431</FONT>      public ShortCircuitReplicaInfo createShortCircuitReplicaInfo() {<a name="line.431"></a>
+<FONT color="green">432</FONT>        if (createShortCircuitReplicaInfoCallback != null) {<a name="line.432"></a>
+<FONT color="green">433</FONT>          ShortCircuitReplicaInfo info =<a name="line.433"></a>
+<FONT color="green">434</FONT>            createShortCircuitReplicaInfoCallback.createShortCircuitReplicaInfo();<a name="line.434"></a>
+<FONT color="green">435</FONT>          if (info != null) return info;<a name="line.435"></a>
+<FONT color="green">436</FONT>        }<a name="line.436"></a>
+<FONT color="green">437</FONT>        if (LOG.isTraceEnabled()) {<a name="line.437"></a>
+<FONT color="green">438</FONT>          LOG.trace(this + ": trying to create ShortCircuitReplicaInfo.");<a name="line.438"></a>
+<FONT color="green">439</FONT>        }<a name="line.439"></a>
+<FONT color="green">440</FONT>        BlockReaderPeer curPeer;<a name="line.440"></a>
+<FONT color="green">441</FONT>        while (true) {<a name="line.441"></a>
+<FONT color="green">442</FONT>          curPeer = nextDomainPeer();<a name="line.442"></a>
+<FONT color="green">443</FONT>          if (curPeer == null) break;<a name="line.443"></a>
+<FONT color="green">444</FONT>          if (curPeer.fromCache) remainingCacheTries--;<a name="line.444"></a>
+<FONT color="green">445</FONT>          DomainPeer peer = (DomainPeer)curPeer.peer;<a name="line.445"></a>
+<FONT color="green">446</FONT>          Slot slot = null;<a name="line.446"></a>
+<FONT color="green">447</FONT>          ShortCircuitCache cache = clientContext.getShortCircuitCache();<a name="line.447"></a>
+<FONT color="green">448</FONT>          try {<a name="line.448"></a>
+<FONT color="green">449</FONT>            MutableBoolean usedPeer = new MutableBoolean(false);<a name="line.449"></a>
+<FONT color="green">450</FONT>            slot = cache.allocShmSlot(datanode, peer, usedPeer,<a name="line.450"></a>
+<FONT color="green">451</FONT>                new ExtendedBlockId(block.getBlockId(), block.getBlockPoolId()),<a name="line.451"></a>
+<FONT color="green">452</FONT>                clientName);<a name="line.452"></a>
+<FONT color="green">453</FONT>            if (usedPeer.booleanValue()) {<a name="line.453"></a>
+<FONT color="green">454</FONT>              if (LOG.isTraceEnabled()) {<a name="line.454"></a>
+<FONT color="green">455</FONT>                LOG.trace(this + ": allocShmSlot used up our previous socket " +<a name="line.455"></a>
+<FONT color="green">456</FONT>                  peer.getDomainSocket() + ".  Allocating a new one...");<a name="line.456"></a>
+<FONT color="green">457</FONT>              }<a name="line.457"></a>
+<FONT color="green">458</FONT>              curPeer = nextDomainPeer();<a name="line.458"></a>
+<FONT color="green">459</FONT>              if (curPeer == null) break;<a name="line.459"></a>
+<FONT color="green">460</FONT>              peer = (DomainPeer)curPeer.peer;<a name="line.460"></a>
+<FONT color="green">461</FONT>            }<a name="line.461"></a>
+<FONT color="green">462</FONT>            ShortCircuitReplicaInfo info = requestFileDescriptors(peer, slot);<a name="line.462"></a>
+<FONT color="green">463</FONT>            clientContext.getPeerCache().put(datanode, peer);<a name="line.463"></a>
+<FONT color="green">464</FONT>            return info;<a name="line.464"></a>
+<FONT color="green">465</FONT>          } catch (IOException e) {<a name="line.465"></a>
+<FONT color="green">466</FONT>            if (slot != null) {<a name="line.466"></a>
+<FONT color="green">467</FONT>              cache.freeSlot(slot);<a name="line.467"></a>
+<FONT color="green">468</FONT>            }<a name="line.468"></a>
+<FONT color="green">469</FONT>            if (curPeer.fromCache) {<a name="line.469"></a>
+<FONT color="green">470</FONT>              // Handle an I/O error we got when using a cached socket.<a name="line.470"></a>
+<FONT color="green">471</FONT>              // These are considered less serious, because the socket may be stale.<a name="line.471"></a>
+<FONT color="green">472</FONT>              if (LOG.isDebugEnabled()) {<a name="line.472"></a>
+<FONT color="green">473</FONT>                LOG.debug(this + ": closing stale domain peer " + peer, e);<a name="line.473"></a>
+<FONT color="green">474</FONT>              }<a name="line.474"></a>
+<FONT color="green">475</FONT>              IOUtils.cleanup(LOG, peer);<a name="line.475"></a>
+<FONT color="green">476</FONT>            } else {<a name="line.476"></a>
+<FONT color="green">477</FONT>              // Handle an I/O error we got when using a newly created socket.<a name="line.477"></a>
+<FONT color="green">478</FONT>              // We temporarily disable the domain socket path for a few minutes in<a name="line.478"></a>
+<FONT color="green">479</FONT>              // this case, to prevent wasting more time on it.<a name="line.479"></a>
+<FONT color="green">480</FONT>              LOG.warn(this + ": I/O error requesting file descriptors.  " + <a name="line.480"></a>
+<FONT color="green">481</FONT>                  "Disabling domain socket " + peer.getDomainSocket(), e);<a name="line.481"></a>
+<FONT color="green">482</FONT>              IOUtils.cleanup(LOG, peer);<a name="line.482"></a>
+<FONT color="green">483</FONT>              clientContext.getDomainSocketFactory()<a name="line.483"></a>
+<FONT color="green">484</FONT>                  .disableDomainSocketPath(pathInfo.getPath());<a name="line.484"></a>
+<FONT color="green">485</FONT>              return null;<a name="line.485"></a>
+<FONT color="green">486</FONT>            }<a name="line.486"></a>
+<FONT color="green">487</FONT>          }<a name="line.487"></a>
+<FONT color="green">488</FONT>        }<a name="line.488"></a>
+<FONT color="green">489</FONT>        return null;<a name="line.489"></a>
+<FONT color="green">490</FONT>      }<a name="line.490"></a>
+<FONT color="green">491</FONT>    <a name="line.491"></a>
+<FONT color="green">492</FONT>      /**<a name="line.492"></a>
+<FONT color="green">493</FONT>       * Request file descriptors from a DomainPeer.<a name="line.493"></a>
+<FONT color="green">494</FONT>       *<a name="line.494"></a>
+<FONT color="green">495</FONT>       * @param peer   The peer to use for communication.<a name="line.495"></a>
+<FONT color="green">496</FONT>       * @param slot   If non-null, the shared memory slot to associate with the <a name="line.496"></a>
+<FONT color="green">497</FONT>       *               new ShortCircuitReplica.<a name="line.497"></a>
+<FONT color="green">498</FONT>       * <a name="line.498"></a>
+<FONT color="green">499</FONT>       * @return  A ShortCircuitReplica object if we could communicate with the<a name="line.499"></a>
+<FONT color="green">500</FONT>       *          datanode; null, otherwise. <a name="line.500"></a>
+<FONT color="green">501</FONT>       * @throws  IOException If we encountered an I/O exception while communicating<a name="line.501"></a>
+<FONT color="green">502</FONT>       *          with the datanode.<a name="line.502"></a>
+<FONT color="green">503</FONT>       */<a name="line.503"></a>
+<FONT color="green">504</FONT>      private ShortCircuitReplicaInfo requestFileDescriptors(DomainPeer peer,<a name="line.504"></a>
+<FONT color="green">505</FONT>              Slot slot) throws IOException {<a name="line.505"></a>
+<FONT color="green">506</FONT>        ShortCircuitCache cache = clientContext.getShortCircuitCache();<a name="line.506"></a>
+<FONT color="green">507</FONT>        final DataOutputStream out =<a name="line.507"></a>
+<FONT color="green">508</FONT>            new DataOutputStream(new BufferedOutputStream(peer.getOutputStream()));<a name="line.508"></a>
+<FONT color="green">509</FONT>        SlotId slotId = slot == null ? null : slot.getSlotId();<a name="line.509"></a>
+<FONT color="green">510</FONT>        new Sender(out).requestShortCircuitFds(block, token, slotId, 1);<a name="line.510"></a>
+<FONT color="green">511</FONT>        DataInputStream in = new DataInputStream(peer.getInputStream());<a name="line.511"></a>
+<FONT color="green">512</FONT>        BlockOpResponseProto resp = BlockOpResponseProto.parseFrom(<a name="line.512"></a>
+<FONT color="green">513</FONT>            PBHelper.vintPrefixed(in));<a name="line.513"></a>
+<FONT color="green">514</FONT>        DomainSocket sock = peer.getDomainSocket();<a name="line.514"></a>
+<FONT color="green">515</FONT>        switch (resp.getStatus()) {<a name="line.515"></a>
+<FONT color="green">516</FONT>        case SUCCESS:<a name="line.516"></a>
+<FONT color="green">517</FONT>          byte buf[] = new byte[1];<a name="line.517"></a>
+<FONT color="green">518</FONT>          FileInputStream fis[] = new FileInputStream[2];<a name="line.518"></a>
+<FONT color="green">519</FONT>          sock.recvFileInputStreams(fis, buf, 0, buf.length);<a name="line.519"></a>
+<FONT color="green">520</FONT>          ShortCircuitReplica replica = null;<a name="line.520"></a>
+<FONT color="green">521</FONT>          try {<a name="line.521"></a>
+<FONT color="green">522</FONT>            ExtendedBlockId key =<a name="line.522"></a>
+<FONT color="green">523</FONT>                new ExtendedBlockId(block.getBlockId(), block.getBlockPoolId());<a name="line.523"></a>
+<FONT color="green">524</FONT>            replica = new ShortCircuitReplica(key, fis[0], fis[1], cache,<a name="line.524"></a>
+<FONT color="green">525</FONT>                Time.monotonicNow(), slot);<a name="line.525"></a>
+<FONT color="green">526</FONT>          } catch (IOException e) {<a name="line.526"></a>
+<FONT color="green">527</FONT>            // This indicates an error reading from disk, or a format error.  Since<a name="line.527"></a>
+<FONT color="green">528</FONT>            // it's not a socket communication problem, we return null rather than<a name="line.528"></a>
+<FONT color="green">529</FONT>            // throwing an exception.<a name="line.529"></a>
+<FONT color="green">530</FONT>            LOG.warn(this + ": error creating ShortCircuitReplica.", e);<a name="line.530"></a>
+<FONT color="green">531</FONT>            return null;<a name="line.531"></a>
+<FONT color="green">532</FONT>          } finally {<a name="line.532"></a>
+<FONT color="green">533</FONT>            if (replica == null) {<a name="line.533"></a>
+<FONT color="green">534</FONT>              IOUtils.cleanup(DFSClient.LOG, fis[0], fis[1]);<a name="line.534"></a>
+<FONT color="green">535</FONT>            }<a name="line.535"></a>
+<FONT color="green">536</FONT>          }<a name="line.536"></a>
+<FONT color="green">537</FONT>          return new ShortCircuitReplicaInfo(replica);<a name="line.537"></a>
+<FONT color="green">538</FONT>        case ERROR_UNSUPPORTED:<a name="line.538"></a>
+<FONT color="green">539</FONT>          if (!resp.hasShortCircuitAccessVersion()) {<a name="line.539"></a>
+<FONT color="green">540</FONT>            LOG.warn("short-circuit read access is disabled for " +<a name="line.540"></a>
+<FONT color="green">541</FONT>                "DataNode " + datanode + ".  reason: " + resp.getMessage());<a name="line.541"></a>
+<FONT color="green">542</FONT>            clientContext.getDomainSocketFactory()<a name="line.542"></a>
+<FONT color="green">543</FONT>                .disableShortCircuitForPath(pathInfo.getPath());<a name="line.543"></a>
+<FONT color="green">544</FONT>          } else {<a name="line.544"></a>
+<FONT color="green">545</FONT>            LOG.warn("short-circuit read access for the file " +<a name="line.545"></a>
+<FONT color="green">546</FONT>                fileName + " is disabled for DataNode " + datanode +<a name="line.546"></a>
+<FONT color="green">547</FONT>                ".  reason: " + resp.getMessage());<a name="line.547"></a>
+<FONT color="green">548</FONT>          }<a name="line.548"></a>
+<FONT color="green">549</FONT>          return null;<a name="line.549"></a>
+<FONT color="green">550</FONT>        case ERROR_ACCESS_TOKEN:<a name="line.550"></a>
+<FONT color="green">551</FONT>          String msg = "access control error while " +<a name="line.551"></a>
+<FONT color="green">552</FONT>              "attempting to set up short-circuit access to " +<a name="line.552"></a>
+<FONT color="green">553</FONT>              fileName + resp.getMessage();<a name="line.553"></a>
+<FONT color="green">554</FONT>          if (LOG.isDebugEnabled()) {<a name="line.554"></a>
+<FONT color="green">555</FONT>            LOG.debug(this + ":" + msg);<a name="line.555"></a>
+<FONT color="green">556</FONT>          }<a name="line.556"></a>
+<FONT color="green">557</FONT>          return new ShortCircuitReplicaInfo(new InvalidToken(msg));<a name="line.557"></a>
+<FONT color="green">558</FONT>        default:<a name="line.558"></a>
+<FONT color="green">559</FONT>          LOG.warn(this + ": unknown response code " + resp.getStatus() +<a name="line.559"></a>
+<FONT color="green">560</FONT>              " while attempting to set up short-circuit access. " +<a name="line.560"></a>
+<FONT color="green">561</FONT>              resp.getMessage());<a name="line.561"></a>
+<FONT color="green">562</FONT>          clientContext.getDomainSocketFactory()<a name="line.562"></a>
+<FONT color="green">563</FONT>              .disableShortCircuitForPath(pathInfo.getPath());<a name="line.563"></a>
+<FONT color="green">564</FONT>          return null;<a name="line.564"></a>
+<FONT color="green">565</FONT>        }<a name="line.565"></a>
+<FONT color="green">566</FONT>      }<a name="line.566"></a>
+<FONT color="green">567</FONT>    <a name="line.567"></a>
+<FONT color="green">568</FONT>      /**<a name="line.568"></a>
+<FONT color="green">569</FONT>       * Get a RemoteBlockReader that communicates over a UNIX domain socket.<a name="line.569"></a>
+<FONT color="green">570</FONT>       *<a name="line.570"></a>
+<FONT color="green">571</FONT>       * @return The new BlockReader, or null if we failed to create the block<a name="line.571"></a>
+<FONT color="green">572</FONT>       * reader.<a name="line.572"></a>
+<FONT color="green">573</FONT>       *<a name="line.573"></a>
+<FONT color="green">574</FONT>       * @throws InvalidToken    If the block token was invalid.<a name="line.574"></a>
+<FONT color="green">575</FONT>       * Potentially other security-related execptions.<a name="line.575"></a>
+<FONT color="green">576</FONT>       */<a name="line.576"></a>
+<FONT color="green">577</FONT>      private BlockReader getRemoteBlockReaderFromDomain() throws IOException {<a name="line.577"></a>
+<FONT color="green">578</FONT>        if (pathInfo == null) {<a name="line.578"></a>
+<FONT color="green">579</FONT>          pathInfo = clientContext.getDomainSocketFactory().<a name="line.579"></a>
+<FONT color="green">580</FONT>                          getPathInfo(inetSocketAddress, conf);<a name="line.580"></a>
+<FONT color="green">581</FONT>        }<a name="line.581"></a>
+<FONT color="green">582</FONT>        if (!pathInfo.getPathState().getUsableForDataTransfer()) {<a name="line.582"></a>
+<FONT color="green">583</FONT>          if (LOG.isTraceEnabled()) {<a name="line.583"></a>
+<FONT color="green">584</FONT>            LOG.trace(this + ": not trying to create a remote block reader " +<a name="line.584"></a>
+<FONT color="green">585</FONT>                "because the UNIX domain socket at " + pathInfo +<a name="line.585"></a>
+<FONT color="green">586</FONT>                " is not usable.");<a name="line.586"></a>
+<FONT color="green">587</FONT>          }<a name="line.587"></a>
+<FONT color="green">588</FONT>          return null;<a name="line.588"></a>
+<FONT color="green">589</FONT>        }<a name="line.589"></a>
+<FONT color="green">590</FONT>        if (LOG.isTraceEnabled()) {<a name="line.590"></a>
+<FONT color="green">591</FONT>          LOG.trace(this + ": trying to create a remote block reader from the " +<a name="line.591"></a>
+<FONT color="green">592</FONT>              "UNIX domain socket at " + pathInfo.getPath());<a name="line.592"></a>
+<FONT color="green">593</FONT>        }<a name="line.593"></a>
+<FONT color="green">594</FONT>    <a name="line.594"></a>
+<FONT color="green">595</FONT>        while (true) {<a name="line.595"></a>
+<FONT color="green">596</FONT>          BlockReaderPeer curPeer = nextDomainPeer();<a name="line.596"></a>
+<FONT color="green">597</FONT>          if (curPeer == null) break;<a name="line.597"></a>
+<FONT color="green">598</FONT>          if (curPeer.fromCache) remainingCacheTries--;<a name="line.598"></a>
+<FONT color="green">599</FONT>          DomainPeer peer = (DomainPeer)curPeer.peer;<a name="line.599"></a>
+<FONT color="green">600</FONT>          BlockReader blockReader = null;<a name="line.600"></a>
+<FONT color="green">601</FONT>          try {<a name="line.601"></a>
+<FONT color="green">602</FONT>            blockReader = getRemoteBlockReader(peer);<a name="line.602"></a>
+<FONT color="green">603</FONT>            return blockReader;<a name="line.603"></a>
+<FONT color="green">604</FONT>          } catch (IOException ioe) {<a name="line.604"></a>
+<FONT color="green">605</FONT>            IOUtils.cleanup(LOG, peer);<a name="line.605"></a>
+<FONT color="green">606</FONT>            if (isSecurityException(ioe)) {<a name="line.606"></a>
+<FONT color="green">607</FONT>              if (LOG.isTraceEnabled()) {<a name="line.607"></a>
+<FONT color="green">608</FONT>                LOG.trace(this + ": got security exception while constructing " +<a name="line.608"></a>
+<FONT color="green">609</FONT>                    "a remote block reader from the unix domain socket at " +<a name="line.609"></a>
+<FONT color="green">610</FONT>                    pathInfo.getPath(), ioe);<a name="line.610"></a>
+<FONT color="green">611</FONT>              }<a name="line.611"></a>
+<FONT color="green">612</FONT>              throw ioe;<a name="line.612"></a>
+<FONT color="green">613</FONT>            }<a name="line.613"></a>
+<FONT color="green">614</FONT>            if (curPeer.fromCache) {<a name="line.614"></a>
+<FONT color="green">615</FONT>              // Handle an I/O error we got when using a cached peer.  These are<a name="line.615"></a>
+<FONT color="green">616</FONT>              // considered less serious, because the underlying socket may be stale.<a name="line.616"></a>
+<FONT color="green">617</FONT>              if (LOG.isDebugEnabled()) {<a name="line.617"></a>
+<FONT color="green">618</FONT>                LOG.debug("Closed potentially stale domain peer " + peer, ioe);<a name="line.618"></a>
+<FONT color="green">619</FONT>              }<a name="line.619"></a>
+<FONT color="green">620</FONT>            } else {<a name="line.620"></a>
+<FONT color="green">621</FONT>              // Handle an I/O error we got when using a newly created domain peer.<a name="line.621"></a>
+<FONT color="green">622</FONT>              // We temporarily disable the domain socket path for a few minutes in<a name="line.622"></a>
+<FONT color="green">623</FONT>              // this case, to prevent wasting more time on it.<a name="line.623"></a>
+<FONT color="green">624</FONT>              LOG.warn("I/O error constructing remote block reader.  Disabling " +<a name="line.624"></a>
+<FONT color="green">625</FONT>                  "domain socket " + peer.getDomainSocket(), ioe);<a name="line.625"></a>
+<FONT color="green">626</FONT>              clientContext.getDomainSocketFactory()<a name="line.626"></a>
+<FONT color="green">627</FONT>                  .disableDomainSocketPath(pathInfo.getPath());<a name="line.627"></a>
+<FONT color="green">628</FONT>              return null;<a name="line.628"></a>
+<FONT color="green">629</FONT>            }<a name="line.629"></a>
+<FONT color="green">630</FONT>          } finally {<a name="line.630"></a>
+<FONT color="green">631</FONT>            if (blockReader == null) {<a name="line.631"></a>
+<FONT color="green">632</FONT>              IOUtils.cleanup(LOG, peer);<a name="line.632"></a>
+<FONT color="green">633</FONT>            }<a name="line.633"></a>
+<FONT color="green">634</FONT>          }<a name="line.634"></a>
+<FONT color="green">635</FONT>        }<a name="line.635"></a>
+<FONT color="green">636</FONT>        return null;<a name="line.636"></a>
+<FONT color="green">637</FONT>      }<a name="line.637"></a>
+<FONT color="green">638</FONT>    <a name="line.638"></a>
+<FONT color="green">639</FONT>      /**<a name="line.639"></a>
+<FONT color="green">640</FONT>       * Get a RemoteBlockReader that communicates over a TCP socket.<a name="line.640"></a>
+<FONT color="green">641</FONT>       *<a name="line.641"></a>
+<FONT color="green">642</FONT>       * @return The new BlockReader.  We will not return null, but instead throw<a name="line.642"></a>
+<FONT color="green">643</FONT>       *         an exception if this fails.<a name="line.643"></a>
+<FONT color="green">644</FONT>       *<a name="line.644"></a>
+<FONT color="green">645</FONT>       * @throws InvalidToken<a name="line.645"></a>
+<FONT color="green">646</FONT>       *             If the block token was invalid.<a name="line.646"></a>
+<FONT color="green">647</FONT>       *         InvalidEncryptionKeyException<a name="line.647"></a>
+<FONT color="green">648</FONT>       *             If the encryption key was invalid.<a name="line.648"></a>
+<FONT color="green">649</FONT>       *         Other IOException<a name="line.649"></a>
+<FONT color="green">650</FONT>       *             If there was another problem.<a name="line.650"></a>
+<FONT color="green">651</FONT>       */<a name="line.651"></a>
+<FONT color="green">652</FONT>      private BlockReader getRemoteBlockReaderFromTcp() throws IOException {<a name="line.652"></a>
+<FONT color="green">653</FONT>        if (LOG.isTraceEnabled()) {<a name="line.653"></a>
+<FONT color="green">654</FONT>          LOG.trace(this + ": trying to create a remote block reader from a " +<a name="line.654"></a>
+<FONT color="green">655</FONT>              "TCP socket");<a name="line.655"></a>
+<FONT color="green">656</FONT>        }<a name="line.656"></a>
+<FONT color="green">657</FONT>        BlockReader blockReader = null;<a name="line.657"></a>
+<FONT color="green">658</FONT>        while (true) {<a name="line.658"></a>
+<FONT color="green">659</FONT>          BlockReaderPeer curPeer = null;<a name="line.659"></a>
+<FONT color="green">660</FONT>          Peer peer = null;<a name="line.660"></a>
+<FONT color="green">661</FONT>          try {<a name="line.661"></a>
+<FONT color="green">662</FONT>            curPeer = nextTcpPeer();<a name="line.662"></a>
+<FONT color="green">663</FONT>            if (curPeer == null) break;<a name="line.663"></a>
+<FONT color="green">664</FONT>            if (curPeer.fromCache) remainingCacheTries--;<a name="line.664"></a>
+<FONT color="green">665</FONT>            peer = curPeer.peer;<a name="line.665"></a>
+<FONT color="green">666</FONT>            blockReader = getRemoteBlockReader(peer);<a name="line.666"></a>
+<FONT color="green">667</FONT>            return blockReader;<a name="line.667"></a>
+<FONT color="green">668</FONT>          } catch (IOException ioe) {<a name="line.668"></a>
+<FONT color="green">669</FONT>            if (isSecurityException(ioe)) {<a name="line.669"></a>
+<FONT color="green">670</FONT>              if (LOG.isTraceEnabled()) {<a name="line.670"></a>
+<FONT color="green">671</FONT>                LOG.trace(this + ": got security exception while constructing " +<a name="line.671"></a>
+<FONT color="green">672</FONT>                    "a remote block reader from " + peer, ioe);<a name="line.672"></a>
+<FONT color="green">673</FONT>              }<a name="line.673"></a>
+<FONT color="green">674</FONT>              throw ioe;<a name="line.674"></a>
+<FONT color="green">675</FONT>            }<a name="line.675"></a>
+<FONT color="green">676</FONT>            if ((curPeer != null) &amp;&amp; curPeer.fromCache) {<a name="line.676"></a>
+<FONT color="green">677</FONT>              // Handle an I/O error we got when using a cached peer.  These are<a name="line.677"></a>
+<FONT color="green">678</FONT>              // considered less serious, because the underlying socket may be<a name="line.678"></a>
+<FONT color="green">679</FONT>              // stale.<a name="line.679"></a>
+<FONT color="green">680</FONT>              if (LOG.isDebugEnabled()) {<a name="line.680"></a>
+<FONT color="green">681</FONT>                LOG.debug("Closed potentially stale remote peer " + peer, ioe);<a name="line.681"></a>
+<FONT color="green">682</FONT>              }<a name="line.682"></a>
+<FONT color="green">683</FONT>            } else {<a name="line.683"></a>
+<FONT color="green">684</FONT>              // Handle an I/O error we got when using a newly created peer.<a name="line.684"></a>
+<FONT color="green">685</FONT>              LOG.warn("I/O error constructing remote block reader.", ioe);<a name="line.685"></a>
+<FONT color="green">686</FONT>              throw ioe;<a name="line.686"></a>
+<FONT color="green">687</FONT>            }<a name="line.687"></a>
+<FONT color="green">688</FONT>          } finally {<a name="line.688"></a>
+<FONT color="green">689</FONT>            if (blockReader == null) {<a name="line.689"></a>
+<FONT color="green">690</FONT>              IOUtils.cleanup(LOG, peer);<a name="line.690"></a>
+<FONT color="green">691</FONT>            }<a name="line.691"></a>
+<FONT color="green">692</FONT>          }<a name="line.692"></a>
+<FONT color="green">693</FONT>        }<a name="line.693"></a>
+<FONT color="green">694</FONT>        return null;<a name="line.694"></a>
+<FONT color="green">695</FONT>      }<a name="line.695"></a>
+<FONT color="green">696</FONT>    <a name="line.696"></a>
+<FONT color="green">697</FONT>      public static class BlockReaderPeer {<a name="line.697"></a>
+<FONT color="green">698</FONT>        final Peer peer;<a name="line.698"></a>
+<FONT color="green">699</FONT>        final boolean fromCache;<a name="line.699"></a>
+<FONT color="green">700</FONT>        <a name="line.700"></a>
+<FONT color="green">701</FONT>        BlockReaderPeer(Peer peer, boolean fromCache) {<a name="line.701"></a>
+<FONT color="green">702</FONT>          this.peer = peer;<a name="line.702"></a>
+<FONT color="green">703</FONT>          this.fromCache = fromCache;<a name="line.703"></a>
+<FONT color="green">704</FONT>        }<a name="line.704"></a>
+<FONT color="green">705</FONT>      }<a name="line.705"></a>
+<FONT color="green">706</FONT>    <a name="line.706"></a>
+<FONT color="green">707</FONT>      /**<a name="line.707"></a>
+<FONT color="green">708</FONT>       * Get the next DomainPeer-- either from the cache or by creating it.<a name="line.708"></a>
+<FONT color="green">709</FONT>       *<a name="line.709"></a>
+<FONT color="green">710</FONT>       * @return the next DomainPeer, or null if we could not construct one.<a name="line.710"></a>
+<FONT color="green">711</FONT>       */<a name="line.711"></a>
+<FONT color="green">712</FONT>      private BlockReaderPeer nextDomainPeer() {<a name="line.712"></a>
+<FONT color="green">713</FONT>        if (remainingCacheTries &gt; 0) {<a name="line.713"></a>
+<FONT color="green">714</FONT>          Peer peer = clientContext.getPeerCache().get(datanode, true);<a name="line.714"></a>
+<FONT color="green">715</FONT>          if (peer != null) {<a name="line.715"></a>
+<FONT color="green">716</FONT>            if (LOG.isTraceEnabled()) {<a name="line.716"></a>
+<FONT color="green">717</FONT>              LOG.trace("nextDomainPeer: reusing existing peer " + peer);<a name="line.717"></a>
+<FONT color="green">718</FONT>            }<a name="line.718"></a>
+<FONT color="green">719</FONT>            return new BlockReaderPeer(peer, true);<a name="line.719"></a>
+<FONT color="green">720</FONT>          }<a name="line.720"></a>
+<FONT color="green">721</FONT>        }<a name="line.721"></a>
+<FONT color="green">722</FONT>        DomainSocket sock = clientContext.getDomainSocketFactory().<a name="line.722"></a>
+<FONT color="green">723</FONT>            createSocket(pathInfo, conf.socketTimeout);<a name="line.723"></a>
+<FONT color="green">724</FONT>        if (sock == null) return null;<a name="line.724"></a>
+<FONT color="green">725</FONT>        return new BlockReaderPeer(new DomainPeer(sock), false);<a name="line.725"></a>
+<FONT color="green">726</FONT>      }<a name="line.726"></a>
+<FONT color="green">727</FONT>    <a name="line.727"></a>
+<FONT color="green">728</FONT>      /**<a name="line.728"></a>
+<FONT color="green">729</FONT>       * Get the next TCP-based peer-- either from the cache or by creating it.<a name="line.729"></a>
+<FONT color="green">730</FONT>       *<a name="line.730"></a>
+<FONT color="green">731</FONT>       * @return the next Peer, or null if we could not construct one.<a name="line.731"></a>
+<FONT color="green">732</FONT>       *<a name="line.732"></a>
+<FONT color="green">733</FONT>       * @throws IOException  If there was an error while constructing the peer<a name="line.733"></a>
+<FONT color="green">734</FONT>       *                      (such as an InvalidEncryptionKeyException)<a name="line.734"></a>
+<FONT color="green">735</FONT>       */<a name="line.735"></a>
+<FONT color="green">736</FONT>      private BlockReaderPeer nextTcpPeer() throws IOException {<a name="line.736"></a>
+<FONT color="green">737</FONT>        if (remainingCacheTries &gt; 0) {<a name="line.737"></a>
+<FONT color="green">738</FONT>          Peer peer = clientContext.getPeerCache().get(datanode, false);<a name="line.738"></a>
+<FONT color="green">739</FONT>          if (peer != null) {<a name="line.739"></a>
+<FONT color="green">740</FONT>            if (LOG.isTraceEnabled()) {<a name="line.740"></a>
+<FONT color="green">741</FONT>              LOG.trace("nextTcpPeer: reusing existing peer " + peer);<a name="line.741"></a>
+<FONT color="green">742</FONT>            }<a name="line.742"></a>
+<FONT color="green">743</FONT>            return new BlockReaderPeer(peer, true);<a name="line.743"></a>
+<FONT color="green">744</FONT>          }<a name="line.744"></a>
+<FONT color="green">745</FONT>        }<a name="line.745"></a>
+<FONT color="green">746</FONT>        try {<a name="line.746"></a>
+<FONT color="green">747</FONT>          Peer peer = remotePeerFactory.newConnectedPeer(inetSocketAddress);<a name="line.747"></a>
+<FONT color="green">748</FONT>          if (LOG.isTraceEnabled()) {<a name="line.748"></a>
+<FONT color="green">749</FONT>            LOG.trace("nextTcpPeer: created newConnectedPeer " + peer);<a name="line.749"></a>
+<FONT color="green">750</FONT>          }<a name="line.750"></a>
+<FONT color="green">751</FONT>          return new BlockReaderPeer(peer, false);<a name="line.751"></a>
+<FONT color="green">752</FONT>        } catch (IOException e) {<a name="line.752"></a>
+<FONT color="green">753</FONT>          if (LOG.isTraceEnabled()) {<a name="line.753"></a>
+<FONT color="green">754</FONT>            LOG.trace("nextTcpPeer: failed to create newConnectedPeer " +<a name="line.754"></a>
+<FONT color="green">755</FONT>                      "connected to " + datanode);<a name="line.755"></a>
+<FONT color="green">756</FONT>          }<a name="line.756"></a>
+<FONT color="green">757</FONT>          throw e;<a name="line.757"></a>
+<FONT color="green">758</FONT>        }<a name="line.758"></a>
+<FONT color="green">759</FONT>      }<a name="line.759"></a>
+<FONT color="green">760</FONT>    <a name="line.760"></a>
+<FONT color="green">761</FONT>      /**<a name="line.761"></a>
+<FONT color="green">762</FONT>       * Determine if an exception is security-related.<a name="line.762"></a>
+<FONT color="green">763</FONT>       *<a name="line.763"></a>
+<FONT color="green">764</FONT>       * We need to handle these exceptions differently than other IOExceptions.<a name="line.764"></a>
+<FONT color="green">765</FONT>       * They don't indicate a communication problem.  Instead, they mean that there<a name="line.765"></a>
+<FONT color="green">766</FONT>       * is some action the client needs to take, such as refetching block tokens,<a name="line.766"></a>
+<FONT color="green">767</FONT>       * renewing encryption keys, etc.<a name="line.767"></a>
+<FONT color="green">768</FONT>       *<a name="line.768"></a>
+<FONT color="green">769</FONT>       * @param ioe    The exception<a name="line.769"></a>
+<FONT color="green">770</FONT>       * @return       True only if the exception is security-related.<a name="line.770"></a>
+<FONT color="green">771</FONT>       */<a name="line.771"></a>
+<FONT color="green">772</FONT>      private static boolean isSecurityException(IOException ioe) {<a name="line.772"></a>
+<FONT color="green">773</FONT>        return (ioe instanceof InvalidToken) ||<a name="line.773"></a>
+<FONT color="green">774</FONT>                (ioe instanceof InvalidEncryptionKeyException) ||<a name="line.774"></a>
+<FONT color="green">775</FONT>                (ioe instanceof InvalidBlockTokenException) ||<a name="line.775"></a>
+<FONT color="green">776</FONT>                (ioe instanceof AccessControlException);<a name="line.776"></a>
+<FONT color="green">777</FONT>      }<a name="line.777"></a>
+<FONT color="green">778</FONT>    <a name="line.778"></a>
+<FONT color="green">779</FONT>      @SuppressWarnings("deprecation")<a name="line.779"></a>
+<FONT color="green">780</FONT>      private BlockReader getRemoteBlockReader(Peer peer) throws IOException {<a name="line.780"></a>
+<FONT color="green">781</FONT>        if (conf.useLegacyBlockReader) {<a name="line.781"></a>
+<FONT color="green">782</FONT>          return RemoteBlockReader.newBlockReader(fileName,<a name="line.782"></a>
+<FONT color="green">783</FONT>              block, token, startOffset, length, conf.ioBufferSize,<a name="line.783"></a>
+<FONT color="green">784</FONT>              verifyChecksum, clientName, peer, datanode,<a name="line.784"></a>
+<FONT color="green">785</FONT>              clientContext.getPeerCache(), cachingStrategy);<a name="line.785"></a>
+<FONT color="green">786</FONT>        } else {<a name="line.786"></a>
+<FONT color="green">787</FONT>          return RemoteBlockReader2.newBlockReader(<a name="line.787"></a>
+<FONT color="green">788</FONT>              fileName, block, token, startOffset, length,<a name="line.788"></a>
+<FONT color="green">789</FONT>              verifyChecksum, clientName, peer, datanode,<a name="line.789"></a>
+<FONT color="green">790</FONT>              clientContext.getPeerCache(), cachingStrategy);<a name="line.790"></a>
+<FONT color="green">791</FONT>        }<a name="line.791"></a>
+<FONT color="green">792</FONT>      }<a name="line.792"></a>
+<FONT color="green">793</FONT>    <a name="line.793"></a>
+<FONT color="green">794</FONT>      @Override<a name="line.794"></a>
+<FONT color="green">795</FONT>      public String toString() {<a name="line.795"></a>
+<FONT color="green">796</FONT>        return "BlockReaderFactory(fileName=" + fileName + ", block=" + block + ")";<a name="line.796"></a>
+<FONT color="green">797</FONT>      }<a name="line.797"></a>
+<FONT color="green">798</FONT>    <a name="line.798"></a>
+<FONT color="green">799</FONT>      /**<a name="line.799"></a>
+<FONT color="green">800</FONT>       * File name to print when accessing a block directly (from servlets)<a name="line.800"></a>
+<FONT color="green">801</FONT>       * @param s Address of the block location<a name="line.801"></a>
+<FONT color="green">802</FONT>       * @param poolId Block pool ID of the block<a name="line.802"></a>
+<FONT color="green">803</FONT>       * @param blockId Block ID of the block<a name="line.803"></a>
+<FONT color="green">804</FONT>       * @return string that has a file name for debug purposes<a name="line.804"></a>
+<FONT color="green">805</FONT>       */<a name="line.805"></a>
+<FONT color="green">806</FONT>      public static String getFileName(final InetSocketAddress s,<a name="line.806"></a>
+<FONT color="green">807</FONT>          final String poolId, final long blockId) {<a name="line.807"></a>
+<FONT color="green">808</FONT>        return s.toString() + ":" + poolId + ":" + blockId;<a name="line.808"></a>
+<FONT color="green">809</FONT>      }<a name="line.809"></a>
+<FONT color="green">810</FONT>    }<a name="line.810"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

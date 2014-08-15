@@ -1,0 +1,409 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    package org.apache.hadoop.hdfs.server.datanode;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_SHARED_FILE_DESCRIPTOR_PATHS;<a name="line.20"></a>
+<FONT color="green">021</FONT>    import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_SHARED_FILE_DESCRIPTOR_PATHS_DEFAULT;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS_DEFAULT;<a name="line.23"></a>
+<FONT color="green">024</FONT>    <a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.io.Closeable;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.io.FileInputStream;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.io.IOException;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.util.HashMap;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import java.util.Iterator;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import java.util.Set;<a name="line.30"></a>
+<FONT color="green">031</FONT>    <a name="line.31"></a>
+<FONT color="green">032</FONT>    import org.apache.commons.io.IOUtils;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.commons.logging.Log;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.hadoop.fs.InvalidRequestException;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.hadoop.hdfs.ExtendedBlockId;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.ShmId;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.Slot;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.SlotId;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.io.nativeio.SharedFileDescriptorFactory;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.net.unix.DomainSocket;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.hadoop.net.unix.DomainSocketWatcher;<a name="line.44"></a>
+<FONT color="green">045</FONT>    <a name="line.45"></a>
+<FONT color="green">046</FONT>    import com.google.common.base.Preconditions;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import com.google.common.collect.HashMultimap;<a name="line.47"></a>
+<FONT color="green">048</FONT>    <a name="line.48"></a>
+<FONT color="green">049</FONT>    /*<a name="line.49"></a>
+<FONT color="green">050</FONT>     * Manages client short-circuit memory segments on the DataNode.<a name="line.50"></a>
+<FONT color="green">051</FONT>     *<a name="line.51"></a>
+<FONT color="green">052</FONT>     * DFSClients request shared memory segments from the DataNode.  The <a name="line.52"></a>
+<FONT color="green">053</FONT>     * ShortCircuitRegistry generates and manages these segments.  Each segment<a name="line.53"></a>
+<FONT color="green">054</FONT>     * has a randomly generated 128-bit ID which uniquely identifies it.  The<a name="line.54"></a>
+<FONT color="green">055</FONT>     * segments each contain several "slots."<a name="line.55"></a>
+<FONT color="green">056</FONT>     *<a name="line.56"></a>
+<FONT color="green">057</FONT>     * Before performing a short-circuit read, DFSClients must request a pair of<a name="line.57"></a>
+<FONT color="green">058</FONT>     * file descriptors from the DataNode via the REQUEST_SHORT_CIRCUIT_FDS<a name="line.58"></a>
+<FONT color="green">059</FONT>     * operation.  As part of this operation, DFSClients pass the ID of the shared<a name="line.59"></a>
+<FONT color="green">060</FONT>     * memory segment they would like to use to communicate information about this<a name="line.60"></a>
+<FONT color="green">061</FONT>     * replica, as well as the slot number within that segment they would like to<a name="line.61"></a>
+<FONT color="green">062</FONT>     * use.  Slot allocation is always done by the client.<a name="line.62"></a>
+<FONT color="green">063</FONT>     *<a name="line.63"></a>
+<FONT color="green">064</FONT>     * Slots are used to track the state of the block on the both the client and<a name="line.64"></a>
+<FONT color="green">065</FONT>     * datanode. When this DataNode mlocks a block, the corresponding slots for the<a name="line.65"></a>
+<FONT color="green">066</FONT>     * replicas are marked as "anchorable".  Anchorable blocks can be safely read<a name="line.66"></a>
+<FONT color="green">067</FONT>     * without verifying the checksum.  This means that BlockReaderLocal objects<a name="line.67"></a>
+<FONT color="green">068</FONT>     * using these replicas can skip checksumming.  It also means that we can do<a name="line.68"></a>
+<FONT color="green">069</FONT>     * zero-copy reads on these replicas (the ZCR interface has no way of<a name="line.69"></a>
+<FONT color="green">070</FONT>     * verifying checksums.)<a name="line.70"></a>
+<FONT color="green">071</FONT>     * <a name="line.71"></a>
+<FONT color="green">072</FONT>     * When a DN needs to munlock a block, it needs to first wait for the block to<a name="line.72"></a>
+<FONT color="green">073</FONT>     * be unanchored by clients doing a no-checksum read or a zero-copy read. The <a name="line.73"></a>
+<FONT color="green">074</FONT>     * DN also marks the block's slots as "unanchorable" to prevent additional <a name="line.74"></a>
+<FONT color="green">075</FONT>     * clients from initiating these operations in the future.<a name="line.75"></a>
+<FONT color="green">076</FONT>     * <a name="line.76"></a>
+<FONT color="green">077</FONT>     * The counterpart fo this class on the client is {@link DfsClientShmManager}.<a name="line.77"></a>
+<FONT color="green">078</FONT>     */<a name="line.78"></a>
+<FONT color="green">079</FONT>    public class ShortCircuitRegistry {<a name="line.79"></a>
+<FONT color="green">080</FONT>      public static final Log LOG = LogFactory.getLog(ShortCircuitRegistry.class);<a name="line.80"></a>
+<FONT color="green">081</FONT>    <a name="line.81"></a>
+<FONT color="green">082</FONT>      private static final int SHM_LENGTH = 8192;<a name="line.82"></a>
+<FONT color="green">083</FONT>    <a name="line.83"></a>
+<FONT color="green">084</FONT>      private static class RegisteredShm extends ShortCircuitShm<a name="line.84"></a>
+<FONT color="green">085</FONT>          implements DomainSocketWatcher.Handler {<a name="line.85"></a>
+<FONT color="green">086</FONT>        private final ShortCircuitRegistry registry;<a name="line.86"></a>
+<FONT color="green">087</FONT>    <a name="line.87"></a>
+<FONT color="green">088</FONT>        RegisteredShm(ShmId shmId, FileInputStream stream,<a name="line.88"></a>
+<FONT color="green">089</FONT>            ShortCircuitRegistry registry) throws IOException {<a name="line.89"></a>
+<FONT color="green">090</FONT>          super(shmId, stream);<a name="line.90"></a>
+<FONT color="green">091</FONT>          this.registry = registry;<a name="line.91"></a>
+<FONT color="green">092</FONT>        }<a name="line.92"></a>
+<FONT color="green">093</FONT>    <a name="line.93"></a>
+<FONT color="green">094</FONT>        @Override<a name="line.94"></a>
+<FONT color="green">095</FONT>        public boolean handle(DomainSocket sock) {<a name="line.95"></a>
+<FONT color="green">096</FONT>          synchronized (registry) {<a name="line.96"></a>
+<FONT color="green">097</FONT>            synchronized (this) {<a name="line.97"></a>
+<FONT color="green">098</FONT>              registry.removeShm(this);<a name="line.98"></a>
+<FONT color="green">099</FONT>            }<a name="line.99"></a>
+<FONT color="green">100</FONT>          }<a name="line.100"></a>
+<FONT color="green">101</FONT>          return true;<a name="line.101"></a>
+<FONT color="green">102</FONT>        }<a name="line.102"></a>
+<FONT color="green">103</FONT>      }<a name="line.103"></a>
+<FONT color="green">104</FONT>    <a name="line.104"></a>
+<FONT color="green">105</FONT>      public synchronized void removeShm(ShortCircuitShm shm) {<a name="line.105"></a>
+<FONT color="green">106</FONT>        if (LOG.isTraceEnabled()) {<a name="line.106"></a>
+<FONT color="green">107</FONT>          LOG.debug("removing shm " + shm);<a name="line.107"></a>
+<FONT color="green">108</FONT>        }<a name="line.108"></a>
+<FONT color="green">109</FONT>        // Stop tracking the shmId.<a name="line.109"></a>
+<FONT color="green">110</FONT>        RegisteredShm removedShm = segments.remove(shm.getShmId());<a name="line.110"></a>
+<FONT color="green">111</FONT>        Preconditions.checkState(removedShm == shm,<a name="line.111"></a>
+<FONT color="green">112</FONT>            "failed to remove " + shm.getShmId());<a name="line.112"></a>
+<FONT color="green">113</FONT>        // Stop tracking the slots.<a name="line.113"></a>
+<FONT color="green">114</FONT>        for (Iterator&lt;Slot&gt; iter = shm.slotIterator(); iter.hasNext(); ) {<a name="line.114"></a>
+<FONT color="green">115</FONT>          Slot slot = iter.next();<a name="line.115"></a>
+<FONT color="green">116</FONT>          boolean removed = slots.remove(slot.getBlockId(), slot);<a name="line.116"></a>
+<FONT color="green">117</FONT>          Preconditions.checkState(removed);<a name="line.117"></a>
+<FONT color="green">118</FONT>          slot.makeInvalid();<a name="line.118"></a>
+<FONT color="green">119</FONT>        }<a name="line.119"></a>
+<FONT color="green">120</FONT>        // De-allocate the memory map and close the shared file. <a name="line.120"></a>
+<FONT color="green">121</FONT>        shm.free();<a name="line.121"></a>
+<FONT color="green">122</FONT>      }<a name="line.122"></a>
+<FONT color="green">123</FONT>    <a name="line.123"></a>
+<FONT color="green">124</FONT>      /**<a name="line.124"></a>
+<FONT color="green">125</FONT>       * Whether or not the registry is enabled.<a name="line.125"></a>
+<FONT color="green">126</FONT>       */<a name="line.126"></a>
+<FONT color="green">127</FONT>      private boolean enabled;<a name="line.127"></a>
+<FONT color="green">128</FONT>    <a name="line.128"></a>
+<FONT color="green">129</FONT>      /**<a name="line.129"></a>
+<FONT color="green">130</FONT>       * The factory which creates shared file descriptors.<a name="line.130"></a>
+<FONT color="green">131</FONT>       */<a name="line.131"></a>
+<FONT color="green">132</FONT>      private final SharedFileDescriptorFactory shmFactory;<a name="line.132"></a>
+<FONT color="green">133</FONT>      <a name="line.133"></a>
+<FONT color="green">134</FONT>      /**<a name="line.134"></a>
+<FONT color="green">135</FONT>       * A watcher which sends out callbacks when the UNIX domain socket<a name="line.135"></a>
+<FONT color="green">136</FONT>       * associated with a shared memory segment closes.<a name="line.136"></a>
+<FONT color="green">137</FONT>       */<a name="line.137"></a>
+<FONT color="green">138</FONT>      private final DomainSocketWatcher watcher;<a name="line.138"></a>
+<FONT color="green">139</FONT>    <a name="line.139"></a>
+<FONT color="green">140</FONT>      private final HashMap&lt;ShmId, RegisteredShm&gt; segments =<a name="line.140"></a>
+<FONT color="green">141</FONT>          new HashMap&lt;ShmId, RegisteredShm&gt;(0);<a name="line.141"></a>
+<FONT color="green">142</FONT>      <a name="line.142"></a>
+<FONT color="green">143</FONT>      private final HashMultimap&lt;ExtendedBlockId, Slot&gt; slots =<a name="line.143"></a>
+<FONT color="green">144</FONT>          HashMultimap.create(0, 1);<a name="line.144"></a>
+<FONT color="green">145</FONT>      <a name="line.145"></a>
+<FONT color="green">146</FONT>      public ShortCircuitRegistry(Configuration conf) throws IOException {<a name="line.146"></a>
+<FONT color="green">147</FONT>        boolean enabled = false;<a name="line.147"></a>
+<FONT color="green">148</FONT>        SharedFileDescriptorFactory shmFactory = null;<a name="line.148"></a>
+<FONT color="green">149</FONT>        DomainSocketWatcher watcher = null;<a name="line.149"></a>
+<FONT color="green">150</FONT>        try {<a name="line.150"></a>
+<FONT color="green">151</FONT>          int interruptCheck = conf.getInt(<a name="line.151"></a>
+<FONT color="green">152</FONT>              DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS,<a name="line.152"></a>
+<FONT color="green">153</FONT>              DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS_DEFAULT);<a name="line.153"></a>
+<FONT color="green">154</FONT>          if (interruptCheck &lt;= 0) {<a name="line.154"></a>
+<FONT color="green">155</FONT>            throw new IOException(<a name="line.155"></a>
+<FONT color="green">156</FONT>                DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS +<a name="line.156"></a>
+<FONT color="green">157</FONT>                " was set to " + interruptCheck);<a name="line.157"></a>
+<FONT color="green">158</FONT>          }<a name="line.158"></a>
+<FONT color="green">159</FONT>          String shmPaths[] =<a name="line.159"></a>
+<FONT color="green">160</FONT>              conf.getTrimmedStrings(DFS_DATANODE_SHARED_FILE_DESCRIPTOR_PATHS);<a name="line.160"></a>
+<FONT color="green">161</FONT>          if (shmPaths.length == 0) {<a name="line.161"></a>
+<FONT color="green">162</FONT>            shmPaths =<a name="line.162"></a>
+<FONT color="green">163</FONT>                DFS_DATANODE_SHARED_FILE_DESCRIPTOR_PATHS_DEFAULT.split(",");<a name="line.163"></a>
+<FONT color="green">164</FONT>          }<a name="line.164"></a>
+<FONT color="green">165</FONT>          shmFactory = SharedFileDescriptorFactory.<a name="line.165"></a>
+<FONT color="green">166</FONT>              create("HadoopShortCircuitShm_", shmPaths);<a name="line.166"></a>
+<FONT color="green">167</FONT>          String dswLoadingFailure = DomainSocketWatcher.getLoadingFailureReason();<a name="line.167"></a>
+<FONT color="green">168</FONT>          if (dswLoadingFailure != null) {<a name="line.168"></a>
+<FONT color="green">169</FONT>            throw new IOException(dswLoadingFailure);<a name="line.169"></a>
+<FONT color="green">170</FONT>          }<a name="line.170"></a>
+<FONT color="green">171</FONT>          watcher = new DomainSocketWatcher(interruptCheck);<a name="line.171"></a>
+<FONT color="green">172</FONT>          enabled = true;<a name="line.172"></a>
+<FONT color="green">173</FONT>          if (LOG.isDebugEnabled()) {<a name="line.173"></a>
+<FONT color="green">174</FONT>            LOG.debug("created new ShortCircuitRegistry with interruptCheck=" +<a name="line.174"></a>
+<FONT color="green">175</FONT>                      interruptCheck + ", shmPath=" + shmFactory.getPath());<a name="line.175"></a>
+<FONT color="green">176</FONT>          }<a name="line.176"></a>
+<FONT color="green">177</FONT>        } catch (IOException e) {<a name="line.177"></a>
+<FONT color="green">178</FONT>          if (LOG.isDebugEnabled()) {<a name="line.178"></a>
+<FONT color="green">179</FONT>            LOG.debug("Disabling ShortCircuitRegistry", e);<a name="line.179"></a>
+<FONT color="green">180</FONT>          }<a name="line.180"></a>
+<FONT color="green">181</FONT>        } finally {<a name="line.181"></a>
+<FONT color="green">182</FONT>          this.enabled = enabled;<a name="line.182"></a>
+<FONT color="green">183</FONT>          this.shmFactory = shmFactory;<a name="line.183"></a>
+<FONT color="green">184</FONT>          this.watcher = watcher;<a name="line.184"></a>
+<FONT color="green">185</FONT>        }<a name="line.185"></a>
+<FONT color="green">186</FONT>      }<a name="line.186"></a>
+<FONT color="green">187</FONT>    <a name="line.187"></a>
+<FONT color="green">188</FONT>      /**<a name="line.188"></a>
+<FONT color="green">189</FONT>       * Process a block mlock event from the FsDatasetCache.<a name="line.189"></a>
+<FONT color="green">190</FONT>       *<a name="line.190"></a>
+<FONT color="green">191</FONT>       * @param blockId    The block that was mlocked.<a name="line.191"></a>
+<FONT color="green">192</FONT>       */<a name="line.192"></a>
+<FONT color="green">193</FONT>      public synchronized void processBlockMlockEvent(ExtendedBlockId blockId) {<a name="line.193"></a>
+<FONT color="green">194</FONT>        if (!enabled) return;<a name="line.194"></a>
+<FONT color="green">195</FONT>        Set&lt;Slot&gt; affectedSlots = slots.get(blockId);<a name="line.195"></a>
+<FONT color="green">196</FONT>        for (Slot slot : affectedSlots) {<a name="line.196"></a>
+<FONT color="green">197</FONT>          slot.makeAnchorable();<a name="line.197"></a>
+<FONT color="green">198</FONT>        }<a name="line.198"></a>
+<FONT color="green">199</FONT>      }<a name="line.199"></a>
+<FONT color="green">200</FONT>    <a name="line.200"></a>
+<FONT color="green">201</FONT>      /**<a name="line.201"></a>
+<FONT color="green">202</FONT>       * Mark any slots associated with this blockId as unanchorable.<a name="line.202"></a>
+<FONT color="green">203</FONT>       *<a name="line.203"></a>
+<FONT color="green">204</FONT>       * @param blockId        The block ID.<a name="line.204"></a>
+<FONT color="green">205</FONT>       * @return               True if we should allow the munlock request.<a name="line.205"></a>
+<FONT color="green">206</FONT>       */<a name="line.206"></a>
+<FONT color="green">207</FONT>      public synchronized boolean processBlockMunlockRequest(<a name="line.207"></a>
+<FONT color="green">208</FONT>          ExtendedBlockId blockId) {<a name="line.208"></a>
+<FONT color="green">209</FONT>        if (!enabled) return true;<a name="line.209"></a>
+<FONT color="green">210</FONT>        boolean allowMunlock = true;<a name="line.210"></a>
+<FONT color="green">211</FONT>        Set&lt;Slot&gt; affectedSlots = slots.get(blockId);<a name="line.211"></a>
+<FONT color="green">212</FONT>        for (Slot slot : affectedSlots) {<a name="line.212"></a>
+<FONT color="green">213</FONT>          slot.makeUnanchorable();<a name="line.213"></a>
+<FONT color="green">214</FONT>          if (slot.isAnchored()) {<a name="line.214"></a>
+<FONT color="green">215</FONT>            allowMunlock = false;<a name="line.215"></a>
+<FONT color="green">216</FONT>          }<a name="line.216"></a>
+<FONT color="green">217</FONT>        }<a name="line.217"></a>
+<FONT color="green">218</FONT>        return allowMunlock;<a name="line.218"></a>
+<FONT color="green">219</FONT>      }<a name="line.219"></a>
+<FONT color="green">220</FONT>      <a name="line.220"></a>
+<FONT color="green">221</FONT>      public static class NewShmInfo implements Closeable {<a name="line.221"></a>
+<FONT color="green">222</FONT>        public final ShmId shmId;<a name="line.222"></a>
+<FONT color="green">223</FONT>        public final FileInputStream stream;<a name="line.223"></a>
+<FONT color="green">224</FONT>    <a name="line.224"></a>
+<FONT color="green">225</FONT>        NewShmInfo(ShmId shmId, FileInputStream stream) {<a name="line.225"></a>
+<FONT color="green">226</FONT>          this.shmId = shmId;<a name="line.226"></a>
+<FONT color="green">227</FONT>          this.stream = stream;<a name="line.227"></a>
+<FONT color="green">228</FONT>        }<a name="line.228"></a>
+<FONT color="green">229</FONT>    <a name="line.229"></a>
+<FONT color="green">230</FONT>        @Override<a name="line.230"></a>
+<FONT color="green">231</FONT>        public void close() throws IOException {<a name="line.231"></a>
+<FONT color="green">232</FONT>          stream.close();<a name="line.232"></a>
+<FONT color="green">233</FONT>        }<a name="line.233"></a>
+<FONT color="green">234</FONT>      }<a name="line.234"></a>
+<FONT color="green">235</FONT>    <a name="line.235"></a>
+<FONT color="green">236</FONT>      /**<a name="line.236"></a>
+<FONT color="green">237</FONT>       * Handle a DFSClient request to create a new memory segment.<a name="line.237"></a>
+<FONT color="green">238</FONT>       *<a name="line.238"></a>
+<FONT color="green">239</FONT>       * @param clientName    Client name as reported by the client.<a name="line.239"></a>
+<FONT color="green">240</FONT>       * @param sock          The DomainSocket to associate with this memory<a name="line.240"></a>
+<FONT color="green">241</FONT>       *                        segment.  When this socket is closed, or the<a name="line.241"></a>
+<FONT color="green">242</FONT>       *                        other side writes anything to the socket, the<a name="line.242"></a>
+<FONT color="green">243</FONT>       *                        segment will be closed.  This can happen at any<a name="line.243"></a>
+<FONT color="green">244</FONT>       *                        time, including right after this function returns.<a name="line.244"></a>
+<FONT color="green">245</FONT>       * @return              A NewShmInfo object.  The caller must close the<a name="line.245"></a>
+<FONT color="green">246</FONT>       *                        NewShmInfo object once they are done with it.<a name="line.246"></a>
+<FONT color="green">247</FONT>       * @throws IOException  If the new memory segment could not be created.<a name="line.247"></a>
+<FONT color="green">248</FONT>       */<a name="line.248"></a>
+<FONT color="green">249</FONT>      public NewShmInfo createNewMemorySegment(String clientName,<a name="line.249"></a>
+<FONT color="green">250</FONT>          DomainSocket sock) throws IOException {<a name="line.250"></a>
+<FONT color="green">251</FONT>        NewShmInfo info = null;<a name="line.251"></a>
+<FONT color="green">252</FONT>        RegisteredShm shm = null;<a name="line.252"></a>
+<FONT color="green">253</FONT>        ShmId shmId = null;<a name="line.253"></a>
+<FONT color="green">254</FONT>        synchronized (this) {<a name="line.254"></a>
+<FONT color="green">255</FONT>          if (!enabled) {<a name="line.255"></a>
+<FONT color="green">256</FONT>            if (LOG.isTraceEnabled()) {<a name="line.256"></a>
+<FONT color="green">257</FONT>              LOG.trace("createNewMemorySegment: ShortCircuitRegistry is " +<a name="line.257"></a>
+<FONT color="green">258</FONT>                  "not enabled.");<a name="line.258"></a>
+<FONT color="green">259</FONT>            }<a name="line.259"></a>
+<FONT color="green">260</FONT>            throw new UnsupportedOperationException();<a name="line.260"></a>
+<FONT color="green">261</FONT>          }<a name="line.261"></a>
+<FONT color="green">262</FONT>          FileInputStream fis = null;<a name="line.262"></a>
+<FONT color="green">263</FONT>          try {<a name="line.263"></a>
+<FONT color="green">264</FONT>            do {<a name="line.264"></a>
+<FONT color="green">265</FONT>              shmId = ShmId.createRandom();<a name="line.265"></a>
+<FONT color="green">266</FONT>            } while (segments.containsKey(shmId));<a name="line.266"></a>
+<FONT color="green">267</FONT>            fis = shmFactory.createDescriptor(clientName, SHM_LENGTH);<a name="line.267"></a>
+<FONT color="green">268</FONT>            shm = new RegisteredShm(shmId, fis, this);<a name="line.268"></a>
+<FONT color="green">269</FONT>          } finally {<a name="line.269"></a>
+<FONT color="green">270</FONT>            if (shm == null) {<a name="line.270"></a>
+<FONT color="green">271</FONT>              IOUtils.closeQuietly(fis);<a name="line.271"></a>
+<FONT color="green">272</FONT>            }<a name="line.272"></a>
+<FONT color="green">273</FONT>          }<a name="line.273"></a>
+<FONT color="green">274</FONT>          info = new NewShmInfo(shmId, fis);<a name="line.274"></a>
+<FONT color="green">275</FONT>          segments.put(shmId, shm);<a name="line.275"></a>
+<FONT color="green">276</FONT>        }<a name="line.276"></a>
+<FONT color="green">277</FONT>        // Drop the registry lock to prevent deadlock.<a name="line.277"></a>
+<FONT color="green">278</FONT>        // After this point, RegisteredShm#handle may be called at any time.<a name="line.278"></a>
+<FONT color="green">279</FONT>        watcher.add(sock, shm);<a name="line.279"></a>
+<FONT color="green">280</FONT>        if (LOG.isTraceEnabled()) {<a name="line.280"></a>
+<FONT color="green">281</FONT>          LOG.trace("createNewMemorySegment: created " + info.shmId);<a name="line.281"></a>
+<FONT color="green">282</FONT>        }<a name="line.282"></a>
+<FONT color="green">283</FONT>        return info;<a name="line.283"></a>
+<FONT color="green">284</FONT>      }<a name="line.284"></a>
+<FONT color="green">285</FONT>      <a name="line.285"></a>
+<FONT color="green">286</FONT>      public synchronized void registerSlot(ExtendedBlockId blockId, SlotId slotId,<a name="line.286"></a>
+<FONT color="green">287</FONT>          boolean isCached) throws InvalidRequestException {<a name="line.287"></a>
+<FONT color="green">288</FONT>        if (!enabled) {<a name="line.288"></a>
+<FONT color="green">289</FONT>          if (LOG.isTraceEnabled()) {<a name="line.289"></a>
+<FONT color="green">290</FONT>            LOG.trace(this + " can't register a slot because the " +<a name="line.290"></a>
+<FONT color="green">291</FONT>                "ShortCircuitRegistry is not enabled.");<a name="line.291"></a>
+<FONT color="green">292</FONT>          }<a name="line.292"></a>
+<FONT color="green">293</FONT>          throw new UnsupportedOperationException();<a name="line.293"></a>
+<FONT color="green">294</FONT>        }<a name="line.294"></a>
+<FONT color="green">295</FONT>        ShmId shmId = slotId.getShmId();<a name="line.295"></a>
+<FONT color="green">296</FONT>        RegisteredShm shm = segments.get(shmId);<a name="line.296"></a>
+<FONT color="green">297</FONT>        if (shm == null) {<a name="line.297"></a>
+<FONT color="green">298</FONT>          throw new InvalidRequestException("there is no shared memory segment " +<a name="line.298"></a>
+<FONT color="green">299</FONT>              "registered with shmId " + shmId);<a name="line.299"></a>
+<FONT color="green">300</FONT>        }<a name="line.300"></a>
+<FONT color="green">301</FONT>        Slot slot = shm.registerSlot(slotId.getSlotIdx(), blockId);<a name="line.301"></a>
+<FONT color="green">302</FONT>        if (isCached) {<a name="line.302"></a>
+<FONT color="green">303</FONT>          slot.makeAnchorable();<a name="line.303"></a>
+<FONT color="green">304</FONT>        } else {<a name="line.304"></a>
+<FONT color="green">305</FONT>          slot.makeUnanchorable();<a name="line.305"></a>
+<FONT color="green">306</FONT>        }<a name="line.306"></a>
+<FONT color="green">307</FONT>        boolean added = slots.put(blockId, slot);<a name="line.307"></a>
+<FONT color="green">308</FONT>        Preconditions.checkState(added);<a name="line.308"></a>
+<FONT color="green">309</FONT>        if (LOG.isTraceEnabled()) {<a name="line.309"></a>
+<FONT color="green">310</FONT>          LOG.trace(this + ": registered " + blockId + " with slot " +<a name="line.310"></a>
+<FONT color="green">311</FONT>            slotId + " (isCached=" + isCached + ")");<a name="line.311"></a>
+<FONT color="green">312</FONT>        }<a name="line.312"></a>
+<FONT color="green">313</FONT>      }<a name="line.313"></a>
+<FONT color="green">314</FONT>      <a name="line.314"></a>
+<FONT color="green">315</FONT>      public synchronized void unregisterSlot(SlotId slotId)<a name="line.315"></a>
+<FONT color="green">316</FONT>          throws InvalidRequestException {<a name="line.316"></a>
+<FONT color="green">317</FONT>        if (!enabled) {<a name="line.317"></a>
+<FONT color="green">318</FONT>          if (LOG.isTraceEnabled()) {<a name="line.318"></a>
+<FONT color="green">319</FONT>            LOG.trace("unregisterSlot: ShortCircuitRegistry is " +<a name="line.319"></a>
+<FONT color="green">320</FONT>                "not enabled.");<a name="line.320"></a>
+<FONT color="green">321</FONT>          }<a name="line.321"></a>
+<FONT color="green">322</FONT>          throw new UnsupportedOperationException();<a name="line.322"></a>
+<FONT color="green">323</FONT>        }<a name="line.323"></a>
+<FONT color="green">324</FONT>        ShmId shmId = slotId.getShmId();<a name="line.324"></a>
+<FONT color="green">325</FONT>        RegisteredShm shm = segments.get(shmId);<a name="line.325"></a>
+<FONT color="green">326</FONT>        if (shm == null) {<a name="line.326"></a>
+<FONT color="green">327</FONT>          throw new InvalidRequestException("there is no shared memory segment " +<a name="line.327"></a>
+<FONT color="green">328</FONT>              "registered with shmId " + shmId);<a name="line.328"></a>
+<FONT color="green">329</FONT>        }<a name="line.329"></a>
+<FONT color="green">330</FONT>        Slot slot = shm.getSlot(slotId.getSlotIdx());<a name="line.330"></a>
+<FONT color="green">331</FONT>        slot.makeInvalid();<a name="line.331"></a>
+<FONT color="green">332</FONT>        shm.unregisterSlot(slotId.getSlotIdx());<a name="line.332"></a>
+<FONT color="green">333</FONT>        slots.remove(slot.getBlockId(), slot);<a name="line.333"></a>
+<FONT color="green">334</FONT>      }<a name="line.334"></a>
+<FONT color="green">335</FONT>      <a name="line.335"></a>
+<FONT color="green">336</FONT>      public void shutdown() {<a name="line.336"></a>
+<FONT color="green">337</FONT>        synchronized (this) {<a name="line.337"></a>
+<FONT color="green">338</FONT>          if (!enabled) return;<a name="line.338"></a>
+<FONT color="green">339</FONT>          enabled = false;<a name="line.339"></a>
+<FONT color="green">340</FONT>        }<a name="line.340"></a>
+<FONT color="green">341</FONT>        IOUtils.closeQuietly(watcher);<a name="line.341"></a>
+<FONT color="green">342</FONT>      }<a name="line.342"></a>
+<FONT color="green">343</FONT>    }<a name="line.343"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

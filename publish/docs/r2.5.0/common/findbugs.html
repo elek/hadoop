@@ -1,0 +1,939 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>FindBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+
+		.tablerow0:hover, .tablerow1:hover {
+			background: #aaffaa;
+		}
+
+		.priority-1 {
+		    color: red;
+		    font-weight: bold;
+		}
+		.priority-2 {
+		    color: orange;
+		    font-weight: bold;
+		}
+		.priority-3 {
+		    color: green;
+		    font-weight: bold;
+		}
+		.priority-4 {
+		    color: blue;
+		    font-weight: bold;
+		}
+		</style>
+<script type="text/javascript">
+			function toggleRow(elid) {
+				if (document.getElementById) {
+					element = document.getElementById(elid);
+					if (element) {
+						if (element.style.display == 'none') {
+							element.style.display = 'block';
+							//window.status = 'Toggle on!';
+						} else {
+							element.style.display = 'none';
+							//window.status = 'Toggle off!';
+						}
+					}
+				}
+			}
+		</script>
+</head>
+<body>
+<h1>
+<a href="http://findbugs.sourceforge.net">FindBugs</a> Report</h1>
+<h2>Project Information</h2>
+<p>Project: 
+		Apache Hadoop Common</p>
+<p>FindBugs version: 1.3.9</p>
+<p>Code analyzed:</p>
+<ul>
+<li>/Users/kasha/code/hadoop-trunk/hadoop-common-project/hadoop-common/target/classes</li>
+</ul>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Metrics</h2>
+<p>76781 lines of code analyzed,
+	in 1750 classes, 
+	in 70 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right">54</td>
+<td align="right">0.70</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right"/>
+<td align="right">0.00</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>54</b>
+</td>
+<td align="right">
+<b>0.70</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Contents</h2>
+<ul>
+<li>
+<a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+</li>
+<li>
+<a href="#Details">Details</a>
+</li>
+</ul>
+<h1>Summary</h1>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+</td>
+<td align="right">54</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>54</b>
+</td>
+</tr>
+</table>
+<h1>Warnings</h1>
+<p>Click on a warning row to see full context information.</p>
+<h2>
+<a name="Warnings_CORRECTNESS">Correctness Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N65798');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.conf.Configuration.dumpDeprecatedKeys()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N65798" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.conf.Configuration<br/>In method org.apache.hadoop.conf.Configuration.dumpDeprecatedKeys()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at Configuration.java:[line 2629]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65865');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.AbstractFileSystem.printStatistics()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65865" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.AbstractFileSystem<br/>In method org.apache.hadoop.fs.AbstractFileSystem.printStatistics()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at AbstractFileSystem.java:[line 205]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N65932');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.DF.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N65932" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.DF<br/>In method org.apache.hadoop.fs.DF.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at DF.java:[line 217]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65999');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.DU.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65999" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.DU<br/>In method org.apache.hadoop.fs.DU.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at DU.java:[line 248]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66066');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.DUHelper.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66066" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.DUHelper<br/>In method org.apache.hadoop.fs.DUHelper.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at DUHelper.java:[line 87]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66133');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.DUHelper.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66133" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.DUHelper<br/>In method org.apache.hadoop.fs.DUHelper.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at DUHelper.java:[line 89]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66200');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.FileSystem.printStatistics()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66200" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.FileSystem<br/>In method org.apache.hadoop.fs.FileSystem.printStatistics()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at FileSystem.java:[line 3229]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66267');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.FsShell.displayError(String, String)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66267" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.FsShell<br/>In method org.apache.hadoop.fs.FsShell.displayError(String, String)<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at FsShell.java:[line 305]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66334');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Non-virtual method call in org.apache.hadoop.fs.FsShell.run(String[]) passes null for nonnull parameter of printInstanceUsage(PrintStream, Command)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66334" style="display: none;">
+<a href="#NP_NULL_PARAM_DEREF_NONVIRTUAL">Bug type NP_NULL_PARAM_DEREF_NONVIRTUAL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.FsShell<br/>In method org.apache.hadoop.fs.FsShell.run(String[])<br/>Called method org.apache.hadoop.fs.FsShell.printInstanceUsage(PrintStream, Command)<br/>At FsShell.java:[line 291]<br/>Value loaded from field java.lang.System.err<br/>Argument 1 is definitely null but must not be null</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66500');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.s3.Jets3tFileSystemStore.dump()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66500" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.Jets3tFileSystemStore<br/>In method org.apache.hadoop.fs.s3.Jets3tFileSystemStore.dump()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at Jets3tFileSystemStore.java:[line 415]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66567');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.s3.MigrationTool.run(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66567" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.MigrationTool<br/>In method org.apache.hadoop.fs.s3.MigrationTool.run(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MigrationTool.java:[line 69]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66634');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.s3.MigrationTool.run(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66634" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.MigrationTool<br/>In method org.apache.hadoop.fs.s3.MigrationTool.run(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MigrationTool.java:[line 83]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66701');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.s3.MigrationTool.run(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66701" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.MigrationTool<br/>In method org.apache.hadoop.fs.s3.MigrationTool.run(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MigrationTool.java:[line 94]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66768');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.s3.MigrationTool.run(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66768" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.MigrationTool<br/>In method org.apache.hadoop.fs.s3.MigrationTool.run(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MigrationTool.java:[line 97]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66835');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.fs.s3.MigrationTool.run(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66835" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3.MigrationTool<br/>In method org.apache.hadoop.fs.s3.MigrationTool.run(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MigrationTool.java:[line 110]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66902');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.s3native.Jets3tNativeFileSystemStore.dump()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66902" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.s3native.Jets3tNativeFileSystemStore<br/>In method org.apache.hadoop.fs.s3native.Jets3tNativeFileSystemStore.dump()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at Jets3tNativeFileSystemStore.java:[line 392]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66969');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Non-virtual method call in org.apache.hadoop.fs.shell.CopyCommands$AppendToFile.processArguments(LinkedList) passes null for nonnull parameter of org.apache.hadoop.io.IOUtils.copyBytes(InputStream, OutputStream, int)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66969" style="display: none;">
+<a href="#NP_NULL_PARAM_DEREF_NONVIRTUAL">Bug type NP_NULL_PARAM_DEREF_NONVIRTUAL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.shell.CopyCommands$AppendToFile<br/>In method org.apache.hadoop.fs.shell.CopyCommands$AppendToFile.processArguments(LinkedList)<br/>Called method org.apache.hadoop.io.IOUtils.copyBytes(InputStream, OutputStream, int)<br/>At CopyCommands.java:[line 338]<br/>Value loaded from field java.lang.System.in<br/>Argument 1 is definitely null but must not be null</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66433');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.fs.Trash.moveToAppropriateTrash(FileSystem, Path, Configuration)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66433" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.fs.Trash<br/>In method org.apache.hadoop.fs.Trash.moveToAppropriateTrash(FileSystem, Path, Configuration)<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at Trash.java:[line 92]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67068');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.ha.ZKFailoverController.confirmFormat()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67068" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.ha.ZKFailoverController<br/>In method org.apache.hadoop.ha.ZKFailoverController.confirmFormat()<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at ZKFailoverController.java:[line 278]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67135');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.ha.ZKFailoverController.printUsage()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67135" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.ha.ZKFailoverController<br/>In method org.apache.hadoop.ha.ZKFailoverController.printUsage()<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at ZKFailoverController.java:[line 254]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67202');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.http.HtmlQuoting.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67202" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.http.HtmlQuoting<br/>In method org.apache.hadoop.http.HtmlQuoting.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at HtmlQuoting.java:[line 199]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67537');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.compress.CompressionCodecFactory.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67537" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.compress.CompressionCodecFactory<br/>In method org.apache.hadoop.io.compress.CompressionCodecFactory.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at CompressionCodecFactory.java:[line 300]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67604');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.compress.CompressionCodecFactory.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67604" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.compress.CompressionCodecFactory<br/>In method org.apache.hadoop.io.compress.CompressionCodecFactory.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at CompressionCodecFactory.java:[line 329]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67671');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.file.tfile.TFile.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67671" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.file.tfile.TFile<br/>In method org.apache.hadoop.io.file.tfile.TFile.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at TFile.java:[line 2344]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67269');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.io.MapFile.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67269" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.MapFile<br/>In method org.apache.hadoop.io.MapFile.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at MapFile.java:[line 832]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67336');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67336" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.WritableUtils<br/>In method org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at WritableUtils.java:[line 199]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67403');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67403" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.WritableUtils<br/>In method org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at WritableUtils.java:[line 200]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67470');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67470" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.io.WritableUtils<br/>In method org.apache.hadoop.io.WritableUtils.displayByteArray(byte[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at WritableUtils.java:[line 204]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67738');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.log.EventCounter.&lt;static initializer&gt;()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67738" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.log.EventCounter<br/>In method org.apache.hadoop.log.EventCounter.&lt;static initializer&gt;()<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at EventCounter.java:[line 29]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67805');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.log.LogLevel.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67805" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.log.LogLevel<br/>In method org.apache.hadoop.log.LogLevel.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at LogLevel.java:[line 57]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67872');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.log.LogLevel.process(String)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67872" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.log.LogLevel<br/>In method org.apache.hadoop.log.LogLevel.process(String)<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at LogLevel.java:[line 76]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67939');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.log.LogLevel.process(String)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67939" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.log.LogLevel<br/>In method org.apache.hadoop.log.LogLevel.process(String)<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at LogLevel.java:[line 64]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68006');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.metrics.jvm.EventCounter.&lt;static initializer&gt;()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68006" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.metrics.jvm.EventCounter<br/>In method org.apache.hadoop.metrics.jvm.EventCounter.&lt;static initializer&gt;()<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at EventCounter.java:[line 28]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68073');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.record.compiler.JFile.genCode(String, String, ArrayList)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68073" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.record.compiler.JFile<br/>In method org.apache.hadoop.record.compiler.JFile.genCode(String, String, ArrayList)<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at JFile.java:[line 73]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68140');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.security.HadoopKerberosName.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68140" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.security.HadoopKerberosName<br/>In method org.apache.hadoop.security.HadoopKerberosName.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at HadoopKerberosName.java:[line 82]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68207');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.security.UserGroupInformation.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68207" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.security.UserGroupInformation<br/>In method org.apache.hadoop.security.UserGroupInformation.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at UserGroupInformation.java:[line 1661]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68274');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.security.UserGroupInformation.print()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68274" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.security.UserGroupInformation<br/>In method org.apache.hadoop.security.UserGroupInformation.print()<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at UserGroupInformation.java:[line 1643]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69346');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.hash.JenkinsHash.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69346" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.hash.JenkinsHash<br/>In method org.apache.hadoop.util.hash.JenkinsHash.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at JenkinsHash.java:[line 252]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69413');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.hash.JenkinsHash.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69413" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.hash.JenkinsHash<br/>In method org.apache.hadoop.util.hash.JenkinsHash.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at JenkinsHash.java:[line 262]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68341');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.NativeLibraryChecker.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68341" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.NativeLibraryChecker<br/>In method org.apache.hadoop.util.NativeLibraryChecker.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at NativeLibraryChecker.java:[line 45]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68408');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.NativeLibraryChecker.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68408" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.NativeLibraryChecker<br/>In method org.apache.hadoop.util.NativeLibraryChecker.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at NativeLibraryChecker.java:[line 51]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68475');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.NativeLibraryChecker.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68475" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.NativeLibraryChecker<br/>In method org.apache.hadoop.util.NativeLibraryChecker.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at NativeLibraryChecker.java:[line 86]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68542');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.PrintJarMainClass.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68542" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.PrintJarMainClass<br/>In method org.apache.hadoop.util.PrintJarMainClass.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at PrintJarMainClass.java:[line 44]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68609');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.PrintJarMainClass.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68609" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.PrintJarMainClass<br/>In method org.apache.hadoop.util.PrintJarMainClass.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at PrintJarMainClass.java:[line 52]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68676');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.ProgramDriver.printUsage(Map)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68676" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.ProgramDriver<br/>In method org.apache.hadoop.util.ProgramDriver.printUsage(Map)<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at ProgramDriver.java:[line 87]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68743');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.ProgramDriver.run(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68743" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.ProgramDriver<br/>In method org.apache.hadoop.util.ProgramDriver.run(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at ProgramDriver.java:[line 126]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68810');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.ProgramDriver.run(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68810" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.ProgramDriver<br/>In method org.apache.hadoop.util.ProgramDriver.run(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at ProgramDriver.java:[line 135]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68877');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.RunJar.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68877" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.RunJar<br/>In method org.apache.hadoop.util.RunJar.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at RunJar.java:[line 122]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68944');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.RunJar.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68944" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.RunJar<br/>In method org.apache.hadoop.util.RunJar.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at RunJar.java:[line 130]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69011');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.RunJar.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69011" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.RunJar<br/>In method org.apache.hadoop.util.RunJar.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at RunJar.java:[line 151]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69078');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.RunJar.main(String[])</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69078" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.RunJar<br/>In method org.apache.hadoop.util.RunJar.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at RunJar.java:[line 167]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69145');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.RunJar.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69145" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.RunJar<br/>In method org.apache.hadoop.util.RunJar.main(String[])<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at RunJar.java:[line 174]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69212');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.err in org.apache.hadoop.util.ToolRunner.confirmPrompt(String)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69212" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.ToolRunner<br/>In method org.apache.hadoop.util.ToolRunner.confirmPrompt(String)<br/>Value loaded from field java.lang.System.err<br/>Dereferenced at ToolRunner.java:[line 103]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69279');">
+<td>
+<span class="priority-1">NP</span>
+</td>
+<td>Null pointer dereference of System.out in org.apache.hadoop.util.VersionInfo.main(String[])</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69279" style="display: none;">
+<a href="#NP_ALWAYS_NULL">Bug type NP_ALWAYS_NULL (click for details)</a>
+<br/>In class org.apache.hadoop.util.VersionInfo<br/>In method org.apache.hadoop.util.VersionInfo.main(String[])<br/>Value loaded from field java.lang.System.out<br/>Dereferenced at VersionInfo.java:[line 172]</p>
+</td>
+</tr>
+</table>
+<h1>
+<a name="Details">Details</a>
+</h1>
+<h2>
+<a name="NP_NULL_PARAM_DEREF_NONVIRTUAL">NP_NULL_PARAM_DEREF_NONVIRTUAL: Non-virtual method call passes null for nonnull parameter</a>
+</h2>
+      
+      <p>
+      A possibly-null value is passed to a nonnull method parameter.
+	Either the parameter is annotated as a parameter that should
+	always be nonnull, or analysis has shown that it will always be 
+	dereferenced.
+      </p>
+      
+   
+<h2>
+<a name="NP_ALWAYS_NULL">NP_ALWAYS_NULL: Null pointer dereference</a>
+</h2>
+
+<p> A null pointer is dereferenced here.&nbsp; This will lead to a
+<code>NullPointerException</code> when the code is executed.</p>
+
+    </body>
+</html>

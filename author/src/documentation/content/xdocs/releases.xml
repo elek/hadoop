@@ -16,10 +16,7 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-        <li><strong>2.4.X - </strong> current stable 2.x version</li>
-        <!--
-        <li><strong>2.3.X - </strong> current 2.x version</li>
-        -->
+	<li><strong>2.5.X - </strong> current stable 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
@@ -38,6 +35,35 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>11 August, 2014: Release 2.5.0 available </title>
+        <p>     Apache Hadoop 2.5.0 is a minor release in the 2.x release
+                line.
+        </p>
+
+	<p>     The release includes the following major features and improvements:
+	<ul>    
+	        <li>Authentication improvements when using an HTTP proxy server.</li>
+	        <li>A new Hadoop Metrics sink that allows writing directly to Graphite.</li>
+	        <li>Specification for Hadoop Compatible Filesystem effort.</li>
+	        <li>Support for POSIX-style filesystem extended attributes.</li>
+	        <li>OfflineImageViewer to browse an fsimage via the WebHDFS API.</li>
+	        <li>Supportability improvements and bug fixes to the NFS gateway.</li>
+	        <li>Modernized web UIs (HTML5 and Javascript) for HDFS daemons.</li>
+	        <li>YARN's REST APIs support submitting and killing applications.</li>
+	        <li>Kerberos integration for the YARN's timeline store.</li>
+	        <li>FairScheduler allows creating user queues at runtime under any specified parent queue.</li>
+	</ul>
+	</p>
+
+        <p>     Users are encouraged to try out 2.5.0
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.5.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.5.0 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
         <title>30 June, 2014: Release 2.4.1 available </title>
@@ -638,7 +664,8 @@
                 debs for the first time.</p>
         <p>See the <a href="http://hadoop.apache.org/docs/r0.20.204.0/releasenotes.html">Hadoop 0.20.204.0 Release Notes</a> for details.  
            Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.204.0/changes.html">change log for this release</a>.</p>
-        <p>Notes:<ul>
+        <p>Notes:
+	<ul>
            <li> The RPMs don't work with security turned on. (HADOOP-7599)</li>
            <li> The NameNode's edit log needs to be merged into the image 
                 via</li>
@@ -646,7 +673,9 @@
              <li> put the NameNode into safe mode</li>
              <li> run dfsadmin savenamespace command</li>
              <li> perform a normal upgrade</li>
-           </ul></ul></p>
+           </ul>
+	</ul>
+	 </p>
       </section>
 
       <section>
