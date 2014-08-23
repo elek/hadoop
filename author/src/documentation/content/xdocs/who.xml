@@ -80,14 +80,6 @@
   </tr>
 
   <tr>
-    <td>benoy</td>
-    <td><a href="http://people.apache.org/~benoy">Benoy Antony</a></td>
-    <td>eBay</td>
-    <td></td>
-    <td>-8</td>
-  </tr>
-
-  <tr>
     <td>bikas</td>
     <td>Bikas Saha</td>
     <td>Hortonworks</td>
@@ -543,6 +535,14 @@
          <td>aw</td>
          <td>Allen Wittenauer</td>
          <td>Altiscale</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+       
+       <tr>
+         <td>benoy</td>
+         <td><a href="http://people.apache.org/~benoy">Benoy Antony</a></td>
+         <td>eBay</td>
          <td></td>
          <td>-8</td>
        </tr>
