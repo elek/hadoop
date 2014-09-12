@@ -37,6 +37,12 @@
       <title>News</title>
 
       <section>
+	<title>12 September, 2014: Relase 2.5.1 available</title>
+	<p>     Apache Hadoop 2.5.1 is a point release in the 2.5.x release line,
+	        and fixes a few release issues with 2.5.0.</p>
+      </section>
+
+      <section>
         <title>11 August, 2014: Release 2.5.0 available </title>
         <p>     Apache Hadoop 2.5.0 is a minor release in the 2.x release
                 line.
