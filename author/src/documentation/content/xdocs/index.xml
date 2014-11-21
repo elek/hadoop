@@ -139,6 +139,78 @@
     <title>News</title>
 
       <section>
+        <title>19 November, 2014: release 2.5.2 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>12 September, 2014: release 2.5.1 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>11 August, 2014: release 2.5.0 available </title>
+        <p>    
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>30 June, 2014: release 2.4.1 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>27 June, 2014: release 0.23.11 available </title>
+        <p>
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>07 April, 2014: release 2.4.0 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>20 February, 2014: release 2.3.0 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
+        <title>11 December, 2013: release 0.23.10 available </title>
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
         <title>15 October, 2013: release 2.2.0 available </title>
         <p>     Apache Hadoop 2.x reaches GA milestone! 
 	        Full information about this milestone release is available at
