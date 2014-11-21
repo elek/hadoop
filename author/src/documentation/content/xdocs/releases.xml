@@ -16,7 +16,7 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-	<li><strong>2.5.X - </strong> current stable 2.x version</li>
+	<li><strong>2.5.X - </strong> stable 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
@@ -35,6 +35,12 @@
 
     <section>
       <title>News</title>
+
+      <section>
+	<title>19 November, 2014: Release 2.5.2 available</title>
+	<p>    Apache Hadoop 2.5.2 is a point release in the 2.5.x release line,
+	       and fixes a few critical issues in 2.5.1</p>
+      </section>
 
       <section>
 	<title>12 September, 2014: Relase 2.5.1 available</title>
