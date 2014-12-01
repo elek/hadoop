@@ -16,7 +16,7 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-	<li><strong>2.5.X - </strong> stable 2.x version</li>
+	      <li><strong>2.6.X - </strong> stable 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
@@ -35,6 +35,79 @@
 
     <section>
       <title>News</title>
+
+      <section>
+        <title>18 November, 2014: Release 2.6.0 available </title>
+        <p>     Apache Hadoop 2.6.0 contains a number of significant 
+                enhancements such as:
+        </p>
+
+        <ul>
+          <li>Hadoop Common</li>
+          <ul>
+            <li><a href="https://issues.apache.org/jira/browse/HADOOP-10433">
+                HADOOP-10433</a> - Key management server (beta)</li>
+            <li><a href="https://issues.apache.org/jira/browse/HADOOP-10607">
+                HADOOP-10607</a> - Credential provider (beta)</li>
+          </ul>
+          <li>Hadoop HDFS</li>
+          <ul>
+            <li>Heterogeneous Storage Tiers - Phase 2</li>
+              <ul>
+              <li><a href="https://issues.apache.org/jira/browse/HDFS-5682">
+                  HDFS-5682</a> - Application APIs for heterogeneous storage</li>
+              <li><a href="https://issues.apache.org/jira/browse/HDFS-7228">
+                  HDFS-7228</a> - SSD storage tier</li>
+              <li><a href="https://issues.apache.org/jira/browse/HDFS-5851">
+                  HDFS-5851</a> - Memory as a storage tier (beta)</li>
+              </ul>
+            <li><a href="https://issues.apache.org/jira/browse/HDFS-6584">
+                HDFS-6584</a> - Support for Archival Storage</li>
+            <li><a href="https://issues.apache.org/jira/browse/HDFS-6134">
+                HDFS-6134</a> - Transparent data at rest encryption (beta)</li>
+            <li><a href="https://issues.apache.org/jira/browse/HDFS-2856">
+                HDFS-2856</a> - Operating secure DataNode without requiring root 
+              access</li>
+            <li><a href="https://issues.apache.org/jira/browse/HDFS-6740">
+                HDFS-6740</a> - Hot swap drive: support add/remove data node volumes 
+              without restarting data node (beta)</li>
+            <li><a href="https://issues.apache.org/jira/browse/HDFS-6606">
+                HDFS-6606</a> - AES support for faster wire encryption</li>
+          </ul>
+          <li>Hadoop YARN</li>
+          <ul>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-896">
+                YARN-896</a> - Support for long running services in YARN</li>
+              <ul>
+              <li><a href="https://issues.apache.org/jira/browse/YARN-913">
+                  YARN-913</a> - Service Registry for applications</li>
+              </ul>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-666">
+                YARN-666</a> - Support for rolling upgrades</li>
+              <ul>
+                <li><a href="https://issues.apache.org/jira/browse/YARN-556">
+                    YARN-556</a> - Work-preserving restarts of ResourceManager</li>
+                <li><a href="https://issues.apache.org/jira/browse/YARN-1336">
+                    YARN-1336</a> - Container-preserving restart of NodeManager</li>
+              </ul>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-796">
+                YARN-796</a> - Support node labels during scheduling</li>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-1051">
+                YARN-1051</a> - Support for time-based resource reservations in 
+              Capacity Scheduler (beta)</li>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-1492">
+                YARN-1492</a> - Global, shared cache for application artifacts (beta)</li>
+            <li><a href="https://issues.apache.org/jira/browse/YARN-1964">
+                YARN-1964</a> - Support running of applications natively in 
+              Docker containers (alpha)</li>
+          </ul>
+        </ul>
+
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.6.0 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
 	<title>19 November, 2014: Release 2.5.2 available</title>
