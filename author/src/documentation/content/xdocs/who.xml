@@ -175,14 +175,6 @@
 	  <td>-8</td>
 	</tr>
 
-  <tr>
-    <td>gera</td>
-    <td>Gera Shegalov</td>
-    <td>Twitter</td>
-    <td></td>
-    <td>-8</td>
-  </tr>
-
 	<tr>
 	  <td>gkesavan</td>
 	  <td><a href="http://people.apache.org/~gkesavan">Giridharan Kesavan</a></td>
@@ -695,6 +687,14 @@
          <td>eyang</td>
          <td><a href="http://people.apache.org/~eyang">Eric Yang</a></td>
          <td>IBM</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
+         <td>gera</td>
+         <td>Gera Shegalov</td>
+         <td>Twitter</td>
          <td></td>
          <td>-8</td>
        </tr>
