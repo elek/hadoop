@@ -43,16 +43,17 @@
         </p>
 
         <ul>
-          <li>Hadoop Common</li>
+          <li>Hadoop Common
           <ul>
             <li><a href="https://issues.apache.org/jira/browse/HADOOP-10433">
                 HADOOP-10433</a> - Key management server (beta)</li>
             <li><a href="https://issues.apache.org/jira/browse/HADOOP-10607">
                 HADOOP-10607</a> - Credential provider (beta)</li>
           </ul>
-          <li>Hadoop HDFS</li>
+          </li>
+          <li>Hadoop HDFS
           <ul>
-            <li>Heterogeneous Storage Tiers - Phase 2</li>
+            <li>Heterogeneous Storage Tiers - Phase 2
               <ul>
               <li><a href="https://issues.apache.org/jira/browse/HDFS-5682">
                   HDFS-5682</a> - Application APIs for heterogeneous storage</li>
@@ -61,6 +62,7 @@
               <li><a href="https://issues.apache.org/jira/browse/HDFS-5851">
                   HDFS-5851</a> - Memory as a storage tier (beta)</li>
               </ul>
+            </li>
             <li><a href="https://issues.apache.org/jira/browse/HDFS-6584">
                 HDFS-6584</a> - Support for Archival Storage</li>
             <li><a href="https://issues.apache.org/jira/browse/HDFS-6134">
@@ -74,22 +76,25 @@
             <li><a href="https://issues.apache.org/jira/browse/HDFS-6606">
                 HDFS-6606</a> - AES support for faster wire encryption</li>
           </ul>
-          <li>Hadoop YARN</li>
+          </li>
+          <li>Hadoop YARN
           <ul>
             <li><a href="https://issues.apache.org/jira/browse/YARN-896">
-                YARN-896</a> - Support for long running services in YARN</li>
+                YARN-896</a> - Support for long running services in YARN
               <ul>
               <li><a href="https://issues.apache.org/jira/browse/YARN-913">
                   YARN-913</a> - Service Registry for applications</li>
               </ul>
+            </li>
             <li><a href="https://issues.apache.org/jira/browse/YARN-666">
-                YARN-666</a> - Support for rolling upgrades</li>
+                YARN-666</a> - Support for rolling upgrades
               <ul>
                 <li><a href="https://issues.apache.org/jira/browse/YARN-556">
                     YARN-556</a> - Work-preserving restarts of ResourceManager</li>
                 <li><a href="https://issues.apache.org/jira/browse/YARN-1336">
                     YARN-1336</a> - Container-preserving restart of NodeManager</li>
               </ul>
+            </li>
             <li><a href="https://issues.apache.org/jira/browse/YARN-796">
                 YARN-796</a> - Support node labels during scheduling</li>
             <li><a href="https://issues.apache.org/jira/browse/YARN-1051">
@@ -101,6 +106,7 @@
                 YARN-1964</a> - Support running of applications natively in 
               Docker containers (alpha)</li>
           </ul>
+          </li> 
         </ul>
 
         <p>     Please see the <a 
@@ -127,7 +133,7 @@
                 line.
         </p>
 
-	<p>     The release includes the following major features and improvements:
+	<p>     The release includes the following major features and improvements:	</p>
 	<ul>    
 	        <li>Authentication improvements when using an HTTP proxy server.</li>
 	        <li>A new Hadoop Metrics sink that allows writing directly to Graphite.</li>
@@ -140,7 +146,7 @@
 	        <li>Kerberos integration for the YARN's timeline store.</li>
 	        <li>FairScheduler allows creating user queues at runtime under any specified parent queue.</li>
 	</ul>
-	</p>
+
 
         <p>     Users are encouraged to try out 2.5.0
         </p>
@@ -155,13 +161,13 @@
         <p>     Apache Hadoop 2.4.1 is a bug-fix release for the stable 2.4.x
                 line.
         </p>
-        <p>     There is also a security bug fix in this minor release.
+        <p>     There is also a security bug fix in this minor release.        </p>
                 <ul>
                   <li>CVE-2014-0229: Add privilege checks to HDFS admin 
                     sub-commands refreshNamenodes, deleteBlockPool and 
                     shutdownDatanode.</li>
                 </ul>
-        </p>
+
         <p>     Users are encouraged to immediately move to 2.4.1.
         </p>
         <p>     Please see the <a 
@@ -371,7 +377,7 @@
 	</p>
         <p>     This release delivers over 200 enhancements and bug-fixes, 
 	        compared to the previous 1.1.2 release.
-	        Major enhancements include:
+	        Major enhancements include:        </p>
 	        <ul>
 		  <li>DistCp v2 backported</li>
 		  <li>Web services for JobTracker</li>
@@ -382,7 +388,7 @@
 		  <li>Add NodeGroups level to NetworkTopology</li>
 		  <li>Add "unset" to Configuration API</li>
 		</ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.2.0/releasenotes.html">
                 Hadoop 1.2.0 Release Notes</a> for more details.
@@ -423,7 +429,7 @@
         <p>     This is the latest (alpha) version in the hadoop-2.x series.
         </p>
         <p>     This release delivers significant major features and stability
-                over previous releases in hadoop-2.x series:
+                over previous releases in hadoop-2.x series:        </p>
                 <ul>
 		            <li> QJM for HDFS HA for NameNode</li>
 		            <li> Multi-resource scheduling (CPU and memory) for YARN</li>
@@ -432,13 +438,13 @@
                      and 14 million applications so far, at time of release)
                 </li>
                 </ul>
-                This release, like previous releases in hadoop-2.x series is 
+       <p>      This release, like previous releases in hadoop-2.x series is 
                 still considered <em>alpha</em> primarily since some of APIs
                 aren't fully-baked and we expect some churn in future. 
                 Furthermore, please note that there are some API changes from
                 previous hadoop-2.0.2-alpha release and applications will need 
-                to recompile against hadoop-2.0.3-alpha.
-        </p>
+                to recompile against hadoop-2.0.3-alpha.</p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r2.0.3-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
                 Hadoop 2.0.3-alpha Release Notes</a> for details.  
@@ -488,7 +494,7 @@
         <title>13 October, 2012: Release 1.1.0 available </title>
         <p>     This is a beta release for version 1.1.
         </p>
-        <p>     This release has approximately 135 enhancements and bug fixes compared to Hadoop-1.0.4, including:
+        <p>     This release has approximately 135 enhancements and bug fixes compared to Hadoop-1.0.4, including:        </p>
                 <ul>
                   <li>Many performance improvements in HDFS, backported from trunk </li>
                   <li>Improvements in Security to use SPNEGO instead of Kerberized SSL for HTTP transactions </li>
@@ -498,7 +504,7 @@
                   <li>Splittable bzip2 files </li>
                   <li>Of course it also has the same security fix as release 1.0.4. </li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.1.0/releasenotes.html">
                 Hadoop 1.1.0 Release Notes</a> for details.  
@@ -509,14 +515,14 @@
         <title>12 October, 2012: Release 1.0.4 available </title>
         <p>     This is a Security Patch release for version 1.0.
         </p>
-        <p>     There are four bug fixes and feature enhancements in this minor release:
+        <p>     There are four bug fixes and feature enhancements in this minor release:        </p>
                 <ul>
                   <li>Security issue CVE-2012-4449: Hadoop tokens use a 20-bit secret </li>
                   <li>HADOOP-7154 - set MALLOC_ARENA_MAX in hadoop-config.sh to resolve problems with glibc in RHEL-6 </li>
                   <li>HDFS-3652 - FSEditLog failure removes the wrong edit stream when storage dirs have same name </li>
                   <li>MAPREDUCE-4399 - Fix (up to 3x) performance regression in shuffle </li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.0.4/releasenotes.html">
                 Hadoop 1.0.4 Release Notes</a> for details.  
@@ -562,7 +568,7 @@
         <p>     This is the first (alpha) version in the hadoop-2.x series.
         </p>
         <p>     This delivers significant major features over the currently 
-                stable hadoop-1.x series including: 
+                stable hadoop-1.x series including:         </p>
                 <ul>
 		            <li> HDFS HA for NameNode (manual failover) </li>
 		            <li> YARN aka NextGen MapReduce </li>
@@ -570,7 +576,7 @@
                 <li> Performance </li>
                 <li> Wire-compatibility for both HDFS and YARN/MapReduce (using protobufs) </li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r2.0.0-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">
                 Hadoop 2.0.0-alpha Release Notes</a> for details.  
@@ -581,13 +587,13 @@
         <title>16 May, 2012: Release 1.0.3 available </title>
         <p>     This is a bug fix release for version 1.0.
         </p>
-        <p>     Bug fixes and feature enhancements in this minor release include:
+        <p>     Bug fixes and feature enhancements in this minor release include:        </p>
                 <ul>
 		  <li>4 patches in support of non-Oracle JDKs </li>
 		  <li>several patches to clean up error handling and log messages </li>
 		  <li>various production issue fixes </li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.0.3/releasenotes.html">
                 Hadoop 1.0.3 Release Notes</a> for details.  
@@ -598,14 +604,14 @@
         <title>3 Apr, 2012: Release 1.0.2 available </title>
         <p>     This is a bug fix release for version 1.0.
         </p>
-        <p>     Bug fixes and feature enhancements in this minor release include:
+        <p>     Bug fixes and feature enhancements in this minor release include:        </p>
                 <ul>
                   <li>Snappy compressor/decompressor is available</li>
                   <li>Occassional deadlock in metrics serving thread fixed</li>
                   <li>64-bit secure datanodes failed to start, now fixed</li>
                   <li>Changed package names for 64-bit rpm/debs to use ".x86_64." instead of ".amd64."</li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.0.2/releasenotes.html">
                 Hadoop 1.0.2 Release Notes</a> for details.  
@@ -618,14 +624,14 @@
                 This release is now considered stable, replacing the
                 long-standing 0.20.203.  
         </p>
-        <p>     Bug fixes in this minor release include:
+        <p>     Bug fixes in this minor release include:        </p>
                 <ul>
                   <li>Added hadoop-client and hadoop-minicluster artifacts for 
                       ease of client install and testing</li>
                   <li>Support run-as-user in non-secure mode</li>
                   <li>Better compatibility with Ganglia, HBase, and Sqoop</li>
                 </ul>
-        </p>
+
         <p>     Please see the <a 
                 href="http://hadoop.apache.org/docs/r1.0.1/releasenotes.html">
                 Hadoop 1.0.1 Release Notes</a> for details.  
@@ -639,7 +645,7 @@
                 has significant improvements compared to 0.23.0 but should still
                 be considered as alpha-quality and not for production use.
         </p>
-        <p>     hadoop-0.23.1 contains several major advances from 0.23.0:
+        <p>     hadoop-0.23.1 contains several major advances from 0.23.0:        </p>
                 <ul>
                   <li>Lots of bug fixes and improvements in both HDFS and MapReduce</li>
                   <li>Major performance work to make this release either match
@@ -649,7 +655,7 @@
                   etc. are better integrated with this release</li>
                 </ul>
 
-        </p>
+
         <p>     See the <a 
                 href="http://hadoop.apache.org/docs/r0.23.1/hadoop-project-dist/hadoop-common/releasenotes.html">
                 Hadoop 0.23.1 Release Notes</a> for details.  
@@ -660,7 +666,7 @@
         <title>27 December, 2011: release 1.0.0 available </title>
         <p>     After six years of gestation, Hadoop reaches 1.0.0!
 	        This release is from the 0.20-security code line, and includes
-	        support for:
+	        support for:        </p>
 	        <ul>
 		  <li>security</li>
 		  <li>HBase (append/hsynch/hflush, and security)</li>
@@ -668,7 +674,7 @@
 		  <li>performance enhanced access to local files for HBase</li>
 		  <li>other performance enhancements, bug fixes, and features</li>
 		</ul>
-        </p>
+
         <p>     Please see the complete <a 
                 href="http://hadoop.apache.org/docs/r1.0.0/releasenotes.html">
                 Hadoop 1.0.0 Release Notes</a> for details.  
@@ -714,15 +720,15 @@
                 Apache Hadoop trunk in a long while. This release is
                 alpha-quality and not yet ready for serious use.
         </p>
-        <p>     hadoop-0.23 contains several major advances:
+        <p>     hadoop-0.23 contains several major advances:        </p>
                 <ul>
                   <li>HDFS Federation</li>
                   <li>NextGen MapReduce (YARN)</li>
                 </ul>
 
-                It also has several major performance improvements to 
-                both HDFS and MapReduce.
-        </p>
+        <p>     It also has several major performance improvements to 
+                both HDFS and MapReduce.</p>
+
         <p>     See the <a 
                 href="http://hadoop.apache.org/docs/r0.23.0/hadoop-project-dist/hadoop-common/releasenotes.html">
                 Hadoop 0.23.0 Release Notes</a> for details.  
@@ -736,10 +742,10 @@
                 debs, all duly checksummed and securely signed.</p>
         <p>See the <a href="http://hadoop.apache.org/docs/r0.20.205.0/releasenotes.html">Hadoop 0.20.205.0 Release Notes</a> for details.  
            Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.205.0/changes.html">change log for this release</a>.</p>
-        <p>Notes:<ul>
+        <p>Notes:</p><ul>
            <li> This release includes a merge of append/hsynch/hflush capabilities from 0.20-append branch, to support HBase in secure mode.</li>
            <li> This release includes the new webhdfs file system, but webhdfs write calls currently fail in secure mode.</li>
-	</ul></p>
+	</ul>
       </section>
 
       <section>
@@ -749,18 +755,19 @@
                 debs for the first time.</p>
         <p>See the <a href="http://hadoop.apache.org/docs/r0.20.204.0/releasenotes.html">Hadoop 0.20.204.0 Release Notes</a> for details.  
            Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.204.0/changes.html">change log for this release</a>.</p>
-        <p>Notes:
+        <p>Notes:	 </p>
 	<ul>
            <li> The RPMs don't work with security turned on. (HADOOP-7599)</li>
            <li> The NameNode's edit log needs to be merged into the image 
-                via</li>
+                via
            <ul>
              <li> put the NameNode into safe mode</li>
              <li> run dfsadmin savenamespace command</li>
              <li> perform a normal upgrade</li>
            </ul>
+           </li>
 	</ul>
-	 </p>
+
       </section>
 
       <section>
