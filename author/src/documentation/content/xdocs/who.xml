@@ -455,6 +455,14 @@
          <td>-8</td>
        </tr>
 
+       <tr>
+         <td>wheat9</td>
+         <td><a href="http://haohui.me">Haohui Mai</a></td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
     <tr>
         <td>zjshen</td>
         <td><a href="http://people.apache.org/~zjshen">Zhijie Shen</a></td>
@@ -1149,7 +1157,7 @@
 
        <tr>
          <td>wheat9</td>
-         <td>Haohui Mai</td>
+         <td><a href="http://haohui.me">Haohui Mai</a></td>
          <td>Hortonworks</td>
          <td></td>
          <td>-8</td>
