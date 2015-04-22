@@ -16,7 +16,8 @@
 
       <ul>
         <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-	      <li><strong>2.6.X - </strong> stable 2.x version</li>
+	      <li><strong>2.6.X - </strong> latest stable 2.x version</li>
+	      <li><strong>2.7.X - </strong> latest 2.x version</li>
         <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
       </ul>
 
