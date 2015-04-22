@@ -37,6 +37,92 @@
       <title>News</title>
 
       <section>
+        <title>21 April 2015: Release 2.7.0 available </title>
+        <p>     Apache Hadoop 2.7.0 contains a number of significant 
+                enhancements. A few of them are noted below.
+        </p>
+
+        <ul>
+          <li>IMPORTANT notes
+            <ul>
+              <li>This release drops support for JDK6 runtime and works with
+                  JDK 7+ only.
+              </li>
+              <li>This release is not yet ready for production use. Critical
+                  issues are  being ironed out via testing and downstream
+                  adoption. Production users should wait for a 2.7.1/2.7.2
+                  release.
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop Common
+            <ul>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/HADOOP-9629">
+                HADOOP-9629</a>
+                - Support Windows Azure Storage - Blob as a file
+                system in Hadoop.
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop HDFS
+            <ul>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/HDFS-3107">
+                HDFS-3107</a>
+                 - Support for file truncate
+              </li>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/HDFS-7584">
+                HDFS-7584</a>
+                - Support for quotas per storage type
+              </li>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/HDFS-3689">
+                HDFS-3689</a>
+                 - Support for files with variable-length blocks
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop YARN
+            <ul>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/YARN-3100">
+                YARN-3100</a>
+                 - Make YARN authorization pluggable
+              </li>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/YARN-1492">
+                YARN-1492</a>
+                 - Automatic shared, global caching of YARN localized resources
+                 (beta)
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop MapReduce
+            <ul>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5583">
+                MAPREDUCE-5583</a>
+                 - Ability to limit running Map/Reduce tasks of a job
+              </li>
+              <li>
+                <a href="https://issues.apache.org/jira/browse/MAPREDUCE-4815">
+                MAPREDUCE-4815</a>
+                 - Speed up FileOutputCommitter for very large jobs with many
+                 output files.
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.7.0/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.7.0 Release Notes</a> for details.  
+        </p>
+      </section>
+
+      <section>
         <title>18 November, 2014: Release 2.6.0 available </title>
         <p>     Apache Hadoop 2.6.0 contains a number of significant 
                 enhancements such as:
@@ -100,8 +186,6 @@
             <li><a href="https://issues.apache.org/jira/browse/YARN-1051">
                 YARN-1051</a> - Support for time-based resource reservations in 
               Capacity Scheduler (beta)</li>
-            <li><a href="https://issues.apache.org/jira/browse/YARN-1492">
-                YARN-1492</a> - Global, shared cache for application artifacts (beta)</li>
             <li><a href="https://issues.apache.org/jira/browse/YARN-1964">
                 YARN-1964</a> - Support running of applications natively in 
               Docker containers (alpha)</li>

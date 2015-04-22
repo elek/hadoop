@@ -139,6 +139,77 @@
     <title>News</title>
 
       <section>
+        <title>21 April 2015: Release 2.7.0 available </title>
+        <p>     Apache Hadoop 2.7.0 contains a number of significant 
+                enhancements. A few of them are noted below.
+        </p>
+
+        <ul>
+          <li><b>IMPORTANT notes</b>
+            <ul>
+              <li>This release drops support for JDK6 runtime and works with
+                  JDK 7+ only.
+              </li>
+              <li>This release is not yet ready for production use. Critical
+                  issues are  being ironed out via testing and downstream
+                  adoption. Production users should wait for a 2.7.1/2.7.2
+                  release.
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop Common
+            <ul>
+              <li>
+                Support Windows Azure Storage - Blob as a file
+                system in Hadoop.
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop HDFS
+            <ul>
+              <li>
+                 Support for file truncate
+              </li>
+              <li>
+                Support for quotas per storage type
+              </li>
+              <li>
+                 Support for files with variable-length blocks
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop YARN
+            <ul>
+              <li>
+                 Make YARN authorization pluggable
+              </li>
+              <li>
+                 Automatic shared, global caching of YARN localized resources
+                 (beta)
+              </li>
+            </ul>
+          </li>
+          <li>Hadoop MapReduce
+            <ul>
+              <li>
+                 Ability to limit running Map/Reduce tasks of a job
+              </li>
+              <li>
+                 Speed up FileOutputCommitter for very large jobs with many
+                 output files.
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>     
+	        Full information about this milestone release is available at
+	        <a href="releases.html#News">
+                Hadoop Releases</a>.  
+        </p>
+      </section>
+
+      <section>
         <title>18 November, 2014: release 2.6.0 available </title>
 
         <p>     Apache Hadoop 2.6.0 contains a number of significant 
