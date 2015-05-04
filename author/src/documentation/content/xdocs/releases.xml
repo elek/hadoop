@@ -6,7 +6,7 @@
 <document> 
 
   <header> 
-    <title>Hadoop Releases</title> 
+    <title>Apache Hadoop Releases</title> 
   </header> 
 
   <body> 
@@ -14,28 +14,106 @@
     <section>
       <title>Download</title>
 
-      <ul>
-        <li><strong>1.2.X - </strong> current stable version, 1.2 release</li>
-	      <li><strong>2.6.X - </strong> latest stable 2.x version</li>
-	      <li><strong>2.7.X - </strong> latest 2.x version</li>
-        <li><strong>0.23.X - </strong> similar to 2.X.X but missing NN HA.</li>
-      </ul>
-
-      <p>Releases may be downloaded from Apache mirrors.</p>
-
       <p>
-      <a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/">
-      <strong>Download a release now!</strong></a>
+      Hadoop is released as source code tarballs with corresponding binary 
+      tarballs for convenience. The downloads are distributed via mirror
+      sites and should be checked for tampering using GPG or SHA-256.
       </p>
 
-      <p>On the mirror, all recent releases are available.</p>
-      
-      <p>Third parties may distribute products that include Apache Hadoop and derived works, under the Apache License.
-      Some of these are listed on the <a href="http://wiki.apache.org/hadoop/Distribution">Distributions wiki page</a>.</p>
+      <p>
+      <table>
+       <tr>
+         <th>Version</th>
+         <th>Release Date</th>
+         <th>Tarball</th>
+         <th>GPG</th>
+         <th>SHA-256</th>
+       </tr>
+       <tr>
+         <td><a href="#21+April+2015%3A+Release+2.7.0+available">2.7.0</a></td>
+         <td>21 Apr 2015</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz.mds">E7F877A3 A978D07A..</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz.mds">AD270AF0 5FFF59D3..</a></td>
+       </tr>
+       <tr>
+         <td><a href="#18+November%2C+2014%3A+Release+2.6.0+available">2.6.0</a></td>
+         <td>18 Nov 2014</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz.mds">51A6520B 982D7D31..</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz.mds">7A2EF6E7 F468AFCA..</a></td>
+       </tr>
+       <tr>
+         <td><a href="#19+November%2C+2014%3A+Release+2.5.2+available">2.5.2</a></td>
+         <td>19 Nov 2014</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz.mds">139EF872 09C5637E..</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.5.2/hadoop-2.5.2.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2.tar.gz.mds">0BDB4850 A3825208..</a></td>
+       </tr>
+     </table>
+     </p>
+
+     <p>To verify Hadoop releases using GPG:
+        <ol>
+        <li> Download the release hadoop-X.Y.Z-src.tar.gz from a
+             <a href="http://www.apache.org/dyn/closer.cgi/hadoop/common">
+             mirror site</a>.</li>
+        <li> Download the signature file hadoop-X.Y.Z-src.tar.gz.asc from
+             <a href="https://dist.apache.org/repos/dist/release/hadoop/common/">
+             Apache</a>.</li>
+        <li> Download the
+             <a href="https://dist.apache.org/repos/dist/release/hadoop/common/KEYS">
+             Hadoop KEYS</a> file.</li>
+        <li> gpg --import KEYS</li>
+        <li> gpg --verify hadoop-X.Y.Z-src.tar.gz.asc</li>
+        </ol>
+        To perform a quick check using SHA-256:
+        <ol>
+        <li> Download the release hadoop-X.Y.Z-src.tar.gz from a
+             <a href="http://www.apache.org/dyn/closer.cgi/hadoop/common">
+             mirror site</a>.</li>
+        <li> Download the checksum hadoop-X.Y.Z-src.tar.gz.mds from
+             <a href="https://dist.apache.org/repos/dist/release/hadoop/common/">
+             Apache</a>.</li>
+        <li> shasum -a 256 hadoop-X.Y.Z-src.tar.gz</li>
+        </ol>
+     </p>
+
+     <p>All previous releases of Hadoop are available from the
+        <a href="https://archive.apache.org/dist/hadoop/common/">
+        Apache release archive</a> site.
+     </p>
+
+     <p>Many third parties distribute products that include Apache Hadoop
+        and related tools. Some of these are listed on the
+        <a href="http://wiki.apache.org/hadoop/Distribution">Distributions
+	wiki page</a>.
+    </p>
     </section>
 
     <section>
-      <title>News</title>
+      <title>Release Notes</title>
 
       <section>
         <title>21 April 2015: Release 2.7.0 available </title>
