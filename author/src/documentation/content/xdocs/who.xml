@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
           "http://forrest.apache.org/dtd/document-v20.dtd">
 
-<document> 
+<document>
 
-  <header> 
-    <title>Who We Are</title> 
-  </header> 
+  <header>
+    <title>Who We Are</title>
+  </header>
 
-  <body> 
+  <body>
 
     <section>
       <title>Apache Hadoop Project Members</title>
@@ -34,7 +34,7 @@
 
       <p>
       The Hadoop Project Management Committee contains (in alphabetical
-      order): 
+      order):
       </p>
 
       <table>
@@ -215,11 +215,11 @@
 	  <td>-8</td>
 	</tr>
 
-      <tr>                                                                     
+      <tr>
          <td>jianhe</td>
-         <td><a href="http://people.apache.org/~jianhe">Jian He</a></td> 
+         <td><a href="http://people.apache.org/~jianhe">Jian He</a></td>
          <td>Hortonworks</td>
-         <td></td>                                                   
+         <td></td>
          <td>-8</td>
       </tr>
 
@@ -349,7 +349,7 @@
 	  <td>Hortonworks</td>
 	  <td></td>
 	  <td>-8</td>
-	</tr> 
+	</tr>
 
        <tr>
          <td>sseth</td>
@@ -358,7 +358,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-    
+
 	<tr>
 	  <td>stack</td>
 	  <td>Michael Stack</td>
@@ -374,14 +374,14 @@
 	  <td></td>
 	  <td>0</td>
 	</tr>
-	
+
    	<tr>
 	  <td>suresh</td>
 	  <td><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
 	  <td>Hortonworks</td>
 	  <td></td>
 	  <td>-8</td>
-	</tr> 
+	</tr>
 
         <tr>
           <td>szetszwo</td>
@@ -586,7 +586,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>benoy</td>
          <td><a href="http://people.apache.org/~benoy">Benoy Antony</a></td>
@@ -787,11 +787,11 @@
          <td>-8</td>
        </tr>
 
-       <tr>                                                                     
+       <tr>
          <td>jianhe</td>
-         <td><a href="http://people.apache.org/~jianhe">Jian He</a></td> 
+         <td><a href="http://people.apache.org/~jianhe">Jian He</a></td>
          <td>Hortonworks</td>
-         <td></td>                                                   
+         <td></td>
          <td>-8</td>
        </tr>
 
@@ -867,6 +867,14 @@
          <td>-8</td>
        </tr>
 
+	   <tr>
+         <td>lei</td>
+		 <td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
+         <td>Cloudera</td>
+		 <td></td>
+		 <td>-8</td>
+       </tr>
+
        <tr>
          <td>lohit</td>
          <td><a href="http://people.apache.org/~lohit">Lohit Vijayarenu</a></td>
@@ -914,7 +922,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-       
+
 	   <tr>
          <td>molkov</td>
          <td><a href="http://people.apache.org/~molkov">Dmytro Molkov</a></td>
@@ -938,7 +946,7 @@
          <td>QA</td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>omalley</td>
          <td><a href="http://people.apache.org/~omalley">Owen O'Malley</a></td>
@@ -1034,7 +1042,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>sreekanth</td>
          <td>Sreekanth Ramakrishnan</td>
@@ -1106,7 +1114,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>tomwhite</td>
          <td><a href="http://www.lexemetech.com">Tom White</a></td>
@@ -1162,7 +1170,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>wangda</td>
          <td>Wangda Tan</td>
@@ -1226,7 +1234,7 @@
          <td></td>
          <td>-8</td>
        </tr>
-		
+
      </table>
    </section>
 
