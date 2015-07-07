@@ -30,22 +30,22 @@
          <th>SHA-256</th>
        </tr>
        <tr>
-         <td><a href="#21+April+2015%3A+Release+2.7.0+available">2.7.0</a></td>
-         <td>21 Apr 2015</td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz">source</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0-src.tar.gz.mds">E7F877A3 A978D07A..</a></td>
+         <td><a href="#06+July%2C+2015%3A+Release+2.7.1+%28stable%29+available">2.7.1</a></td>
+         <td>06 July, 2015</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.1/hadoop-2.7.1-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1-src.tar.gz.mds">53F3001C 457AD8FD..</a></td>
        </tr>
        <tr>
          <td></td>
          <td></td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz">binary</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz.mds">AD270AF0 5FFF59D3..</a></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz.mds">991DC34E A42A80B2..</a></td>
        </tr>
        <tr>
          <td><a href="#18+November%2C+2014%3A+Release+2.6.0+available">2.6.0</a></td>
-         <td>18 Nov 2014</td>
+         <td>18 Nov, 2014</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz">source</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz.asc">signature</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.0/hadoop-2.6.0-src.tar.gz.mds">51A6520B 982D7D31..</a></td>
@@ -59,7 +59,7 @@
        </tr>
        <tr>
          <td><a href="#19+November%2C+2014%3A+Release+2.5.2+available">2.5.2</a></td>
-         <td>19 Nov 2014</td>
+         <td>19 Nov, 2014</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz">source</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz.asc">signature</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.5.2/hadoop-2.5.2-src.tar.gz.mds">139EF872 09C5637E..</a></td>
@@ -114,6 +114,20 @@
 
     <section>
       <title>Release Notes</title>
+
+      <section>
+        <title>06 July, 2015: Release 2.7.1 (stable) available </title>
+        <p>     A point release for the 2.7 line. This release is now considered
+                stable.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.7.1/releasenotes.html">
+                Hadoop 2.7.1 Release Notes</a> for the list of 131 bug fixes and
+                patches since the previous release 2.7.0. Please look at the
+                2.7.0 section below for the list of enhancements enabled by this
+                first stable release of 2.7.x.
+        </p>
+      </section>
 
       <section>
         <title>21 April 2015: Release 2.7.0 available </title>

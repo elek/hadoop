@@ -139,6 +139,20 @@
     <title>News</title>
 
       <section>
+        <title>06 July, 2015: Release 2.7.1 (stable) available </title>
+        <p>     A point release for the 2.7 line. This release is now considered
+                stable.
+        </p>
+        <p>     Please see the <a
+                href="http://hadoop.apache.org/docs/r2.7.1/releasenotes.html">
+                Hadoop 2.7.1 Release Notes</a> for the list of 131 bug fixes and
+                patches since the previous release 2.7.0. Please look at the
+                2.7.0 section below for the list of enhancements enabled by this
+                first stable release of 2.7.x.
+        </p>
+      </section>
+
+      <section>
         <title>21 April 2015: Release 2.7.0 available </title>
         <p>     Apache Hadoop 2.7.0 contains a number of significant 
                 enhancements. A few of them are noted below.
