@@ -30,18 +30,18 @@
          <th>SHA-256</th>
        </tr>
        <tr>
-         <td><a href="#23+September%2C+2015%3A+Release+2.6.1+available">2.6.1</a></td>
-         <td>23 Sep, 2015</td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.1/hadoop-2.6.1-src.tar.gz">source</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.1/hadoop-2.6.1-src.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.1/hadoop-2.6.1-src.tar.gz.mds">813E7C57 FD9869C8..</a></td>
+         <td><a href="#28+October%2C+2015%3A+Release+2.6.2+available">2.6.2</a></td>
+         <td>28 Oct, 2015</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.2/hadoop-2.6.2-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.2/hadoop-2.6.2-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.2/hadoop-2.6.2-src.tar.gz.mds">6996A4A8 0FCE9109..</a></td>
        </tr>
        <tr>
          <td></td>
          <td></td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.1/hadoop-2.6.1.tar.gz">binary</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.1/hadoop-2.6.1.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.1/hadoop-2.6.1.tar.gz.mds">7EC1AA97 75BB65F3..</a></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz.mds">56F630D7 0D4C7850..</a></td>
        </tr>
        <tr>
          <td><a href="#06+July%2C+2015%3A+Release+2.7.1+%28stable%29+available">2.7.1</a></td>
@@ -128,6 +128,16 @@
 
     <section>
       <title>Release Notes</title>
+
+      <section>
+        <title>28 October, 2015: Release 2.6.2 available</title>
+        <p>    Apache Hadoop 2.6.2 is a point release in the 2.6.x release line,
+               and fixes a few critical issues in 2.6.1.</p>
+        <p>    Please see the <a 
+               href="http://hadoop.apache.org/docs/r2.6.2/hadoop-project-dist/hadoop-common/releasenotes.html">
+               Hadoop 2.6.2 Release Notes</a> for details.  
+        </p>
+      </section>
 
       <section>
 	<title>23 September, 2015: Release 2.6.1 available</title>
