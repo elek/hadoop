@@ -139,6 +139,17 @@
     <title>News</title>
 
       <section>
+        <title>25 January, 2016: Release 2.7.2 (stable) available </title>
+        <p>     A point release for the 2.7 line.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.7.2 Release Notes</a> for the list of 155 bug fixes and
+                patches since the previous release 2.7.1.
+        </p>
+      </section>
+
+      <section>
         <title>17 December, 2015: Release 2.6.3 available </title>
         <p>     A point release for the 2.6 line.
         </p>
