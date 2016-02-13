@@ -30,6 +30,20 @@
          <th>SHA-256</th>
        </tr>
        <tr>
+         <td><a href="#11+February%2C+2016%3A+Release+2.6.4+available">2.6.4</a></td>
+         <td>11 February, 2016</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz.mds">F755D961 18316335..</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz.mds">C58F08D2 E0B13035..</a></td>
+       </tr>
+       <tr>
          <td><a href="#25+January%2C+2016%3A+Release+2.7.2+%28stable%29+available">2.7.2</a></td>
          <td>25 January, 2016</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.2/hadoop-2.7.2-src.tar.gz">source</a></td>
@@ -142,6 +156,16 @@
 
     <section>
       <title>Release Notes</title>
+
+      <section>
+        <title>11 February, 2016: Release 2.6.4 available</title>
+        <p>    Apache Hadoop 2.6.4 is a point release in the 2.6.x release line,
+               and fixes a few critical issues in 2.6.3.</p>
+        <p>    Please see the <a 
+               href="http://hadoop.apache.org/docs/r2.6.4/hadoop-project-dist/hadoop-common/releasenotes.html">
+               Hadoop 2.6.4 Release Notes</a> for details.
+        </p>
+      </section>
 
       <section>
         <title>25 January, 2016: Release 2.7.2 (stable) available </title>

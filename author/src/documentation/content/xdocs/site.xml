@@ -37,7 +37,7 @@
     <stable label="Stable" href="ext:docs/stable/"/>
     <r1.2.1 label="Release 1.2.1" href="ext:docs/r1.2.1/"/>
     <r2.5.2 label="Release 2.5.2" href="ext:docs/r2.5.2/"/>
-    <r2.6.3 label="Release 2.6.3" href="ext:docs/r2.6.3/"/>
+    <r2.6.4 label="Release 2.6.4" href="ext:docs/r2.6.4/"/>
     <r0.23.11 label="Release 0.23.11" href="ext:docs/r0.23.11/"/>
     <r2.7.2 label="Release 2.7.2" href="ext:docs/r2.7.2/"/>
   </docs>
@@ -84,7 +84,7 @@
       <stable href="stable/"/>
       <r1.2.1 href="r1.2.1/"/>
       <r2.5.2 href="r2.5.2/"/>
-      <r2.6.3 href="r2.6.3/"/>
+      <r2.6.4 href="r2.6.4/"/>
       <r0.23.11 href="r0.23.11/"/>
       <r2.7.2 href="r2.7.2/"/>
     </docs>
