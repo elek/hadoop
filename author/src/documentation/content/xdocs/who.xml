@@ -488,9 +488,17 @@
        </tr>
 
        <tr>
+         <td>wangda</td>
+         <td>Wangda Tan</td>
+         <td>Hortonworks</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
          <td>wheat9</td>
          <td><a href="http://haohui.me">Haohui Mai</a></td>
-         <td>Hortonworks</td>
+         <td>Uber</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -800,6 +808,14 @@
          <td><a href="http://people.apache.org/~gkesavan">Giridharan Kesavan</a></td>
          <td>Hortonworks</td>
          <td>RE</td>
+         <td>-8</td>
+       </tr>
+       
+       <tr>
+         <td>gtcarrera9</td>
+         <td>Li Lu</td>
+         <td>Hortonworks</td>
+         <td></td>
          <td>-8</td>
        </tr>
 
@@ -1286,7 +1302,7 @@
        <tr>
          <td>wheat9</td>
          <td><a href="http://haohui.me">Haohui Mai</a></td>
-         <td>Hortonworks</td>
+         <td>Uber</td>
          <td></td>
          <td>-8</td>
        </tr>
