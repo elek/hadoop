@@ -287,6 +287,13 @@
           <td>-6</td>
         </tr>
 
+		<tr>
+	      <td>lei</td>
+		  <td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
+		  <td>Cloudera</td>
+		  <td></td>
+		  <td>-8</td>
+        </tr>
         <tr>
           <td>llu</td>
           <td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
@@ -842,7 +849,7 @@
          <td>RE</td>
          <td>-8</td>
        </tr>
-       
+
        <tr>
          <td>gtcarrera9</td>
          <td>Li Lu</td>
