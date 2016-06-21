@@ -79,6 +79,14 @@
     <td>-8</td>
   </tr>
 
+       <tr>
+         <td>asuresh</td>
+         <td>Arun Suresh</td>
+         <td>Microsoft</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
   <tr>
     <td>atm</td>
     <td><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
@@ -661,7 +669,7 @@
        <tr>
          <td>asuresh</td>
          <td>Arun Suresh</td>
-         <td>Cloudera</td>
+         <td>Microsoft</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -758,6 +766,14 @@
          <td>cos</td>
          <td><a href="http://people.apache.org/~cos">Konstantin Boudnik</a></td>
          <td>WANdisco</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
+         <td>curino</td>
+         <td>Carlo Curino</td>
+         <td>Microsoft</td>
          <td></td>
          <td>-8</td>
        </tr>
@@ -1241,6 +1257,14 @@
      	  <td></td>
      	  <td>0</td>
      	</tr>
+
+        <tr>
+         <td>subru</td>
+         <td>Subru Krishnan</td>
+         <td>Microsoft</td>
+         <td></td>
+         <td>-8</td>
+       </tr>
 
        <tr>
          <td>suresh</td>
