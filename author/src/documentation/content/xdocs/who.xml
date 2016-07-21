@@ -1419,6 +1419,14 @@
        </tr>
 
        <tr>
+         <td>xiao</td>
+         <td>Xiao Chen</td>
+         <td>Cloudera</td>
+         <td>HDFS</td>
+         <td>-8</td>
+       </tr>
+
+       <tr>
          <td>xyao</td>
          <td><a href="http://people.apache.org/~xyao">Xiaoyu Yao</a></td>
          <td>Hortonworks</td>
