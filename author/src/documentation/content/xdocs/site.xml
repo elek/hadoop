@@ -29,6 +29,8 @@
     <thanks      label="Thanks" href="ext:thanks" />
     <privacy      label="Privacy Policy" href="privacy_policy.html" />    
     <bylaws       label="Bylaws" href="bylaws.html"/>
+    <committer       label="Committer criteria" href="committer_criteria.html"/>
+    <versioning       label="Release Versioning" href="versioning.html"/>
     <license label="License" href="ext:license" />
   </project>
 
