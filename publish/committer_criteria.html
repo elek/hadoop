@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.9">
 <meta name="Forrest-skin-name" content="hadoop-pelt">
-<title>Hadoop Version Control System</title>
+<title>Committer Criteria</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
@@ -113,8 +113,8 @@ document.write("Last Published: " + document.lastModified);
     |start Menu
     +-->
 <div id="menu">
-<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">About</div>
-<div id="menu_1.1" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">About</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="index.html">Welcome</a>
 </div>
@@ -151,8 +151,16 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="bylaws.html">Bylaws</a>
 </div>
-<div class="menuitem">
-<a href="committer_criteria.html">Committer criteria</a>
+<div class="menupage">
+<div class="menupagetitle">Committer criteria</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Criteria for Committership" href="#Criteria+for+Committership">Criteria for Commit...</a>
+</div>
+<div class="menupageitem">
+<a title="Example Paths to Committership" href="#Example+Paths+to+Committership">Example Paths to Co...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="http://www.apache.org/licenses/">License</a>
@@ -237,59 +245,45 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="version_control.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="committer_criteria.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Hadoop Version Control System</h1>
-  
+<h1>Committer Criteria</h1> 
+
     
-<a name="N1000D"></a><a name="Overview"></a>
-<h2 class="h3">Overview</h2>
+<a name="N1000D"></a><a name="Criteria+for+Committership"></a>
+<h2 class="h3">Criteria for Committership</h2>
 <div class="section">
-<p>
-        The Hadoop source code resides in the Apache <a href="http://subversion.tigris.org/">Subversion (SVN)</a>
-        repository.  The command-line SVN client can be obtained <a href="http://subversion.tigris.org/project_packages.html">here</a>.
-        The TortoiseSVN GUI client for Windows can be obtained <a href="http://tortoisesvn.tigris.org/">here</a>. There are also
-        SVN plugins available for both <a href="http://subclipse.tigris.org/">Eclipse</a> and <a href="http://svnup.tigris.org/">IntelliJ IDEA</a>.
-      </p>
+<p>Committers are responsible for reviewing and integrating code changes. The PMC votes to make a contributor a committer based on an assessment of their contributions to the project. Contributions can be made in many ways, and there is no one route to committership. That said, here are the general criteria that the PMC looks for from all potential committers:</p>
+<ul>
+            
+<li>
+<strong>A history of sustained contribution to the project.</strong> This is a way for a contributor to demonstrate their expertise in an area, and thus their ability to help review and commit contributions by others in that same area. Sustained contribution is also a way of demonstrating commitment to the project, essentially that someone will continue contributing even after they become a committer.</li>
+            
+<li>
+<strong>High-quality contributions.</strong> As experienced contributors, committers set an example for others in the project, and help inculcate a culture of high-quality contributions. For code contributions, this means clean, documented code which includes unit tests if appropriate and passes precommit checks. For reviews, this means thorough, actionable feedback, and a +1 vote (even non-binding) only when there is a high degree of confidence in the change.</li>
+            
+<li>
+<strong>Community involvement.</strong> Contributors are always expected to be polite, constructive, and respectful of others during community interactions. Disagreement can (and will) happen over technical issues, but the discussion should remain friendly and focused on technical merits. Committers also have the additional responsibility of mentoring newer contributors, as well as helping to grow the community through actions like responding to emails on the user and dev list.</li>
+        
+</ul>
 </div>
+
     
-    
-<a name="N1002B"></a><a name="Web+Access+%28read-only%29"></a>
-<h2 class="h3">Web Access (read-only)</h2>
+<a name="N10028"></a><a name="Example+Paths+to+Committership"></a>
+<h2 class="h3">Example Paths to Committership</h2>
 <div class="section">
+<p>Here are a few hypothetical example paths to a commit bit:</p>
 <p>
-        The source code can be browsed via the Web at 
-        <a href="http://svn.apache.org/viewcvs.cgi/hadoop/common/trunk/">http://svn.apache.org/viewcvs.cgi/hadoop/common/trunk/</a>.
-        No SVN client software is required.
-      </p>
-</div>
-    
-    
-<a name="N10039"></a><a name="Anonymous+Access+%28read-only%29"></a>
-<h2 class="h3">Anonymous Access (read-only)</h2>
-<div class="section">
+<em>Han Meimei</em> works at a big company operating a large Apache Hadoop cluster. While deploying the newest version of Hadoop to her staging cluster, she discovers a number of bugs and performance regressions. She files JIRAs for these issues, and is able to post patches for some of them. On the remaining JIRAs, she works with other community members by doing additional debugging on her cluster and testing and reviewing intermediate patches. Additionally, Han Meimei works with the release manager of the release line, <em>Lei Li</em>, to make sure critical issues are backported to the next maintenance release. Han Meimei also makes an effort to help fix and review other critical issues targeted at the next maintenance release, even though her cluster is not currently affected. She continues doing similar stabilization work for subsequent maintenance releases in this release line, demonstrating her commitment to shipping high-quality upstream releases.</p>
 <p>
-        The SVN URL for anonymous users is 
-        <a href="http://svn.apache.org/repos/asf/hadoop/common/trunk/">http://svn.apache.org/repos/asf/hadoop/common/trunk/</a>.
-        Instructions for anonymous SVN access are 
-        <a href="http://www.apache.org/dev/version-control.html#anon-svn">here</a>.
-      </p>
-</div>
-    
-    
-<a name="N1004B"></a><a name="Committer+Access+%28read-write%29"></a>
-<h2 class="h3">Committer Access (read-write)</h2>
-<div class="section">
+<em>Elise</em> works at a commercial big data vendor as a developer. Elise ramps up by doing some newbie JIRAs, but then gets involved with a large cross-company development effort happening on a feature branch. Elise helps to review the design of the feature, providing constructive feedback, and works with other community members to divide the work into subtasks. At this point, the PMC grants Elise branch committership to accelerate development. Elise submits good patches for a number of subtasks, and shows care and thoroughness when reviewing and committing code of others. After the feature branch is later merged to trunk, Elise continues to find and fix bugs related to the feature, as well as reviewing code contributions from others.</p>
 <p>
-        The SVN URL for committers is 
-        <a href="https://svn.apache.org/repos/asf/hadoop/common/trunk/">https://svn.apache.org/repos/asf/hadoop/common/trunk/</a>.
-        Instructions for committer SVN access are 
-        <a href="http://www.apache.org/dev/version-control.html#https-svn">here</a>.
-      </p>
+<em>Raj</em> works as a test engineer at a commercial big data vendor. Raj notices the lack of integration testing upstream, and contributes a test harness for fault-injection testing which is committed to the project. Raj coordinates with the PMC to get the test harness running on Apache infrastructure, and starts triaging the output and filing JIRAs for relevant bugs with reproductions. Raj helps with gathering logs and reproducing issues, and continues making improvements to the test harness.</p>
+<p>
+<em>Peter</em> is a technical writer interested in improving Hadoop's documentation. He starts by fixing outdated information and incorrect examples, reaching out to subject matter experts and exploring the codebase to clarify technical details. As Peter becomes more familiar with the set of documentation, he realizes that a newly contributed feature didn't include sufficient documentation, and contributes a guide on how to setup and use the feature that also explains some of the design decisions that influenced API design. Peter continues to broaden his doc contributions to more and more areas, and also is active answering user questions on the mailing list. This demonstrates his knowledge of the project, attention to detail, and also his user-focus.</p>
 </div>
-    
-  
+
 </div>
 <!--+
     |end content

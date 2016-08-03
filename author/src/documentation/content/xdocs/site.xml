@@ -20,6 +20,7 @@
   <project label="About">
     <news       label="Welcome"          href="index.html" />    
     <releases   label="Releases"         href="releases.html" />
+    <versioning       label="Release Versioning" href="versioning.html"/>
     <mail         label="Mailing Lists"     href="mailing_lists.html" />    
     <issues      label="Issue Tracking" href="issue_tracking.html" />    
     <who         label="Who We Are?"   href="who.html" />    
@@ -30,7 +31,6 @@
     <privacy      label="Privacy Policy" href="privacy_policy.html" />    
     <bylaws       label="Bylaws" href="bylaws.html"/>
     <committer       label="Committer criteria" href="committer_criteria.html"/>
-    <versioning       label="Release Versioning" href="versioning.html"/>
     <license label="License" href="ext:license" />
   </project>
 
