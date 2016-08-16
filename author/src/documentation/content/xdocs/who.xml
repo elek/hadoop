@@ -302,6 +302,15 @@
 		  <td></td>
 		  <td>-8</td>
         </tr>
+
+  <tr>
+    <td>liuml07</td>
+    <td><a href="http://people.apache.org/~liuml07">Mingliang Liu</a></td>
+    <td>Hortonworks</td>
+    <td>HDFS</td>
+    <td>-8</td>
+  </tr>
+
         <tr>
           <td>llu</td>
           <td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
