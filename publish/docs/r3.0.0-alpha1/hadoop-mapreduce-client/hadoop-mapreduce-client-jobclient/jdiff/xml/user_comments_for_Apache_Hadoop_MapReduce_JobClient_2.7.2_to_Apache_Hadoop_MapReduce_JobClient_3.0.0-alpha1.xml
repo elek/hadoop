@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<comments
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:noNamespaceSchemaLocation='comments.xsd'
+  name="Apache_Hadoop_MapReduce_JobClient_2.7.2_to_Apache_Hadoop_MapReduce_JobClient_3.0.0-alpha1"
+  jdversion="1.0.9">
+
+<!-- This file contains comments for a JDiff report. -->
+<!-- It is used only in generating the report, and does not need to ship with the final report. -->
+
+<!-- The id attribute in an identifier element identifiers the change as noted in the report. -->
+<!-- An id has the form package[.class[.[ctor|method|field].signature]], where [] indicates optional text. -->
+<!-- A comment element can have multiple identifier elements, which will -->
+<!-- will cause the same text to appear at each place in the report, but -->
+<!-- will be converted to separate comments when the comments file is used. -->
+<!-- HTML tags in the text field will appear in the report. -->
+<comment>
+  <identifier id="org.apache.hadoop.mapred"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ClientCache"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ClientCache.close_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ClientServiceDelegate"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ClientServiceDelegate.close_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.createReservation_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.failApplicationAttempt_added(org.apache.hadoop.yarn.api.records.ApplicationAttemptId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.getApplications_added(java.util.Set, java.util.EnumSet, java.util.Set)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.getApplications_added(java.util.Set, java.util.Set, java.util.Set, java.util.EnumSet)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.getClusterNodeLabels_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.listReservations_added(org.apache.hadoop.yarn.api.protocolrecords.ReservationListRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.signalToContainer_added(org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.SignalContainerCommand)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.ResourceMgrDelegate.updateApplicationPriority_added(org.apache.hadoop.yarn.api.records.ApplicationId, org.apache.hadoop.yarn.api.records.Priority)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.YARNRunner"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.YARNRunner.AM_CONTAINER_PRIORITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.YARNRunner.close_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapred.YARNRunner.setResourceMgrDelegate_removed(org.apache.hadoop.mapred.ResourceMgrDelegate)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+
+</comments>

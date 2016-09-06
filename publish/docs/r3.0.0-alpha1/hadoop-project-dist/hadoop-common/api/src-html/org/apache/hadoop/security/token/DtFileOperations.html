@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>package org.apache.hadoop.security.token;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import java.io.File;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.io.IOException;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.PrintStream;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.text.DateFormat;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.ArrayList;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Date;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.ServiceLoader;<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.commons.lang.StringUtils;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.commons.logging.Log;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.commons.logging.LogFactory;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.conf.Configuration;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.fs.Path;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.io.Text;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.security.Credentials;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.security.token.delegation.AbstractDelegationTokenIdentifier;<a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38"></a>
+<span class="sourceLineNo">039</span>/**<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * DtFileOperations is a collection of delegation token file operations.<a name="line.40"></a>
+<span class="sourceLineNo">041</span> */<a name="line.41"></a>
+<span class="sourceLineNo">042</span>public final class DtFileOperations {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>  private static final Log LOG = LogFactory.getLog(DtFileOperations.class);<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>  /** No public constructor as per checkstyle. */<a name="line.45"></a>
+<span class="sourceLineNo">046</span>  private DtFileOperations() { }<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>  /**<a name="line.48"></a>
+<span class="sourceLineNo">049</span>   * Use FORMAT_* as arguments to format parameters.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   * FORMAT_PB is for protobuf output.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>   */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>  public static final String FORMAT_PB = "protobuf";<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>  /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   * Use FORMAT_* as arguments to format parameters.<a name="line.55"></a>
+<span class="sourceLineNo">056</span>   * FORMAT_JAVA is a legacy option for java serialization output.<a name="line.56"></a>
+<span class="sourceLineNo">057</span>   */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>  public static final String FORMAT_JAVA = "java";<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>  private static final String NA_STRING = "-NA-";<a name="line.60"></a>
+<span class="sourceLineNo">061</span>  private static final String PREFIX_HTTP = "http://";<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  private static final String PREFIX_HTTPS = "https://";<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>  /** Let the DtFetcher code add the appropriate prefix if HTTP/S is used. */<a name="line.64"></a>
+<span class="sourceLineNo">065</span>  private static String stripPrefix(String u) {<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    return u.replaceFirst(PREFIX_HTTP, "").replaceFirst(PREFIX_HTTPS, "");<a name="line.66"></a>
+<span class="sourceLineNo">067</span>  }<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>  /** Match token service field to alias text.  True if alias is null. */<a name="line.69"></a>
+<span class="sourceLineNo">070</span>  private static boolean matchAlias(Token&lt;?&gt; token, Text alias) {<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    return alias == null || token.getService().equals(alias);<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  }<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>  /** Match fetcher's service name to the service text and/or url prefix. */<a name="line.74"></a>
+<span class="sourceLineNo">075</span>  private static boolean matchService(<a name="line.75"></a>
+<span class="sourceLineNo">076</span>      DtFetcher fetcher, Text service, String url) {<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    Text sName = fetcher.getServiceName();<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    return (service == null &amp;&amp; url.startsWith(sName.toString() + "://")) ||<a name="line.78"></a>
+<span class="sourceLineNo">079</span>           (service != null &amp;&amp; service.equals(sName));<a name="line.79"></a>
+<span class="sourceLineNo">080</span>  }<a name="line.80"></a>
+<span class="sourceLineNo">081</span><a name="line.81"></a>
+<span class="sourceLineNo">082</span>  /** Format a long integer type into a date string. */<a name="line.82"></a>
+<span class="sourceLineNo">083</span>  private static String formatDate(long date) {<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    DateFormat df = DateFormat.getDateTimeInstance(<a name="line.84"></a>
+<span class="sourceLineNo">085</span>        DateFormat.SHORT, DateFormat.SHORT);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    return df.format(new Date(date));<a name="line.86"></a>
+<span class="sourceLineNo">087</span>  }<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>  /** Add the service prefix for a local filesystem. */<a name="line.89"></a>
+<span class="sourceLineNo">090</span>  private static Path fileToPath(File f) {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    return new Path("file:" + f.getAbsolutePath());<a name="line.91"></a>
+<span class="sourceLineNo">092</span>  }<a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>  /** Write out a Credentials object as a local file.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>   *  @param f a local File object.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   *  @param format a string equal to FORMAT_PB or FORMAT_JAVA.<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   *  @param creds the Credentials object to be written out.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   *  @param conf a Configuration object passed along.<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   *  @throws IOException<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>  public static void doFormattedWrite(<a name="line.101"></a>
+<span class="sourceLineNo">102</span>      File f, String format, Credentials creds, Configuration conf)<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      throws IOException {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    if (format == null || format.equals(FORMAT_PB)) {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>      creds.writeTokenStorageFile(fileToPath(f), conf);<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    } else { // if (format != null &amp;&amp; format.equals(FORMAT_JAVA)) {<a name="line.106"></a>
+<span class="sourceLineNo">107</span>      creds.writeLegacyTokenStorageLocalFile(f);<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    }<a name="line.108"></a>
+<span class="sourceLineNo">109</span>  }<a name="line.109"></a>
+<span class="sourceLineNo">110</span><a name="line.110"></a>
+<span class="sourceLineNo">111</span>  /** Print out a Credentials file from the local filesystem.<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   *  @param tokenFile a local File object.<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   *  @param alias print only tokens matching alias (null matches all).<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   *  @param conf Configuration object passed along.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   *  @param out print to this stream.<a name="line.115"></a>
+<span class="sourceLineNo">116</span>   *  @throws IOException<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   */<a name="line.117"></a>
+<span class="sourceLineNo">118</span>  public static void printTokenFile(<a name="line.118"></a>
+<span class="sourceLineNo">119</span>      File tokenFile, Text alias, Configuration conf, PrintStream out)<a name="line.119"></a>
+<span class="sourceLineNo">120</span>      throws IOException {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    out.println("File: " + tokenFile.getPath());<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    Credentials creds = Credentials.readTokenStorageFile(tokenFile, conf);<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    printCredentials(creds, alias, out);<a name="line.123"></a>
+<span class="sourceLineNo">124</span>  }<a name="line.124"></a>
+<span class="sourceLineNo">125</span><a name="line.125"></a>
+<span class="sourceLineNo">126</span>  /** Print out a Credentials object.<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   *  @param creds the Credentials object to be printed out.<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   *  @param alias print only tokens matching alias (null matches all).<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   *  @param out print to this stream.<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   *  @throws IOException<a name="line.130"></a>
+<span class="sourceLineNo">131</span>   */<a name="line.131"></a>
+<span class="sourceLineNo">132</span>  public static void printCredentials(<a name="line.132"></a>
+<span class="sourceLineNo">133</span>      Credentials creds, Text alias, PrintStream out)<a name="line.133"></a>
+<span class="sourceLineNo">134</span>      throws IOException {<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    boolean tokenHeader = true;<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    String fmt = "%-24s %-20s %-15s %-12s %s%n";<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    for (Token&lt;?&gt; token : creds.getAllTokens()) {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>      if (matchAlias(token, alias)) {<a name="line.138"></a>
+<span class="sourceLineNo">139</span>        if (tokenHeader) {<a name="line.139"></a>
+<span class="sourceLineNo">140</span>          out.printf(fmt, "Token kind", "Service", "Renewer", "Exp date",<a name="line.140"></a>
+<span class="sourceLineNo">141</span>                     "URL enc token");<a name="line.141"></a>
+<span class="sourceLineNo">142</span>          out.println(StringUtils.repeat("-", 80));<a name="line.142"></a>
+<span class="sourceLineNo">143</span>          tokenHeader = false;<a name="line.143"></a>
+<span class="sourceLineNo">144</span>        }<a name="line.144"></a>
+<span class="sourceLineNo">145</span>        AbstractDelegationTokenIdentifier id =<a name="line.145"></a>
+<span class="sourceLineNo">146</span>            (AbstractDelegationTokenIdentifier) token.decodeIdentifier();<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        out.printf(fmt, token.getKind(), token.getService(),<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                   (id != null) ? id.getRenewer() : NA_STRING,<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                   (id != null) ? formatDate(id.getMaxDate()) : NA_STRING,<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                   token.encodeToUrlString());<a name="line.150"></a>
+<span class="sourceLineNo">151</span>      }<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    }<a name="line.152"></a>
+<span class="sourceLineNo">153</span>  }<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>  /** Fetch a token from a service and save to file in the local filesystem.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   *  @param tokenFile a local File object to hold the output.<a name="line.156"></a>
+<span class="sourceLineNo">157</span>   *  @param fileFormat a string equal to FORMAT_PB or FORMAT_JAVA, for output<a name="line.157"></a>
+<span class="sourceLineNo">158</span>   *  @param alias overwrite service field of fetched token with this text.<a name="line.158"></a>
+<span class="sourceLineNo">159</span>   *  @param service use a DtFetcher implementation matching this service text.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>   *  @param url pass this URL to fetcher after stripping any http/s prefix.<a name="line.160"></a>
+<span class="sourceLineNo">161</span>   *  @param renewer pass this renewer to the fetcher.<a name="line.161"></a>
+<span class="sourceLineNo">162</span>   *  @param conf Configuration object passed along.<a name="line.162"></a>
+<span class="sourceLineNo">163</span>   *  @throws IOException<a name="line.163"></a>
+<span class="sourceLineNo">164</span>   */<a name="line.164"></a>
+<span class="sourceLineNo">165</span>  public static void getTokenFile(File tokenFile, String fileFormat,<a name="line.165"></a>
+<span class="sourceLineNo">166</span>      Text alias, Text service, String url, String renewer, Configuration conf)<a name="line.166"></a>
+<span class="sourceLineNo">167</span>      throws Exception {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    Token&lt;?&gt; token = null;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    Credentials creds = tokenFile.exists() ?<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        Credentials.readTokenStorageFile(tokenFile, conf) : new Credentials();<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    ServiceLoader&lt;DtFetcher&gt; loader = ServiceLoader.load(DtFetcher.class);<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    for (DtFetcher fetcher : loader) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>      if (matchService(fetcher, service, url)) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>        if (!fetcher.isTokenRequired()) {<a name="line.174"></a>
+<span class="sourceLineNo">175</span>          String message = "DtFetcher for service '" + service +<a name="line.175"></a>
+<span class="sourceLineNo">176</span>              "' does not require a token.  Check your configuration.  " +<a name="line.176"></a>
+<span class="sourceLineNo">177</span>              "Note: security may be disabled or there may be two DtFetcher " +<a name="line.177"></a>
+<span class="sourceLineNo">178</span>              "providers for the same service designation.";<a name="line.178"></a>
+<span class="sourceLineNo">179</span>          LOG.error(message);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>          throw new IllegalArgumentException(message);<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        }<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        token = fetcher.addDelegationTokens(conf, creds, renewer,<a name="line.182"></a>
+<span class="sourceLineNo">183</span>                                            stripPrefix(url));<a name="line.183"></a>
+<span class="sourceLineNo">184</span>      }<a name="line.184"></a>
+<span class="sourceLineNo">185</span>    }<a name="line.185"></a>
+<span class="sourceLineNo">186</span>    if (alias != null) {<a name="line.186"></a>
+<span class="sourceLineNo">187</span>      if (token == null) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        String message = "DtFetcher for service '" + service + "'" +<a name="line.188"></a>
+<span class="sourceLineNo">189</span>            " does not allow aliasing.  Cannot apply alias '" + alias + "'." +<a name="line.189"></a>
+<span class="sourceLineNo">190</span>            "  Drop alias flag to get token for this service.";<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        LOG.error(message);<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        throw new IOException(message);<a name="line.192"></a>
+<span class="sourceLineNo">193</span>      }<a name="line.193"></a>
+<span class="sourceLineNo">194</span>      Token&lt;?&gt; aliasedToken = token.copyToken();<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      aliasedToken.setService(alias);<a name="line.195"></a>
+<span class="sourceLineNo">196</span>      creds.addToken(alias, aliasedToken);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>      LOG.info("Add token with service " + alias);<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    }<a name="line.198"></a>
+<span class="sourceLineNo">199</span>    doFormattedWrite(tokenFile, fileFormat, creds, conf);<a name="line.199"></a>
+<span class="sourceLineNo">200</span>  }<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span>  /** Alias a token from a file and save back to file in the local filesystem.<a name="line.202"></a>
+<span class="sourceLineNo">203</span>   *  @param tokenFile a local File object to hold the input and output.<a name="line.203"></a>
+<span class="sourceLineNo">204</span>   *  @param fileFormat a string equal to FORMAT_PB or FORMAT_JAVA, for output<a name="line.204"></a>
+<span class="sourceLineNo">205</span>   *  @param alias overwrite service field of fetched token with this text.<a name="line.205"></a>
+<span class="sourceLineNo">206</span>   *  @param service only apply alias to tokens matching this service text.<a name="line.206"></a>
+<span class="sourceLineNo">207</span>   *  @param conf Configuration object passed along.<a name="line.207"></a>
+<span class="sourceLineNo">208</span>   *  @throws IOException<a name="line.208"></a>
+<span class="sourceLineNo">209</span>   */<a name="line.209"></a>
+<span class="sourceLineNo">210</span>  public static void aliasTokenFile(File tokenFile, String fileFormat,<a name="line.210"></a>
+<span class="sourceLineNo">211</span>      Text alias, Text service, Configuration conf) throws Exception {<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    Credentials newCreds = new Credentials();<a name="line.212"></a>
+<span class="sourceLineNo">213</span>    Credentials creds = Credentials.readTokenStorageFile(tokenFile, conf);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    for (Token&lt;?&gt; token : creds.getAllTokens()) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>      newCreds.addToken(token.getService(), token);<a name="line.215"></a>
+<span class="sourceLineNo">216</span>      if (token.getService().equals(service)) {<a name="line.216"></a>
+<span class="sourceLineNo">217</span>        Token&lt;?&gt; aliasedToken = token.copyToken();<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        aliasedToken.setService(alias);<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        newCreds.addToken(alias, aliasedToken);<a name="line.219"></a>
+<span class="sourceLineNo">220</span>      }<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    }<a name="line.221"></a>
+<span class="sourceLineNo">222</span>    doFormattedWrite(tokenFile, fileFormat, newCreds, conf);<a name="line.222"></a>
+<span class="sourceLineNo">223</span>  }<a name="line.223"></a>
+<span class="sourceLineNo">224</span><a name="line.224"></a>
+<span class="sourceLineNo">225</span>  /** Append tokens from list of files in local filesystem, saving to last file.<a name="line.225"></a>
+<span class="sourceLineNo">226</span>   *  @param tokenFiles list of local File objects.  Last file holds the output.<a name="line.226"></a>
+<span class="sourceLineNo">227</span>   *  @param fileFormat a string equal to FORMAT_PB or FORMAT_JAVA, for output<a name="line.227"></a>
+<span class="sourceLineNo">228</span>   *  @param conf Configuration object passed along.<a name="line.228"></a>
+<span class="sourceLineNo">229</span>   *  @throws IOException<a name="line.229"></a>
+<span class="sourceLineNo">230</span>   */<a name="line.230"></a>
+<span class="sourceLineNo">231</span>  public static void appendTokenFiles(<a name="line.231"></a>
+<span class="sourceLineNo">232</span>      ArrayList&lt;File&gt; tokenFiles, String fileFormat, Configuration conf)<a name="line.232"></a>
+<span class="sourceLineNo">233</span>      throws IOException {<a name="line.233"></a>
+<span class="sourceLineNo">234</span>    Credentials newCreds = new Credentials();<a name="line.234"></a>
+<span class="sourceLineNo">235</span>    File lastTokenFile = null;<a name="line.235"></a>
+<span class="sourceLineNo">236</span>    for (File tokenFile : tokenFiles) {<a name="line.236"></a>
+<span class="sourceLineNo">237</span>      lastTokenFile = tokenFile;<a name="line.237"></a>
+<span class="sourceLineNo">238</span>      Credentials creds = Credentials.readTokenStorageFile(tokenFile, conf);<a name="line.238"></a>
+<span class="sourceLineNo">239</span>      for (Token&lt;?&gt; token : creds.getAllTokens()) {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>        newCreds.addToken(token.getService(), token);<a name="line.240"></a>
+<span class="sourceLineNo">241</span>      }<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    }<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    doFormattedWrite(lastTokenFile, fileFormat, newCreds, conf);<a name="line.243"></a>
+<span class="sourceLineNo">244</span>  }<a name="line.244"></a>
+<span class="sourceLineNo">245</span><a name="line.245"></a>
+<span class="sourceLineNo">246</span>  /** Remove a token from a file in the local filesystem, matching alias.<a name="line.246"></a>
+<span class="sourceLineNo">247</span>   *  @param cancel cancel token as well as remove from file.<a name="line.247"></a>
+<span class="sourceLineNo">248</span>   *  @param tokenFile a local File object.<a name="line.248"></a>
+<span class="sourceLineNo">249</span>   *  @param fileFormat a string equal to FORMAT_PB or FORMAT_JAVA, for output<a name="line.249"></a>
+<span class="sourceLineNo">250</span>   *  @param alias remove only tokens matching alias; null matches all.<a name="line.250"></a>
+<span class="sourceLineNo">251</span>   *  @param conf Configuration object passed along.<a name="line.251"></a>
+<span class="sourceLineNo">252</span>   *  @throws IOException<a name="line.252"></a>
+<span class="sourceLineNo">253</span>   *  @throws InterruptedException<a name="line.253"></a>
+<span class="sourceLineNo">254</span>   */<a name="line.254"></a>
+<span class="sourceLineNo">255</span>  public static void removeTokenFromFile(boolean cancel,<a name="line.255"></a>
+<span class="sourceLineNo">256</span>      File tokenFile, String fileFormat, Text alias, Configuration conf)<a name="line.256"></a>
+<span class="sourceLineNo">257</span>      throws IOException, InterruptedException {<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    Credentials newCreds = new Credentials();<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    Credentials creds = Credentials.readTokenStorageFile(tokenFile, conf);<a name="line.259"></a>
+<span class="sourceLineNo">260</span>    for (Token&lt;?&gt; token : creds.getAllTokens()) {<a name="line.260"></a>
+<span class="sourceLineNo">261</span>      if (matchAlias(token, alias)) {<a name="line.261"></a>
+<span class="sourceLineNo">262</span>        if (token.isManaged() &amp;&amp; cancel) {<a name="line.262"></a>
+<span class="sourceLineNo">263</span>          token.cancel(conf);<a name="line.263"></a>
+<span class="sourceLineNo">264</span>          LOG.info("Canceled " + token.getKind() + ":" + token.getService());<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        }<a name="line.265"></a>
+<span class="sourceLineNo">266</span>      } else {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>        newCreds.addToken(token.getService(), token);<a name="line.267"></a>
+<span class="sourceLineNo">268</span>      }<a name="line.268"></a>
+<span class="sourceLineNo">269</span>    }<a name="line.269"></a>
+<span class="sourceLineNo">270</span>    doFormattedWrite(tokenFile, fileFormat, newCreds, conf);<a name="line.270"></a>
+<span class="sourceLineNo">271</span>  }<a name="line.271"></a>
+<span class="sourceLineNo">272</span><a name="line.272"></a>
+<span class="sourceLineNo">273</span>  /** Renew a token from a file in the local filesystem, matching alias.<a name="line.273"></a>
+<span class="sourceLineNo">274</span>   *  @param tokenFile a local File object.<a name="line.274"></a>
+<span class="sourceLineNo">275</span>   *  @param fileFormat a string equal to FORMAT_PB or FORMAT_JAVA, for output<a name="line.275"></a>
+<span class="sourceLineNo">276</span>   *  @param alias renew only tokens matching alias; null matches all.<a name="line.276"></a>
+<span class="sourceLineNo">277</span>   *  @param conf Configuration object passed along.<a name="line.277"></a>
+<span class="sourceLineNo">278</span>   *  @throws IOException<a name="line.278"></a>
+<span class="sourceLineNo">279</span>   *  @throws InterruptedException<a name="line.279"></a>
+<span class="sourceLineNo">280</span>   */<a name="line.280"></a>
+<span class="sourceLineNo">281</span>  public static void renewTokenFile(<a name="line.281"></a>
+<span class="sourceLineNo">282</span>      File tokenFile, String fileFormat, Text alias, Configuration conf)<a name="line.282"></a>
+<span class="sourceLineNo">283</span>      throws IOException, InterruptedException {<a name="line.283"></a>
+<span class="sourceLineNo">284</span>    Credentials creds = Credentials.readTokenStorageFile(tokenFile, conf);<a name="line.284"></a>
+<span class="sourceLineNo">285</span>    for (Token&lt;?&gt; token : creds.getAllTokens()) {<a name="line.285"></a>
+<span class="sourceLineNo">286</span>      if (token.isManaged() &amp;&amp; matchAlias(token, alias)) {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>        long result = token.renew(conf);<a name="line.287"></a>
+<span class="sourceLineNo">288</span>        LOG.info("Renewed" + token.getKind() + ":" + token.getService() +<a name="line.288"></a>
+<span class="sourceLineNo">289</span>                 " until " + formatDate(result));<a name="line.289"></a>
+<span class="sourceLineNo">290</span>      }<a name="line.290"></a>
+<span class="sourceLineNo">291</span>    }<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    doFormattedWrite(tokenFile, fileFormat, creds, conf);<a name="line.292"></a>
+<span class="sourceLineNo">293</span>  }<a name="line.293"></a>
+<span class="sourceLineNo">294</span>}<a name="line.294"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

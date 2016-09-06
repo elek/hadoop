@@ -1,0 +1,679 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.server.datanode;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import com.google.common.annotations.VisibleForTesting;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import com.google.common.base.Joiner;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import com.google.common.base.Preconditions;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.classification.InterfaceAudience;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.hadoop.conf.Configuration;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.hdfs.protocol.DatanodeID;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.hdfs.protocol.DatanodeInfo;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.apache.hadoop.hdfs.protocol.ErasureCodingPolicy;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.hadoop.hdfs.protocol.ExtendedBlock;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.hadoop.hdfs.protocol.RecoveryInProgressException;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.hadoop.hdfs.protocolPB.DatanodeProtocolClientSideTranslatorPB;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.hdfs.server.protocol.BlockRecoveryCommand.RecoveringBlock;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.hdfs.server.protocol.BlockRecoveryCommand.RecoveringStripedBlock;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.hdfs.server.protocol.InterDatanodeProtocol;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.hdfs.server.protocol.ReplicaRecoveryInfo;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.hdfs.util.StripedBlockUtil;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.apache.hadoop.ipc.RemoteException;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.apache.hadoop.util.Daemon;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.slf4j.Logger;<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>import java.io.IOException;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import java.util.ArrayList;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import java.util.Arrays;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import java.util.Collection;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import java.util.HashMap;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import java.util.List;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import java.util.Map;<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.BLOCK_GROUP_INDEX_MASK;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import static org.apache.hadoop.hdfs.util.StripedBlockUtil.getInternalBlockLength;<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>/**<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * This class handles the block recovery work commands.<a name="line.54"></a>
+<span class="sourceLineNo">055</span> */<a name="line.55"></a>
+<span class="sourceLineNo">056</span>@InterfaceAudience.Private<a name="line.56"></a>
+<span class="sourceLineNo">057</span>public class BlockRecoveryWorker {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>  public static final Logger LOG = DataNode.LOG;<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>  private final DataNode datanode;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>  private final Configuration conf;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  private final DNConf dnConf;<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>  BlockRecoveryWorker(DataNode datanode) {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    this.datanode = datanode;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    conf = datanode.getConf();<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    dnConf = datanode.getDnConf();<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  }<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>  /** A convenient class used in block recovery. */<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  static class BlockRecord {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    private final DatanodeID id;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    private final InterDatanodeProtocol datanode;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    private final ReplicaRecoveryInfo rInfo;<a name="line.74"></a>
+<span class="sourceLineNo">075</span><a name="line.75"></a>
+<span class="sourceLineNo">076</span>    private String storageID;<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>    BlockRecord(DatanodeID id, InterDatanodeProtocol datanode,<a name="line.78"></a>
+<span class="sourceLineNo">079</span>        ReplicaRecoveryInfo rInfo) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>      this.id = id;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>      this.datanode = datanode;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>      this.rInfo = rInfo;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    }<a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>    private void updateReplicaUnderRecovery(String bpid, long recoveryId,<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        long newBlockId, long newLength) throws IOException {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>      final ExtendedBlock b = new ExtendedBlock(bpid, rInfo);<a name="line.87"></a>
+<span class="sourceLineNo">088</span>      storageID = datanode.updateReplicaUnderRecovery(b, recoveryId, newBlockId,<a name="line.88"></a>
+<span class="sourceLineNo">089</span>          newLength);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    }<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>    public ReplicaRecoveryInfo getReplicaRecoveryInfo(){<a name="line.92"></a>
+<span class="sourceLineNo">093</span>      return rInfo;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    }<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>    @Override<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    public String toString() {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>      return "block:" + rInfo + " node:" + id;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    }<a name="line.99"></a>
+<span class="sourceLineNo">100</span>  }<a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>  /** A block recovery task for a contiguous block. */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>  class RecoveryTaskContiguous {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    private final RecoveringBlock rBlock;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    private final ExtendedBlock block;<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    private final String bpid;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>    private final DatanodeInfo[] locs;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    private final long recoveryId;<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>    RecoveryTaskContiguous(RecoveringBlock rBlock) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      this.rBlock = rBlock;<a name="line.111"></a>
+<span class="sourceLineNo">112</span>      block = rBlock.getBlock();<a name="line.112"></a>
+<span class="sourceLineNo">113</span>      bpid = block.getBlockPoolId();<a name="line.113"></a>
+<span class="sourceLineNo">114</span>      locs = rBlock.getLocations();<a name="line.114"></a>
+<span class="sourceLineNo">115</span>      recoveryId = rBlock.getNewGenerationStamp();<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>    protected void recover() throws IOException {<a name="line.118"></a>
+<span class="sourceLineNo">119</span>      List&lt;BlockRecord&gt; syncList = new ArrayList&lt;&gt;(locs.length);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>      int errorCount = 0;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>      int candidateReplicaCnt = 0;<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>      // Check generation stamps, replica size and state. Replica must satisfy<a name="line.123"></a>
+<span class="sourceLineNo">124</span>      // the following criteria to be included in syncList for recovery:<a name="line.124"></a>
+<span class="sourceLineNo">125</span>      // - Valid generation stamp<a name="line.125"></a>
+<span class="sourceLineNo">126</span>      // - Non-zero length<a name="line.126"></a>
+<span class="sourceLineNo">127</span>      // - Original state is RWR or better<a name="line.127"></a>
+<span class="sourceLineNo">128</span>      for(DatanodeID id : locs) {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        try {<a name="line.129"></a>
+<span class="sourceLineNo">130</span>          DatanodeID bpReg = new DatanodeID(<a name="line.130"></a>
+<span class="sourceLineNo">131</span>              datanode.getBPOfferService(bpid).bpRegistration);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>          InterDatanodeProtocol proxyDN = bpReg.equals(id)?<a name="line.132"></a>
+<span class="sourceLineNo">133</span>              datanode: DataNode.createInterDataNodeProtocolProxy(id, conf,<a name="line.133"></a>
+<span class="sourceLineNo">134</span>              dnConf.socketTimeout, dnConf.connectToDnViaHostname);<a name="line.134"></a>
+<span class="sourceLineNo">135</span>          ReplicaRecoveryInfo info = callInitReplicaRecovery(proxyDN, rBlock);<a name="line.135"></a>
+<span class="sourceLineNo">136</span>          if (info != null &amp;&amp;<a name="line.136"></a>
+<span class="sourceLineNo">137</span>              info.getGenerationStamp() &gt;= block.getGenerationStamp() &amp;&amp;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>              info.getNumBytes() &gt; 0) {<a name="line.138"></a>
+<span class="sourceLineNo">139</span>            // Count the number of candidate replicas received.<a name="line.139"></a>
+<span class="sourceLineNo">140</span>            ++candidateReplicaCnt;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>            if (info.getOriginalReplicaState().getValue() &lt;=<a name="line.141"></a>
+<span class="sourceLineNo">142</span>                ReplicaState.RWR.getValue()) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>              syncList.add(new BlockRecord(id, proxyDN, info));<a name="line.143"></a>
+<span class="sourceLineNo">144</span>            } else {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>              if (LOG.isDebugEnabled()) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                LOG.debug("Block recovery: Ignored replica with invalid " +<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                    "original state: " + info + " from DataNode: " + id);<a name="line.147"></a>
+<span class="sourceLineNo">148</span>              }<a name="line.148"></a>
+<span class="sourceLineNo">149</span>            }<a name="line.149"></a>
+<span class="sourceLineNo">150</span>          } else {<a name="line.150"></a>
+<span class="sourceLineNo">151</span>            if (LOG.isDebugEnabled()) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>              if (info == null) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                LOG.debug("Block recovery: DataNode: " + id + " does not have "<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                    + "replica for block: " + block);<a name="line.154"></a>
+<span class="sourceLineNo">155</span>              } else {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                LOG.debug("Block recovery: Ignored replica with invalid "<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                    + "generation stamp or length: " + info + " from " +<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                    "DataNode: " + id);<a name="line.158"></a>
+<span class="sourceLineNo">159</span>              }<a name="line.159"></a>
+<span class="sourceLineNo">160</span>            }<a name="line.160"></a>
+<span class="sourceLineNo">161</span>          }<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        } catch (RecoveryInProgressException ripE) {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>          InterDatanodeProtocol.LOG.warn(<a name="line.163"></a>
+<span class="sourceLineNo">164</span>              "Recovery for replica " + block + " on data-node " + id<a name="line.164"></a>
+<span class="sourceLineNo">165</span>                  + " is already in progress. Recovery id = "<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                  + rBlock.getNewGenerationStamp() + " is aborted.", ripE);<a name="line.166"></a>
+<span class="sourceLineNo">167</span>          return;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        } catch (IOException e) {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>          ++errorCount;<a name="line.169"></a>
+<span class="sourceLineNo">170</span>          InterDatanodeProtocol.LOG.warn(<a name="line.170"></a>
+<span class="sourceLineNo">171</span>              "Failed to obtain replica info for block (=" + block<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                  + ") from datanode (=" + id + ")", e);<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        }<a name="line.173"></a>
+<span class="sourceLineNo">174</span>      }<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>      if (errorCount == locs.length) {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        throw new IOException("All datanodes failed: block=" + block<a name="line.177"></a>
+<span class="sourceLineNo">178</span>            + ", datanodeids=" + Arrays.asList(locs));<a name="line.178"></a>
+<span class="sourceLineNo">179</span>      }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>      // None of the replicas reported by DataNodes has the required original<a name="line.181"></a>
+<span class="sourceLineNo">182</span>      // state, report the error.<a name="line.182"></a>
+<span class="sourceLineNo">183</span>      if (candidateReplicaCnt &gt; 0 &amp;&amp; syncList.isEmpty()) {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        throw new IOException("Found " + candidateReplicaCnt +<a name="line.184"></a>
+<span class="sourceLineNo">185</span>            " replica(s) for block " + block + " but none is in " +<a name="line.185"></a>
+<span class="sourceLineNo">186</span>            ReplicaState.RWR.name() + " or better state. datanodeids=" +<a name="line.186"></a>
+<span class="sourceLineNo">187</span>            Arrays.asList(locs));<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      }<a name="line.188"></a>
+<span class="sourceLineNo">189</span><a name="line.189"></a>
+<span class="sourceLineNo">190</span>      syncBlock(syncList);<a name="line.190"></a>
+<span class="sourceLineNo">191</span>    }<a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192"></a>
+<span class="sourceLineNo">193</span>    /** Block synchronization. */<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    void syncBlock(List&lt;BlockRecord&gt; syncList) throws IOException {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      DatanodeProtocolClientSideTranslatorPB nn =<a name="line.195"></a>
+<span class="sourceLineNo">196</span>          getActiveNamenodeForBP(block.getBlockPoolId());<a name="line.196"></a>
+<span class="sourceLineNo">197</span><a name="line.197"></a>
+<span class="sourceLineNo">198</span>      boolean isTruncateRecovery = rBlock.getNewBlock() != null;<a name="line.198"></a>
+<span class="sourceLineNo">199</span>      long blockId = (isTruncateRecovery) ?<a name="line.199"></a>
+<span class="sourceLineNo">200</span>          rBlock.getNewBlock().getBlockId() : block.getBlockId();<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span>      if (LOG.isDebugEnabled()) {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        LOG.debug("block=" + block + ", (length=" + block.getNumBytes()<a name="line.203"></a>
+<span class="sourceLineNo">204</span>            + "), syncList=" + syncList);<a name="line.204"></a>
+<span class="sourceLineNo">205</span>      }<a name="line.205"></a>
+<span class="sourceLineNo">206</span><a name="line.206"></a>
+<span class="sourceLineNo">207</span>      // syncList.isEmpty() means that all data-nodes do not have the block<a name="line.207"></a>
+<span class="sourceLineNo">208</span>      // or their replicas have 0 length.<a name="line.208"></a>
+<span class="sourceLineNo">209</span>      // The block can be deleted.<a name="line.209"></a>
+<span class="sourceLineNo">210</span>      if (syncList.isEmpty()) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        if (LOG.isDebugEnabled()) {<a name="line.211"></a>
+<span class="sourceLineNo">212</span>          LOG.debug("syncBlock for block " + block + ", all datanodes don't " +<a name="line.212"></a>
+<span class="sourceLineNo">213</span>              "have the block or their replicas have 0 length. The block can " +<a name="line.213"></a>
+<span class="sourceLineNo">214</span>              "be deleted.");<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        }<a name="line.215"></a>
+<span class="sourceLineNo">216</span>        nn.commitBlockSynchronization(block, recoveryId, 0,<a name="line.216"></a>
+<span class="sourceLineNo">217</span>            true, true, DatanodeID.EMPTY_ARRAY, null);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        return;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>      }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>      // Calculate the best available replica state.<a name="line.221"></a>
+<span class="sourceLineNo">222</span>      ReplicaState bestState = ReplicaState.RWR;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>      long finalizedLength = -1;<a name="line.223"></a>
+<span class="sourceLineNo">224</span>      for (BlockRecord r : syncList) {<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        assert r.rInfo.getNumBytes() &gt; 0 : "zero length replica";<a name="line.225"></a>
+<span class="sourceLineNo">226</span>        ReplicaState rState = r.rInfo.getOriginalReplicaState();<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        if (rState.getValue() &lt; bestState.getValue()) {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>          bestState = rState;<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        if(rState == ReplicaState.FINALIZED) {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>          if (finalizedLength &gt; 0 &amp;&amp; finalizedLength != r.rInfo.getNumBytes()) {<a name="line.231"></a>
+<span class="sourceLineNo">232</span>            throw new IOException("Inconsistent size of finalized replicas. " +<a name="line.232"></a>
+<span class="sourceLineNo">233</span>                "Replica " + r.rInfo + " expected size: " + finalizedLength);<a name="line.233"></a>
+<span class="sourceLineNo">234</span>          }<a name="line.234"></a>
+<span class="sourceLineNo">235</span>          finalizedLength = r.rInfo.getNumBytes();<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        }<a name="line.236"></a>
+<span class="sourceLineNo">237</span>      }<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>      // Calculate list of nodes that will participate in the recovery<a name="line.239"></a>
+<span class="sourceLineNo">240</span>      // and the new block size<a name="line.240"></a>
+<span class="sourceLineNo">241</span>      List&lt;BlockRecord&gt; participatingList = new ArrayList&lt;&gt;();<a name="line.241"></a>
+<span class="sourceLineNo">242</span>      final ExtendedBlock newBlock = new ExtendedBlock(bpid, blockId,<a name="line.242"></a>
+<span class="sourceLineNo">243</span>          -1, recoveryId);<a name="line.243"></a>
+<span class="sourceLineNo">244</span>      switch(bestState) {<a name="line.244"></a>
+<span class="sourceLineNo">245</span>      case FINALIZED:<a name="line.245"></a>
+<span class="sourceLineNo">246</span>        assert finalizedLength &gt; 0 : "finalizedLength is not positive";<a name="line.246"></a>
+<span class="sourceLineNo">247</span>        for(BlockRecord r : syncList) {<a name="line.247"></a>
+<span class="sourceLineNo">248</span>          ReplicaState rState = r.rInfo.getOriginalReplicaState();<a name="line.248"></a>
+<span class="sourceLineNo">249</span>          if (rState == ReplicaState.FINALIZED ||<a name="line.249"></a>
+<span class="sourceLineNo">250</span>              rState == ReplicaState.RBW &amp;&amp;<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                  r.rInfo.getNumBytes() == finalizedLength) {<a name="line.251"></a>
+<span class="sourceLineNo">252</span>            participatingList.add(r);<a name="line.252"></a>
+<span class="sourceLineNo">253</span>          }<a name="line.253"></a>
+<span class="sourceLineNo">254</span>          if (LOG.isDebugEnabled()) {<a name="line.254"></a>
+<span class="sourceLineNo">255</span>            LOG.debug("syncBlock replicaInfo: block=" + block +<a name="line.255"></a>
+<span class="sourceLineNo">256</span>                ", from datanode " + r.id + ", receivedState=" + rState.name() +<a name="line.256"></a>
+<span class="sourceLineNo">257</span>                ", receivedLength=" + r.rInfo.getNumBytes() +<a name="line.257"></a>
+<span class="sourceLineNo">258</span>                ", bestState=FINALIZED, finalizedLength=" + finalizedLength);<a name="line.258"></a>
+<span class="sourceLineNo">259</span>          }<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        }<a name="line.260"></a>
+<span class="sourceLineNo">261</span>        newBlock.setNumBytes(finalizedLength);<a name="line.261"></a>
+<span class="sourceLineNo">262</span>        break;<a name="line.262"></a>
+<span class="sourceLineNo">263</span>      case RBW:<a name="line.263"></a>
+<span class="sourceLineNo">264</span>      case RWR:<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        long minLength = Long.MAX_VALUE;<a name="line.265"></a>
+<span class="sourceLineNo">266</span>        for(BlockRecord r : syncList) {<a name="line.266"></a>
+<span class="sourceLineNo">267</span>          ReplicaState rState = r.rInfo.getOriginalReplicaState();<a name="line.267"></a>
+<span class="sourceLineNo">268</span>          if(rState == bestState) {<a name="line.268"></a>
+<span class="sourceLineNo">269</span>            minLength = Math.min(minLength, r.rInfo.getNumBytes());<a name="line.269"></a>
+<span class="sourceLineNo">270</span>            participatingList.add(r);<a name="line.270"></a>
+<span class="sourceLineNo">271</span>          }<a name="line.271"></a>
+<span class="sourceLineNo">272</span>          if (LOG.isDebugEnabled()) {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>            LOG.debug("syncBlock replicaInfo: block=" + block +<a name="line.273"></a>
+<span class="sourceLineNo">274</span>                ", from datanode " + r.id + ", receivedState=" + rState.name() +<a name="line.274"></a>
+<span class="sourceLineNo">275</span>                ", receivedLength=" + r.rInfo.getNumBytes() + ", bestState=" +<a name="line.275"></a>
+<span class="sourceLineNo">276</span>                bestState.name());<a name="line.276"></a>
+<span class="sourceLineNo">277</span>          }<a name="line.277"></a>
+<span class="sourceLineNo">278</span>        }<a name="line.278"></a>
+<span class="sourceLineNo">279</span>        // recover() guarantees syncList will have at least one replica with RWR<a name="line.279"></a>
+<span class="sourceLineNo">280</span>        // or better state.<a name="line.280"></a>
+<span class="sourceLineNo">281</span>        assert minLength != Long.MAX_VALUE : "wrong minLength";<a name="line.281"></a>
+<span class="sourceLineNo">282</span>        newBlock.setNumBytes(minLength);<a name="line.282"></a>
+<span class="sourceLineNo">283</span>        break;<a name="line.283"></a>
+<span class="sourceLineNo">284</span>      case RUR:<a name="line.284"></a>
+<span class="sourceLineNo">285</span>      case TEMPORARY:<a name="line.285"></a>
+<span class="sourceLineNo">286</span>        assert false : "bad replica state: " + bestState;<a name="line.286"></a>
+<span class="sourceLineNo">287</span>      default:<a name="line.287"></a>
+<span class="sourceLineNo">288</span>        break; // we have 'case' all enum values<a name="line.288"></a>
+<span class="sourceLineNo">289</span>      }<a name="line.289"></a>
+<span class="sourceLineNo">290</span>      if (isTruncateRecovery) {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>        newBlock.setNumBytes(rBlock.getNewBlock().getNumBytes());<a name="line.291"></a>
+<span class="sourceLineNo">292</span>      }<a name="line.292"></a>
+<span class="sourceLineNo">293</span><a name="line.293"></a>
+<span class="sourceLineNo">294</span>      List&lt;DatanodeID&gt; failedList = new ArrayList&lt;&gt;();<a name="line.294"></a>
+<span class="sourceLineNo">295</span>      final List&lt;BlockRecord&gt; successList = new ArrayList&lt;&gt;();<a name="line.295"></a>
+<span class="sourceLineNo">296</span>      for (BlockRecord r : participatingList) {<a name="line.296"></a>
+<span class="sourceLineNo">297</span>        try {<a name="line.297"></a>
+<span class="sourceLineNo">298</span>          r.updateReplicaUnderRecovery(bpid, recoveryId, blockId,<a name="line.298"></a>
+<span class="sourceLineNo">299</span>              newBlock.getNumBytes());<a name="line.299"></a>
+<span class="sourceLineNo">300</span>          successList.add(r);<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        } catch (IOException e) {<a name="line.301"></a>
+<span class="sourceLineNo">302</span>          InterDatanodeProtocol.LOG.warn("Failed to updateBlock (newblock="<a name="line.302"></a>
+<span class="sourceLineNo">303</span>              + newBlock + ", datanode=" + r.id + ")", e);<a name="line.303"></a>
+<span class="sourceLineNo">304</span>          failedList.add(r.id);<a name="line.304"></a>
+<span class="sourceLineNo">305</span>        }<a name="line.305"></a>
+<span class="sourceLineNo">306</span>      }<a name="line.306"></a>
+<span class="sourceLineNo">307</span><a name="line.307"></a>
+<span class="sourceLineNo">308</span>      // If any of the data-nodes failed, the recovery fails, because<a name="line.308"></a>
+<span class="sourceLineNo">309</span>      // we never know the actual state of the replica on failed data-nodes.<a name="line.309"></a>
+<span class="sourceLineNo">310</span>      // The recovery should be started over.<a name="line.310"></a>
+<span class="sourceLineNo">311</span>      if (!failedList.isEmpty()) {<a name="line.311"></a>
+<span class="sourceLineNo">312</span>        throw new IOException("Cannot recover " + block<a name="line.312"></a>
+<span class="sourceLineNo">313</span>            + ", the following datanodes failed: " + failedList);<a name="line.313"></a>
+<span class="sourceLineNo">314</span>      }<a name="line.314"></a>
+<span class="sourceLineNo">315</span><a name="line.315"></a>
+<span class="sourceLineNo">316</span>      // Notify the name-node about successfully recovered replicas.<a name="line.316"></a>
+<span class="sourceLineNo">317</span>      final DatanodeID[] datanodes = new DatanodeID[successList.size()];<a name="line.317"></a>
+<span class="sourceLineNo">318</span>      final String[] storages = new String[datanodes.length];<a name="line.318"></a>
+<span class="sourceLineNo">319</span>      for (int i = 0; i &lt; datanodes.length; i++) {<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        final BlockRecord r = successList.get(i);<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        datanodes[i] = r.id;<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        storages[i] = r.storageID;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>      }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>      if (LOG.isDebugEnabled()) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>        LOG.debug("Datanode triggering commitBlockSynchronization, block=" +<a name="line.326"></a>
+<span class="sourceLineNo">327</span>            block + ", newGs=" + newBlock.getGenerationStamp() +<a name="line.327"></a>
+<span class="sourceLineNo">328</span>            ", newLength=" + newBlock.getNumBytes());<a name="line.328"></a>
+<span class="sourceLineNo">329</span>      }<a name="line.329"></a>
+<span class="sourceLineNo">330</span><a name="line.330"></a>
+<span class="sourceLineNo">331</span>      nn.commitBlockSynchronization(block,<a name="line.331"></a>
+<span class="sourceLineNo">332</span>          newBlock.getGenerationStamp(), newBlock.getNumBytes(), true, false,<a name="line.332"></a>
+<span class="sourceLineNo">333</span>          datanodes, storages);<a name="line.333"></a>
+<span class="sourceLineNo">334</span>    }<a name="line.334"></a>
+<span class="sourceLineNo">335</span>  }<a name="line.335"></a>
+<span class="sourceLineNo">336</span><a name="line.336"></a>
+<span class="sourceLineNo">337</span>  /**<a name="line.337"></a>
+<span class="sourceLineNo">338</span>   * blk_0  blk_1  blk_2  blk_3  blk_4  blk_5  blk_6  blk_7  blk_8<a name="line.338"></a>
+<span class="sourceLineNo">339</span>   *  64k    64k    64k    64k    64k    64k    64k    64k    64k   &lt;-- stripe_0<a name="line.339"></a>
+<span class="sourceLineNo">340</span>   *  64k    64k    64k    64k    64k    64k    64k    64k    64k<a name="line.340"></a>
+<span class="sourceLineNo">341</span>   *  64k    64k    64k    64k    64k    64k    64k    61k    &lt;-- startStripeIdx<a name="line.341"></a>
+<span class="sourceLineNo">342</span>   *  64k    64k    64k    64k    64k    64k    64k<a name="line.342"></a>
+<span class="sourceLineNo">343</span>   *  64k    64k    64k    64k    64k    64k    59k<a name="line.343"></a>
+<span class="sourceLineNo">344</span>   *  64k    64k    64k    64k    64k    64k<a name="line.344"></a>
+<span class="sourceLineNo">345</span>   *  64k    64k    64k    64k    64k    64k                &lt;-- last full stripe<a name="line.345"></a>
+<span class="sourceLineNo">346</span>   *  64k    64k    13k    64k    55k     3k              &lt;-- target last stripe<a name="line.346"></a>
+<span class="sourceLineNo">347</span>   *  64k    64k           64k     1k<a name="line.347"></a>
+<span class="sourceLineNo">348</span>   *  64k    64k           58k<a name="line.348"></a>
+<span class="sourceLineNo">349</span>   *  64k    64k<a name="line.349"></a>
+<span class="sourceLineNo">350</span>   *  64k    19k<a name="line.350"></a>
+<span class="sourceLineNo">351</span>   *  64k                                               &lt;-- total visible stripe<a name="line.351"></a>
+<span class="sourceLineNo">352</span>   *<a name="line.352"></a>
+<span class="sourceLineNo">353</span>   *  Due to different speed of streamers, the internal blocks in a block group<a name="line.353"></a>
+<span class="sourceLineNo">354</span>   *  could have different lengths when the block group isn't ended normally.<a name="line.354"></a>
+<span class="sourceLineNo">355</span>   *  The purpose of this class is to recover the UnderConstruction block group,<a name="line.355"></a>
+<span class="sourceLineNo">356</span>   *  so all internal blocks end at the same stripe.<a name="line.356"></a>
+<span class="sourceLineNo">357</span>   *<a name="line.357"></a>
+<span class="sourceLineNo">358</span>   * The steps:<a name="line.358"></a>
+<span class="sourceLineNo">359</span>   * 1. get all blocks lengths from DataNodes.<a name="line.359"></a>
+<span class="sourceLineNo">360</span>   * 2. calculate safe length, which is at the target last stripe.<a name="line.360"></a>
+<span class="sourceLineNo">361</span>   * 3. decode and feed blk_6~8, make them end at last full stripe. (the last<a name="line.361"></a>
+<span class="sourceLineNo">362</span>   * full stripe means the last decodable stripe.)<a name="line.362"></a>
+<span class="sourceLineNo">363</span>   * 4. encode the target last stripe, with the remaining sequential data. In<a name="line.363"></a>
+<span class="sourceLineNo">364</span>   * this case, the sequential data is 64k+64k+13k. Feed blk_6~8 the parity cells.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>   * Overwrite the parity cell if have to.<a name="line.365"></a>
+<span class="sourceLineNo">366</span>   * 5. truncate the stripes from visible stripe, to target last stripe.<a name="line.366"></a>
+<span class="sourceLineNo">367</span>   * TODO: implement step 3,4<a name="line.367"></a>
+<span class="sourceLineNo">368</span>   */<a name="line.368"></a>
+<span class="sourceLineNo">369</span>  public class RecoveryTaskStriped {<a name="line.369"></a>
+<span class="sourceLineNo">370</span>    private final RecoveringBlock rBlock;<a name="line.370"></a>
+<span class="sourceLineNo">371</span>    private final ExtendedBlock block;<a name="line.371"></a>
+<span class="sourceLineNo">372</span>    private final String bpid;<a name="line.372"></a>
+<span class="sourceLineNo">373</span>    private final DatanodeInfo[] locs;<a name="line.373"></a>
+<span class="sourceLineNo">374</span>    private final long recoveryId;<a name="line.374"></a>
+<span class="sourceLineNo">375</span><a name="line.375"></a>
+<span class="sourceLineNo">376</span>    private final byte[] blockIndices;<a name="line.376"></a>
+<span class="sourceLineNo">377</span>    private final ErasureCodingPolicy ecPolicy;<a name="line.377"></a>
+<span class="sourceLineNo">378</span><a name="line.378"></a>
+<span class="sourceLineNo">379</span>    RecoveryTaskStriped(RecoveringStripedBlock rBlock) {<a name="line.379"></a>
+<span class="sourceLineNo">380</span>      this.rBlock = rBlock;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>      // TODO: support truncate<a name="line.381"></a>
+<span class="sourceLineNo">382</span>      Preconditions.checkArgument(rBlock.getNewBlock() == null);<a name="line.382"></a>
+<span class="sourceLineNo">383</span><a name="line.383"></a>
+<span class="sourceLineNo">384</span>      block = rBlock.getBlock();<a name="line.384"></a>
+<span class="sourceLineNo">385</span>      bpid = block.getBlockPoolId();<a name="line.385"></a>
+<span class="sourceLineNo">386</span>      locs = rBlock.getLocations();<a name="line.386"></a>
+<span class="sourceLineNo">387</span>      recoveryId = rBlock.getNewGenerationStamp();<a name="line.387"></a>
+<span class="sourceLineNo">388</span>      blockIndices = rBlock.getBlockIndices();<a name="line.388"></a>
+<span class="sourceLineNo">389</span>      ecPolicy = rBlock.getErasureCodingPolicy();<a name="line.389"></a>
+<span class="sourceLineNo">390</span>    }<a name="line.390"></a>
+<span class="sourceLineNo">391</span><a name="line.391"></a>
+<span class="sourceLineNo">392</span>    protected void recover() throws IOException {<a name="line.392"></a>
+<span class="sourceLineNo">393</span>      checkLocations(locs.length);<a name="line.393"></a>
+<span class="sourceLineNo">394</span><a name="line.394"></a>
+<span class="sourceLineNo">395</span>      Map&lt;Long, BlockRecord&gt; syncBlocks = new HashMap&lt;&gt;(locs.length);<a name="line.395"></a>
+<span class="sourceLineNo">396</span>      final int dataBlkNum = ecPolicy.getNumDataUnits();<a name="line.396"></a>
+<span class="sourceLineNo">397</span>      final int totalBlkNum = dataBlkNum + ecPolicy.getNumParityUnits();<a name="line.397"></a>
+<span class="sourceLineNo">398</span>      //check generation stamps<a name="line.398"></a>
+<span class="sourceLineNo">399</span>      for (int i = 0; i &lt; locs.length; i++) {<a name="line.399"></a>
+<span class="sourceLineNo">400</span>        DatanodeID id = locs[i];<a name="line.400"></a>
+<span class="sourceLineNo">401</span>        try {<a name="line.401"></a>
+<span class="sourceLineNo">402</span>          DatanodeID bpReg = new DatanodeID(<a name="line.402"></a>
+<span class="sourceLineNo">403</span>              datanode.getBPOfferService(bpid).bpRegistration);<a name="line.403"></a>
+<span class="sourceLineNo">404</span>          InterDatanodeProtocol proxyDN = bpReg.equals(id) ?<a name="line.404"></a>
+<span class="sourceLineNo">405</span>              datanode : DataNode.createInterDataNodeProtocolProxy(id, conf,<a name="line.405"></a>
+<span class="sourceLineNo">406</span>              dnConf.socketTimeout, dnConf.connectToDnViaHostname);<a name="line.406"></a>
+<span class="sourceLineNo">407</span>          ExtendedBlock internalBlk = new ExtendedBlock(block);<a name="line.407"></a>
+<span class="sourceLineNo">408</span>          final long blockId = block.getBlockId() + blockIndices[i];<a name="line.408"></a>
+<span class="sourceLineNo">409</span>          internalBlk.setBlockId(blockId);<a name="line.409"></a>
+<span class="sourceLineNo">410</span>          ReplicaRecoveryInfo info = callInitReplicaRecovery(proxyDN,<a name="line.410"></a>
+<span class="sourceLineNo">411</span>              new RecoveringBlock(internalBlk, null, recoveryId));<a name="line.411"></a>
+<span class="sourceLineNo">412</span><a name="line.412"></a>
+<span class="sourceLineNo">413</span>          if (info != null &amp;&amp;<a name="line.413"></a>
+<span class="sourceLineNo">414</span>              info.getGenerationStamp() &gt;= block.getGenerationStamp() &amp;&amp;<a name="line.414"></a>
+<span class="sourceLineNo">415</span>              info.getNumBytes() &gt; 0) {<a name="line.415"></a>
+<span class="sourceLineNo">416</span>            final BlockRecord existing = syncBlocks.get(blockId);<a name="line.416"></a>
+<span class="sourceLineNo">417</span>            if (existing == null ||<a name="line.417"></a>
+<span class="sourceLineNo">418</span>                info.getNumBytes() &gt; existing.rInfo.getNumBytes()) {<a name="line.418"></a>
+<span class="sourceLineNo">419</span>              // if we have &gt;1 replicas for the same internal block, we<a name="line.419"></a>
+<span class="sourceLineNo">420</span>              // simply choose the one with larger length.<a name="line.420"></a>
+<span class="sourceLineNo">421</span>              // TODO: better usage of redundant replicas<a name="line.421"></a>
+<span class="sourceLineNo">422</span>              syncBlocks.put(blockId, new BlockRecord(id, proxyDN, info));<a name="line.422"></a>
+<span class="sourceLineNo">423</span>            }<a name="line.423"></a>
+<span class="sourceLineNo">424</span>          }<a name="line.424"></a>
+<span class="sourceLineNo">425</span>        } catch (RecoveryInProgressException ripE) {<a name="line.425"></a>
+<span class="sourceLineNo">426</span>          InterDatanodeProtocol.LOG.warn(<a name="line.426"></a>
+<span class="sourceLineNo">427</span>              "Recovery for replica " + block + " on data-node " + id<a name="line.427"></a>
+<span class="sourceLineNo">428</span>                  + " is already in progress. Recovery id = "<a name="line.428"></a>
+<span class="sourceLineNo">429</span>                  + rBlock.getNewGenerationStamp() + " is aborted.", ripE);<a name="line.429"></a>
+<span class="sourceLineNo">430</span>          return;<a name="line.430"></a>
+<span class="sourceLineNo">431</span>        } catch (IOException e) {<a name="line.431"></a>
+<span class="sourceLineNo">432</span>          InterDatanodeProtocol.LOG.warn(<a name="line.432"></a>
+<span class="sourceLineNo">433</span>              "Failed to obtain replica info for block (=" + block<a name="line.433"></a>
+<span class="sourceLineNo">434</span>                  + ") from datanode (=" + id + ")", e);<a name="line.434"></a>
+<span class="sourceLineNo">435</span>        }<a name="line.435"></a>
+<span class="sourceLineNo">436</span>      }<a name="line.436"></a>
+<span class="sourceLineNo">437</span>      checkLocations(syncBlocks.size());<a name="line.437"></a>
+<span class="sourceLineNo">438</span><a name="line.438"></a>
+<span class="sourceLineNo">439</span>      final long safeLength = getSafeLength(syncBlocks);<a name="line.439"></a>
+<span class="sourceLineNo">440</span>      if (LOG.isDebugEnabled()) {<a name="line.440"></a>
+<span class="sourceLineNo">441</span>        LOG.debug("Recovering block " + block<a name="line.441"></a>
+<span class="sourceLineNo">442</span>            + ", length=" + block.getNumBytes() + ", safeLength=" + safeLength<a name="line.442"></a>
+<span class="sourceLineNo">443</span>            + ", syncList=" + syncBlocks);<a name="line.443"></a>
+<span class="sourceLineNo">444</span>      }<a name="line.444"></a>
+<span class="sourceLineNo">445</span><a name="line.445"></a>
+<span class="sourceLineNo">446</span>      // If some internal blocks reach the safe length, convert them to RUR<a name="line.446"></a>
+<span class="sourceLineNo">447</span>      List&lt;BlockRecord&gt; rurList = new ArrayList&lt;&gt;(locs.length);<a name="line.447"></a>
+<span class="sourceLineNo">448</span>      for (BlockRecord r : syncBlocks.values()) {<a name="line.448"></a>
+<span class="sourceLineNo">449</span>        int blockIndex = (int) (r.rInfo.getBlockId() &amp; BLOCK_GROUP_INDEX_MASK);<a name="line.449"></a>
+<span class="sourceLineNo">450</span>        long newSize = getInternalBlockLength(safeLength, ecPolicy.getCellSize(),<a name="line.450"></a>
+<span class="sourceLineNo">451</span>            dataBlkNum, blockIndex);<a name="line.451"></a>
+<span class="sourceLineNo">452</span>        if (r.rInfo.getNumBytes() &gt;= newSize) {<a name="line.452"></a>
+<span class="sourceLineNo">453</span>          rurList.add(r);<a name="line.453"></a>
+<span class="sourceLineNo">454</span>        }<a name="line.454"></a>
+<span class="sourceLineNo">455</span>      }<a name="line.455"></a>
+<span class="sourceLineNo">456</span>      assert rurList.size() &gt;= dataBlkNum : "incorrect safe length";<a name="line.456"></a>
+<span class="sourceLineNo">457</span><a name="line.457"></a>
+<span class="sourceLineNo">458</span>      // Recovery the striped block by truncating internal blocks to the safe<a name="line.458"></a>
+<span class="sourceLineNo">459</span>      // length. Abort if there is any failure in this step.<a name="line.459"></a>
+<span class="sourceLineNo">460</span>      truncatePartialBlock(rurList, safeLength);<a name="line.460"></a>
+<span class="sourceLineNo">461</span><a name="line.461"></a>
+<span class="sourceLineNo">462</span>      // notify Namenode the new size and locations<a name="line.462"></a>
+<span class="sourceLineNo">463</span>      final DatanodeID[] newLocs = new DatanodeID[totalBlkNum];<a name="line.463"></a>
+<span class="sourceLineNo">464</span>      final String[] newStorages = new String[totalBlkNum];<a name="line.464"></a>
+<span class="sourceLineNo">465</span>      for (int i = 0; i &lt; totalBlkNum; i++) {<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        newLocs[blockIndices[i]] = DatanodeID.EMPTY_DATANODE_ID;<a name="line.466"></a>
+<span class="sourceLineNo">467</span>        newStorages[blockIndices[i]] = "";<a name="line.467"></a>
+<span class="sourceLineNo">468</span>      }<a name="line.468"></a>
+<span class="sourceLineNo">469</span>      for (BlockRecord r : rurList) {<a name="line.469"></a>
+<span class="sourceLineNo">470</span>        int index = (int) (r.rInfo.getBlockId() &amp;<a name="line.470"></a>
+<span class="sourceLineNo">471</span>            HdfsServerConstants.BLOCK_GROUP_INDEX_MASK);<a name="line.471"></a>
+<span class="sourceLineNo">472</span>        newLocs[index] = r.id;<a name="line.472"></a>
+<span class="sourceLineNo">473</span>        newStorages[index] = r.storageID;<a name="line.473"></a>
+<span class="sourceLineNo">474</span>      }<a name="line.474"></a>
+<span class="sourceLineNo">475</span>      ExtendedBlock newBlock = new ExtendedBlock(bpid, block.getBlockId(),<a name="line.475"></a>
+<span class="sourceLineNo">476</span>          safeLength, recoveryId);<a name="line.476"></a>
+<span class="sourceLineNo">477</span>      DatanodeProtocolClientSideTranslatorPB nn = getActiveNamenodeForBP(bpid);<a name="line.477"></a>
+<span class="sourceLineNo">478</span>      nn.commitBlockSynchronization(block, newBlock.getGenerationStamp(),<a name="line.478"></a>
+<span class="sourceLineNo">479</span>          newBlock.getNumBytes(), true, false, newLocs, newStorages);<a name="line.479"></a>
+<span class="sourceLineNo">480</span>    }<a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>    private void truncatePartialBlock(List&lt;BlockRecord&gt; rurList,<a name="line.482"></a>
+<span class="sourceLineNo">483</span>        long safeLength) throws IOException {<a name="line.483"></a>
+<span class="sourceLineNo">484</span>      int cellSize = ecPolicy.getCellSize();<a name="line.484"></a>
+<span class="sourceLineNo">485</span>      int dataBlkNum = ecPolicy.getNumDataUnits();<a name="line.485"></a>
+<span class="sourceLineNo">486</span>      List&lt;DatanodeID&gt; failedList = new ArrayList&lt;&gt;();<a name="line.486"></a>
+<span class="sourceLineNo">487</span>      for (BlockRecord r : rurList) {<a name="line.487"></a>
+<span class="sourceLineNo">488</span>        int blockIndex = (int) (r.rInfo.getBlockId() &amp; BLOCK_GROUP_INDEX_MASK);<a name="line.488"></a>
+<span class="sourceLineNo">489</span>        long newSize = getInternalBlockLength(safeLength, cellSize, dataBlkNum,<a name="line.489"></a>
+<span class="sourceLineNo">490</span>            blockIndex);<a name="line.490"></a>
+<span class="sourceLineNo">491</span>        try {<a name="line.491"></a>
+<span class="sourceLineNo">492</span>          r.updateReplicaUnderRecovery(bpid, recoveryId, r.rInfo.getBlockId(),<a name="line.492"></a>
+<span class="sourceLineNo">493</span>              newSize);<a name="line.493"></a>
+<span class="sourceLineNo">494</span>        } catch (IOException e) {<a name="line.494"></a>
+<span class="sourceLineNo">495</span>          InterDatanodeProtocol.LOG.warn("Failed to updateBlock (newblock="<a name="line.495"></a>
+<span class="sourceLineNo">496</span>              + ", datanode=" + r.id + ")", e);<a name="line.496"></a>
+<span class="sourceLineNo">497</span>          failedList.add(r.id);<a name="line.497"></a>
+<span class="sourceLineNo">498</span>        }<a name="line.498"></a>
+<span class="sourceLineNo">499</span>      }<a name="line.499"></a>
+<span class="sourceLineNo">500</span><a name="line.500"></a>
+<span class="sourceLineNo">501</span>      // If any of the data-nodes failed, the recovery fails, because<a name="line.501"></a>
+<span class="sourceLineNo">502</span>      // we never know the actual state of the replica on failed data-nodes.<a name="line.502"></a>
+<span class="sourceLineNo">503</span>      // The recovery should be started over.<a name="line.503"></a>
+<span class="sourceLineNo">504</span>      if (!failedList.isEmpty()) {<a name="line.504"></a>
+<span class="sourceLineNo">505</span>        throw new IOException("Cannot recover " + block<a name="line.505"></a>
+<span class="sourceLineNo">506</span>            + ", the following datanodes failed: " + failedList);<a name="line.506"></a>
+<span class="sourceLineNo">507</span>      }<a name="line.507"></a>
+<span class="sourceLineNo">508</span>    }<a name="line.508"></a>
+<span class="sourceLineNo">509</span><a name="line.509"></a>
+<span class="sourceLineNo">510</span>    /**<a name="line.510"></a>
+<span class="sourceLineNo">511</span>     * TODO: the current implementation depends on the assumption that the<a name="line.511"></a>
+<span class="sourceLineNo">512</span>     * parity cells are only generated based on the full stripe. This is not<a name="line.512"></a>
+<span class="sourceLineNo">513</span>     * true after we support hflush.<a name="line.513"></a>
+<span class="sourceLineNo">514</span>     */<a name="line.514"></a>
+<span class="sourceLineNo">515</span>    @VisibleForTesting<a name="line.515"></a>
+<span class="sourceLineNo">516</span>    long getSafeLength(Map&lt;Long, BlockRecord&gt; syncBlocks) {<a name="line.516"></a>
+<span class="sourceLineNo">517</span>      final int dataBlkNum = ecPolicy.getNumDataUnits();<a name="line.517"></a>
+<span class="sourceLineNo">518</span>      Preconditions.checkArgument(syncBlocks.size() &gt;= dataBlkNum);<a name="line.518"></a>
+<span class="sourceLineNo">519</span>      long[] blockLengths = new long[syncBlocks.size()];<a name="line.519"></a>
+<span class="sourceLineNo">520</span>      int i = 0;<a name="line.520"></a>
+<span class="sourceLineNo">521</span>      for (BlockRecord r : syncBlocks.values()) {<a name="line.521"></a>
+<span class="sourceLineNo">522</span>        ReplicaRecoveryInfo rInfo = r.getReplicaRecoveryInfo();<a name="line.522"></a>
+<span class="sourceLineNo">523</span>        blockLengths[i++] = rInfo.getNumBytes();<a name="line.523"></a>
+<span class="sourceLineNo">524</span>      }<a name="line.524"></a>
+<span class="sourceLineNo">525</span>      return StripedBlockUtil.getSafeLength(ecPolicy, blockLengths);<a name="line.525"></a>
+<span class="sourceLineNo">526</span>    }<a name="line.526"></a>
+<span class="sourceLineNo">527</span><a name="line.527"></a>
+<span class="sourceLineNo">528</span>    private void checkLocations(int locationCount)<a name="line.528"></a>
+<span class="sourceLineNo">529</span>        throws IOException {<a name="line.529"></a>
+<span class="sourceLineNo">530</span>      if (locationCount &lt; ecPolicy.getNumDataUnits()) {<a name="line.530"></a>
+<span class="sourceLineNo">531</span>        throw new IOException(block + " has no enough internal blocks" +<a name="line.531"></a>
+<span class="sourceLineNo">532</span>            ", unable to start recovery. Locations=" + Arrays.asList(locs));<a name="line.532"></a>
+<span class="sourceLineNo">533</span>      }<a name="line.533"></a>
+<span class="sourceLineNo">534</span>    }<a name="line.534"></a>
+<span class="sourceLineNo">535</span>  }<a name="line.535"></a>
+<span class="sourceLineNo">536</span><a name="line.536"></a>
+<span class="sourceLineNo">537</span>  private static void logRecoverBlock(String who, RecoveringBlock rb) {<a name="line.537"></a>
+<span class="sourceLineNo">538</span>    ExtendedBlock block = rb.getBlock();<a name="line.538"></a>
+<span class="sourceLineNo">539</span>    DatanodeInfo[] targets = rb.getLocations();<a name="line.539"></a>
+<span class="sourceLineNo">540</span><a name="line.540"></a>
+<span class="sourceLineNo">541</span>    LOG.info(who + " calls recoverBlock(" + block<a name="line.541"></a>
+<span class="sourceLineNo">542</span>        + ", targets=[" + Joiner.on(", ").join(targets) + "]"<a name="line.542"></a>
+<span class="sourceLineNo">543</span>        + ", newGenerationStamp=" + rb.getNewGenerationStamp()<a name="line.543"></a>
+<span class="sourceLineNo">544</span>        + ", newBlock=" + rb.getNewBlock()<a name="line.544"></a>
+<span class="sourceLineNo">545</span>        + ", isStriped=" + rb.isStriped()<a name="line.545"></a>
+<span class="sourceLineNo">546</span>        + ")");<a name="line.546"></a>
+<span class="sourceLineNo">547</span>  }<a name="line.547"></a>
+<span class="sourceLineNo">548</span><a name="line.548"></a>
+<span class="sourceLineNo">549</span>  /**<a name="line.549"></a>
+<span class="sourceLineNo">550</span>   * Convenience method, which unwraps RemoteException.<a name="line.550"></a>
+<span class="sourceLineNo">551</span>   * @throws IOException not a RemoteException.<a name="line.551"></a>
+<span class="sourceLineNo">552</span>   */<a name="line.552"></a>
+<span class="sourceLineNo">553</span>  private static ReplicaRecoveryInfo callInitReplicaRecovery(<a name="line.553"></a>
+<span class="sourceLineNo">554</span>      InterDatanodeProtocol datanode, RecoveringBlock rBlock)<a name="line.554"></a>
+<span class="sourceLineNo">555</span>      throws IOException {<a name="line.555"></a>
+<span class="sourceLineNo">556</span>    try {<a name="line.556"></a>
+<span class="sourceLineNo">557</span>      return datanode.initReplicaRecovery(rBlock);<a name="line.557"></a>
+<span class="sourceLineNo">558</span>    } catch(RemoteException re) {<a name="line.558"></a>
+<span class="sourceLineNo">559</span>      throw re.unwrapRemoteException();<a name="line.559"></a>
+<span class="sourceLineNo">560</span>    }<a name="line.560"></a>
+<span class="sourceLineNo">561</span>  }<a name="line.561"></a>
+<span class="sourceLineNo">562</span><a name="line.562"></a>
+<span class="sourceLineNo">563</span>  /**<a name="line.563"></a>
+<span class="sourceLineNo">564</span>   * Get the NameNode corresponding to the given block pool.<a name="line.564"></a>
+<span class="sourceLineNo">565</span>   *<a name="line.565"></a>
+<span class="sourceLineNo">566</span>   * @param bpid Block pool Id<a name="line.566"></a>
+<span class="sourceLineNo">567</span>   * @return Namenode corresponding to the bpid<a name="line.567"></a>
+<span class="sourceLineNo">568</span>   * @throws IOException if unable to get the corresponding NameNode<a name="line.568"></a>
+<span class="sourceLineNo">569</span>   */<a name="line.569"></a>
+<span class="sourceLineNo">570</span>  DatanodeProtocolClientSideTranslatorPB getActiveNamenodeForBP(<a name="line.570"></a>
+<span class="sourceLineNo">571</span>      String bpid) throws IOException {<a name="line.571"></a>
+<span class="sourceLineNo">572</span>    BPOfferService bpos = datanode.getBPOfferService(bpid);<a name="line.572"></a>
+<span class="sourceLineNo">573</span>    if (bpos == null) {<a name="line.573"></a>
+<span class="sourceLineNo">574</span>      throw new IOException("No block pool offer service for bpid=" + bpid);<a name="line.574"></a>
+<span class="sourceLineNo">575</span>    }<a name="line.575"></a>
+<span class="sourceLineNo">576</span><a name="line.576"></a>
+<span class="sourceLineNo">577</span>    DatanodeProtocolClientSideTranslatorPB activeNN = bpos.getActiveNN();<a name="line.577"></a>
+<span class="sourceLineNo">578</span>    if (activeNN == null) {<a name="line.578"></a>
+<span class="sourceLineNo">579</span>      throw new IOException(<a name="line.579"></a>
+<span class="sourceLineNo">580</span>          "Block pool " + bpid + " has not recognized an active NN");<a name="line.580"></a>
+<span class="sourceLineNo">581</span>    }<a name="line.581"></a>
+<span class="sourceLineNo">582</span>    return activeNN;<a name="line.582"></a>
+<span class="sourceLineNo">583</span>  }<a name="line.583"></a>
+<span class="sourceLineNo">584</span><a name="line.584"></a>
+<span class="sourceLineNo">585</span>  public Daemon recoverBlocks(final String who,<a name="line.585"></a>
+<span class="sourceLineNo">586</span>      final Collection&lt;RecoveringBlock&gt; blocks) {<a name="line.586"></a>
+<span class="sourceLineNo">587</span>    Daemon d = new Daemon(datanode.threadGroup, new Runnable() {<a name="line.587"></a>
+<span class="sourceLineNo">588</span>      @Override<a name="line.588"></a>
+<span class="sourceLineNo">589</span>      public void run() {<a name="line.589"></a>
+<span class="sourceLineNo">590</span>        for(RecoveringBlock b : blocks) {<a name="line.590"></a>
+<span class="sourceLineNo">591</span>          try {<a name="line.591"></a>
+<span class="sourceLineNo">592</span>            logRecoverBlock(who, b);<a name="line.592"></a>
+<span class="sourceLineNo">593</span>            if (b.isStriped()) {<a name="line.593"></a>
+<span class="sourceLineNo">594</span>              new RecoveryTaskStriped((RecoveringStripedBlock) b).recover();<a name="line.594"></a>
+<span class="sourceLineNo">595</span>            } else {<a name="line.595"></a>
+<span class="sourceLineNo">596</span>              new RecoveryTaskContiguous(b).recover();<a name="line.596"></a>
+<span class="sourceLineNo">597</span>            }<a name="line.597"></a>
+<span class="sourceLineNo">598</span>          } catch (IOException e) {<a name="line.598"></a>
+<span class="sourceLineNo">599</span>            LOG.warn("recoverBlocks FAILED: " + b, e);<a name="line.599"></a>
+<span class="sourceLineNo">600</span>          }<a name="line.600"></a>
+<span class="sourceLineNo">601</span>        }<a name="line.601"></a>
+<span class="sourceLineNo">602</span>      }<a name="line.602"></a>
+<span class="sourceLineNo">603</span>    });<a name="line.603"></a>
+<span class="sourceLineNo">604</span>    d.start();<a name="line.604"></a>
+<span class="sourceLineNo">605</span>    return d;<a name="line.605"></a>
+<span class="sourceLineNo">606</span>  }<a name="line.606"></a>
+<span class="sourceLineNo">607</span>}<a name="line.607"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

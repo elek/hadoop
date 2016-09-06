@@ -1,0 +1,2 @@
+NO DOC BLOCK: org.apache.hadoop.mapreduce.TypeConverter Method fromYarnApplicationPriority(int)
+NO DOC BLOCK: org.apache.hadoop.mapreduce.TypeConverter Method toYarnApplicationPriority(java.lang.String)

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<comments
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:noNamespaceSchemaLocation='comments.xsd'
+  name="Apache_Hadoop_MapReduce_Common_2.7.2_to_Apache_Hadoop_MapReduce_Common_3.0.0-alpha1"
+  jdversion="1.0.9">
+
+<!-- This file contains comments for a JDiff report. -->
+<!-- It is used only in generating the report, and does not need to ship with the final report. -->
+
+<!-- The id attribute in an identifier element identifiers the change as noted in the report. -->
+<!-- An id has the form package[.class[.[ctor|method|field].signature]], where [] indicates optional text. -->
+<!-- A comment element can have multiple identifier elements, which will -->
+<!-- will cause the same text to appear at each place in the report, but -->
+<!-- will be converted to separate comments when the comments file is used. -->
+<!-- HTML tags in the text field will appear in the report. -->
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.TypeConverter"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.TypeConverter.fromYarnApplicationPriority_added(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.TypeConverter.toYarnApplicationPriority_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.CancelDelegationTokenRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.CancelDelegationTokenRequest.getDelegationToken_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.CancelDelegationTokenRequest.setDelegationToken_changed(org.apache.hadoop.yarn.api.records.Token)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.FailTaskAttemptRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.FailTaskAttemptRequest.getTaskAttemptId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.FailTaskAttemptRequest.setTaskAttemptId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersRequest.getJobId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersRequest.setJobId_changed(org.apache.hadoop.mapreduce.v2.api.records.JobId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersResponse.getCounters_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetCountersResponse.setCounters_changed(org.apache.hadoop.mapreduce.v2.api.records.Counters)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenRequest.getRenewer_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenRequest.setRenewer_changed(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenResponse.getDelegationToken_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDelegationTokenResponse.setDelegationToken_changed(org.apache.hadoop.yarn.api.records.Token)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsRequest.getTaskAttemptId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsRequest.setTaskAttemptId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.addAllDiagnostics_changed(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.addDiagnostics_changed(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.clearDiagnostics_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.getDiagnosticsCount_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.getDiagnosticsList_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.getDiagnostics_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetDiagnosticsResponse.removeDiagnostics_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportRequest.getJobId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportRequest.setJobId_changed(org.apache.hadoop.mapreduce.v2.api.records.JobId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportResponse.getJobReport_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetJobReportResponse.setJobReport_changed(org.apache.hadoop.mapreduce.v2.api.records.JobReport)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.getFromEventId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.getJobId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.getMaxEvents_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.setFromEventId_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.setJobId_changed(org.apache.hadoop.mapreduce.v2.api.records.JobId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsRequest.setMaxEvents_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.addAllCompletionEvents_changed(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.addCompletionEvent_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptCompletionEvent)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.clearCompletionEvents_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.getCompletionEventCount_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.getCompletionEventList_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.getCompletionEvent_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptCompletionEventsResponse.removeCompletionEvent_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportRequest.getTaskAttemptId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportRequest.setTaskAttemptId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportResponse.getTaskAttemptReport_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskAttemptReportResponse.setTaskAttemptReport_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptReport)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportRequest.getTaskId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportRequest.setTaskId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportResponse.getTaskReport_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportResponse.setTaskReport_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskReport)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsRequest.getJobId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsRequest.getTaskType_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsRequest.setJobId_changed(org.apache.hadoop.mapreduce.v2.api.records.JobId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsRequest.setTaskType_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.addAllTaskReports_changed(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.addTaskReport_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskReport)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.clearTaskReports_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.getTaskReportCount_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.getTaskReportList_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.getTaskReport_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.GetTaskReportsResponse.removeTaskReport_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillJobRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillJobRequest.getJobId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillJobRequest.setJobId_changed(org.apache.hadoop.mapreduce.v2.api.records.JobId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskAttemptRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskAttemptRequest.getTaskAttemptId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskAttemptRequest.setTaskAttemptId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskAttemptId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskRequest.getTaskId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.KillTaskRequest.setTaskId_changed(org.apache.hadoop.mapreduce.v2.api.records.TaskId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenRequest.getDelegationToken_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenRequest.setDelegationToken_changed(org.apache.hadoop.yarn.api.records.Token)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenResponse.getNextExpirationTime_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.mapreduce.v2.api.protocolrecords.RenewDelegationTokenResponse.setNextExpirationTime_changed(long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+
+</comments>

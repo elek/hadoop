@@ -1,0 +1,47 @@
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.impl.pb.client.CollectorNodemanagerProtocolPBClientImpl Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.impl.pb.service.CollectorNodemanagerProtocolPBServiceImpl Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.records.ContainerQueuingLimit Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.records.impl.pb.ContainerQueuingLimitPBImpl Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.DistributedSchedulingAMProtocol Interface
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.impl.pb.client.DistributedSchedulingAMProtocolPBClientImpl Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.impl.pb.service.DistributedSchedulingAMProtocolPBServiceImpl Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.ErrorMetrics Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.MetricsBase Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.WarningMetrics Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.records.impl.pb.QueuedContainersStatusPBImpl Class
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.WebPageUtils Method appsTableInit(boolean, boolean)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAllocatedCpuVcores()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAllocatedMemoryMB()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAmNodeLabelExpression()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAppNodeLabelExpression()
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.records.NodeStatus Method getContainersUtilization()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method getContainersUtilization()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.AppBlock Method getCSRFHeaderString(org.apache.hadoop.conf.Configuration)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Method getFinishedTime()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.NodeStatus Method getIncreasedContainers()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method getIncreasedContainers()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.AppBlock Method getLogAggregationStatus()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo Method getNodeId()
+MISSING @SINCE TAG: org.apache.hadoop.yarn.server.api.records.NodeStatus Method getNodeUtilization()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method getNodeUtilization()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getPriority()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method getQueuedContainersStatus()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getRunningContainers()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Method getStartedTime()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method isUnmanagedApp()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.utils.YarnServerBuilderUtils Method newNodeHeartbeatResponse(org.apache.hadoop.yarn.server.api.records.NodeAction, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.WebPageUtils Method resourceRequestsTableInit()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method setContainersUtilization(org.apache.hadoop.yarn.api.records.ResourceUtilization)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method setIncreasedContainers(java.util.List)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method setNodeUtilization(org.apache.hadoop.yarn.api.records.ResourceUtilization)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl Method setQueuedContainersStatus(org.apache.hadoop.yarn.server.api.records.QueuedContainersStatus)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.ResourceTracker Method unRegisterNodeManager(org.apache.hadoop.yarn.server.api.protocolrecords.UnRegisterNodeManagerRequest)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.impl.pb.client.ResourceTrackerPBClientImpl Method unRegisterNodeManager(org.apache.hadoop.yarn.server.api.protocolrecords.UnRegisterNodeManagerRequest)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.api.impl.pb.service.ResourceTrackerPBServiceImpl Method unRegisterNodeManager(com.google.protobuf.RpcController, org.apache.hadoop.yarn.proto.YarnServerCommonServiceProtos.UnRegisterNodeManagerRequestProto)
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Field finishedTime
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo Field nodeId
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field priority
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field runningContainers
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Field startedTime
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field unmanagedApplication

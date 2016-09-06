@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<comments
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:noNamespaceSchemaLocation='comments.xsd'
+  name="Apache_Hadoop_YARN_Server_Common_2.7.2_to_Apache_Hadoop_YARN_Server_Common_3.0.0-alpha1"
+  jdversion="1.0.9">
+
+<!-- This file contains comments for a JDiff report. -->
+<!-- It is used only in generating the report, and does not need to ship with the final report. -->
+
+<!-- The id attribute in an identifier element identifiers the change as noted in the report. -->
+<!-- An id has the form package[.class[.[ctor|method|field].signature]], where [] indicates optional text. -->
+<!-- A comment element can have multiple identifier elements, which will -->
+<!-- will cause the same text to appear at each place in the report, but -->
+<!-- will be converted to separate comments when the comments file is used. -->
+<!-- HTML tags in the text field will appear in the report. -->
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.DistributedSchedulingAMProtocol"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ResourceTracker"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ResourceTracker.nodeHeartbeat_changed(org.apache.hadoop.yarn.server.api.protocolrecords.NodeHeartbeatRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ResourceTracker.registerNodeManager_changed(org.apache.hadoop.yarn.server.api.protocolrecords.RegisterNodeManagerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ResourceTracker.unRegisterNodeManager_added(org.apache.hadoop.yarn.server.api.protocolrecords.UnRegisterNodeManagerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.client"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.client.CollectorNodemanagerProtocolPBClientImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.client.DistributedSchedulingAMProtocolPBClientImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.client.ResourceTrackerPBClientImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.client.ResourceTrackerPBClientImpl.unRegisterNodeManager_added(org.apache.hadoop.yarn.server.api.protocolrecords.UnRegisterNodeManagerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.service"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.service.CollectorNodemanagerProtocolPBServiceImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.service.DistributedSchedulingAMProtocolPBServiceImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.service.ResourceTrackerPBServiceImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.impl.pb.service.ResourceTrackerPBServiceImpl.unRegisterNodeManager_added(com.google.protobuf.RpcController, org.apache.hadoop.yarn.proto.YarnServerCommonServiceProtos.UnRegisterNodeManagerRequestProto)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.ContainerQueuingLimit"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.MasterKey"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.MasterKey.getBytes_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.MasterKey.getKeyId_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.MasterKey.setBytes_changed(java.nio.ByteBuffer)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.MasterKey.setKeyId_changed(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.NodeStatus"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.NodeStatus.getContainersUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.NodeStatus.getIncreasedContainers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.NodeStatus.getNodeUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.NodeStatus.newInstance_changed(org.apache.hadoop.yarn.api.records.NodeId, int, java.util.List, java.util.List, org.apache.hadoop.yarn.server.api.records.NodeHealthStatus, org.apache.hadoop.yarn.api.records.ResourceUtilization, org.apache.hadoop.yarn.api.records.ResourceUtilization, java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.ContainerQueuingLimitPBImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.getContainersUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.getIncreasedContainers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.getNodeUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.getQueuedContainersStatus_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.setContainersUtilization_added(org.apache.hadoop.yarn.api.records.ResourceUtilization)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.setIncreasedContainers_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.setNodeUtilization_added(org.apache.hadoop.yarn.api.records.ResourceUtilization)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.NodeStatusPBImpl.setQueuedContainersStatus_added(org.apache.hadoop.yarn.server.api.records.QueuedContainersStatus)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.records.impl.pb.QueuedContainersStatusPBImpl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.scheduler"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.utils"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.utils.YarnServerBuilderUtils"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.utils.YarnServerBuilderUtils.newNodeHeartbeatResponse_added(org.apache.hadoop.yarn.server.api.records.NodeAction, java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.AppBlock"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.AppBlock.getCSRFHeaderString_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.AppBlock.getLogAggregationStatus_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.ErrorMetrics"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.MetricsBase"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.ErrorsAndWarningsBlock.WarningMetrics"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.WebPageUtils"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.WebPageUtils.appsTableInit_added(boolean, boolean)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.WebPageUtils.resourceRequestsTableInit_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo.finishedTime"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo.getFinishedTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo.getStartedTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo.startedTime"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getAllocatedCpuVcores_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getAllocatedMemoryMB_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getAmNodeLabelExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getAppNodeLabelExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getPriority_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.getRunningContainers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.isUnmanagedApp_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.priority"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.runningContainers"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.AppInfo.unmanagedApplication"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.allocatedMB"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.allocatedVCores"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.getAllocatedMB_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.getAllocatedVCores_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.getNodeId_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.webapp.dao.ContainerInfo.nodeId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+
+</comments>
