@@ -150,7 +150,7 @@
         </p>
         <p>
           Users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/index.html">overview of major changes</a> coming in 3.0.0.
-          The <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/hadoop-project-dist/hadoop-common/release/3.0.0-alpha1/CHANGES.3.0.0-alpha1.html">full set of release notes</a> detail all the changes since the previous minor release 2.7.0.
+          The <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/hadoop-project-dist/hadoop-common/release/3.0.0-alpha1/RELEASENOTES.3.0.0-alpha1.html">full set of release notes</a> and <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/hadoop-project-dist/hadoop-common/release/3.0.0-alpha1/CHANGES.3.0.0-alpha1.html">changelog</a> detail all the changes since the previous minor release 2.7.0.
         </p>
       </section>
 
