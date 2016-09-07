@@ -30,7 +30,7 @@
          <th>SHA-256</th>
        </tr>
        <tr>
-         <td><a href="#03+September+2016%3A+Release+3.0.0-alpha1+available">3.0.0-alpha1</a></td>
+         <td><a href="#03+September%2C+2016%3A+Release+3.0.0-alpha1+available">3.0.0-alpha1</a></td>
          <td>03 September, 2016</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1-src.tar.gz">source</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha-src.tar.gz.asc">signature</a></td>
