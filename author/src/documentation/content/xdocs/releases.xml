@@ -58,18 +58,18 @@
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz.mds">D489DF38 08244B90..</a></td>
        </tr>
        <tr>
-         <td><a href="#11+February%2C+2016%3A+Release+2.6.4+available">2.6.4</a></td>
-         <td>11 February, 2016</td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz">source</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4-src.tar.gz.mds">F755D961 18316335..</a></td>
+         <td><a href="#08+October%2C+2016%3A+Release+2.6.5+available">2.6.5</a></td>
+         <td>08 October, 2016</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.5/hadoop-2.6.5-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.5/hadoop-2.6.5-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.5/hadoop-2.6.5-src.tar.gz.mds">3A843F18 73D9951A..</a></td>
        </tr>
        <tr>
          <td></td>
          <td></td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz">binary</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.4/hadoop-2.6.4.tar.gz.mds">C58F08D2 E0B13035..</a></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.5/hadoop-2.6.5.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.5/hadoop-2.6.5.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.6.5/hadoop-2.6.5.tar.gz.mds">001AD18D 4B6D0FE5..</a></td>
        </tr>
        <tr>
          <td><a href="#19+November%2C+2014%3A+Release+2.5.2+available">2.5.2</a></td>
@@ -128,6 +128,17 @@
 
     <section>
       <title>Release Notes</title>
+
+      <section>
+        <title>08 October, 2016: Release 2.6.5 available </title>
+        <p>     A point release for the 2.6 line.
+        </p>
+        <p>     Please see the <a 
+                href="http://hadoop.apache.org/docs/r2.6.5/hadoop-project-dist/hadoop-common/releasenotes.html">
+                Hadoop 2.6.5 Release Notes</a> for the list of 79 bug fixes and
+                patches since the previous release 2.6.4.
+        </p>
+      </section>
 
       <section>
         <title>03 September, 2016: Release 3.0.0-alpha1 available </title>

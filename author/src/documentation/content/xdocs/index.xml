@@ -138,6 +138,17 @@
     <section>
     <title>News</title>
 
+    <section>
+      <title>08 October, 2016: Release 2.6.5 available </title>
+      <p>     A point release for the 2.6 line.
+      </p>
+      <p>     Please see the <a
+              href="http://hadoop.apache.org/docs/r2.6.5/hadoop-project-dist/hadoop-common/releasenotes.html">
+              Hadoop 2.6.5 Release Notes</a> for the list of 79 critical bug
+              fixes and since the previous release 2.6.4.
+      </p>
+    </section>
+
       <section>
         <title>03 September, 2016: Release 3.0.0-alpha1 available </title>
         <p>
