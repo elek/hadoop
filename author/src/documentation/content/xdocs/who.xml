@@ -394,7 +394,7 @@
 	<tr>
 	  <td>shv</td>
 	  <td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
-	  <td>WANdisco</td>
+	  <td>LinkedIn</td>
 	  <td>HDFS</td>
 	  <td>-8</td>
 	</tr>
@@ -581,6 +581,14 @@
         <td>Intel</td>
         <td></td>
         <td>+8</td>
+    </tr>
+
+    <tr>
+        <td>zhz</td>
+        <td><a href="http://zhe-thoughts.github.io/about/">Zhe Zhang</a></td>
+        <td>LinkedIn</td>
+        <td></td>
+        <td>-8</td>
     </tr>
 
     <tr>
@@ -1246,7 +1254,7 @@
        <tr>
          <td>shv</td>
          <td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
-         <td>WANdisco</td>
+         <td>LinkedIn</td>
          <td>HDFS</td>
          <td>-8</td>
        </tr>
@@ -1494,7 +1502,7 @@
        <tr>
          <td>zhz</td>
          <td><a href="http://zhe-thoughts.github.io/about/">Zhe Zhang</a></td>
-         <td>Cloudera</td>
+         <td>LinkedIn</td>
          <td>HDFS</td>
          <td>-8</td>
        </tr>
