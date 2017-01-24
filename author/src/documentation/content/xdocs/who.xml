@@ -1036,19 +1036,19 @@
        </tr>
 
        <tr>
-         <td>kkaranasos</td>
-         <td><a href="http://www.microsoft.com/en-us/research/people/kokarana">Konstantinos Karanasos</a></td>
-         <td>Microsoft</td>
-         <td></td>
-         <td>-8</td>
-       </tr>
-
-       <tr>
          <td>kihwal</td>
          <td><a href="http://people.apache.org/~kihwal">Kihwal Lee</a></td>
          <td>Yahoo!</td>
          <td></td>
          <td>-6</td>
+       </tr>
+
+       <tr>
+         <td>kkaranasos</td>
+         <td><a href="http://www.microsoft.com/en-us/research/people/kokarana">Konstantinos Karanasos</a></td>
+         <td>Microsoft</td>
+         <td></td>
+         <td>-8</td>
        </tr>
 
        <tr>
@@ -1067,21 +1067,21 @@
          <td>-8</td>
        </tr>
 
-	   <tr>
+       <tr>
          <td>lei</td>
-		 <td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
+         <td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
          <td>Cloudera</td>
-		 <td></td>
-		 <td>-8</td>
+         <td></td>
+         <td>-8</td>
        </tr>
 
-  <tr>
-    <td>liuml07</td>
-    <td><a href="http://people.apache.org/~liuml07">Mingliang Liu</a></td>
-    <td>Hortonworks</td>
-    <td>HDFS</td>
-    <td>-8</td>
-  </tr>
+       <tr>
+         <td>liuml07</td>
+         <td><a href="http://people.apache.org/~liuml07">Mingliang Liu</a></td>
+         <td>Hortonworks</td>
+         <td>HDFS</td>
+         <td>-8</td>
+       </tr>
 
        <tr>
          <td>lohit</td>
