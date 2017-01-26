@@ -155,7 +155,7 @@
         </p>
         <p>
           Users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.0.0-alpha2/index.html">overview of major changes</a> coming in 3.0.0.
-          The alpha2 <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/hadoop-project-dist/hadoop-common/release/3.0.0-alpha1/RELEASENOTES.3.0.0-alpha1.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.0.0-alpha1/hadoop-project-dist/hadoop-common/release/3.0.0-alpha1/CHANGES.3.0.0-alpha1.html">changelog</a> detail 857 fixes, improvements, and new features since the previous 3.0.0-alpha1 release.
+          The alpha2 <a href="http://hadoop.apache.org/docs/r3.0.0-alpha2/hadoop-project-dist/hadoop-common/release/3.0.0-alpha2/RELEASENOTES.3.0.0-alpha2.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.0.0-alpha2/hadoop-project-dist/hadoop-common/release/3.0.0-alpha2/CHANGES.3.0.0-alpha2.html">changelog</a> detail 857 fixes, improvements, and new features since the previous 3.0.0-alpha2 release.
         </p>
       </section>
       <section>
