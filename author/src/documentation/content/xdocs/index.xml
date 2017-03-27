@@ -138,6 +138,18 @@
     <section>
     <title>News</title>
 
+     <section>
+        <title>22 March 2017: Release 2.8.0 available </title>
+        <p>     Apache Hadoop 2.8.0 contains a number of significant features and enhancements. For major features and improvements, please refer:
+                <a href="http://hadoop.apache.org/docs/r2.8.0/index.html">overview of major changes</a> coming in 2.8.0. 
+                For details of 2917 fixes, improvements, and new features since the previous 2.7.0 release, please check: 
+                <a href="http:/http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/releasenotes.html">release notes</a> and 
+                <a href="http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/CHANGES.txt">changelog</a>
+        </p>
+        <p>     Please note that this release is not yet ready for production use. Critical issues are being ironed out via testing and downstream
+                adoption. Production users should wait for a 2.8.1/2.8.2 release.
+        </p>
+      </section>
       <section>
         <title>25 January, 2017: Release 3.0.0-alpha2 available </title>
         <p>

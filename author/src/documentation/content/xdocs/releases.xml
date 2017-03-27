@@ -30,6 +30,20 @@
          <th>SHA-256</th>
        </tr>
        <tr>
+         <td><a href="#22+March%2C+2017%3A+Release+2.8.0+available">2.8.0</a></td>
+         <td>22 March, 2017</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz.mds">77B6A9A5 F1324A00..</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz.mds">3C0C6053 651970C3..</a></td>
+       </tr>
+       <tr>
          <td><a href="#25+January+2017%3A+Release+3.0.0-alpha2+available">3.0.0-alpha2</a></td>
          <td>25 January, 2017</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2-src.tar.gz">source</a></td>
@@ -142,6 +156,19 @@
 
     <section>
       <title>Release Notes</title>
+
+     <section>
+        <title>22 March 2017: Release 2.8.0 available </title>
+        <p>     Apache Hadoop 2.8.0 contains a number of significant features and enhancements. For major features and improvements, please refer:
+                <a href="http://hadoop.apache.org/docs/r2.8.0/index.html">overview of major changes</a> coming in 2.8.0. 
+                For details of 2917 fixes, improvements, and new features since the previous 2.7.0 release, please check: 
+                <a href="http:/http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/releasenotes.html">release notes</a> and 
+                <a href="http://hadoop.apache.org/docs/r2.8.0/hadoop-project-dist/hadoop-common/CHANGES.txt">changelog</a>
+        </p>
+        <p>     Please note that this release is not yet ready for production use. Critical issues are being ironed out via testing and downstream
+                adoption. Production users should wait for a 2.8.1/2.8.2 release.
+        </p>
+      </section>
 
       <section>
         <title>25 January, 2017: Release 3.0.0-alpha2 available </title>
