@@ -48,15 +48,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
@@ -65,6 +61,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test striped file write operation with data node failures.
  */
+@RunWith(Parameterized.class)
 public class TestDFSStripedOutputStreamWithFailure {
   public static final Log LOG = LogFactory.getLog(
       TestDFSStripedOutputStreamWithFailure.class);
@@ -91,9 +88,24 @@ public class TestDFSStripedOutputStreamWithFailure {
     return StripedFileTestUtil.getDefaultECPolicy();
   }
 
+  private int base;
+
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    List<Object[]> parameters = new ArrayList<>();
+    for (int i = 0; i < 220; i += 10) {
+      parameters.add(new Object[]{i});
+    }
+    return parameters;
+  }
+
+  public TestDFSStripedOutputStreamWithFailure(int base) {
+    this.base = base;
+  }
+
   /*
-   * Initialize erasure coding policy.
-   */
+     * Initialize erasure coding policy.
+     */
   @Before
   public void init(){
     ecPolicy = getEcPolicy();
@@ -542,34 +554,14 @@ public class TestDFSStripedOutputStreamWithFailure {
     }
   }
 
-  int getBase() {
-    final String name = getClass().getSimpleName();
-    int i = name.length() - 1;
-    for(; i >= 0 && Character.isDigit(name.charAt(i));){
-      i--;
-    }
-    String number = name.substring(i + 1);
-    try {
-      return Integer.parseInt(number);
-    } catch (Exception e) {
-      return -1;
-    }
-  }
-
   private void run(int offset) {
-    int base = getBase();
     Assume.assumeTrue(base >= 0);
     final int i = offset + base;
     final Integer length = getLength(i);
-    if (length == null) {
-      System.out.println("Skip test " + i + " since length=null.");
-      return;
-    }
-    if (RANDOM.nextInt(16) != 0) {
-      System.out.println("Test " + i + ", length=" + length
-          + ", is not chosen to run.");
-      return;
-    }
+    Assume.assumeTrue("Skip test " + i + " since length=null.", length != null);
+    Assume.assumeTrue("Test " + i + ", length=" + length
+        + ", is not chosen to run.", RANDOM.nextInt(16) != 0);
+
     System.out.println("Run test " + i + ", length=" + length);
     runTest(length);
   }
