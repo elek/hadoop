@@ -1,0 +1,45 @@
+{{partial "header.html" .}}
+<div class="container">
+
+  <h1>Download</h1>
+
+  <p>Hadoop is released as source code tarballs with corresponding binary
+  tarballs for convenience. The downloads are distributed via mirror sites
+  and should be checked for tampering using GPG or SHA-256.</p>
+
+<p>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Version</th>
+      <th>Release date</th>
+      <th>Source download</th>
+      <th>Binary download</th>
+      <th>Release notes</th>
+    </tr>
+  </thead>
+  {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
+     <tr>
+       <td>{{.BaseFileName }}</td>
+       <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
+       <td>
+         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz">source</a>
+         (<a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.asc">checksum</a>
+         <a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.mds">signature</a>)
+        </td>
+        <td>
+          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz">binary</a>
+          (<a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.asc">checksum</a>
+          <a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.mds">signature</a>)
+         </td>
+         <td>
+           <a href="/release/{{.BaseFileName }}.html">Announcement</a>
+         </td>
+     </tr>
+  {{end}}
+  </table>
+</p>
+
+  {{.Content}}
+</div>
+{{partial "footer.html" .}}

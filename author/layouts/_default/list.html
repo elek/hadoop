@@ -1,0 +1,20 @@
+{{ partial "header.html" . }}
+<div class="container">
+{{ $paginator := .Paginate .Data.Pages}}
+<section id="main">
+  <div>
+    <h1 id="title">{{ .Title }} Archive</h1>
+        <ul id="list">
+            {{ range $paginator.Pages }}
+            <h1><a href="{{.URL}}">{{.Title}}</a></h1>
+            <p><small>{{dateFormat "2006 Jan 2 " .Date}}</small></p>
+
+            {{.Content}}
+
+            {{ end }}
+        </ul>
+  </div>
+{{ template "_internal/pagination.html" . }}
+</section>
+</div>
+{{ partial "footer.html" . }}

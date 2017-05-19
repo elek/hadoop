@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <base href="/">
+    <title>Apache Hadoop</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/hadoop.css">
+
+    
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img class="navbar-logo" src="/elephant.png">
+          <a class="navbar-brand" href="/"> Apache Hadoop</a>
+        </div>
+           <div id="navbar" class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+       
+       
+          
+             <li class=""><a href="/releases.html">Download</a></li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://hadoop.apache.org/docs/current/">Latest</a></li>
+               
+                  <li ><a href="http://hadoop.apache.org/docs/stable/">Stable</a></li>
+               
+               
+               <li role="separator" class="divider"></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.8.0/">2.8.0</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.0.0-alpha2/">3.0.0-alpha2</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.6.5/">2.6.5</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.7.3/">2.7.3</a></li>
+               
+               <li role="separator" class="divider"></li>
+               <li><a href="https://wiki.apache.org/hadoop">Wiki</a></li>
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="/bylaws.html">Bylaws</a></li>
+               
+                  <li ><a href="/committer_criteria.html">Criteria for Committership</a></li>
+               
+                  <li ><a href="/mailing_lists.html">Mailing lists</a></li>
+               
+                  <li ><a href="/who.html">Who We are</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Development <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://wiki.apache.org/hadoop/HowToContribute">How to Contribute</a></li>
+               
+                  <li ><a href="/issue_tracking.html">Issue Tracking</a></li>
+               
+                  <li ><a href="/version_control.html">Version Control</a></li>
+               
+                  <li ><a href="/versioning.html">Versioning</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://www.cafepress.com/hadoop">Buy Stuff</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorshop</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+      <li>
+       <a href="https://www.apache.org/">Apache Software Foundation <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      </li>
+
+
+     </ul>
+   </div>
+
+      </div>
+    </nav>
+
+<div class="container">
+
+<section id="main">
+  <div>
+    <h1 id="title"> Archive</h1>
+        <ul id="list">
+            
+            <h1><a href="">Related projects</a></h1>
+            <p><small>0001 Jan 1 </small></p>
+
+            <p>Other Hadoop-related projects at Apache include:</p>
+
+<ul>
+<li><a href="https://apache.ambari.org"><strong>Ambari™</strong></a>: A web-based tool for provisioning,
+managing, and monitoring Apache Hadoop clusters which includes
+support for Hadoop HDFS, Hadoop MapReduce, Hive, HCatalog, HBase,
+ZooKeeper, Oozie, Pig and Sqoop. Ambari also provides a dashboard
+for viewing cluster health such as heatmaps and ability to view
+MapReduce, Pig and Hive applications visually alongwith features to
+diagnose their performance characteristics in a user-friendly
+manner.</li>
+<li><a href="https://avro.apache.org"><strong>Avro™</strong></a>: A data serialization system.</li>
+<li><a href="https://cassandra.apache.org/"><strong>Cassandra™</strong></a>: A scalable multi-master database
+with no single points of failure.</li>
+<li><a href="https://chukwa.apache.org/"><strong>Chukwa™</strong></a>: A data collection system for managing
+large distributed systems.</li>
+<li><a href="https://hbase.apache.org/"><strong>HBase™</strong></a>: A scalable, distributed database that
+supports structured data storage for large tables.</li>
+<li><a href="https://hive.apache.org/"><strong>Hive™</strong></a>: A data warehouse infrastructure that provides
+data summarization and ad hoc querying.</li>
+<li><a href="https://mahout.apache.org/"><strong>Mahout™</strong></a>: A Scalable machine learning and data
+mining library.</li>
+<li><a href="https://pig.apache.org"><strong>Pig™</strong></a>: A high-level data-flow language and execution
+framework for parallel computation.</li>
+<li><a href="https://spark.apache.org"><strong>Spark™</strong></a>: A fast and general compute engine for
+Hadoop data. Spark provides a simple and expressive programming
+model that supports a wide range of applications, including ETL,
+machine learning, stream processing, and graph computation.</li>
+<li><a href="https://tez.apache.org"><strong>Tez™</strong></a>: A generalized data-flow programming framework,
+built on Hadoop YARN, which provides a powerful and flexible engine
+to execute an arbitrary DAG of tasks to process data for both batch
+and interactive use-cases. Tez is being adopted by Hive™, Pig™ and
+other frameworks in the Hadoop ecosystem, and also by other
+commercial software (e.g. ETL tools), to replace Hadoop™ MapReduce
+as the underlying execution engine.</li>
+<li><a href="https://zookeeper.apache.org"><strong>ZooKeeper™</strong></a>: A high-performance coordination
+service for distributed applications.</li>
+</ul>
+
+
+            
+            <h1><a href="">Who We are</a></h1>
+            <p><small>0001 Jan 1 </small></p>
+
+            
+
+<h2 id="apache-hadoop-project-members:3a80101a736c0780c9d4ab48eec20b40">Apache Hadoop Project Members</h2>
+
+<p>We ask that you please do not send us emails privately asking for
+support. We are non-paid volunteers who help out with the project and we
+do not necessarily have the time or energy to help people on an
+individual basis. Instead, we have setup mailing lists for each module
+which often contain hundreds of individuals who will help answer
+detailed requests for help. The benefit of using mailing lists over
+private communication is that it is a shared resource where others can
+also learn from common mistakes and as a community we all grow together.</p>
+
+<h2 id="hadoop-pmc:3a80101a736c0780c9d4ab48eec20b40">Hadoop PMC</h2>
+
+<p>The Hadoop Project Management Committee contains (in alphabetical
+order):</p>
+
+<table>
+<thead>
+<tr>
+<th>username</th>
+<th>name</th>
+<th>organization</th>
+<th>roles</th>
+<th>timezone</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>aajisaka</td>
+<td>Akira Ajisaka</td>
+<td>NTT DATA</td>
+<td></td>
+<td>+9</td>
+</tr>
+
+<tr>
+<td>acmurthy</td>
+<td><a href="http://people.apache.org/~acmurthy">Arun C Murthy</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>amareshwari</td>
+<td>Amareshwari Sriramadasu</td>
+<td>InMobi</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>arp</td>
+<td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>asuresh</td>
+<td>Arun Suresh</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>atm</td>
+<td><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>bikas</td>
+<td>Bikas Saha</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>bobby</td>
+<td>Robert(Bobby) Evans</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>brandonli</td>
+<td>Brandon Li</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cdouglas</td>
+<td><a href="http://people.apache.org/~cdouglas">Chris Douglas</a></td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cmccabe</td>
+<td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
+<td>Cloudera</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cnauroth</td>
+<td>Chris Nauroth</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cutting</td>
+<td><a href="http://blog.lucene.com/">Doug Cutting</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>daryn</td>
+<td>Daryn Sharp</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>ddas</td>
+<td><a href="http://people.apache.org/~ddas">Devaraj Das</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>devaraj</td>
+<td>Devaraj K</td>
+<td>Intel</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>dhruba</td>
+<td><a href="http://people.apache.org/~dhruba">Dhruba Borthakur</a></td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>eli</td>
+<td><a href="http://people.apache.org/~eli">Eli Collins</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>enis</td>
+<td><a href="http://people.apache.org/~enis">Enis Soztutar</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>gkesavan</td>
+<td><a href="http://people.apache.org/~gkesavan">Giridharan Kesavan</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>hairong</td>
+<td>Hairong Kuang</td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>hitesh</td>
+<td>Hitesh Shah</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jeagles</td>
+<td><a href="http://people.apache.org/~jeagles">Jonathan Eagles</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>jghoman</td>
+<td><a href="http://people.apache.org/~jghoman">Jakob Homan</a></td>
+<td>LinkedIn</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jianhe</td>
+<td><a href="http://people.apache.org/~jianhe">Jian He</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jing9</td>
+<td>Jing Zhao</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jitendra</td>
+<td><a href="http://people.apache.org/~jitendra">Jitendra Nath Pandey</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jlowe</td>
+<td>Jason Lowe</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>junping_du</td>
+<td>Junping Du</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>kasha</td>
+<td><a href="http://people.apache.org/~kasha">Karthik Kambatla</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>kihwal</td>
+<td><a href="http://people.apache.org/~kihwal">Kihwal Lee</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>lei</td>
+<td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>llu</td>
+<td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
+<td>VMware</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mahadev</td>
+<td>Mahadev Konar</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mattf</td>
+<td>Matt Foley</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mingma</td>
+<td>Ming Ma</td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>nigel</td>
+<td>Nigel Daley</td>
+<td>Jive</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>omalley</td>
+<td><a href="http://people.apache.org/~omalley">Owen O&rsquo;Malley</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>ozawa</td>
+<td><a href="http://people.apache.org/~ozawa">Tsuyoshi Ozawa</a></td>
+<td>NTT</td>
+<td></td>
+<td>+9</td>
+</tr>
+
+<tr>
+<td>phunt</td>
+<td><a href="http://people.apache.org/~phunt">Patrick Hunt</a></td>
+<td>Cloudera</td>
+<td>ZooKeeper</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>rangadi</td>
+<td>Raghu Angadi</td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>rohithsharmaks</td>
+<td>Rohith Sharma K S</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>sharad</td>
+<td>Sharad Agarwal</td>
+<td>InMobi</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>shv</td>
+<td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
+<td>LinkedIn</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sandy</td>
+<td><a href="http://people.apache.org/~sandy">Sandy Ryza</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sjlee</td>
+<td><a href="http://people.apache.org/~sjlee">Sangjin Lee</a></td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sradia</td>
+<td><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sseth</td>
+<td>Siddharth Seth</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>stack</td>
+<td>Michael Stack</td>
+<td>Cloudera</td>
+<td>HBase</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>stevel</td>
+<td>Steve Loughran</td>
+<td>Hortonworks</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>suresh</td>
+<td><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>szetszwo</td>
+<td><a href="http://people.apache.org/~szetszwo">Tsz Wo (Nicholas) Sze</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tgraves</td>
+<td>Thomas Graves</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>todd</td>
+<td><a href="http://people.apache.org/~todd">Todd Lipcon</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tomwhite</td>
+<td><a href="http://weblogs.java.net/blog/tomwhite/">Tom White</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tucu</td>
+<td>Alejandro Abdelnur</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>umamahesh</td>
+<td><a href="https://people.apache.org/~umamahesh/umamahesh.html">Uma Maheswara Rao G</a></td>
+<td>Intel</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>vinayakumarb</td>
+<td><a href="https://people.apache.org/~vinayakumarb/">Vinayakumar B</a></td>
+<td>Huawei</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>vinodkv</td>
+<td>Vinod Kumar Vavilapalli</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>yhemanth</td>
+<td>Hemanth Yamijala</td>
+<td></td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>wang</td>
+<td>Andrew Wang</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>wangda</td>
+<td>Wangda Tan</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>wheat9</td>
+<td><a href="http://haohui.me">Haohui Mai</a></td>
+<td>Uber</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>xgong</td>
+<td><a href="http://people.apache.org/~xgong">Xuan Gong</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>xyao</td>
+<td><a href="http://people.apache.org/~xyao">Xiaoyu Yao</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>yjzhangal</td>
+<td><a href="http://people.apache.org/~yjzhangal">Yongjun Zhang</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>yliu</td>
+<td><a href="http://people.apache.org/~yliu">Yi Liu</a></td>
+<td>Intel</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>zhz</td>
+<td><a href="http://zhe-thoughts.github.io/about/">Zhe Zhang</a></td>
+<td>LinkedIn</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>zjshen</td>
+<td><a href="http://people.apache.org/~zjshen">Zhijie Shen</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>zshao</td>
+<td>Zheng Shao</td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+</tbody>
+</table>
+
+<p>Emeritus Hadoop PMC Members
+-   Andrzej Bialecki
+-   Christophe Taton
+-   Jim Kellerman</p>
+
+<h2 id="hadoop-committers:3a80101a736c0780c9d4ab48eec20b40">Hadoop Committers</h2>
+
+<p>Hadoop&rsquo;s active committers include:</p>
+
+<table>
+<thead>
+<tr>
+<th>username</th>
+<th>name</th>
+<th>organization</th>
+<th>roles</th>
+<th>timezone</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>aajisaka</td>
+<td>Akira Ajisaka</td>
+<td>NTT DATA</td>
+<td></td>
+<td>+9</td>
+</tr>
+
+<tr>
+<td>ab</td>
+<td>Andrzej Bialecki</td>
+<td>Getopt</td>
+<td></td>
+<td>+1</td>
+</tr>
+
+<tr>
+<td>acmurthy</td>
+<td><a href="http://people.apache.org/~acmurthy">Arun C Murthy</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>adhoot</td>
+<td>Anubhav Dhoot</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>amareshwari</td>
+<td><a href="http://people.apache.org/~amareshwari">Amareshwari Sriramadasu</a></td>
+<td>InMobi</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>amarrk</td>
+<td><a href="http://people.apache.org/~amarrk">Amar Ramesh Kamat</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>arp</td>
+<td><a href="http://people.apache.org/~arp">Arpit Agarwal</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>arpit</td>
+<td><a href="http://people.apache.org/~arpit">Arpit Gupta</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>asuresh</td>
+<td>Arun Suresh</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>atm</td>
+<td><a href="http://people.apache.org/~atm">Aaron T. Myers</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>aw</td>
+<td>Allen Wittenauer</td>
+<td>Effective Machines</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>benoy</td>
+<td><a href="http://people.apache.org/~benoy">Benoy Antony</a></td>
+<td>eBay</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>bibinchundatt</td>
+<td>Bibin A Chundatt</td>
+<td>Huawei</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>bikas</td>
+<td>Bikas Saha</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>bobby</td>
+<td>Robert(Bobby) Evans</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>boryas</td>
+<td><a href="http://people.apache.org/~boryas">Boris Shkolnik</a></td>
+<td>LinkedIn</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>brahma</td>
+<td>Brahma Reddy Battula</td>
+<td>Huawei</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>brandonli</td>
+<td>Brandon Li</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cdouglas</td>
+<td>Chris Douglas</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cmccabe</td>
+<td><a href="http://www.club.cc.cmu.edu/~cmccabe">Colin Patrick McCabe</a></td>
+<td>Cloudera</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cnauroth</td>
+<td>Chris Nauroth</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cos</td>
+<td><a href="http://people.apache.org/~cos">Konstantin Boudnik</a></td>
+<td>WANdisco</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>curino</td>
+<td>Carlo Curino</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>cutting</td>
+<td><a href="http://blog.lucene.com/">Doug Cutting</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>daryn</td>
+<td>Daryn Sharp</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>ddas</td>
+<td><a href="http://people.apache.org/~ddas">Devaraj Das</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>devaraj</td>
+<td>Devaraj K</td>
+<td>Intel</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>dhruba</td>
+<td><a href="http://people.apache.org/~dhruba">Dhruba Borthakur</a></td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>drankye</td>
+<td><a href="http://people.apache.org/~drankye">Kai Zheng</a></td>
+<td>Intel</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>eli</td>
+<td><a href="http://people.apache.org/~eli">Eli Collins</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>epayne</td>
+<td><a href="http://people.apache.org/~epayne">Eric Payne</a></td>
+<td>Yahoo</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>enis</td>
+<td><a href="http://people.apache.org/~enis">Enis Soztutar</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>eyang</td>
+<td><a href="http://people.apache.org/~eyang">Eric Yang</a></td>
+<td>IBM</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>gera</td>
+<td>Gera Shegalov</td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>gkesavan</td>
+<td><a href="http://people.apache.org/~gkesavan">Giridharan Kesavan</a></td>
+<td>Hortonworks</td>
+<td>RE</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>gtcarrera9</td>
+<td>Li Lu</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>hitesh</td>
+<td>Hitesh Shah</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>hairong</td>
+<td><a href="http://people.apache.org/~hairong">Hairong Kuang</a></td>
+<td>Facebook</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>harsh</td>
+<td><a href="http://harshj.com/">Harsh J</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>ivanmi</td>
+<td>Ivan Mitic</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>iwasakims</td>
+<td>Masatake Iwasaki</td>
+<td>NTT DATA</td>
+<td></td>
+<td>+9</td>
+</tr>
+
+<tr>
+<td>jeagles</td>
+<td><a href="http://people.apache.org/~jeagles">Jonathan Eagles</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>jghoman</td>
+<td><a href="http://people.apache.org/~jghoman">Jakob Homan</a></td>
+<td>LinkedIn</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jianhe</td>
+<td><a href="http://people.apache.org/~jianhe">Jian He</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jing9</td>
+<td>Jing Zhao</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jitendra</td>
+<td><a href="http://people.apache.org/~jitendra">Jitendra Nath Pandey</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>jlowe</td>
+<td>Jason Lowe</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>johan</td>
+<td><a href="http://people.apache.org/~johan">Johan Oskarsson</a></td>
+<td>Twitter</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>junping_du</td>
+<td>Junping Du</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>kasha</td>
+<td><a href="http://people.apache.org/~kasha">Karthik Kambatla</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>kihwal</td>
+<td><a href="http://people.apache.org/~kihwal">Kihwal Lee</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>kkaranasos</td>
+<td><a href="http://www.microsoft.com/en-us/research/people/kokarana">Konstantinos Karanasos</a></td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>knoguchi</td>
+<td><a href="http://people.apache.org/~knoguchi">Koji Noguchi</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>kzhang</td>
+<td>Kan Zhang</td>
+<td>IBM</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>lei</td>
+<td><a href="http://people.apache.org/~lei">Lei Xu</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>liuml07</td>
+<td><a href="http://people.apache.org/~liuml07">Mingliang Liu</a></td>
+<td>Hortonworks</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>lohit</td>
+<td><a href="http://people.apache.org/~lohit">Lohit Vijayarenu</a></td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>llu</td>
+<td><a href="http://people.apache.org/~llu">Luke Lu</a></td>
+<td>VMware</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>lmccay</td>
+<td><a href="http://people.apache.org/~lmccay">Larry McCay</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-5</td>
+</tr>
+
+<tr>
+<td>mahadev</td>
+<td>Mahadev Konar</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>matei</td>
+<td><a href="http://www.cs.berkeley.edu/~matei">Matei Zaharia</a></td>
+<td>UC Berkeley</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mattf</td>
+<td><a href="http://people.apache.org/~mattf">Matthew Foley</a></td>
+<td>Hortonworks</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mayank</td>
+<td><a href="http://people.apache.org/~mayank">Mayank Bansal</a></td>
+<td>uber</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>molkov</td>
+<td><a href="http://people.apache.org/~molkov">Dmytro Molkov</a></td>
+<td>Facebook</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mukund</td>
+<td><a href="http://people.apache.org/~mukund">Mukund Madhugiri</a></td>
+<td>Yahoo!</td>
+<td>QA</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>mingma</td>
+<td>Ming Ma</td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>naganarasimha_gr</td>
+<td><a href="http://people.apache.org/~naganarasimha_gr/">Naganarasimha G R</a></td>
+<td>Huawei</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>nigel</td>
+<td><a href="http://people.apache.org/~nigel">Nigel Daley</a></td>
+<td></td>
+<td>QA</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>omalley</td>
+<td><a href="http://people.apache.org/~omalley">Owen O&rsquo;Malley</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>ozawa</td>
+<td><a href="http://people.apache.org/~ozawa">Tsuyoshi Ozawa</a></td>
+<td>NTT</td>
+<td></td>
+<td>+9</td>
+</tr>
+
+<tr>
+<td>rakeshr</td>
+<td><a href="https://people.apache.org/~rakeshr">Rakesh Radhakrishnan</a></td>
+<td>Intel</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>rangadi</td>
+<td><a href="http://people.apache.org/~rangadi">Raghu Angadi</a></td>
+<td>Twitter</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>ramya</td>
+<td><a href="http://people.apache.org/~ramya">Ramya Sunil</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>raviprak</td>
+<td><a href="http://people.apache.org/~raviprak">Ravi Prakash</a></td>
+<td>Altiscale, Inc.</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>rchiang</td>
+<td>Ray Chiang</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>rkanter</td>
+<td><a href="http://people.apache.org/~rkanter">Robert Kanter</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>rohithsharmaks</td>
+<td>Rohith Sharma K S</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>rvs</td>
+<td><a href="http://people.apache.org/~rvs">Roman Shaposhnik</a></td>
+<td>Pivotal</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>schen</td>
+<td><a href="http://people.apache.org/~schen">Scott Chun-Yang Chen</a></td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sharad</td>
+<td>Sharad Agarwal</td>
+<td>InMobi</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>shv</td>
+<td><a href="http://people.apache.org/~shv">Konstantin Shvachko</a></td>
+<td>LinkedIn</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sandy</td>
+<td><a href="http://people.apache.org/~sandy">Sandy Ryza</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sjlee</td>
+<td><a href="http://people.apache.org/~sjlee">Sangjin Lee</a></td>
+<td>Twitter</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sradia</td>
+<td><a href="http://people.apache.org/~sradia">Sanjay Radia</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sreekanth</td>
+<td>Sreekanth Ramakrishnan</td>
+<td>InMobi</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>sseth</td>
+<td>Siddharth Seth</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>stevel</td>
+<td>Steve Loughran</td>
+<td>Hortonworks</td>
+<td></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>subru</td>
+<td>Subru Krishnan</td>
+<td>Microsoft</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>sunilg</td>
+<td>Sunil G</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>suresh</td>
+<td><a href="http://people.apache.org/~suresh">Suresh Srinivas</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>szetszwo</td>
+<td><a href="http://people.apache.org/~szetszwo">Tsz Wo (Nicholas) Sze</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tanping</td>
+<td><a href="http://people.apache.org/~tanping">Tanping Wang</a></td>
+<td>Yahoo!</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>taton</td>
+<td><a href="http://people.apache.org/~taton">Christophe Taton</a></td>
+<td>INRIA</td>
+<td></td>
+<td>+1</td>
+</tr>
+
+<tr>
+<td>tgraves</td>
+<td>Thomas Graves</td>
+<td>Yahoo!</td>
+<td></td>
+<td>-6</td>
+</tr>
+
+<tr>
+<td>todd</td>
+<td><a href="http://people.apache.org/~todd">Todd Lipcon</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tomwhite</td>
+<td><a href="http://www.lexemetech.com">Tom White</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>tucu</td>
+<td>Alejandro Abdelnur</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>umamahesh</td>
+<td><a href="https://people.apache.org/~umamahesh/umamahesh.html">Uma Maheswara Rao G</a></td>
+<td>Intel</td>
+<td>HDFS</td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>vinayakumarb</td>
+<td><a href="http://people.apache.org/~vinayakumarb">Vinayakumar B</a></td>
+<td>Huawei</td>
+<td>HDFS</td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>vinodkv</td>
+<td><a href="http://people.apache.org/~vinodkv">Vinod Kumar Vavilapalli</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>varunsaxena</td>
+<td><a href="http://people.apache.org/~varunsaxena">Varun Saxena</a></td>
+<td>Huawei</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>vvasudev</td>
+<td>Varun Vasudev</td>
+<td>Hortonworks</td>
+<td></td>
+<td>+5.5</td>
+</tr>
+
+<tr>
+<td>waltersu4549</td>
+<td>Walter Su</td>
+<td></td>
+<td>HDFS</td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>wang</td>
+<td>Andrew Wang</td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>wangda</td>
+<td>Wangda Tan</td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>weichiu</td>
+<td><a href="http://weichiu.com/about-wei-chiu/">Wei-Chiu Chuang</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>wheat9</td>
+<td><a href="http://haohui.me">Haohui Mai</a></td>
+<td>Uber</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>xgong</td>
+<td><a href="http://people.apache.org/~xgong">Xuan Gong</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>xiao</td>
+<td>Xiao Chen</td>
+<td>Cloudera</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>xyao</td>
+<td><a href="http://people.apache.org/~xyao">Xiaoyu Yao</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>yjzhangal</td>
+<td><a href="http://people.apache.org/~yjzhangal">Yongjun Zhang</a></td>
+<td>Cloudera</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>yliu</td>
+<td><a href="http://people.apache.org/~yliu">Yi Liu</a></td>
+<td>Intel</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>yqlin</td>
+<td><a href="https://github.com/linyiqun">Yiqun Lin</a></td>
+<td>Vipshop</td>
+<td></td>
+<td>+8</td>
+</tr>
+
+<tr>
+<td>zhz</td>
+<td><a href="http://zhe-thoughts.github.io/about/">Zhe Zhang</a></td>
+<td>LinkedIn</td>
+<td>HDFS</td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>zjshen</td>
+<td><a href="http://people.apache.org/~zjshen">Zhijie Shen</a></td>
+<td>Hortonworks</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>zshao</td>
+<td><a href="http://people.apache.org/~zshao">Zheng Shao</a></td>
+<td>Facebook</td>
+<td></td>
+<td>-8</td>
+</tr>
+
+<tr>
+<td>zxu</td>
+<td><a href="http://people.apache.org/~zxu">Zhihai Xu</a></td>
+<td>Uber</td>
+<td></td>
+<td>-8</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="emeritus-hadoop-committers:3a80101a736c0780c9d4ab48eec20b40">Emeritus Hadoop Committers</h2>
+
+<p>Hadoop committers who are no longer active include:</p>
+
+<ul>
+<li>Mike Cafarella</li>
+</ul>
+
+
+            
+        </ul>
+  </div>
+
+    
+    <ul class="pagination">
+        
+        <li>
+            <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+        </li>
+        
+        <li
+        >
+        <a href="/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+        
+        <li
+        ><a href="/">1</a></li>
+        
+        <li
+        class="active"><a href="/page/2.html">2</a></li>
+        
+        <li
+        class="disabled">
+        <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+        
+        <li>
+            <a href="/page/2.html" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        </li>
+        
+    </ul>
+    
+</section>
+</div>
+<div class="container">
+<footer class="footer container">
+  <div class="col-md-6">
+  <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
+    and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
+     in the United States and other countries</p>
+  <p>Copyright © 2017 The Apache Software Foundation.</p>
+  <p><a href="/privacy_policy.html">Privacy policy</a></p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="/asf_logo_wide.png"/>
+  </div>
+</footer>
+</div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    $(function() { $('table').addClass('table table-striped'); })
+    </script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-7453027-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+	 </body>
+</html>
+
