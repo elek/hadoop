@@ -1,0 +1,41 @@
+version: "3"
+services:
+   namenode:
+      hostname: namenode
+      image: apache/hadoop
+      ports:
+        - "50070:50070"
+      volumes:
+         - data-volume:/opt/hadoop/data
+      environment:
+         CORE-SITE.XML_fs.defaultFS: "hdfs://namenode:9000"
+         HDFS-SITE.XML_dfs.namenode.rpc-address: "namenode:9000"
+         HDFS-SITE.XML_dfs.namenode.name.dir: /opt/hadoop/data/namenode
+      command: "/opt/hadoop/bin/hdfs namenode"
+   datanode:
+      image: apache/hadoop
+      environment:
+         CORE-SITE.XML_fs.default.name: "hdfs://namenode:9000"
+         HDFS-SITE.XML_dfs.namenode.rpc-address: "namenode:9000"
+         HDFS-SITE.XML_dfs_datanode_data_dir: /data/datanode
+         HDFS-SITE.XML_dfs.namenode.http-bind-host: 0.0.0.0
+      command: "/opt/hadoop/bin/hdfs datanode"
+   resourcemanager:
+      ports:
+        - "8088:8088"
+      hostname: resourcemanager
+      image: apache/hadoop
+      environment:
+         CORE-SITE.XML_fs.default.name: "hdfs://namenode:9000"
+         YARN-SITE.XML_yarn.resourcemanager.hostname: "resourcemanager"
+         YARN-SITE.XML_yarn.nodemanager.delete.debug-delay-sec: 600
+      command: "/opt/hadoop/bin/yarn resourcemanager"
+   nodemanager:
+      image: elek/hadoop-yarn-nodemanager
+      environment:
+         CORE-SITE.XML_fs.default.name: "hdfs://namenode:9000"
+         YARN-SITE.XML_yarn.resourcemanager.hostname: "resourcemanager"
+         YARN-SITE.XML_yarn.nodemanager.delete.debug-delay-sec: 600
+      command: "/opt/hadoop/bin/yarn resourcemanager"
+volumes:
+  data-volume:
