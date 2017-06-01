@@ -30,6 +30,20 @@
          <th>SHA-256</th>
        </tr>
        <tr>
+         <td><a href="#26+May+2017%3A+Release+3.0.0-alpha3+available">3.0.0-alpha3</a></td>
+         <td>26 May, 2017</td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3-src.tar.gz">source</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3-src.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3-src.tar.gz.mds">checksum file</a></td>
+       </tr>
+       <tr>
+         <td></td>
+         <td></td>
+         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3.tar.gz">binary</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3.tar.gz.asc">signature</a></td>
+         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha3/hadoop-3.0.0-alpha3.tar.gz.mds">checksum file</a></td>
+       </tr>
+       <tr>
          <td><a href="#22+March%2C+2017%3A+Release+2.8.0+available">2.8.0</a></td>
          <td>22 March, 2017</td>
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.8.0/hadoop-2.8.0-src.tar.gz">source</a></td>
@@ -42,34 +56,6 @@
          <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz">binary</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz.asc">signature</a></td>
          <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz.mds">3C0C6053 651970C3..</a></td>
-       </tr>
-       <tr>
-         <td><a href="#25+January+2017%3A+Release+3.0.0-alpha2+available">3.0.0-alpha2</a></td>
-         <td>25 January, 2017</td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2-src.tar.gz">source</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha-src.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2-src.tar.gz.mds">checksum file</a></td>
-       </tr>
-       <tr>
-         <td></td>
-         <td></td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz">binary</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha2/hadoop-3.0.0-alpha2.tar.gz.mds">checksum file</a></td>
-       </tr>
-       <tr>
-         <td><a href="#03+September%2C+2016%3A+Release+3.0.0-alpha1+available">3.0.0-alpha1</a></td>
-         <td>03 September, 2016</td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1-src.tar.gz">source</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha-src.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1-src.tar.gz.mds">checksum file</a></td>
-       </tr>
-       <tr>
-         <td></td>
-         <td></td>
-         <td><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1.tar.gz">binary</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1.tar.gz.asc">signature</a></td>
-         <td><a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-3.0.0-alpha1/hadoop-3.0.0-alpha1.tar.gz.mds">checksum file</a></td>
        </tr>
        <tr>
          <td><a href="#25+August%2C+2016%3A+Release+2.7.3+available">2.7.3</a></td>
@@ -157,6 +143,19 @@
     <section>
       <title>Release Notes</title>
 
+      <section>
+        <title>26 May, 2017: Release 3.0.0-alpha3 available </title>
+        <p>
+          This is a security release in the 3.0.0 release line. It consists of alpha2 plus security fixes, along with necessary build-related fixes. Users on 3.0.0-alpha1 and 3.0.0-alpha2 are encouraged to upgrade to 3.0.0-alpha3.
+        </p>
+        <p>
+          Please note that alpha releases come with no guarantees of quality or API stability, and are not intended for production use.
+        </p>
+        <p>
+          Users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.0.0-alpha2/index.html">overview of major changes</a> coming in 3.0.0.
+          The alpha3 <a href="http://hadoop.apache.org/docs/r3.0.0-alpha3/hadoop-project-dist/hadoop-common/release/3.0.0-alpha3/RELEASENOTES.3.0.0-alpha3.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.0.0-alpha3/hadoop-project-dist/hadoop-common/release/3.0.0-alpha3/CHANGES.3.0.0-alpha3.html">changelog</a> detail the changes since 3.0.0-alpha2.
+        </p>
+      </section>
      <section>
         <title>22 March 2017: Release 2.8.0 available </title>
         <p>     Apache Hadoop 2.8.0 contains a number of significant features and enhancements. For major features and improvements, please refer:
