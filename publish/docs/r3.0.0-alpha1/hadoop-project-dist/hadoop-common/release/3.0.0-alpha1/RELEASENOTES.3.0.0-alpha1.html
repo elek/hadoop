@@ -2103,6 +2103,13 @@
 
 <ul>
   
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-12406">HADOOP-12406</a> | <i>Blocker</i> | <b>AbstractMapWritable.readFields throws ClassNotFoundException with custom writables</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p>
+<hr />
+
+<ul>
+  
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-12963">HADOOP-12963</a> | <i>Minor</i> | <b>Allow using path style addressing for accessing the s3 endpoint</b></li>
 </ul>
 <p>Add new flag to allow supporting path style addressing for s3a</p>
@@ -2219,6 +2226,13 @@
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-12930">HADOOP-12930</a> | <i>Critical</i> | <b>[Umbrella] Dynamic subcommands for hadoop shell scripts</b></li>
 </ul>
 <p>It is now possible to add or modify the behavior of existing subcommands in the hadoop, hdfs, mapred, and yarn scripts. See the Unix Shell Guide for more information.</p>
+<hr />
+
+<ul>
+  
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6701">MAPREDUCE-6701</a> | <i>Critical</i> | <b>application master log can not be available when clicking jobhistory&#x2019;s am logs link</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p>
 <hr />
 
 <ul>
@@ -2458,7 +2472,7 @@
   
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-13382">HADOOP-13382</a> | <i>Major</i> | <b>remove unneeded commons-httpclient dependencies from POM files in Hadoop and sub-projects</b></li>
 </ul>
-<p>Dependencies on commons-httpclient have been removed. Projects with undeclared transitive dependencies on commons-httpclient, previously provided via hadoop-common or hadoop-client, may find this to be an incompatible change. Such project are also potentially exposed to the commons-httpclient CVE, and should be fixed for that reason as well.</p>
+<p><b>WARNING: No release note provided for this change.</b></p>
 <hr />
 
 <ul>
@@ -2480,6 +2494,13 @@
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10689">HDFS-10689</a> | <i>Minor</i> | <b>Hdfs dfs chmod should reset sticky bit permission when the bit is omitted in the octal mode</b></li>
 </ul>
 <p>Hdfs dfs chmod command will reset sticky bit permission on a file/directory when the leading sticky bit is omitted in the octal mode (like 644). So when a file/directory permission is applied using octal mode and sticky bit permission needs to be preserved, then it has to be explicitly mentioned in the permission bits (like 1644). This behavior is similar to many other filesystems on Linux/BSD.</p>
+<hr />
+
+<ul>
+  
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6729">MAPREDUCE-6729</a> | <i>Minor</i> | <b>Accurately compute the test execute time in DFSIO</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p>
 <hr />
 
 <ul>
@@ -2507,7 +2528,7 @@
   
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-7933">HDFS-7933</a> | <i>Major</i> | <b>fsck should also report decommissioning replicas.</b></li>
 </ul>
-<p>The output of hdfs fsck now also contains information about decommissioning replicas.</p>
+<p><b>WARNING: No release note provided for this change.</b></p>
 <hr />
 
 <ul>
@@ -2528,7 +2549,7 @@
   
 <li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-12726">HADOOP-12726</a> | <i>Major</i> | <b>Unsupported FS operations should throw UnsupportedOperationException</b></li>
 </ul>
-<p>Unsupported FileSystem operations now throw an UnsupportedOperationException rather than an IOException.</p>
+<p><b>WARNING: No release note provided for this change.</b></p>
 <hr />
 
 <ul>
