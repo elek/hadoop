@@ -19,7 +19,10 @@
 package org.apache.hadoop.ozone.scm;
 
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeStat;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +50,9 @@ public interface SCMMXBean {
    * @return SCM client RPC server port
    */
   String getClientRpcPort();
+
+  Map<String, SCMNodeStat> getNodeStats();
+
+  SCMNodeStat getStats();
+
 }

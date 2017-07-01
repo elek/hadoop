@@ -31,60 +31,38 @@ import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.ozone.OzoneClientUtils;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.OzoneConfiguration;
-import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos;
-import org.apache.hadoop.ozone.protocolPB
-    .ScmBlockLocationProtocolServerSideTranslatorPB;
-import org.apache.hadoop.ozone.scm.block.BlockManager;
-import org.apache.hadoop.ozone.scm.block.BlockManagerImpl;
-import org.apache.hadoop.ozone.scm.exceptions.SCMException;
-import org.apache.hadoop.scm.client.ScmClient;
-import org.apache.hadoop.scm.container.common.helpers.AllocatedBlock;
-import org.apache.hadoop.scm.container.common.helpers.DeleteBlockResult;
-import org.apache.hadoop.scm.protocol.ScmBlockLocationProtocol;
 import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
-import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
+import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos;
 import org.apache.hadoop.ozone.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.ContainerReportsProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMCommandResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMHeartbeatResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMNodeAddressList;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMVersionRequestProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMVersionResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SendContainerReportProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type;
+    .StorageContainerDatanodeProtocolProtos.*;
 import org.apache.hadoop.ozone.protocol.proto
     .StorageContainerLocationProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMReregisterCmdResponseProto;
+import org.apache.hadoop.ozone.protocolPB
+    .ScmBlockLocationProtocolServerSideTranslatorPB;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolPB;
 import org.apache.hadoop.ozone.protocolPB
     .StorageContainerDatanodeProtocolServerSideTranslatorPB;
-import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolPB;
-import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
 import org.apache.hadoop.ozone.protocolPB
     .StorageContainerLocationProtocolServerSideTranslatorPB;
+import org.apache.hadoop.ozone.scm.block.BlockManager;
+import org.apache.hadoop.ozone.scm.block.BlockManagerImpl;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.Mapping;
+import org.apache.hadoop.ozone.scm.exceptions.SCMException;
 import org.apache.hadoop.ozone.scm.node.NodeManager;
 import org.apache.hadoop.ozone.scm.node.SCMNodeManager;
+import org.apache.hadoop.scm.client.ScmClient;
+import org.apache.hadoop.scm.container.common.helpers.AllocatedBlock;
+import org.apache.hadoop.scm.container.common.helpers.DeleteBlockResult;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
+import org.apache.hadoop.scm.protocol.ScmBlockLocationProtocol;
+import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
+import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolPB;
+import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.StringUtils;
 import org.slf4j.Logger;
@@ -93,32 +71,11 @@ import org.slf4j.LoggerFactory;
 import javax.management.ObjectName;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Collection;
-import java.util.UUID;
+import java.util.*;
 
 import static org.apache.hadoop.ozone.protocol.proto
     .ScmBlockLocationProtocolProtos.DeleteScmBlockResult.Result;
-
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_BLOCK_CLIENT_ADDRESS_KEY;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_CLIENT_ADDRESS_KEY;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_DATANODE_ADDRESS_KEY;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_DB_CACHE_SIZE_DEFAULT;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_DB_CACHE_SIZE_MB;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HANDLER_COUNT_DEFAULT;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HANDLER_COUNT_KEY;
+import static org.apache.hadoop.scm.ScmConfigKeys.*;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
 /**
@@ -134,7 +91,7 @@ import static org.apache.hadoop.util.ExitUtil.terminate;
 @InterfaceAudience.LimitedPrivate({"HDFS", "CBLOCK", "OZONE", "HBASE"})
 public class StorageContainerManager
     implements StorageContainerDatanodeProtocol,
-    StorageContainerLocationProtocol, ScmBlockLocationProtocol, SCMMXBean{
+    StorageContainerLocationProtocol, ScmBlockLocationProtocol{
 
   private static final Logger LOG =
       LoggerFactory.getLogger(StorageContainerManager.class);
@@ -294,7 +251,7 @@ public class StorageContainerManager
 
   private void registerMXBean() {
     this.scmInfoBeanName = MBeans.register("StorageContainerManager",
-        "StorageContainerManagerInfo", this);
+        "StorageContainerManagerInfo", new SCMMXBeanAdapter(this));
   }
 
   private void unregisterMXBean() {
@@ -438,7 +395,6 @@ public class StorageContainerManager
     return clientRpcAddress;
   }
 
-  @Override
   public String getClientRpcPort() {
     InetSocketAddress addr = getClientRpcAddress();
     return addr == null ? "0" : Integer.toString(addr.getPort());
@@ -453,7 +409,6 @@ public class StorageContainerManager
     return datanodeRpcAddress;
   }
 
-  @Override
   public String getDatanodeRpcPort() {
     InetSocketAddress addr = getDatanodeRpcAddress();
     return addr == null ? "0" : Integer.toString(addr.getPort());
@@ -597,14 +552,7 @@ public class StorageContainerManager
     return scmNodeManager.getNodeCount(nodestate);
   }
 
-  @Override
-  public Map<String, Integer> getNodeCount() {
-    Map<String, Integer> countMap = new HashMap<String, Integer>();
-    for (SCMNodeManager.NODESTATE state : SCMNodeManager.NODESTATE.values()) {
-      countMap.put(state.toString(), scmNodeManager.getNodeCount(state));
-    }
-    return countMap;
-  }
+
 
   /**
    * Returns node manager.
