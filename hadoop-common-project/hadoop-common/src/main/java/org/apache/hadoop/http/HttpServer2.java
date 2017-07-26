@@ -25,10 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.PrintStream;
-import java.net.BindException;
-import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.URL;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -989,7 +986,17 @@ public final class HttpServer2 implements FilterContainer {
    * @throws FileNotFoundException if 'webapps' directory cannot be found on CLASSPATH.
    */
   protected String getWebAppsPath(String appName) throws FileNotFoundException {
-    URL url = getClass().getClassLoader().getResource("webapps/" + appName);
+    File development = new File("src/main/webapps/" + appName);
+    URL url = null;
+    if (development.exists()) {
+      try {
+        url = development.getParentFile().toURI().toURL();
+      } catch (MalformedURLException e) {
+        LOG.error("Mailfored URL during when find webdir : " + e.getMessage());
+      }
+    } else {
+      url = getClass().getClassLoader().getResource("webapps/" + appName);
+    }
     if (url == null)
       throw new FileNotFoundException("webapps/" + appName
           + " not found in CLASSPATH");
