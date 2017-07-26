@@ -1,0 +1,22 @@
+CORE-SITE.XML_fs.defaultFS: "hdfs://namenode:9000"
+OZONE-SITE.XML_ozone.ksm.address=localhost
+OZONE-SITE.XML_ozone.scm.names=localhost
+OZONE-SITE.XML_ozone.enabled=True
+OZONE-SITE.XML_ozone.scm.datanode.id=/tmp/datanode.id
+OZONE-SITE.XML_ozone.scm.block.client.address=localhost
+OZONE-SITE.XML_ozone.container.metadata.dirs=/tmp/metadata
+OZONE-SITE.XML_ozone.handler.type=distributed
+OZONE-SITE.XML_ozone.scm.client.address=localhost
+HDFS-SITE.XML_dfs.namenode.rpc-address=namenode:9000
+HDFS-SITE.XML_dfs.namenode.name.dir=/data/namenode
+HDFS-SITE.XML_dfs.namenode.http-bind-host=0.0.0.0
+MAPRED-SITE.XML_mapreduce.framework.name=yarn
+YARN-SITE.XML_yarn.resourcemanager.hostname=resourcemanager
+YARN-SITE.XML_yarn.nodemanager.pmem-check-enabled=false
+YARN-SITE.XML_yarn.nodemanager.delete.debug-delay-sec=600
+YARN-SITE.XML_yarn.nodemanager.vmem-check-enabled=false
+YARN-SITE.XML_yarn.nodemanager.aux-services=mapreduce_shuffle
+LOG4J.PROPERTIES_log4j.rootLogger=INFO, stdout
+LOG4J.PROPERTIES_log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+LOG4J.PROPERTIES_log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+LOG4J.PROPERTIES_log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
