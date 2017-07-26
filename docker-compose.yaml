@@ -1,0 +1,36 @@
+version: "3"
+services:
+   namenode:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: namenode
+      volumes:
+         - ./hadoop-dist/target/hadoop-3.0.0-beta1-SNAPSHOT:/opt/hadoop
+      ports:
+         - 50070:50070
+         - 9870:9870
+      environment:
+          ENSURE_NAMENODE_DIR: /data/namenode
+      env_file:
+         - ./docker-config
+   datanode:
+      image: flokkr/hadoop-hdfs-datanode:latest
+      volumes:
+        - ./hadoop-dist/target/hadoop-3.0.0-beta1-SNAPSHOT:/opt/hadoop
+   ksm:
+      image: flokkr/hadoop:latest
+      volumes:
+         - ./hadoop-dist/target/hadoop-3.0.0-beta1-SNAPSHOT:/opt/hadoop
+      ports:
+         - 9874
+      env_file:
+          - ./docker-config
+      command: ["/opt/hadoop/bin/hdfs","ksm"]
+   scm:
+      image: flokkr/hadoop:latest
+      volumes:
+         - ./hadoop-dist/target/hadoop-3.0.0-beta1-SNAPSHOT:/opt/hadoop
+      ports:
+         - 9876
+      env_file:
+          - ./docker-config
+      command: ["/opt/hadoop/bin/hdfs","scm"]
