@@ -195,6 +195,10 @@ This command tells the data node to send in the container report when possible
 message SendContainerReportProto {
 }
 
+message CloseContainerProto {
+  required string containerName = 1;
+}
+
 /**
 Type of commands supported by SCM to datanode protocol.
 */
@@ -203,6 +207,7 @@ enum Type {
   registeredCommand = 3;
   sendContainerReport = 4;
   reregisterCommand = 5;
+  closeContainerCommand = 6;
 }
 
 /*
@@ -214,6 +219,7 @@ message SCMCommandResponseProto {
   optional SCMVersionResponseProto versionProto = 4;
   optional SendContainerReportProto sendReport = 5;
   optional SCMReregisterCmdResponseProto reregisterProto = 6;
+  optional CloseContainerProto closeContainerProto = 7;
 }
 
 
