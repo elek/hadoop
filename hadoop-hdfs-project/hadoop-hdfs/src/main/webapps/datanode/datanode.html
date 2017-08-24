@@ -95,6 +95,27 @@
   {/dn.BPServiceActorInfo}
 </table>
 
+
+<div class="page-header"><h1>Ozone: SCM Connections</h1></div>
+<table class="table">
+  <thead>
+  <tr>
+    <th>SCM Address</th>
+    <th>Status</th>
+    <th>Version</th>
+    <th>Missed count</th>
+  </tr>
+  </thead>
+  {#ozone.ScmConnection}
+  <tr>
+    <td>{addressString}</td>
+    <td>{state}</td>
+    <td>{versionNumber}</td>
+    <td>{missedCount}s</td>
+  </tr>
+  {/ozone.ScmConnection}
+</table>
+
 <div class="page-header"><h1>Volume Information</h1></div>
 <table class="table">
   <thead>

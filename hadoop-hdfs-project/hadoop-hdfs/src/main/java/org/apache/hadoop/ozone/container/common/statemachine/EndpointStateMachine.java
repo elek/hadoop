@@ -35,7 +35,8 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Endpoint is used as holder class that keeps state around the RPC endpoint.
  */
-public class EndpointStateMachine implements Closeable {
+public class EndpointStateMachine
+    implements Closeable, EndpointStateMachineMBean {
   static final Logger
       LOG = LoggerFactory.getLogger(EndpointStateMachine.class);
   private final StorageContainerDatanodeProtocolClientSideTranslatorPB endPoint;
@@ -104,6 +105,15 @@ public class EndpointStateMachine implements Closeable {
     return state;
   }
 
+  @Override
+  public int getVersionNumber() {
+    if (version != null) {
+      return version.getProtobufMessage().getSoftwareVersion();
+    } else {
+      return -1;
+    }
+  }
+
   /**
    * Sets the endpoint state.
    *
@@ -142,6 +152,11 @@ public class EndpointStateMachine implements Closeable {
    */
   public long getMissedCount() {
     return this.missedCount.get();
+  }
+
+  @Override
+  public String getAddressString() {
+    return getAddress().toString();
   }
 
   public void zeroMissedCount() {

@@ -22,12 +22,20 @@
 
   dust.loadSource(dust.compile($('#tmpl-dn').html(), 'dn'));
 
-  function load() {
+  function loadDatanodeInfo() {
     $.get('/jmx?qry=Hadoop:service=DataNode,name=DataNodeInfo', function(resp) {
       data.dn = workaround(resp.beans[0]);
       data.dn.HostName = resp.beans[0]['DatanodeHostname'];
       render();
     }).fail(show_err_msg);
+  }
+
+  function loadOzoneInfo() {
+        $.get('/jmx?qry=Hadoop:service=SCMConnectionManager,name=SCMConnectionManager', function (resp) {
+            data.ozone = {}
+            data.ozone.ScmConnection = resp.beans[0].SCMServers;
+            render();
+        }).fail(show_err_msg);
   }
 
   function workaround(dn) {
@@ -54,6 +62,7 @@
         return chunk.write(moment().subtract(Number(value), 'seconds').fromNow(true));
       }
     });
+    console.log(data)
     dust.render('dn', base.push(data), function(err, out) {
       $('#tab-overview').html(out);
       $('#tab-overview').addClass('active');
@@ -65,6 +74,7 @@
     $('#alert-panel').show();
   }
 
-  load();
+    loadDatanodeInfo();
+    loadOzoneInfo();
 
 })();

@@ -20,19 +20,25 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.server.datanode.DataNodeMXBean;
+import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.ozone.OzoneConfiguration;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
 import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.CommandDispatcher;
 import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.ContainerReportHandler;
 import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
+import org.apache.hadoop.ozone.protocol.proto
+    .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.util.Time;
 import org.apache.hadoop.util.concurrent.HadoopExecutors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.management.ObjectName;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,7 +46,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * State Machine Class.
  */
-public class DatanodeStateMachine implements Closeable {
+public class DatanodeStateMachine implements Closeable, DatanodeStateMachineMXBean{
   @VisibleForTesting
   static final Logger LOG =
       LoggerFactory.getLogger(DatanodeStateMachine.class);
@@ -56,6 +62,7 @@ public class DatanodeStateMachine implements Closeable {
   private AtomicLong nextHB;
   private Thread stateMachineThread = null;
   private Thread cmdProcessThread = null;
+  private final ObjectName jmxBean;
 
   /**
    * Constructs a a datanode state machine.
@@ -86,6 +93,8 @@ public class DatanodeStateMachine implements Closeable {
       .setContainer(container)
       .setContext(context)
       .build();
+
+    jmxBean = registerMXBean();
   }
 
   public void setDatanodeID(DatanodeID datanodeID) {
@@ -115,12 +124,21 @@ public class DatanodeStateMachine implements Closeable {
     return this.container;
   }
 
+  private ObjectName registerMXBean() {
+    try {
+      return MBeans.register("OzoneDataNode",
+          "DatanodeStateMachine",
+          this);
+    } catch (Exception ex) {
+      LOG.error("Can't register SCMConnectionManager JMX Bean", ex);
+      return null;
+    }
+  }
   /**
    * Runs the state machine at a fixed frequency.
    */
   private void start() throws IOException {
     long now = 0;
-
     container.start();
     initCommandHandlerThread(conf);
     while (context.getState() != DatanodeStates.SHUTDOWN) {
@@ -202,7 +220,9 @@ public class DatanodeStateMachine implements Closeable {
     if(container != null) {
       container.stop();
     }
+    MBeans.unregister(jmxBean);
   }
+
 
   /**
    * States that a datanode  can be in. GetNextState will move this enum from
