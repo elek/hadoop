@@ -1,0 +1,8 @@
+<configuration>
+  <!--property
+  ><name>rpc.metrics.quantile.enable</name><value>true</value></property>
+  <property><name>rpc.metrics.percentiles.intervals</name><value>1,60,
+    300</value></property-->
+  <property><name>ozone.enabled</name><value>true</value></property>
+
+</configuration>
