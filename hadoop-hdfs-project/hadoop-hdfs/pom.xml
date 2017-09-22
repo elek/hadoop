@@ -39,17 +39,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-annotations</artifactId>
-      <scope>provided</scope>
+      
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-auth</artifactId>
-      <scope>provided</scope>
+      
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-common</artifactId>
-      <scope>provided</scope>
+      
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -60,7 +60,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs-client</artifactId>
-      <scope>provided</scope>
+      
     </dependency>
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
@@ -161,7 +161,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <scope>provided</scope>
+      
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
