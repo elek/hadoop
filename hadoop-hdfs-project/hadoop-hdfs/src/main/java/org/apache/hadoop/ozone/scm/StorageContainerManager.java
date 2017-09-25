@@ -35,6 +35,7 @@ import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.OzoneConfiguration;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
 import org.apache.hadoop.ozone.common.BlockGroup;
+import org.apache.hadoop.ozone.ksm.KeySpaceManager;
 import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
@@ -80,6 +81,7 @@ import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
 import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolPB;
 import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,6 +135,7 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
 
   private static final Logger LOG =
       LoggerFactory.getLogger(StorageContainerManager.class);
+  private static final String USAGE = "hdfs scm [genericOptions]";
 
   /**
    * NodeManager and container Managers for SCM.
@@ -313,7 +316,20 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
   public static void main(String[] argv) throws IOException {
     StringUtils.startupShutdownMessage(StorageContainerManager.class,
         argv, LOG);
+    if (DFSUtil.parseHelpArgument(argv, USAGE,
+        System.out, true)) {
+      System.exit(0);
+    }
+    StringUtils.startupShutdownMessage(KeySpaceManager.class, argv, LOG);
     try {
+      OzoneConfiguration conf = new OzoneConfiguration();
+      GenericOptionsParser hParser = new GenericOptionsParser(conf, argv);
+      if (!hParser.isParseSuccessful()
+          || hParser.getRemainingArgs().length > 0) {
+        System.err.println("USAGE: hdfs scm [genericOptions]\n");
+        hParser.printGenericCommandUsage(System.err);
+        System.exit(-1);
+      }   
       StorageContainerManager scm = new StorageContainerManager(
           new OzoneConfiguration());
       scm.start();

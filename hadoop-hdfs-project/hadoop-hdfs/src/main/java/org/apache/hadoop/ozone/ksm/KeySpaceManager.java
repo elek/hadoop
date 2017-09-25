@@ -18,8 +18,10 @@
 package org.apache.hadoop.ozone.ksm;
 
 import com.google.protobuf.BlockingService;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.server.namenode.NameNode;
 import org.apache.hadoop.ipc.Client;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RPC;
@@ -44,6 +46,7 @@ import org.apache.hadoop.scm.protocol.ScmBlockLocationProtocol;
 import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolClientSideTranslatorPB;
 import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolPB;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,6 +87,7 @@ public class KeySpaceManager extends ServiceRuntimeInfoImpl
   private final KSMMetrics metrics;
   private final KeySpaceManagerHttpServer httpServer;
   private ObjectName ksmInfoBeanName;
+  private static final String USAGE = "hdfs ksm [genericOptions]";
 
   public KeySpaceManager(OzoneConfiguration conf) throws IOException {
     final int handlerCount = conf.getInt(OZONE_KSM_HANDLER_COUNT_KEY,
@@ -182,9 +186,21 @@ public class KeySpaceManager extends ServiceRuntimeInfoImpl
    * @throws IOException if startup fails due to I/O error
    */
   public static void main(String[] argv) throws IOException {
+    if (DFSUtil.parseHelpArgument(argv, USAGE,
+        System.out, true)) {
+      System.exit(0);
+    }
     StringUtils.startupShutdownMessage(KeySpaceManager.class, argv, LOG);
     try {
-      KeySpaceManager ksm = new KeySpaceManager(new OzoneConfiguration());
+      OzoneConfiguration conf = new OzoneConfiguration();
+      GenericOptionsParser hParser = new GenericOptionsParser(conf, argv);
+      if (!hParser.isParseSuccessful()
+          || hParser.getRemainingArgs().length > 0) {
+        System.err.println("USAGE: hdfs ksm [genericOptions]\n");
+        hParser.printGenericCommandUsage(System.err);
+        System.exit(-1);
+      }
+      KeySpaceManager ksm = new KeySpaceManager(conf);
       ksm.start();
       ksm.join();
     } catch (Throwable t) {
