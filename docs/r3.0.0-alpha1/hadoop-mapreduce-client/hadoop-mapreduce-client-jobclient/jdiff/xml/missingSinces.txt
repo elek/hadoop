@@ -1,0 +1,11 @@
+NO DOC BLOCK: org.apache.hadoop.mapred.ClientCache Method close()
+NO DOC BLOCK: org.apache.hadoop.mapred.ClientServiceDelegate Method close()
+NO DOC BLOCK: org.apache.hadoop.mapred.YARNRunner Method close()
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method createReservation()
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method failApplicationAttempt(org.apache.hadoop.yarn.api.records.ApplicationAttemptId)
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method getApplications(java.util.Set, java.util.EnumSet, java.util.Set)
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method getApplications(java.util.Set, java.util.Set, java.util.Set, java.util.EnumSet)
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method listReservations(org.apache.hadoop.yarn.api.protocolrecords.ReservationListRequest)
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method signalToContainer(org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.SignalContainerCommand)
+NO DOC BLOCK: org.apache.hadoop.mapred.ResourceMgrDelegate Method updateApplicationPriority(org.apache.hadoop.yarn.api.records.ApplicationId, org.apache.hadoop.yarn.api.records.Priority)
+NO DOC BLOCK: org.apache.hadoop.mapred.YARNRunner Field AM_CONTAINER_PRIORITY

@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * contributor license agreements.  See the NOTICE file distributed with this<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * work for additional information regarding copyright ownership.  The ASF<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * licenses this file to you under the Apache License, Version 2.0 (the<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * "License"); you may not use this file except in compliance with the License.<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * You may obtain a copy of the License at<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * &lt;p/&gt;<a name="line.8"></a>
+<span class="sourceLineNo">009</span> * http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * &lt;p/&gt;<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * License for the specific language governing permissions and limitations under<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * the License.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> */<a name="line.16"></a>
+<span class="sourceLineNo">017</span><a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.server.diskbalancer.planner;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import com.google.common.base.Preconditions;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.slf4j.Logger;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.slf4j.LoggerFactory;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.hdfs.server.diskbalancer.datamodel<a name="line.23"></a>
+<span class="sourceLineNo">024</span>    .DiskBalancerDataNode;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.hdfs.server.diskbalancer.datamodel.DiskBalancerVolume;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.hdfs.server.diskbalancer.datamodel<a name="line.26"></a>
+<span class="sourceLineNo">027</span>    .DiskBalancerVolumeSet;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.hadoop.util.Time;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import java.util.Iterator;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import java.util.List;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import java.util.TreeSet;<a name="line.32"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>/**<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * Greedy Planner is a simple planner that computes the largest possible move at<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * any point of time given a volumeSet.<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * &lt;p/&gt;<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * This is done by choosing the disks with largest  amount of data above and<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * below the idealStorage and then a move is scheduled between them.<a name="line.39"></a>
+<span class="sourceLineNo">040</span> */<a name="line.40"></a>
+<span class="sourceLineNo">041</span>public class GreedyPlanner implements Planner {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>  public static final long MB = 1024L * 1024L;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>  public static final long GB = MB * 1024L;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>  public static final long TB = GB * 1024L;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>  private static final Logger LOG =<a name="line.45"></a>
+<span class="sourceLineNo">046</span>      LoggerFactory.getLogger(GreedyPlanner.class);<a name="line.46"></a>
+<span class="sourceLineNo">047</span>  private final double threshold;<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>  /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>   * Constructs a greedy planner.<a name="line.50"></a>
+<span class="sourceLineNo">051</span>   *<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   * @param threshold - Disk tolerance that we are ok with<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * @param node      - node on which this planner is operating upon<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>  public GreedyPlanner(double threshold, DiskBalancerDataNode node) {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>    this.threshold = threshold;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>  }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>  /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   * Computes a node plan for the given node.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   *<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   * @return NodePlan<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   * @throws Exception<a name="line.63"></a>
+<span class="sourceLineNo">064</span>   */<a name="line.64"></a>
+<span class="sourceLineNo">065</span>  @Override<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  public NodePlan plan(DiskBalancerDataNode node) throws Exception {<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    long startTime = Time.monotonicNow();<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    NodePlan plan = new NodePlan(node.getDataNodeName(),<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        node.getDataNodePort());<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    LOG.info("Starting plan for Node : {}:{}",<a name="line.70"></a>
+<span class="sourceLineNo">071</span>        node.getDataNodeName(), node.getDataNodePort());<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    while (node.isBalancingNeeded(this.threshold)) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>      for (DiskBalancerVolumeSet vSet : node.getVolumeSets().values()) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>        balanceVolumeSet(node, vSet, plan);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>      }<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    }<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>    long endTime = Time.monotonicNow();<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    String message = String<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        .format("Compute Plan for Node : %s:%d took %d ms ",<a name="line.80"></a>
+<span class="sourceLineNo">081</span>            node.getDataNodeName(), node.getDataNodePort(),<a name="line.81"></a>
+<span class="sourceLineNo">082</span>            endTime - startTime);<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    LOG.info(message);<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    return plan;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>  }<a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">087</span>  /**<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * Computes Steps to make a DiskBalancerVolumeSet Balanced.<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   *<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * @param node<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   * @param vSet - DiskBalancerVolumeSet<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   * @param plan - NodePlan<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   */<a name="line.93"></a>
+<span class="sourceLineNo">094</span>  public void balanceVolumeSet(DiskBalancerDataNode node,<a name="line.94"></a>
+<span class="sourceLineNo">095</span>                               DiskBalancerVolumeSet vSet, NodePlan plan)<a name="line.95"></a>
+<span class="sourceLineNo">096</span>      throws Exception {<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    Preconditions.checkNotNull(vSet);<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    Preconditions.checkNotNull(plan);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    Preconditions.checkNotNull(node);<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    DiskBalancerVolumeSet currentSet = new DiskBalancerVolumeSet(vSet);<a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>    while (currentSet.isBalancingNeeded(this.threshold)) {<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      removeSkipVolumes(currentSet);<a name="line.103"></a>
+<span class="sourceLineNo">104</span><a name="line.104"></a>
+<span class="sourceLineNo">105</span>      DiskBalancerVolume lowVolume = currentSet.getSortedQueue().first();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>      DiskBalancerVolume highVolume = currentSet.getSortedQueue().last();<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>      Step nextStep = null;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      // ok both volumes bytes used are in the range that we expect<a name="line.109"></a>
+<span class="sourceLineNo">110</span>      // Then we create a move request.<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      if (!lowVolume.isSkip() &amp;&amp; !highVolume.isSkip()) {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        nextStep = computeMove(currentSet, lowVolume, highVolume);<a name="line.112"></a>
+<span class="sourceLineNo">113</span>      } else {<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        LOG.debug("Skipping compute move. lowVolume: {} highVolume: {}",<a name="line.114"></a>
+<span class="sourceLineNo">115</span>            lowVolume.getPath(), highVolume.getPath());<a name="line.115"></a>
+<span class="sourceLineNo">116</span>      }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>      applyStep(nextStep, currentSet, lowVolume, highVolume);<a name="line.118"></a>
+<span class="sourceLineNo">119</span>      if (nextStep != null) {<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        LOG.debug("Step : {} ",  nextStep.toString());<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        plan.addStep(nextStep);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>      }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    }<a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>    String message = String<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        .format("Disk Volume set %s Type : %s plan completed.",<a name="line.126"></a>
+<span class="sourceLineNo">127</span>            currentSet.getSetID(),<a name="line.127"></a>
+<span class="sourceLineNo">128</span>            currentSet.getVolumes().get(0).getStorageType());<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>    plan.setNodeName(node.getDataNodeName());<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    plan.setNodeUUID(node.getDataNodeUUID());<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    plan.setTimeStamp(Time.now());<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    plan.setPort(node.getDataNodePort());<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    LOG.info(message);<a name="line.134"></a>
+<span class="sourceLineNo">135</span>  }<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>  /**<a name="line.137"></a>
+<span class="sourceLineNo">138</span>   * Apply steps applies the current step on to a volumeSet so that we can<a name="line.138"></a>
+<span class="sourceLineNo">139</span>   * compute next steps until we reach the desired goals.<a name="line.139"></a>
+<span class="sourceLineNo">140</span>   *<a name="line.140"></a>
+<span class="sourceLineNo">141</span>   * @param nextStep   - nextStep or Null<a name="line.141"></a>
+<span class="sourceLineNo">142</span>   * @param currentSet - Current Disk BalancerVolume Set we are operating upon<a name="line.142"></a>
+<span class="sourceLineNo">143</span>   * @param lowVolume  - volume<a name="line.143"></a>
+<span class="sourceLineNo">144</span>   * @param highVolume - volume<a name="line.144"></a>
+<span class="sourceLineNo">145</span>   */<a name="line.145"></a>
+<span class="sourceLineNo">146</span>  private void applyStep(Step nextStep, DiskBalancerVolumeSet currentSet,<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                         DiskBalancerVolume lowVolume,<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                         DiskBalancerVolume highVolume) throws Exception {<a name="line.148"></a>
+<span class="sourceLineNo">149</span><a name="line.149"></a>
+<span class="sourceLineNo">150</span>    long used;<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    if (nextStep != null) {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>      used = lowVolume.getUsed() + nextStep.getBytesToMove();<a name="line.152"></a>
+<span class="sourceLineNo">153</span>      lowVolume.setUsed(used);<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>      used = highVolume.getUsed() - nextStep.getBytesToMove();<a name="line.155"></a>
+<span class="sourceLineNo">156</span>      highVolume.setUsed(used);<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    }<a name="line.157"></a>
+<span class="sourceLineNo">158</span><a name="line.158"></a>
+<span class="sourceLineNo">159</span>    // since the volume data changed , we need to recompute the DataDensity.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    currentSet.computeVolumeDataDensity();<a name="line.160"></a>
+<span class="sourceLineNo">161</span>    printQueue(currentSet.getSortedQueue());<a name="line.161"></a>
+<span class="sourceLineNo">162</span>  }<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>  /**<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   * Computes a data move from the largest disk we have to smallest disk.<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   *<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   * @param currentSet - Current Disk Set we are working with<a name="line.167"></a>
+<span class="sourceLineNo">168</span>   * @param lowVolume  - Low Data Capacity Volume<a name="line.168"></a>
+<span class="sourceLineNo">169</span>   * @param highVolume - High Data Capacity Volume<a name="line.169"></a>
+<span class="sourceLineNo">170</span>   * @return Step<a name="line.170"></a>
+<span class="sourceLineNo">171</span>   */<a name="line.171"></a>
+<span class="sourceLineNo">172</span>  private Step computeMove(DiskBalancerVolumeSet currentSet,<a name="line.172"></a>
+<span class="sourceLineNo">173</span>                           DiskBalancerVolume lowVolume,<a name="line.173"></a>
+<span class="sourceLineNo">174</span>                           DiskBalancerVolume highVolume) {<a name="line.174"></a>
+<span class="sourceLineNo">175</span>    // Compute how many bytes we can move. First Compute the maximum that<a name="line.175"></a>
+<span class="sourceLineNo">176</span>    // low Volume Can receive, then compute maximum high volume can give<a name="line.176"></a>
+<span class="sourceLineNo">177</span>    // Then take the minimum of those two numbers that is the bytesToMove.<a name="line.177"></a>
+<span class="sourceLineNo">178</span><a name="line.178"></a>
+<span class="sourceLineNo">179</span>    long maxLowVolumeCanReceive = (long) (<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        (currentSet.getIdealUsed() * lowVolume.computeEffectiveCapacity()) -<a name="line.180"></a>
+<span class="sourceLineNo">181</span>            lowVolume.getUsed());<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>    // This disk cannot take any more data from any disk.<a name="line.183"></a>
+<span class="sourceLineNo">184</span>    // Remove it from our computation matrix.<a name="line.184"></a>
+<span class="sourceLineNo">185</span>    if (maxLowVolumeCanReceive &lt;= 0) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>      LOG.debug("{} Skipping disk from computation. Maximum data size " +<a name="line.186"></a>
+<span class="sourceLineNo">187</span>          "achieved.", lowVolume.getPath());<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      skipVolume(currentSet, lowVolume);<a name="line.188"></a>
+<span class="sourceLineNo">189</span>    }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>    long maxHighVolumeCanGive = highVolume.getUsed() -<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        (long) (currentSet.getIdealUsed() *<a name="line.192"></a>
+<span class="sourceLineNo">193</span>            highVolume.computeEffectiveCapacity());<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    // This volume cannot give any more data, remove it from the<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    // computation matrix<a name="line.195"></a>
+<span class="sourceLineNo">196</span>    if (maxHighVolumeCanGive &lt;= 0) {<a name="line.196"></a>
+<span class="sourceLineNo">197</span>      LOG.debug(" {} Skipping disk from computation. Minimum data size " +<a name="line.197"></a>
+<span class="sourceLineNo">198</span>          "achieved.", highVolume.getPath());<a name="line.198"></a>
+<span class="sourceLineNo">199</span>      skipVolume(currentSet, highVolume);<a name="line.199"></a>
+<span class="sourceLineNo">200</span>    }<a name="line.200"></a>
+<span class="sourceLineNo">201</span><a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>    long bytesToMove = Math.min(maxLowVolumeCanReceive, maxHighVolumeCanGive);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    Step nextStep = null;<a name="line.204"></a>
+<span class="sourceLineNo">205</span><a name="line.205"></a>
+<span class="sourceLineNo">206</span>    if (bytesToMove &gt; 0) {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>      // Create a new step<a name="line.207"></a>
+<span class="sourceLineNo">208</span>      nextStep = new MoveStep(highVolume, currentSet.getIdealUsed(), lowVolume,<a name="line.208"></a>
+<span class="sourceLineNo">209</span>          bytesToMove, currentSet.getSetID());<a name="line.209"></a>
+<span class="sourceLineNo">210</span>      LOG.debug(nextStep.toString());<a name="line.210"></a>
+<span class="sourceLineNo">211</span>    }<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    return nextStep;<a name="line.212"></a>
+<span class="sourceLineNo">213</span>  }<a name="line.213"></a>
+<span class="sourceLineNo">214</span><a name="line.214"></a>
+<span class="sourceLineNo">215</span>  /**<a name="line.215"></a>
+<span class="sourceLineNo">216</span>   * Skips this volume if needed.<a name="line.216"></a>
+<span class="sourceLineNo">217</span>   *<a name="line.217"></a>
+<span class="sourceLineNo">218</span>   * @param currentSet - Current Disk set<a name="line.218"></a>
+<span class="sourceLineNo">219</span>   * @param volume     - Volume<a name="line.219"></a>
+<span class="sourceLineNo">220</span>   */<a name="line.220"></a>
+<span class="sourceLineNo">221</span>  private void skipVolume(DiskBalancerVolumeSet currentSet,<a name="line.221"></a>
+<span class="sourceLineNo">222</span>                          DiskBalancerVolume volume) {<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    if (LOG.isDebugEnabled()) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>      String message =<a name="line.224"></a>
+<span class="sourceLineNo">225</span>          String.format(<a name="line.225"></a>
+<span class="sourceLineNo">226</span>              "Skipping volume. Volume : %s " +<a name="line.226"></a>
+<span class="sourceLineNo">227</span>              "Type : %s Target " +<a name="line.227"></a>
+<span class="sourceLineNo">228</span>              "Number of bytes : %f lowVolume dfsUsed : %d. Skipping this " +<a name="line.228"></a>
+<span class="sourceLineNo">229</span>              "volume from all future balancing calls.", volume.getPath(),<a name="line.229"></a>
+<span class="sourceLineNo">230</span>              volume.getStorageType(),<a name="line.230"></a>
+<span class="sourceLineNo">231</span>              currentSet.getIdealUsed() * volume.getCapacity(),<a name="line.231"></a>
+<span class="sourceLineNo">232</span>              volume.getUsed());<a name="line.232"></a>
+<span class="sourceLineNo">233</span>      LOG.debug(message);<a name="line.233"></a>
+<span class="sourceLineNo">234</span>    }<a name="line.234"></a>
+<span class="sourceLineNo">235</span>    volume.setSkip(true);<a name="line.235"></a>
+<span class="sourceLineNo">236</span>  }<a name="line.236"></a>
+<span class="sourceLineNo">237</span><a name="line.237"></a>
+<span class="sourceLineNo">238</span>  // Removes all volumes which are part of the volumeSet but skip flag is set.<a name="line.238"></a>
+<span class="sourceLineNo">239</span>  private void removeSkipVolumes(DiskBalancerVolumeSet currentSet) {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>    List&lt;DiskBalancerVolume&gt; volumeList = currentSet.getVolumes();<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    Iterator&lt;DiskBalancerVolume&gt; volumeIterator = volumeList.iterator();<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    while (volumeIterator.hasNext()) {<a name="line.242"></a>
+<span class="sourceLineNo">243</span>      DiskBalancerVolume vol = volumeIterator.next();<a name="line.243"></a>
+<span class="sourceLineNo">244</span>      if (vol.isSkip() || vol.isFailed()) {<a name="line.244"></a>
+<span class="sourceLineNo">245</span>        currentSet.removeVolume(vol);<a name="line.245"></a>
+<span class="sourceLineNo">246</span>      }<a name="line.246"></a>
+<span class="sourceLineNo">247</span>    }<a name="line.247"></a>
+<span class="sourceLineNo">248</span>    currentSet.computeVolumeDataDensity();<a name="line.248"></a>
+<span class="sourceLineNo">249</span>    printQueue(currentSet.getSortedQueue());<a name="line.249"></a>
+<span class="sourceLineNo">250</span>  }<a name="line.250"></a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span>  /**<a name="line.252"></a>
+<span class="sourceLineNo">253</span>   * This function is used only for debugging purposes to ensure queue looks<a name="line.253"></a>
+<span class="sourceLineNo">254</span>   * correct.<a name="line.254"></a>
+<span class="sourceLineNo">255</span>   *<a name="line.255"></a>
+<span class="sourceLineNo">256</span>   * @param queue - Queue<a name="line.256"></a>
+<span class="sourceLineNo">257</span>   */<a name="line.257"></a>
+<span class="sourceLineNo">258</span>  private void printQueue(TreeSet&lt;DiskBalancerVolume&gt; queue) {<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    if (LOG.isDebugEnabled()) {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>      String format =<a name="line.260"></a>
+<span class="sourceLineNo">261</span>          String.format(<a name="line.261"></a>
+<span class="sourceLineNo">262</span>              "First Volume : %s, DataDensity : %f, " +<a name="line.262"></a>
+<span class="sourceLineNo">263</span>              "Last Volume : %s, DataDensity : %f",<a name="line.263"></a>
+<span class="sourceLineNo">264</span>              queue.first().getPath(), queue.first().getVolumeDataDensity(),<a name="line.264"></a>
+<span class="sourceLineNo">265</span>              queue.last().getPath(), queue.last().getVolumeDataDensity());<a name="line.265"></a>
+<span class="sourceLineNo">266</span>      LOG.debug(format);<a name="line.266"></a>
+<span class="sourceLineNo">267</span>    }<a name="line.267"></a>
+<span class="sourceLineNo">268</span>  }<a name="line.268"></a>
+<span class="sourceLineNo">269</span>}<a name="line.269"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
