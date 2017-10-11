@@ -1,41 +1,12 @@
-This is the definition of the official Hadoop Apache docker image.
+# Apache Hadoop base image
 
-To build the images use:
+This is the definition of the official Hadoop base image. It doesn't use any Hadoop distribution just the scripts to run any Hadoop from source or from a prebuild package.
 
-```
-docker build -t apache/hadoop .
-```
+Usage:
 
-To start a cluster go the example directory and run the following commands:
-
-At the first time:
-```
-docker-compose run namenode hdfs namenode -format
-```
-
-To start the hdfs cluster:
+Do a full build on the HDFS-7240 branch of apache hadoop repositry
 
 ```
-docker-compose up -d namenode
-docker-compose up -d datanode
-```
-
-Test the hdfs cluster:
-
-```
-docker exec example_namenode_1 hdfs dfs -mkdir /test
-```
-
-Or just check http://localhost:50070
-
-To use multiple datanode instance:
-
-```
-docker-compose scale datanode=2
-```
-
-Similar to start a yarn cluster:
-
-```
-docker-compose up -d resourcemanager
+cd dev-support/compose/ozone
+docker-compose up -d
 ```
