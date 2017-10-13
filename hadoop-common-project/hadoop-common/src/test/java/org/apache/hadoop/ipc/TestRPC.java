@@ -34,6 +34,7 @@ import org.apache.hadoop.ipc.protobuf.RpcHeaderProtos.RpcResponseHeaderProto.Rpc
 import org.apache.hadoop.ipc.protobuf.RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto;
 import org.apache.hadoop.ipc.protobuf.TestProtos;
 import org.apache.hadoop.metrics2.MetricsRecordBuilder;
+import org.apache.hadoop.metrics2.MetricsTag;
 import org.apache.hadoop.metrics2.lib.MutableCounterLong;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.AccessControlException;
@@ -47,9 +48,12 @@ import org.apache.hadoop.security.token.SecretManager;
 import org.apache.hadoop.security.token.TokenIdentifier;
 import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.test.MetricsAsserts;
+import static org.apache.hadoop.test.MetricsAsserts.assertTag;
 import org.apache.hadoop.test.MockitoUtil;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runners.model.TestClass;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.slf4j.Logger;
@@ -90,8 +94,6 @@ import static org.apache.hadoop.test.MetricsAsserts.assertCounterGt;
 import static org.apache.hadoop.test.MetricsAsserts.getLongCounter;
 import static org.apache.hadoop.test.MetricsAsserts.getMetrics;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -446,6 +448,15 @@ public class TestRPC extends TestRpcBase {
       assertCounter("RpcProcessingTimeNumOps", 3L, rb);
       assertCounterGt("SentBytes", 0L, rb);
       assertCounterGt("ReceivedBytes", 0L, rb);
+
+      // Check tags of the metrics
+      assertEquals("" + server.getPort(),
+          server.getRpcMetrics().getTag("port").value());
+
+      assertEquals("TestProtobufRpcProto",
+          server.getRpcMetrics().getTag("serverName").value());
+
+
 
       // Number of calls to echo method should be 2
       rb = getMetrics(server.rpcDetailedMetrics.name());
@@ -1362,6 +1373,50 @@ public class TestRPC extends TestRpcBase {
     }
   }
 
+  @Test
+  public void testServerNameFromClass() {
+    Assert.assertEquals("TestRPC",
+        RPC.Server.serverNameFromClass(this.getClass()));
+    Assert.assertEquals("TestClass",
+        RPC.Server.serverNameFromClass(TestRPC.TestClass.class));
+
+    Object testing = new TestClass().classFactory();
+    Assert.assertEquals("Embedded",
+        RPC.Server.serverNameFromClass(testing.getClass()));
+
+    testing = new TestClass().classFactoryAbstract();
+    Assert.assertEquals("TestClass",
+        RPC.Server.serverNameFromClass(testing.getClass()));
+
+    testing = new TestClass().classFactoryObject();
+    Assert.assertEquals("TestClass",
+        RPC.Server.serverNameFromClass(testing.getClass()));
+
+  }
+
+  public static class TestClass {
+    class Embedded {
+    }
+
+    abstract class AbstractEmbedded {
+
+    }
+
+    private Object classFactory() {
+      return new Embedded();
+    }
+
+    private Object classFactoryAbstract() {
+      return new AbstractEmbedded() {
+      };
+    }
+
+    private Object classFactoryObject() {
+      return new Object() {
+      };
+    }
+
+  }
   public static class FakeRequestClass extends RpcWritable {
     static volatile IOException exception;
     @Override
