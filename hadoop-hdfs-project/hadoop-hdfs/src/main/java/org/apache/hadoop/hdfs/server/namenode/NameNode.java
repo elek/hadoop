@@ -317,7 +317,7 @@ public class NameNode extends ReconfigurableBase implements
       + StartupOption.FORCE.getName() + "] ] | \n\t["
       + StartupOption.METADATAVERSION.getName() + " ]";
 
-  
+ //TODO test, don't commit or merge 
   public long getProtocolVersion(String protocol, 
                                  long clientVersion) throws IOException {
     if (protocol.equals(ClientProtocol.class.getName())) {
