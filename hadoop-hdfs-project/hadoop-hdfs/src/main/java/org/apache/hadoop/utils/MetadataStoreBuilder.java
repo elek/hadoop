@@ -26,6 +26,8 @@ import org.rocksdb.BlockBasedTableConfig;
 import java.io.File;
 import java.io.IOException;
 
+import static org.apache.hadoop.ozone.OzoneConfigKeys
+    .OZONE_METADATA_STORE_IMPL_INMEMORY;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_LEVELDB;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_ROCKSDB;
 
@@ -92,6 +94,8 @@ public class MetadataStoreBuilder {
         opts.setTableFormatConfig(tableConfig);
       }
       store = new RocksDBStore(dbFile, opts);
+    } else if (OZONE_METADATA_STORE_IMPL_INMEMORY.equals(impl)){
+      return new InMemoryStore();
     } else {
       throw new IllegalArgumentException("Invalid argument for "
           + OzoneConfigKeys.OZONE_METADATA_STORE_IMPL

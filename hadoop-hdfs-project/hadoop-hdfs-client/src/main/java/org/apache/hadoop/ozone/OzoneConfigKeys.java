@@ -86,6 +86,8 @@ public final class OzoneConfigKeys {
       "LevelDB";
   public static final String OZONE_METADATA_STORE_IMPL_ROCKSDB =
       "RocksDB";
+  public static final Object OZONE_METADATA_STORE_IMPL_INMEMORY =
+      "InMemory";
   public static final String OZONE_METADATA_STORE_IMPL_DEFAULT =
       OZONE_METADATA_STORE_IMPL_ROCKSDB;
 

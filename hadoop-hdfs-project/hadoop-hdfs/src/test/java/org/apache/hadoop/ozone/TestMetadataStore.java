@@ -67,8 +67,9 @@ public class TestMetadataStore {
   @Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][] {
-        {OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_LEVELDB},
-        {OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_ROCKSDB}
+        {OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_INMEMORY}
+        //{OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_LEVELDB},
+        //{OzoneConfigKeys.OZONE_METADATA_STORE_IMPL_ROCKSDB}
     });
   }
 

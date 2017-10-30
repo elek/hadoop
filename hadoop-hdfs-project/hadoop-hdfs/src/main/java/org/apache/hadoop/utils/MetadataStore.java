@@ -18,7 +18,6 @@
 
 package org.apache.hadoop.utils;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.utils.MetadataKeyFilters.MetadataKeyFilter;
 
@@ -151,7 +150,7 @@ public interface MetadataStore extends Closeable{
    * @return a key-value pair
    * @throws IOException
    */
-  ImmutablePair<byte[], byte[]> peekAround(int offset, byte[] from)
+  Map.Entry<byte[], byte[]> peekAround(int offset, byte[] from)
       throws IOException, IllegalArgumentException;
 
   /**
