@@ -39,6 +39,7 @@ import org.apache.hadoop.ozone.container.common.interfaces.ContainerDispatcher;
 import org.apache.hadoop.ozone.container.common.interfaces.ContainerManager;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
+import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +91,7 @@ public class Dispatcher implements ContainerDispatcher {
       ContainerCommandRequestProto msg) {
     LOG.trace("Command {}, trace ID: {} ", msg.getCmdType().toString(),
         msg.getTraceID());
-    long startNanos = System.nanoTime();
+    long startMillis = Time.monotonicNow();
     ContainerCommandResponseProto resp = null;
     try {
       Preconditions.checkNotNull(msg);
@@ -102,7 +103,7 @@ public class Dispatcher implements ContainerDispatcher {
           (cmdType == Type.ListContainer) ||
           (cmdType == Type.UpdateContainer) ||
           (cmdType == Type.CloseContainer)) {
-        return containerProcessHandler(msg);
+        resp = containerProcessHandler(msg);
       }
 
       if ((cmdType == Type.PutKey) ||
@@ -125,7 +126,7 @@ public class Dispatcher implements ContainerDispatcher {
 
       if (resp != null) {
         metrics.incContainerOpsLatencies(cmdType,
-            System.nanoTime() - startNanos);
+            Time.monotonicNow() - startMillis);
         return resp;
       }
 
