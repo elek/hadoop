@@ -36,4 +36,11 @@ if [ -n "$ENSURE_SCM_INITIALIZED" ]; then
    fi
 fi
 
+if [ -n "$ENSURE_KSM_INITIALIZED" ]; then
+   if [ ! -f "$ENSURE_KSM_INITIALIZED" ]; then
+      /opt/hadoop/bin/hdfs ksm -createObjectStore
+   fi
+fi
+
+
 $@
