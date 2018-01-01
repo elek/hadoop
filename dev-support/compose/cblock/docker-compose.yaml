@@ -38,6 +38,8 @@ services:
       command: ["/opt/hadoop/bin/hdfs","datanode"]
    jscsi:
       image: elek/hadoop-runner:latest
+      ports:
+        - 3260:3260
       volumes:
          - ../../../hadoop-dist/target/hadoop-${VERSION}:/opt/hadoop
       env_file:
@@ -59,3 +61,6 @@ services:
       env_file:
           - ./docker-config
       command: ["/opt/hadoop/bin/hdfs","scm"]
+      environment:
+          ENSURE_SCM_INITIALIZED: /data/metadata/scm/current/VERSION
+
