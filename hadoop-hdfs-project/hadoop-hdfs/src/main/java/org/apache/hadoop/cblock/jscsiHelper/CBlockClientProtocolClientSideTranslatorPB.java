@@ -20,9 +20,11 @@ package org.apache.hadoop.cblock.jscsiHelper;
 import com.google.common.primitives.Longs;
 import com.google.protobuf.ServiceException;
 import org.apache.hadoop.cblock.exception.CBlockException;
+import org.apache.hadoop.cblock.meta.VolumeInfo;
 import org.apache.hadoop.cblock.proto.CBlockClientProtocol;
 import org.apache.hadoop.cblock.proto.MountVolumeResponse;
 import org.apache.hadoop.cblock.protocol.proto.CBlockClientServerProtocolProtos;
+import org.apache.hadoop.cblock.protocol.proto.CBlockServiceProtocolProtos;
 import org.apache.hadoop.cblock.protocolPB.CBlockClientServerProtocolPB;
 import org.apache.hadoop.ipc.ProtobufHelper;
 import org.apache.hadoop.ipc.ProtocolTranslator;
@@ -107,6 +109,27 @@ public class CBlockClientProtocolClientSideTranslatorPB
           resp.getBlockSize(),
           containerIDs,
           containerPipelines);
+    } catch (ServiceException e) {
+      throw ProtobufHelper.getRemoteException(e);
+    }
+  }
+
+  @Override
+  public List<VolumeInfo> listVolumes() throws IOException {
+    try {
+      List<VolumeInfo> result = new ArrayList<>();
+      CBlockClientServerProtocolProtos.ListVolumesResponseProto
+          listVolumesResponseProto = this.rpcProxy.listVolumes(null,
+          CBlockClientServerProtocolProtos.ListVolumesRequestProto.newBuilder()
+              .build());
+      for (CBlockServiceProtocolProtos.VolumeInfoProto volumeInfoProto :
+          listVolumesResponseProto
+          .getVolumeEntryList()) {
+        result.add(new VolumeInfo(volumeInfoProto.getUserName(),
+            volumeInfoProto.getVolumeName(), volumeInfoProto.getVolumeSize(),
+            volumeInfoProto.getBlockSize()));
+      }
+      return result;
     } catch (ServiceException e) {
       throw ProtobufHelper.getRemoteException(e);
     }

@@ -18,6 +18,7 @@
 package org.apache.hadoop.cblock.jscsiHelper;
 
 import com.google.common.annotations.VisibleForTesting;
+import org.apache.hadoop.cblock.meta.VolumeInfo;
 import org.apache.hadoop.cblock.proto.MountVolumeResponse;
 import org.apache.hadoop.cblock.util.KeyUtil;
 import org.apache.hadoop.conf.OzoneConfiguration;
@@ -28,6 +29,7 @@ import org.jscsi.target.TargetServer;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class extends JSCSI target server, which is a ISCSI target that can be
@@ -102,6 +104,24 @@ public final class CBlockTargetServer extends TargetServer {
           + e.getMessage());
     }
     return targets.containsKey(checkTargetName);
+  }
+
+  @Override
+  public String[] getTargetNames() {
+    try {
+      if (cBlockManagerHandler != null) {
+        List<VolumeInfo> volumeInfos = cBlockManagerHandler.listVolumes();
+        return cBlockManagerHandler.listVolumes().
+            stream().map(
+            volumeInfo -> volumeInfo.getUserName() + ":" + volumeInfo
+                .getVolumeName()).toArray(String[]::new);
+      } else {
+        return new String[0];
+      }
+    } catch (IOException e) {
+      LOGGER.error("Can't list existing volumes", e);
+      return new String[0];
+    }
   }
 
   @VisibleForTesting
