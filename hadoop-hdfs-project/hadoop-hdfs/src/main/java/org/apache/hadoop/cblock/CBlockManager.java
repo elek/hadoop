@@ -19,6 +19,7 @@ package org.apache.hadoop.cblock;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.BlockingService;
+import org.apache.hadoop.cblock.kubernetes.DynamicProvisioner;
 import org.apache.hadoop.cblock.meta.VolumeDescriptor;
 import org.apache.hadoop.cblock.meta.VolumeInfo;
 import org.apache.hadoop.cblock.proto.CBlockClientProtocol;
@@ -119,6 +120,8 @@ public class CBlockManager implements CBlockServiceProtocol,
   private final LevelDBStore levelDBStore;
   private final String dbPath;
 
+  private final DynamicProvisioner kubernetesDynamicProvisioner;
+
   private Charset encoding = Charset.forName("UTF-8");
 
   public CBlockManager(OzoneConfiguration conf,
@@ -179,11 +182,14 @@ public class CBlockManager implements CBlockServiceProtocol,
             DFS_CBLOCK_JSCSIRPC_ADDRESS_KEY, serverRpcAddr, cblockServer);
     LOG.info("CBlock server listening for client commands on: {}",
         cblockServerRpcAddress);
+
+    kubernetesDynamicProvisioner = new DynamicProvisioner(conf, storageManager);
   }
 
   public void start() {
     cblockService.start();
     cblockServer.start();
+    kubernetesDynamicProvisioner.start();
     LOG.info("CBlock manager started!");
   }
 
