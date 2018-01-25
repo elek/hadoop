@@ -19,6 +19,11 @@ package org.apache.hadoop.cblock;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.BlockingService;
+import static org.apache.hadoop.cblock.CBlockConfigKeys
+    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED;
+import static org.apache.hadoop.cblock.CBlockConfigKeys
+    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT;
+import org.apache.hadoop.cblock.kubernetes.DynamicProvisioner;
 import org.apache.hadoop.cblock.meta.VolumeDescriptor;
 import org.apache.hadoop.cblock.meta.VolumeInfo;
 import org.apache.hadoop.cblock.proto.CBlockClientProtocol;
@@ -62,7 +67,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_CONTAINER_SIZE_GB_DEFAULT;
@@ -118,6 +122,8 @@ public class CBlockManager implements CBlockServiceProtocol,
 
   private final LevelDBStore levelDBStore;
   private final String dbPath;
+
+  private final DynamicProvisioner kubernetesDynamicProvisioner;
 
   private Charset encoding = Charset.forName("UTF-8");
 
@@ -179,17 +185,31 @@ public class CBlockManager implements CBlockServiceProtocol,
             DFS_CBLOCK_JSCSIRPC_ADDRESS_KEY, serverRpcAddr, cblockServer);
     LOG.info("CBlock server listening for client commands on: {}",
         cblockServerRpcAddress);
+
+    if (conf.getBoolean(DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED,
+        DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT)) {
+      kubernetesDynamicProvisioner = new DynamicProvisioner(conf, storageManager);
+      kubernetesDynamicProvisioner.init();
+    } else {
+      kubernetesDynamicProvisioner = null;
+    }
   }
 
   public void start() {
     cblockService.start();
     cblockServer.start();
+    if (kubernetesDynamicProvisioner != null) {
+      kubernetesDynamicProvisioner.start();
+    }
     LOG.info("CBlock manager started!");
   }
 
   public void stop() {
     cblockService.stop();
     cblockServer.stop();
+    if (kubernetesDynamicProvisioner != null) {
+      kubernetesDynamicProvisioner.stop();
+    }
   }
 
   public void join() {
