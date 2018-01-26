@@ -221,9 +221,14 @@ public class CBlockCli extends Configured implements Tool {
     int size = Integer.parseInt(m.group(1));
     String s = m.group(2);
 
-    if (s.equalsIgnoreCase("GB") || s.equalsIgnoreCase("Gi")) {
+    if (s.equalsIgnoreCase("MB") ||
+        s.equalsIgnoreCase("Mi")) {
+      multiplier = 1024L * 1024;
+    } else if (s.equalsIgnoreCase("GB") ||
+        s.equalsIgnoreCase("Gi")) {
       multiplier = 1024L * 1024 * 1024;
-    } else if (s.equalsIgnoreCase("TB") || s.equalsIgnoreCase("Ti")) {
+    } else if (s.equalsIgnoreCase("TB") ||
+        s.equalsIgnoreCase("Ti")) {
       multiplier = 1024L * 1024 * 1024 * 1024;
     } else {
       throw new IOException("Invalid volume size args " + volumeSizeArgs);

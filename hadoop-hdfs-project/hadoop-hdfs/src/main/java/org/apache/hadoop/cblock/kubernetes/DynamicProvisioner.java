@@ -69,7 +69,7 @@ import java.util.concurrent.TimeUnit;
  * Listens on the kubernetes feed and creates the appropriate cblock AND
  * kubernetes PersistentVolume according to the created PersistentVolumeClaims.
  */
-public class DynamicProvisioner {
+public class DynamicProvisioner implements Runnable{
 
   protected static final Logger LOGGER =
       LoggerFactory.getLogger(DynamicProvisioner.class);
@@ -94,6 +94,7 @@ public class DynamicProvisioner {
 
   private ApiClient client;
 
+  private Thread watcherThread;
 
   public  DynamicProvisioner(OzoneConfiguration ozoneConf,
       StorageManager storageManager) throws IOException {
@@ -128,9 +129,14 @@ public class DynamicProvisioner {
     client.getHttpClient().setReadTimeout(60, TimeUnit.SECONDS);
     Configuration.setDefaultApiClient(client);
     api = new CoreV1Api();
+
+    watcherThread = new Thread(this);
+    watcherThread.setName("DynamicProvisioner");
+    watcherThread.setDaemon(true);
   }
 
-  public void start() {
+  @Override
+  public void run() {
     LOGGER.info("Starting kubernetes dynamic provisioner.");
     while (running) {
       String resourceVersion = null;
@@ -273,5 +279,9 @@ public class DynamicProvisioner {
   @VisibleForTesting
   protected CoreV1Api getApi() {
     return api;
+  }
+
+  public void start() {
+     watcherThread.start();
   }
 }
