@@ -59,8 +59,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,6 +79,10 @@ public class DynamicProvisioner implements Runnable{
   private static final String STORAGE_CLASS = "cblock";
 
   private static final String PROVISIONER_ID = "hadoop.apache.org/cblock";
+  private static final String KUBERNETES_PROVISIONER_KEY =
+      "volume.beta.kubernetes.io/storage-provisioner";
+  private static final String KUBERNETES_BIND_COMPLETED_KEY =
+      "pv.kubernetes.io/bind-completed";
 
   private static boolean running = true;
 
@@ -161,12 +167,20 @@ public class DynamicProvisioner implements Runnable{
         //check the new pvc resources, and create cblock + pv if needed
         for (Watch.Response<V1PersistentVolumeClaim> item : watch) {
           V1PersistentVolumeClaim claim = item.object;
-          if (claim.getStatus().getPhase().equals("Pending") && STORAGE_CLASS
-              .equals(claim.getSpec().getStorageClassName())) {
+
+          if (isPvMissingForPvc(claim)) {
 
             LOGGER.info("Provisioning volumes for PVC {}/{}",
                 claim.getMetadata().getNamespace(),
                 claim.getMetadata().getName());
+
+            if (LOGGER.isDebugEnabled()) {
+              RequestBody request =
+                  api.getApiClient().serialize(claim, "application/json");
+              final Buffer buffer = new Buffer();
+              request.writeTo(buffer);
+              LOGGER.debug("New PVC is detected: " + buffer.readUtf8());
+            }
 
             String volumeName = createVolumeName(claim);
 
@@ -178,15 +192,32 @@ public class DynamicProvisioner implements Runnable{
           }
         }
       } catch (Exception ex) {
-        LOGGER.error("Error on provisioning persistent volumes.", ex);
-        try {
-          //we can try again in the main loop
-          Thread.sleep(1000);
-        } catch (InterruptedException e) {
-          LOGGER.error("Error on sleeping after an error.",e);
+        if (ex.getCause() != null && ex
+            .getCause() instanceof SocketTimeoutException) {
+          //This is normal. We are connection to the kubernetes server and the
+          //connection should be reopened time to time...
+          LOGGER.debug("Time exception occured", ex);
+        } else {
+          LOGGER.error("Error on provisioning persistent volumes.", ex);
+          try {
+            //we can try again in the main loop
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            LOGGER.error("Error on sleeping after an error.", e);
+          }
         }
       }
     }
+  }
+
+  private boolean isPvMissingForPvc(V1PersistentVolumeClaim claim) {
+
+    Map<String, String> annotations = claim.getMetadata().getAnnotations();
+
+    return claim.getStatus().getPhase().equals("Pending") && STORAGE_CLASS
+        .equals(claim.getSpec().getStorageClassName()) && PROVISIONER_ID
+        .equals(annotations.get(KUBERNETES_PROVISIONER_KEY)) && !"yes"
+        .equals(annotations.get(KUBERNETES_BIND_COMPLETED_KEY));
   }
 
   @VisibleForTesting
@@ -220,7 +251,7 @@ public class DynamicProvisioner implements Runnable{
           api.getApiClient().serialize(v1PersistentVolume, "application/json");
       final Buffer buffer = new Buffer();
       request.writeTo(buffer);
-      LOGGER.debug("Creating new PVC: " + buffer.readUtf8());
+      LOGGER.debug("Creating new PV: " + buffer.readUtf8());
     }
     api.createPersistentVolume(v1PersistentVolume, null);
   }
