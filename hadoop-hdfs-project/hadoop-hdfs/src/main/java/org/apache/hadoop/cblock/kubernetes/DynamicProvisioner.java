@@ -33,6 +33,21 @@ import io.kubernetes.client.models.V1PersistentVolumeSpec;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.Watch;
 import okio.Buffer;
+import org.apache.hadoop.cblock.cli.CBlockCli;
+import org.apache.hadoop.cblock.exception.CBlockException;
+import org.apache.hadoop.cblock.proto.MountVolumeResponse;
+import org.apache.hadoop.cblock.storage.StorageManager;
+import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.ratis.shaded.com.google.common.annotations.VisibleForTesting;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_ISCSI_ADVERTISED_IP;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
@@ -49,21 +64,6 @@ import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_KUBERNETES_CBLOCK_USER_DEFAULT;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_KUBERNETES_CONFIG_FILE_KEY;
-import org.apache.hadoop.cblock.cli.CBlockCli;
-import org.apache.hadoop.cblock.exception.CBlockException;
-import org.apache.hadoop.cblock.proto.MountVolumeResponse;
-import org.apache.hadoop.cblock.storage.StorageManager;
-import org.apache.hadoop.conf.OzoneConfiguration;
-import org.apache.ratis.shaded.com.google.common.annotations.VisibleForTesting;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Kubernetes Dynamic Persistent Volume provisioner.
@@ -229,6 +229,11 @@ public class DynamicProvisioner implements Runnable{
 
   public void stop() {
     running = false;
+    try {
+      watcherThread.join(60000);
+    } catch (InterruptedException e) {
+      LOGGER.error("Kubernetes watcher thread can't stopped gracefully.", e);
+    }
   }
 
   private void createCBlock(String volumeName, long size) throws CBlockException {

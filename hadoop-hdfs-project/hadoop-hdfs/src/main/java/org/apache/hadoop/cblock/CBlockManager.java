@@ -19,10 +19,6 @@ package org.apache.hadoop.cblock;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.protobuf.BlockingService;
-import static org.apache.hadoop.cblock.CBlockConfigKeys
-    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED;
-import static org.apache.hadoop.cblock.CBlockConfigKeys
-    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT;
 import org.apache.hadoop.cblock.kubernetes.DynamicProvisioner;
 import org.apache.hadoop.cblock.meta.VolumeDescriptor;
 import org.apache.hadoop.cblock.meta.VolumeInfo;
@@ -96,6 +92,11 @@ import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_SERVICE_LEVELDB_PATH_DEFAULT;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_SERVICE_LEVELDB_PATH_KEY;
+import static org.apache.hadoop.cblock.CBlockConfigKeys
+    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED;
+import static org.apache.hadoop.cblock.CBlockConfigKeys
+    .DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT;
+
 
 /**
  * The main entry point of CBlock operations, ALL the CBlock operations
