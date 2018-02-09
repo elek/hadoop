@@ -239,6 +239,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
           <groupId>io.swagger</groupId>
           <artifactId>swagger-annotations</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>com.github.stefanbirkner</groupId>
+          <artifactId>system-rules</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
