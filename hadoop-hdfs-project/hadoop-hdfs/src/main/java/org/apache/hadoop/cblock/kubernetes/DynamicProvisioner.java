@@ -84,7 +84,7 @@ public class DynamicProvisioner implements Runnable{
   private static final String KUBERNETES_BIND_COMPLETED_KEY =
       "pv.kubernetes.io/bind-completed";
 
-  private static boolean running = true;
+  private boolean running = true;
 
   private final StorageManager storageManager;
 
