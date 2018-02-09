@@ -31,13 +31,16 @@ import org.junit.Test;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Test the resource generation of Dynamic Provisioner.
+ */
 public class TestDynamicProvisioner {
 
   @Test
   public void persitenceVolumeBuilder() throws Exception {
 
     OzoneConfiguration conf = new OzoneConfiguration();
-    conf.setStrings(DFS_CBLOCK_ISCSI_ADVERTISED_IP,"1.2.3.4");
+    conf.setStrings(DFS_CBLOCK_ISCSI_ADVERTISED_IP, "1.2.3.4");
 
     DynamicProvisioner provisioner =
         new DynamicProvisioner(conf, null);

@@ -204,13 +204,16 @@ public final class CBlockConfigKeys {
       DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT = false;
 
   public static final String
-      DFS_CBLOCK_KUBERNETES_CBLOCK_USER = "dfs.cblock.kubernetes.cblock-user";
+      DFS_CBLOCK_KUBERNETES_CBLOCK_USER =
+         "dfs.cblock.kubernetes.cblock-user";
 
   public static final String
-      DFS_CBLOCK_KUBERNETES_CBLOCK_USER_DEFAULT = "iqn.2001-04.org.apache.hadoop";
+      DFS_CBLOCK_KUBERNETES_CBLOCK_USER_DEFAULT =
+         "iqn.2001-04.org.apache.hadoop";
 
   public static final String
-      DFS_CBLOCK_KUBERNETES_CONFIG_FILE_KEY = "dfs.cblock.kubernetes.configfile";
+      DFS_CBLOCK_KUBERNETES_CONFIG_FILE_KEY =
+         "dfs.cblock.kubernetes.configfile";
 
   private CBlockConfigKeys() {
 

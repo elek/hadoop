@@ -177,6 +177,7 @@ public class DynamicProvisioner implements Runnable{
             if (LOGGER.isDebugEnabled()) {
               RequestBody request =
                   api.getApiClient().serialize(claim, "application/json");
+
               final Buffer buffer = new Buffer();
               request.writeTo(buffer);
               LOGGER.debug("New PVC is detected: " + buffer.readUtf8());
@@ -228,7 +229,6 @@ public class DynamicProvisioner implements Runnable{
 
   public void stop() {
     running = false;
-    //TODO force watcher to stop;
   }
 
   private void createCBlock(String volumeName, long size) throws CBlockException {
@@ -249,6 +249,7 @@ public class DynamicProvisioner implements Runnable{
     if (LOGGER.isDebugEnabled()) {
       RequestBody request =
           api.getApiClient().serialize(v1PersistentVolume, "application/json");
+
       final Buffer buffer = new Buffer();
       request.writeTo(buffer);
       LOGGER.debug("Creating new PV: " + buffer.readUtf8());
@@ -268,9 +269,13 @@ public class DynamicProvisioner implements Runnable{
     metadata.setName(volumeName);
     metadata.setNamespace(claim.getMetadata().getNamespace());
     metadata.setAnnotations(new HashMap<>());
+
     metadata.getAnnotations()
         .put("pv.kubernetes.io/provisioned-by", PROVISIONER_ID);
-    metadata.getAnnotations().put("volume.beta.kubernetes.io/storage-class", STORAGE_CLASS);
+
+    metadata.getAnnotations()
+        .put("volume.beta.kubernetes.io/storage-class", STORAGE_CLASS);
+
     v1PersistentVolume.setMetadata(metadata);
 
     V1PersistentVolumeSpec spec = new V1PersistentVolumeSpec();
@@ -313,6 +318,6 @@ public class DynamicProvisioner implements Runnable{
   }
 
   public void start() {
-     watcherThread.start();
+    watcherThread.start();
   }
 }

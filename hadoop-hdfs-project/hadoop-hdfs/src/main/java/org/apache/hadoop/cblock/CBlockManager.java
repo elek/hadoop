@@ -188,8 +188,11 @@ public class CBlockManager implements CBlockServiceProtocol,
 
     if (conf.getBoolean(DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED,
         DFS_CBLOCK_KUBERNETES_DYNAMIC_PROVISIONER_ENABLED_DEFAULT)) {
-      kubernetesDynamicProvisioner = new DynamicProvisioner(conf, storageManager);
+
+      kubernetesDynamicProvisioner =
+          new DynamicProvisioner(conf, storageManager);
       kubernetesDynamicProvisioner.init();
+
     } else {
       kubernetesDynamicProvisioner = null;
     }
