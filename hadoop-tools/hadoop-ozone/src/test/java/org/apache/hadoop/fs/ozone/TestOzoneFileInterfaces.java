@@ -18,8 +18,11 @@
 
 package org.apache.hadoop.fs.ozone;
 
-import static junit.framework.TestCase.fail;
-import org.apache.commons.lang.RandomStringUtils;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -27,12 +30,10 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import static org.apache.hadoop.fs.ozone.Constants.OZONE_DEFAULT_USER;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.ObjectStoreHandler;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.ozone.web.handlers.BucketArgs;
 import org.apache.hadoop.ozone.web.handlers.UserArgs;
 import org.apache.hadoop.ozone.web.handlers.VolumeArgs;
@@ -40,19 +41,18 @@ import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.Time;
+import static org.apache.hadoop.fs.ozone.Constants.OZONE_DEFAULT_USER;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Test OzoneFileSystem Interfaces.
@@ -95,7 +95,7 @@ public class TestOzoneFileInterfaces {
   }
 
   @Before
-  public void init() throws IOException, OzoneException {
+  public void init() throws Exception {
     OzoneConfiguration conf = new OzoneConfiguration();
     cluster = new MiniOzoneClassicCluster.Builder(conf)
         .setHandlerType(OzoneConsts.OZONE_HANDLER_DISTRIBUTED).build();
@@ -124,31 +124,29 @@ public class TestOzoneFileInterfaces {
     rootPath = String
         .format("%s://%s.%s/", Constants.OZONE_URI_SCHEME, bucketName,
             volumeName);
-    if (this.setDefaultFs) {
+    if (setDefaultFs) {
       // Set the fs.defaultFS and start the filesystem
       conf.set(CommonConfigurationKeysPublic.FS_DEFAULT_NAME_KEY, rootPath);
       fs = FileSystem.get(conf);
     } else {
-      try {
         fs = FileSystem.get(new URI(rootPath + "/test.txt"), conf);
-      } catch (URISyntaxException e) {
-        fail("Can't create ozone file system");
-      }
     }
   }
 
   @After
   public void teardown() throws IOException {
-    fs.close();
-    storageHandler.close();
-    cluster.shutdown();
+    IOUtils.closeQuietly(fs);
+    IOUtils.closeQuietly(storageHandler);
+    IOUtils.closeQuietly(cluster);
   }
 
   @Test
   public void testFileSystemInit() throws IOException {
-    if (this.setDefaultFs) {
-      Assert.assertTrue(fs instanceof OzoneFileSystem);
-      Assert.assertEquals(Constants.OZONE_URI_SCHEME, fs.getUri().getScheme());
+    if (setDefaultFs) {
+      assertTrue(
+          "The initialized file system is not OzoneFileSysetem " + "but " + fs
+              .getClass(), fs instanceof OzoneFileSystem);
+      assertEquals(Constants.OZONE_URI_SCHEME, fs.getUri().getScheme());
     }
   }
 
@@ -166,13 +164,14 @@ public class TestOzoneFileInterfaces {
     FileStatus status = fs.getFileStatus(path);
     // The timestamp of the newly created file should always be greater than
     // the time when the test was started
-    Assert.assertTrue(status.getModificationTime() > currentTime);
+    assertTrue("Modification time has not been recorded",
+        status.getModificationTime() > currentTime);
 
     try (FSDataInputStream inputStream = fs.open(path)) {
       byte[] buffer = new byte[stringLen];
       inputStream.readFully(0, buffer);
       String out = new String(buffer, 0, buffer.length);
-      Assert.assertEquals(data, out);
+      assertEquals(data, out);
     }
   }
 
@@ -181,27 +180,34 @@ public class TestOzoneFileInterfaces {
   public void testDirectory() throws IOException {
     String dirPath = RandomStringUtils.randomAlphanumeric(5);
     Path path = createPath("/" + dirPath);
-    Assert.assertTrue(fs.mkdirs(path));
+    assertTrue("File system creation was unsuccessfull.", fs.mkdirs(path));
 
     FileStatus status = fs.getFileStatus(path);
-    Assert.assertTrue(status.isDirectory());
-    Assert.assertEquals(0, status.getLen());
+    assertTrue("The created path is not directory.", status.isDirectory());
+
+    assertEquals(0, status.getLen());
 
     FileStatus[] statusList = fs.listStatus(createPath("/"));
-    Assert.assertEquals(1, statusList.length);
-    Assert.assertEquals(status, statusList[0]);
+    assertEquals(1, statusList.length);
+    assertEquals(status, statusList[0]);
+
+    FileStatus statusRoot = fs.getFileStatus(createPath("/"));
+    assertTrue("Root dir (/) is not a directory.", status.isDirectory());
+    assertEquals(0, status.getLen());
+
+
   }
 
   @Test
   public void testPathToKey() throws Exception {
     OzoneFileSystem ozoneFs = (OzoneFileSystem) TestOzoneFileInterfaces.fs;
 
-    Assert.assertEquals("a/b/1", ozoneFs.pathToKey(new Path("/a/b/1")));
+    assertEquals("a/b/1", ozoneFs.pathToKey(new Path("/a/b/1")));
 
-    Assert.assertEquals("user/" + getCurrentUser() + "/key1/key2",
+    assertEquals("user/" + getCurrentUser() + "/key1/key2",
         ozoneFs.pathToKey(new Path("key1/key2")));
 
-    Assert.assertEquals("key1/key2",
+    assertEquals("key1/key2",
         ozoneFs.pathToKey(new Path("o3://test1/key1/key2")));
   }
 
@@ -214,7 +220,7 @@ public class TestOzoneFileInterfaces {
   }
 
   private Path createPath(String relativePath) {
-    if (this.useAbsolutePath) {
+    if (useAbsolutePath) {
       return new Path(
           rootPath + (relativePath.startsWith("/") ? "" : "/") + relativePath);
     } else {

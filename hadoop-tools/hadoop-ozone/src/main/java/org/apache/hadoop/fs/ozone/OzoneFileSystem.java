@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Preconditions;
 import org.apache.hadoop.fs.CreateFlag;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -92,7 +93,8 @@ public class OzoneFileSystem extends FileSystem {
   private ReplicationType replicationType;
   private ReplicationFactor replicationFactor;
 
-  private Pattern urlSchemaPattern = Pattern.compile("(.+)\\.([^\\.]+)");
+  private static final Pattern URL_SCHEMA_PATTERN =
+      Pattern.compile("(.+)\\.([^\\.]+)");
 
   @Override
   public void initialize(URI name, Configuration conf) throws IOException {
@@ -103,7 +105,7 @@ public class OzoneFileSystem extends FileSystem {
 
     String authority = name.getAuthority();
 
-    Matcher matcher = urlSchemaPattern.matcher(authority);
+    Matcher matcher = URL_SCHEMA_PATTERN.matcher(authority);
 
     if (!matcher.matches()) {
       throw new IllegalArgumentException("Ozone file system url should be "
@@ -297,14 +299,12 @@ public class OzoneFileSystem extends FileSystem {
     }
 
     // Cannot rename a directory to its own subdirectory
-    Path parent = dst.getParent();
-    while (parent != null && !src.equals(parent)) {
-      parent = parent.getParent();
+    Path dstParent = dst.getParent();
+    while (dstParent != null && !src.equals(dstParent)) {
+      dstParent = dstParent.getParent();
     }
-    if (parent != null) {
-      return false;
-    }
-
+    Preconditions.checkArgument(dstParent != null,
+        "Cannot rename a directory to its own subdirectory");
     // Check if the source exists
     FileStatus srcStatus;
     try {
