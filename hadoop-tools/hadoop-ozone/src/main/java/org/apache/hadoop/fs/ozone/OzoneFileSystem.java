@@ -303,7 +303,7 @@ public class OzoneFileSystem extends FileSystem {
     while (dstParent != null && !src.equals(dstParent)) {
       dstParent = dstParent.getParent();
     }
-    Preconditions.checkArgument(dstParent != null,
+    Preconditions.checkArgument(dstParent == null,
         "Cannot rename a directory to its own subdirectory");
     // Check if the source exists
     FileStatus srcStatus;
