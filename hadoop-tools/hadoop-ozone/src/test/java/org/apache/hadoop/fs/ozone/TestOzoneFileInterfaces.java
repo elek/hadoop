@@ -23,6 +23,15 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.After;
+
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -41,18 +50,10 @@ import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.Time;
-import static org.apache.hadoop.fs.ozone.Constants.OZONE_DEFAULT_USER;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.After;
+import static org.apache.hadoop.fs.ozone.Constants.OZONE_DEFAULT_USER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test OzoneFileSystem Interfaces.
@@ -144,8 +145,9 @@ public class TestOzoneFileInterfaces {
   public void testFileSystemInit() throws IOException {
     if (setDefaultFs) {
       assertTrue(
-          "The initialized file system is not OzoneFileSysetem " + "but " + fs
-              .getClass(), fs instanceof OzoneFileSystem);
+          "The initialized file system is not OzoneFileSysetem but " +
+              fs.getClass(),
+          fs instanceof OzoneFileSystem);
       assertEquals(Constants.OZONE_URI_SCHEME, fs.getUri().getScheme());
     }
   }
@@ -164,7 +166,7 @@ public class TestOzoneFileInterfaces {
     FileStatus status = fs.getFileStatus(path);
     // The timestamp of the newly created file should always be greater than
     // the time when the test was started
-    assertTrue("Modification time has not been recorded",
+    assertTrue("Modification time has not been recorded: " + status,
         status.getModificationTime() > currentTime);
 
     try (FSDataInputStream inputStream = fs.open(path)) {
@@ -180,7 +182,8 @@ public class TestOzoneFileInterfaces {
   public void testDirectory() throws IOException {
     String dirPath = RandomStringUtils.randomAlphanumeric(5);
     Path path = createPath("/" + dirPath);
-    assertTrue("File system creation was unsuccessfull.", fs.mkdirs(path));
+    assertTrue("Makedirs returned with false for the path " + path,
+        fs.mkdirs(path));
 
     FileStatus status = fs.getFileStatus(path);
     assertTrue("The created path is not directory.", status.isDirectory());
