@@ -27,6 +27,7 @@ ENV PATH $PATH:/opt/hadoop/bin
 RUN addgroup --gid 1000 hadoop
 RUN adduser --disabled-password --gecos "" --uid 1000 hadoop --gid 100 --home /opt/hadoop
 RUN echo "hadoop ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN chown hadoop /opt
 ADD scripts /opt/
 
 WORKDIR /opt/hadoop
