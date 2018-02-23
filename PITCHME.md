@@ -21,7 +21,7 @@ Three usecases to use docker images with Hadoop
 
 ### Case #2: Demonstrate features of Hadoop
 
- 1. Don't need to start 
+ 1. Don't need to do a build. 
  2. Just download example docker-compose and config from documentation
  3. And start a cluster locally
 
