@@ -24,4 +24,4 @@ if [ ! -d "$DIR/build/apache-rat-0.12" ]; then
 	cd -
 fi
 java -jar $DIR/build/apache-rat-0.12/apache-rat-0.12.jar $DIR -e public -e apache-rat-0.12 -e .git -e .gitignore
-docker build -t apache/hadoop:2 .
+docker build -t apache/hadoop:3 .

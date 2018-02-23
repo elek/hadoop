@@ -20,7 +20,7 @@ services:
       hostname: namenode
       command: ["hdfs", "namenode"]
       ports:
-         - 50070:50070
+        - 9870:9870
       env_file:
         - ./config
       environment:
