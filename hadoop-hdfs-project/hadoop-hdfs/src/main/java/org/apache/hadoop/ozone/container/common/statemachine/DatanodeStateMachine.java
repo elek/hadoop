@@ -18,16 +18,13 @@ package org.apache.hadoop.ozone.container.common.statemachine;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
-import org.apache.hadoop.ozone.container.common.statemachine.commandhandler
-    .CloseContainerHandler;
-import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.CommandDispatcher;
-import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.ContainerReportHandler;
-import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.DeleteBlocksCommandHandler;
-import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
+import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.*;
+import org.apache.hadoop.ozone.container.ozoneimpl.*;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 import org.apache.hadoop.util.Time;
 import org.apache.hadoop.util.concurrent.HadoopExecutors;
@@ -59,6 +56,8 @@ public class DatanodeStateMachine implements Closeable {
   private AtomicLong nextHB;
   private Thread stateMachineThread = null;
   private Thread cmdProcessThread = null;
+  private HDSLDatanodeHttpServer containerReplicationServer;
+
 
   /**
    * Constructs a a datanode state machine.
@@ -85,12 +84,21 @@ public class DatanodeStateMachine implements Closeable {
     commandDispatcher = CommandDispatcher.newBuilder()
         .addHandler(new ContainerReportHandler())
         .addHandler(new CloseContainerHandler())
+        .addHandler(new CopyContainerHandler())
         .addHandler(new DeleteBlocksCommandHandler(
             container.getContainerManager(), conf))
         .setConnectionManager(connectionManager)
         .setContainer(container)
         .setContext(context)
         .build();
+
+    containerReplicationServer = new HDSLDatanodeHttpServer(conf);
+    ContainerReplicationSource replicationSource =
+        new OnDemandContainerReplicationSource(container.getContainerManager());
+
+    containerReplicationServer.getWebAppContext()
+        .setAttribute(RawContainerResource.OZONE_REPLICATION_SOURCE,
+            replicationSource);
   }
 
   public void setDatanodeID(DatanodeID datanodeID) {
@@ -125,7 +133,7 @@ public class DatanodeStateMachine implements Closeable {
    */
   private void start() throws IOException {
     long now = 0;
-
+    containerReplicationServer.start();
     container.start();
     initCommandHandlerThread(conf);
     while (context.getState() != DatanodeStates.SHUTDOWN) {
@@ -208,6 +216,8 @@ public class DatanodeStateMachine implements Closeable {
     if(container != null) {
       container.stop();
     }
+
+    IOUtils.closeQuietly(containerReplicationServer);
   }
 
   /**
@@ -381,5 +391,9 @@ public class DatanodeStateMachine implements Closeable {
   @VisibleForTesting
   public long getCommandHandled() {
     return commandsHandled;
+  }
+
+  public HDSLDatanodeHttpServer getContainerReplicationServer() {
+    return containerReplicationServer;
   }
 }

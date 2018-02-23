@@ -273,4 +273,12 @@ public interface ContainerManager extends RwLock {
    * @return container report state.
    */
   ReportState getContainerReportState();
+
+  /**
+   * Copy the raw container from existing replicas on raw data level.
+   * @param containerName
+   * @param pipeline
+   */
+  void copyContainerFrom(String containerName, Pipeline pipeline)
+      throws StorageContainerException;
 }

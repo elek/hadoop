@@ -28,11 +28,14 @@ import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.container.common.helpers.KeyData;
 import org.apache.hadoop.ozone.container.common.helpers.KeyUtils;
 import org.apache.hadoop.ozone.container.common.interfaces.*;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.ozone.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
 import org.apache.hadoop.util.ReflectionUtils;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
+import org.apache.hadoop.ozone.protocol.proto
+    .StorageContainerDatanodeProtocolProtos;
+import org.apache.hadoop.ozone.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.ozone.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
 import org.apache.hadoop.ozone.protocol.proto
@@ -49,11 +52,7 @@ import org.apache.hadoop.utils.MetadataStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.DigestInputStream;
@@ -86,7 +85,7 @@ import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
 import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
     .Result.UNSUPPORTED_REQUEST;
 import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
-   .Result.ERROR_IN_COMPACT_DB;
+    .Result.ERROR_IN_COMPACT_DB;
 import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
     .Result.UNCLOSED_CONTAINER_IO;
 import static org.apache.hadoop.ozone.OzoneConsts.CONTAINER_EXTENSION;
@@ -116,6 +115,10 @@ public class ContainerManagerImpl implements ContainerManager {
   private ContainerDeletionChoosingPolicy containerDeletionChooser;
   private ContainerReportManager containerReportManager;
 
+  private ContainerDownloader downloader;
+
+  private ContainerPacker packer;
+
   /**
    * Init call that sets up a container Manager.
    *
@@ -139,6 +142,9 @@ public class ContainerManagerImpl implements ContainerManager {
 
     this.conf = config;
     this.datanodeID = datanode;
+
+    downloader = new SimpleContainerDownloader(conf);
+    packer = new TarContainerPacker();
 
     readLock();
     try {
@@ -359,54 +365,27 @@ public class ContainerManagerImpl implements ContainerManager {
    * }
    *
    * @param containerData - container Data
-   * @param overwrite - Whether we are overwriting.
+   * @param overwrite     - Whether we are overwriting.
    * @throws StorageContainerException, NoSuchAlgorithmException
    */
   private void writeContainerInfo(ContainerData containerData,
-      boolean  overwrite)
+      boolean overwrite)
       throws StorageContainerException, NoSuchAlgorithmException {
 
     Preconditions.checkNotNull(this.locationManager,
         "Internal error: location manager cannot be null");
 
     FileOutputStream containerStream = null;
-    DigestOutputStream dos = null;
     FileOutputStream metaStream = null;
-
+    DigestOutputStream dos = null;
     try {
-      Path metadataPath = null;
-      Path location = (!overwrite) ? locationManager.getContainerPath():
-          Paths.get(containerData.getContainerPath()).getParent();
-      if (location == null) {
-        throw new StorageContainerException(
-            "Failed to get container file path.",
-            CONTAINER_INTERNAL_ERROR);
-      }
 
-      File containerFile = ContainerUtils.getContainerFile(containerData,
-          location);
-      File metadataFile = ContainerUtils.getMetadataFile(containerData,
-          location);
-      String containerName = containerData.getContainerName();
+      initContainer(containerData, overwrite);
 
-      if(!overwrite) {
-        ContainerUtils.verifyIsNewContainer(containerFile, metadataFile);
-        metadataPath = this.locationManager.getDataPath(containerName);
-        metadataPath = ContainerUtils.createMetadata(metadataPath,
-            containerName, conf);
-      }  else {
-        metadataPath = ContainerUtils.getMetadataDirectory(containerData);
-      }
+      containerStream = new FileOutputStream(containerData.getContainerPath());
 
-      containerStream = new FileOutputStream(containerFile);
-      metaStream = new FileOutputStream(metadataFile);
       MessageDigest sha = MessageDigest.getInstance(OzoneConsts.FILE_HASH);
-
       dos = new DigestOutputStream(containerStream, sha);
-      containerData.setDBPath(metadataPath.resolve(
-          ContainerUtils.getContainerDbFileName(containerName))
-          .toString());
-      containerData.setContainerPath(containerFile.toString());
 
       ContainerProtos.ContainerData protoData = containerData
           .getProtoBufMessage();
@@ -414,7 +393,7 @@ public class ContainerManagerImpl implements ContainerManager {
 
       ContainerProtos.ContainerMeta protoMeta = ContainerProtos
           .ContainerMeta.newBuilder()
-          .setFileName(containerFile.toString())
+          .setFileName(containerData.getContainerPath())
           .setHash(DigestUtils.sha256Hex(sha.digest()))
           .build();
       protoMeta.writeDelimitedTo(metaStream);
@@ -442,6 +421,42 @@ public class ContainerManagerImpl implements ContainerManager {
       IOUtils.closeStream(containerStream);
       IOUtils.closeStream(metaStream);
     }
+  }
+
+  /**
+   * Initialize the container with filling all the required path fields.
+   */
+  private void initContainer(ContainerData containerData, boolean overwrite)
+      throws IOException {
+    Path metadataPath = null;
+    Path location = (!overwrite) ? locationManager.getContainerPath() :
+        Paths.get(containerData.getContainerPath()).getParent();
+    if (location == null) {
+      throw new StorageContainerException(
+          "Failed to get container file path.",
+          CONTAINER_INTERNAL_ERROR);
+    }
+
+    File containerFile = ContainerUtils.getContainerFile(containerData,
+        location);
+    File metadataFile = ContainerUtils.getMetadataFile(containerData,
+        location);
+    String containerName = containerData.getContainerName();
+
+    if (!overwrite) {
+      ContainerUtils.verifyIsNewContainer(containerFile, metadataFile);
+      metadataPath = this.locationManager.getDataPath(containerName);
+      metadataPath = ContainerUtils.createMetadata(metadataPath,
+          containerName, conf);
+    } else {
+      metadataPath = ContainerUtils.getMetadataDirectory(containerData);
+    }
+
+    containerData.setDBPath(metadataPath.resolve(
+        ContainerUtils.getContainerDbFileName(containerName))
+        .toString());
+    containerData.setContainerPath(containerFile.toString());
+
   }
 
   /**
@@ -606,7 +621,7 @@ public class ContainerManagerImpl implements ContainerManager {
     File containerFileBK = null, containerFile = null;
     boolean deleted = false;
 
-    if(!containerMap.containsKey(containerName)) {
+    if (!containerMap.containsKey(containerName)) {
       throw new StorageContainerException("Container doesn't exist. Name :"
           + containerName, CONTAINER_NOT_FOUND);
     }
@@ -663,8 +678,8 @@ public class ContainerManagerImpl implements ContainerManager {
       containerMap.replace(containerName, newStatus);
     } catch (IOException e) {
       // Restore the container file from backup
-      if(containerFileBK != null && containerFileBK.exists() && deleted) {
-        if(containerFile.delete()
+      if (containerFileBK != null && containerFileBK.exists() && deleted) {
+        if (containerFile.delete()
             && containerFileBK.renameTo(containerFile)) {
           throw new StorageContainerException("Container update failed,"
               + " container data restored from the backup.",
@@ -680,7 +695,7 @@ public class ContainerManagerImpl implements ContainerManager {
       }
     } finally {
       if (containerFileBK != null && containerFileBK.exists()) {
-        if(!containerFileBK.delete()) {
+        if (!containerFileBK.delete()) {
           LOG.warn("Unable to delete container file backup : {}.",
               containerFileBK.getAbsolutePath());
         }
@@ -731,7 +746,6 @@ public class ContainerManagerImpl implements ContainerManager {
     this.containerMap.clear();
     this.locationManager.shutdown();
   }
-
 
   @VisibleForTesting
   public ConcurrentSkipListMap<String, ContainerStatus> getContainerMap() {
@@ -827,6 +841,7 @@ public class ContainerManagerImpl implements ContainerManager {
 
   /**
    * Get the node report.
+   *
    * @return node report.
    */
   @Override
@@ -843,7 +858,6 @@ public class ContainerManagerImpl implements ContainerManager {
     }
     return nrb.build();
   }
-
 
   /**
    * Gets container reports.
@@ -886,7 +900,7 @@ public class ContainerManagerImpl implements ContainerManager {
     crBuilder.setDatanodeID(datanodeID.getProtoBufMessage())
         .setType(ContainerReportsRequestProto.reportType.fullReport);
 
-    for (ContainerStatus container: containers) {
+    for (ContainerStatus container : containers) {
       StorageContainerDatanodeProtocolProtos.ContainerInfo.Builder ciBuilder =
           StorageContainerDatanodeProtocolProtos.ContainerInfo.newBuilder();
       ciBuilder.setContainerName(container.getContainer().getContainerName())
@@ -1095,6 +1109,53 @@ public class ContainerManagerImpl implements ContainerManager {
   @Override
   public ReportState getContainerReportState() {
     return containerReportManager.getContainerReportState();
+  }
+
+  /**
+   * Handle copy container command: download it from other datanodes and
+   * add it to the local db.
+   *
+   * @param containerName The name of the container to copy from the pipeline.
+   * @param pipeline The pipline of the container
+   * @throws StorageContainerException
+   */
+  @Override
+  public void copyContainerFrom(String containerName, Pipeline pipeline)
+      throws StorageContainerException {
+
+    if (containerMap.containsKey(containerName)) {
+      LOG.debug("Container already exists. {}", containerName);
+      throw new StorageContainerException("container already exists.",
+          CONTAINER_EXISTS);
+    }
+
+    downloader.getContainerDataFromReplicas(containerName, pipeline, datanodeID)
+        .thenAccept(tempFile -> {
+          try {
+            ContainerData containerData = new ContainerData(containerName,
+                conf);
+
+            initContainer(containerData, false);
+
+            File cFile = new File(containerData.getContainerPath());
+            try (FileInputStream fis = new FileInputStream(tempFile.toFile())) {
+              packer.unpack(containerData, fis);
+            }
+
+            writeLock();
+            try {
+              //read the extracted files and add it to the map
+              readContainerInfo(ContainerUtils.getContainerNameFromFile(cFile));
+            } finally {
+              writeUnlock();
+            }
+
+          } catch (Exception e) {
+            LOG.error("Can't initialize the container from the "
+                + " downloaded data: " + tempFile, e);
+          }
+        });
+
   }
 
 }

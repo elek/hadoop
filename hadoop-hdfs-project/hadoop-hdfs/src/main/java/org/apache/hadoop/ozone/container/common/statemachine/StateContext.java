@@ -57,6 +57,7 @@ public class StateContext {
   private ReportState  reportState;
   private static final ReportState DEFAULT_REPORT_STATE =
       ReportState.newBuilder().setState(noContainerReports).setCount(0).build();
+  private int hdlsRestPort;
 
   /**
    * Constructs a StateContext.
@@ -278,4 +279,8 @@ public class StateContext {
     }
   }
 
+  public int getHdlsRestPort() {
+    return parent == null ?
+        INVALID_PORT : parent.getContainerReplicationServer().getPort();
+  }
 }

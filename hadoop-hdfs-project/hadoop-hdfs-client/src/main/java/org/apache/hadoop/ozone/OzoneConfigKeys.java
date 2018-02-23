@@ -82,6 +82,9 @@ public final class OzoneConfigKeys {
   public static final String OZONE_METADATA_DIRS =
       "ozone.metadata.dirs";
 
+  public static final String OZONE_CONTAINER_COPY_WORKDIR =
+      "ozone.containercopy.workdir";
+
   public static final String OZONE_METADATA_STORE_IMPL =
       "ozone.metastore.impl";
   public static final String OZONE_METADATA_STORE_IMPL_LEVELDB =
@@ -236,6 +239,24 @@ public final class OzoneConfigKeys {
 
   public static final String OZONE_SCM_WEB_AUTHENTICATION_KERBEROS_PRINCIPAL =
       "ozone.web.authentication.kerberos.principal";
+
+
+  public static final String HDLS_DATANODE_HTTP_ENABLED_KEY =
+      "hdls.datanode.http.enabled";
+  public static final String HDLS_DATANODE_HTTP_BIND_HOST_KEY =
+      "hdls.datanode.http-bind-host";
+  public static final String HDLS_DATANODE_HTTPS_BIND_HOST_KEY =
+      "hdls.datanode.https-bind-host";
+  public static final String HDLS_DATANODE_HTTP_ADDRESS_KEY =
+      "hdls.datanode.http-address";
+  public static final String HDLS_DATANODE_HTTPS_ADDRESS_KEY =
+      "hdls.datanode.https-address";
+  public static final String HDLS_DATANODE_KEYTAB_FILE =
+      "hdls.datanode.keytab.file";
+  public static final String HDLS_DATANODE_HTTP_BIND_HOST_DEFAULT = "0.0.0.0";
+  public static final int HDLS_DATANODE_HTTP_BIND_PORT_DEFAULT = 9878;
+  public static final int HDLS_DATANODE_HTTPS_BIND_PORT_DEFAULT = 9879;
+
 
   /**
    * There is no need to instantiate this class.

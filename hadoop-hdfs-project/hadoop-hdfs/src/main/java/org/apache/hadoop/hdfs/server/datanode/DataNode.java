@@ -309,6 +309,7 @@ public class DataNode extends ReconfigurableBase
   private static final String DATANODE_HTRACE_PREFIX = "datanode.htrace.";
   private final FileIoProvider fileIoProvider;
 
+
   /**
    * Use {@link NetUtils#createSocketAddr(String)} instead.
    */
@@ -1549,6 +1550,7 @@ public class DataNode extends ReconfigurableBase
 
   /**
    * Create a DatanodeRegistration for a specific block pool.
+   *
    * @param nsInfo the namespace info from the first part of the NN handshake
    */
   DatanodeRegistration createBPRegistration(NamespaceInfo nsInfo) {

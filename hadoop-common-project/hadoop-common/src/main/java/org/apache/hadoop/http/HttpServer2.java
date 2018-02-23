@@ -20,11 +20,8 @@ package org.apache.hadoop.http;
 import static org.apache.hadoop.fs.CommonConfigurationKeys.DEFAULT_HADOOP_HTTP_STATIC_USER;
 import static org.apache.hadoop.fs.CommonConfigurationKeys.HADOOP_HTTP_STATIC_USER;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.io.PrintStream;
+
+import java.io.*;
 import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
@@ -117,7 +114,7 @@ import org.slf4j.LoggerFactory;
  */
 @InterfaceAudience.Private
 @InterfaceStability.Evolving
-public final class HttpServer2 implements FilterContainer {
+public final class HttpServer2 implements FilterContainer, Closeable {
   public static final Logger LOG = LoggerFactory.getLogger(HttpServer2.class);
 
   public static final String HTTP_SCHEME = "http";
@@ -170,6 +167,14 @@ public final class HttpServer2 implements FilterContainer {
   private static final String X_FRAME_VALUE = "xFrameOption";
   private static final String X_FRAME_ENABLED = "X_FRAME_ENABLED";
 
+  @Override
+  public void close() throws IOException {
+    try {
+      stop();
+    } catch (Exception e) {
+      throw new IOException("Can't close the http server ", e);
+    }
+  }
 
   /**
    * Class to construct instances of HTTP server with specific options.

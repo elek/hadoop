@@ -18,6 +18,7 @@
 package org.apache.hadoop.ozone.web;
 
 import com.google.common.base.Optional;
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
@@ -30,13 +31,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServlet;
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
 /**
  * Base class for HTTP server of the Ozone related components.
  */
-public abstract class OzoneHttpServer {
+public abstract class OzoneHttpServer implements Closeable{
 
   private static final Logger LOG =
       LoggerFactory.getLogger(OzoneHttpServer.class);
@@ -97,7 +99,7 @@ public abstract class OzoneHttpServer {
    * Returns the WebAppContext associated with this HttpServer.
    * @return WebAppContext
    */
-  protected WebAppContext getWebAppContext() {
+  public WebAppContext getWebAppContext() {
     return httpServer.getWebAppContext();
   }
 
@@ -213,4 +215,17 @@ public abstract class OzoneHttpServer {
 
   protected abstract String getEnabledKey();
 
+  @Override
+  public void close() throws IOException {
+    IOUtils.closeQuietly(httpServer);
+  }
+
+  public int getPort() {
+    //todo: handle https
+    return getHttpBindAddress().getPort();
+  }
+
+  protected HttpServer2 getHttpServer() {
+    return httpServer;
+  }
 }

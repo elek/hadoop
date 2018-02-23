@@ -54,6 +54,7 @@ public class DatanodeID implements Comparable<DatanodeID> {
   private String xferAddr;
   private int containerPort; // container Stand_alone Rpc port.
   private int ratisPort; // Container Ratis RPC Port.
+  private int hdlsRestPort;
 
   /**
    * UUID identifying a given datanode. For upgraded Datanodes this is the
@@ -75,6 +76,9 @@ public class DatanodeID implements Comparable<DatanodeID> {
         from.getInfoPort(),
         from.getInfoSecurePort(),
         from.getIpcPort());
+    setRatisPort(from.getRatisPort());
+    setHdlsRestPort(from.getHdlsRestPort());
+    setContainerPort(from.getContainerPort());
     this.peerHostName = from.getPeerHostName();
   }
 
@@ -326,6 +330,7 @@ public class DatanodeID implements Comparable<DatanodeID> {
         datanodeIDProto.getInfoSecurePort(), datanodeIDProto.getIpcPort());
     id.setContainerPort(datanodeIDProto.getContainerPort());
     id.setRatisPort(datanodeIDProto.getRatisPort());
+    id.setHdlsRestPort(datanodeIDProto.getHdlsRestPort());
     return id;
   }
 
@@ -345,10 +350,19 @@ public class DatanodeID implements Comparable<DatanodeID> {
         .setIpcPort(this.getIpcPort())
         .setContainerPort(this.getContainerPort())
         .setRatisPort(this.getRatisPort())
+        .setHdlsRestPort(this.getHdlsRestPort())
         .build();
   }
 
   public InetSocketAddress getResolvedAddress() {
     return new InetSocketAddress(this.getIpAddr(), this.getXferPort());
+  }
+
+  public int getHdlsRestPort() {
+    return hdlsRestPort;
+  }
+
+  public void setHdlsRestPort(int hdlsRestPort) {
+    this.hdlsRestPort = hdlsRestPort;
   }
 }

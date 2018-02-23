@@ -219,6 +219,14 @@ message SCMCloseContainerCmdResponseProto {
 }
 
 /**
+This command asks the datanode to copy the container from other datanodes.
+*/
+message SCMCopyContainerCmdResponseProto {
+  required string containerName = 1;
+  required hadoop.hdfs.ozone.Pipeline pipeline = 2;
+}
+
+/**
 Type of commands supported by SCM to datanode protocol.
 */
 enum Type {
@@ -228,6 +236,7 @@ enum Type {
   reregisterCommand = 5;
   deleteBlocksCommand = 6;
   closeContainerCommand = 7;
+  copyContainerCommand = 8;
 }
 
 /*
@@ -242,6 +251,7 @@ message SCMCommandResponseProto {
   optional SCMDeleteBlocksCmdResponseProto deleteBlocksProto = 7;
   required string datanodeUUID = 8;
   optional SCMCloseContainerCmdResponseProto closeContainerProto = 9;
+  optional SCMCopyContainerCmdResponseProto copyContainerProto = 10;
 }
 
 

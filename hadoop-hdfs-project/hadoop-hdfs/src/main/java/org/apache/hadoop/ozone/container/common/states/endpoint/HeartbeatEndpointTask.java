@@ -29,6 +29,7 @@ import org.apache.hadoop.ozone.container.common.statemachine
     .EndpointStateMachine.EndPointStates;
 import org.apache.hadoop.ozone.container.common.statemachine.StateContext;
 import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
+import org.apache.hadoop.ozone.protocol.commands.CopyContainerCommand;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerNodeIDProto;
@@ -176,6 +177,16 @@ public class HeartbeatEndpointTask
               closeContainer.getContainerName());
         }
         this.context.addCommand(closeContainer);
+        break;
+      case copyContainerCommand:
+        CopyContainerCommand copyContainer =
+            CopyContainerCommand.getFromProtobuf(commandResponseProto
+                .getCopyContainerProto());
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("Received SCM container copy request for container {}",
+              copyContainer.getContainerName());
+        }
+        this.context.addCommand(copyContainer);
         break;
       default:
         throw new IllegalArgumentException("Unknown response : "

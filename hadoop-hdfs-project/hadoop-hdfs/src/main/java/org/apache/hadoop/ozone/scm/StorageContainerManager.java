@@ -43,10 +43,7 @@ import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
 import org.apache.hadoop.ozone.common.Storage.StorageState;
 import org.apache.hadoop.ozone.common.StorageInfo;
 import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
-import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
-import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
-import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
-import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
+import org.apache.hadoop.ozone.protocol.commands.*;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
 import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos;
@@ -584,6 +581,10 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
     case closeContainerCommand:
       return builder.setCmdType(Type.closeContainerCommand)
           .setCloseContainerProto(((CloseContainerCommand)cmd).getProto())
+          .build();
+    case copyContainerCommand:
+      return builder.setCmdType(Type.copyContainerCommand)
+          .setCopyContainerProto(((CopyContainerCommand)cmd).getProto())
           .build();
     default:
       throw new IllegalArgumentException("Not implemented");
