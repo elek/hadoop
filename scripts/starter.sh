@@ -22,13 +22,25 @@ set -e
 sudo chmod o+rwx /data
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 $DIR/envtoconf.py --destination /opt/hadoop/etc/hadoop
 
+if [ -n "$SLEEP_SECONDS" ]; then
+   echo "Sleeping for $SLEEP_SECONDS seconds"
+   sleep $SLEEP_SECONDS
+fi
+
+
 if [ -n "$ENSURE_NAMENODE_DIR" ]; then
+   CLUSTERID_OPTS=""
+   if [ -n "$ENSURE_NAMENODE_CLUSTERID" ]; then
+      CLUSTERID_OPTS="-clusterid $ENSURE_NAMENODE_CLUSTERID"
+   fi
    if [ ! -d "$ENSURE_NAMENODE_DIR" ]; then
-      /opt/hadoop/bin/hdfs namenode -format
+      /opt/hadoop/bin/hdfs namenode -format -force $CLUSTERID_OPTS
         fi
 fi
+
 
 if [ -n "$ENSURE_SCM_INITIALIZED" ]; then
    if [ ! -f "$ENSURE_SCM_INITIALIZED" ]; then
