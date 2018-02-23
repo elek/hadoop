@@ -1,0 +1,32 @@
+version: "2"
+services:
+   namenode:
+      build: .
+      hostname: namenode
+      command: ["hdfs", "namenode"]
+      ports:
+         - 50070:50070
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+   datanode:
+      build: .
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./config
+   resourcemanager:
+      build: .
+      hostname: resourcemanager
+      command: ["yarn", "resourcemanager"]
+      ports:
+         - 8088:8088
+      env_file:
+        - ./config
+      volumes:
+        - ./test.sh:/opt/test.sh
+   nodemanager:
+      build: .
+      command: ["yarn", "nodemanager"]
+      env_file:
+        - ./config
