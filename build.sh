@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,9 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM apache/hadoop-runner
-ARG HADOOP_URL=http://mirror.jax.hugeserver.com/apache/hadoop/common/hadoop-2.9.0/hadoop-2.9.0.tar.gz
-WORKDIR /opt
-RUN sudo rm -rf /opt/hadoop && wget $HADOOP_URL -O hadoop.tar.gz && tar zxf hadoop.tar.gz && rm hadoop.tar.gz && mv hadoop* hadoop && rm -rf /opt/hadoop/share/doc
-WORKDIR /opt/hadoop
-ADD log4j.properties /opt/hadoop/etc/hadoop/log4j.properties
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+set -e
+mkdir -p build
+if [ ! -d "$DIR/build/apache-rat-0.12" ]; then
+   wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/creadur/apache-rat-0.12/apache-rat-0.12-bin.tar.gz -O $DIR/build/apache-rat.tar.gz
+	cd $DIR/build
+	tar zvxf apache-rat.tar.gz
+	cd -
+fi
+java -jar $DIR/build/apache-rat-0.12/apache-rat-0.12.jar $DIR -e public -e apache-rat-0.12 -e .git -e .gitignore
+docker build -t apache/hadoop:2 .
