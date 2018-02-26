@@ -17,6 +17,7 @@
  */
 package org.apache.hadoop.ozone.container.common.impl;
 
+import com.google.common.base.Preconditions;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -162,7 +163,7 @@ public class TarContainerPacker implements
     for (Path path : Files.list(Paths.get(containerPath))
         .collect(Collectors.toList())) {
 
-      includeFile(path.toFile(), subdir + "/" + path.getFileName().toString(),
+      includeFile(path.toFile(), subdir + "/" + path.getFileName(),
           archiveOutputStream);
     }
   }
