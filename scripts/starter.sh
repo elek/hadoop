@@ -42,6 +42,13 @@ if [ -n "$ENSURE_NAMENODE_DIR" ]; then
 fi
 
 
+if [ -n "$ENSURE_STANDBY_NAMENODE_DIR" ]; then
+   if [ ! -d "$ENSURE_STANDBY_NAMENODE_DIR" ]; then
+      /opt/hadoop/bin/hdfs namenode -bootstrapStandby
+    fi
+fi
+
+
 if [ -n "$ENSURE_SCM_INITIALIZED" ]; then
    if [ ! -f "$ENSURE_SCM_INITIALIZED" ]; then
       /opt/hadoop/bin/hdfs scm -init
