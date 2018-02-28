@@ -57,6 +57,10 @@ fi
 
 if [ -n "$ENSURE_KSM_INITIALIZED" ]; then
    if [ ! -f "$ENSURE_KSM_INITIALIZED" ]; then
+      #To make sure SCM is running in dockerized environment we will sleep
+		# Could be removed after HDFS-13203
+		echo "Waiting 15 seconds for SCM startup"
+		sleep 15
       /opt/hadoop/bin/hdfs ksm -createObjectStore
    fi
 fi
