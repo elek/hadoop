@@ -25,7 +25,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.HttpRequest;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,25 +60,6 @@ class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
       p.replace(this, SimpleHttpProxyHandler.class.getSimpleName(), h);
       h.channelRead0(ctx, req);
     }
-  }
-
-
-  /*
-   * Returns true if the request has ozone headers
-   *
-   * @param req HTTP request
-   * @return true if request has ozone header, else false
-   */
-
-  private boolean isObjectStoreRequestHeaders(HttpRequest req) {
-    for (String version : req.headers().getAll(Header.OZONE_VERSION_HEADER)) {
-      if (version != null) {
-        LOG.debug("ozone : dispatching call to Ozone, when security is not " +
-            "enabled");
-        return true;
-      }
-    }
-    return false;
   }
 
 
