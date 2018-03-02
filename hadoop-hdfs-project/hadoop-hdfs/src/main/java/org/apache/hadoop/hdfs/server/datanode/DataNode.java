@@ -111,10 +111,12 @@ import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.DFSUtilClient;
 import org.apache.hadoop.hdfs.HDFSPolicyProvider;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-import org.apache.hadoop.ozone.container.common.statemachine.DatanodeStateMachine;
+//import org.apache.hadoop.ozone.container.common.statemachine.DatanodeStateMachine;
+
+import org.apache.hadoop.hdfs.server.DataNodeService;
 import org.apache.hadoop.hdfs.server.datanode.checker.DatasetVolumeChecker;
 import org.apache.hadoop.hdfs.server.datanode.checker.StorageLocationChecker;
-import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
+//import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
 import org.apache.hadoop.util.AutoCloseableLock;
 import org.apache.hadoop.hdfs.client.BlockReportOptions;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
@@ -326,7 +328,7 @@ public class DataNode extends ReconfigurableBase
   volatile FsDatasetSpi<? extends FsVolumeSpi> data = null;
   private String clusterId = null;
 
-  final AtomicInteger xmitsInProgress = new AtomicInteger();
+  final AtomicInteger  xmitsInProgress = new AtomicInteger();
   Daemon dataXceiverServer = null;
   DataXceiverServer xserver = null;
   Daemon localDataXceiverServer = null;
@@ -375,7 +377,6 @@ public class DataNode extends ReconfigurableBase
   private final String confVersion;
   private final long maxNumberOfBlocksToLog;
   private final boolean pipelineSupportECN;
-  private final boolean ozoneEnabled;
 
   private final List<String> usersWithLocalPathAccess;
   private final boolean connectToDnViaHostname;
@@ -404,7 +405,7 @@ public class DataNode extends ReconfigurableBase
 
   private final SocketFactory socketFactory;
 
-  private DatanodeStateMachine datanodeStateMachine;
+  private List<DataNodeService> services = new ArrayList<>();
 
   private static Tracer createTracer(Configuration conf) {
     return new Tracer.Builder("DataNode").
@@ -434,7 +435,6 @@ public class DataNode extends ReconfigurableBase
     this.connectToDnViaHostname = false;
     this.blockScanner = new BlockScanner(this, this.getConf());
     this.pipelineSupportECN = false;
-    this.ozoneEnabled = false;
     this.socketFactory = NetUtils.getDefaultSocketFactory(conf);
     this.dnConf = new DNConf(this);
     initOOBTimeout();
@@ -473,8 +473,6 @@ public class DataNode extends ReconfigurableBase
     this.pipelineSupportECN = conf.getBoolean(
         DFSConfigKeys.DFS_PIPELINE_ECN_ENABLED,
         DFSConfigKeys.DFS_PIPELINE_ECN_ENABLED_DEFAULT);
-
-    this.ozoneEnabled = DFSUtil.isOzoneEnabled(conf);
 
     confVersion = "core-" +
         conf.get("hadoop.common.configuration.version", "UNSPECIFIED") +
@@ -985,7 +983,7 @@ public class DataNode extends ReconfigurableBase
       throw e;
     }
 
-    //adding additional plugin s from SPI definitions
+    //adding additional plugins from SPI definitions
     for (DataNodeServicePlugin plugin :
         ServiceLoader.load(DataNodeServicePlugin.class)) {
       plugins.add(plugin);
@@ -1458,6 +1456,15 @@ public class DataNode extends ReconfigurableBase
       diskMetrics = new DataNodeDiskMetrics(this,
           dnConf.outliersReportIntervalMs);
     }
+
+    ServiceLoader<DataNodeService> load =
+        ServiceLoader.load(DataNodeService.class);
+
+    load.forEach(service -> services.add(service));
+
+    for (DataNodeService service : services) {
+      service.init(getConf());
+    }
   }
 
   /**
@@ -1597,29 +1604,13 @@ public class DataNode extends ReconfigurableBase
           + ". Expecting " + storage.getDatanodeUuid());
     }
 
-    if (isOzoneEnabled()) {
-      if (datanodeStateMachine == null) {
-        datanodeStateMachine = new DatanodeStateMachine(
-            getDatanodeId(),
-            getConf());
-        datanodeStateMachine.startDaemon();
+    for (ServicePlugin plugin : plugins) {
+      if (plugin instanceof DataNodeServicePlugin) {
+        ((DataNodeServicePlugin) plugin)
+            .onDatanodeSuccessfulNamenodeRegisration(bpRegistration);
       }
     }
     registerBlockPoolWithSecretManager(bpRegistration, blockPoolId);
-  }
-
-  @VisibleForTesting
-  public OzoneContainer getOzoneContainerManager() {
-    return this.datanodeStateMachine.getContainer();
-  }
-
-  @VisibleForTesting
-  public DatanodeStateMachine.DatanodeStates getOzoneStateMachineState() {
-    if (this.datanodeStateMachine != null) {
-      return this.datanodeStateMachine.getContext().getState();
-    }
-    // if the state machine doesn't exist then DN initialization is in progress
-    return DatanodeStateMachine.DatanodeStates.INIT;
   }
 
   /**
@@ -2063,13 +2054,6 @@ public class DataNode extends ReconfigurableBase
       }
     }
 
-    // Stop the object store handler
-    if (isOzoneEnabled()) {
-        if(datanodeStateMachine != null &&
-            !datanodeStateMachine.isDaemonStopped()) {
-          datanodeStateMachine.stopDaemon();
-        }
-    }
 
     volumeChecker.shutdownAndWait(1, TimeUnit.SECONDS);
 
@@ -3248,12 +3232,6 @@ public class DataNode extends ReconfigurableBase
           } catch (InterruptedException ie) { }
         }
         shutdown();
-
-        if (isOzoneEnabled()) {
-          if(datanodeStateMachine != null) {
-            datanodeStateMachine.stopDaemon();
-          }
-        }
       }
     };
 
@@ -3548,9 +3526,6 @@ public class DataNode extends ReconfigurableBase
     return metricsLoggerTimer;
   }
 
-  public boolean isOzoneEnabled() {
-    return ozoneEnabled;
-  }
 
   public Tracer getTracer() {
     return tracer;

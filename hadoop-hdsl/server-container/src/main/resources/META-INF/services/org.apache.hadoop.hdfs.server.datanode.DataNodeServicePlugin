@@ -1,0 +1,2 @@
+org.apache.hadoop.ozone.web.ObjectStoreRestPlugin
+org.apache.hadoop.ozone.HdslServerPlugin

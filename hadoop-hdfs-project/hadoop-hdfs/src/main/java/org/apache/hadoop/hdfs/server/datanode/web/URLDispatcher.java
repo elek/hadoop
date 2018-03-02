@@ -28,7 +28,6 @@ import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability.Evolving;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

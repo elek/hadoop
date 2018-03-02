@@ -187,17 +187,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.fusesource.leveldbjni</groupId>
       <artifactId>leveldbjni-all</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.rocksdb</groupId>
-      <artifactId>rocksdbjni</artifactId>
-      <version>5.8.0</version>
-    </dependency>
-    <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <version>1.5.9</version>
-      <scope>provided</scope>
-    </dependency>
+
     <!-- 'mvn dependency:analyze' fails to detect use of this dependency -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
@@ -209,18 +199,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jscsi</groupId>
-      <artifactId>target</artifactId>
-      <version>2.6.0</version>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.jctools</groupId>
       <artifactId>jctools-core</artifactId>
       <optional>true</optional>
@@ -229,21 +207,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.8.7</version>
-    </dependency>
-    <dependency>
-      <groupId>io.kubernetes</groupId>
-      <artifactId>client-java</artifactId>
-      <version>1.0.0-beta1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>io.swagger</groupId>
-          <artifactId>swagger-annotations</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.stefanbirkner</groupId>
-          <artifactId>system-rules</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.curator</groupId>
@@ -259,18 +222,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <artifactId>assertj-core</artifactId>
         <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.openjdk.jmh</groupId>
-      <artifactId>jmh-core</artifactId>
-      <version>1.19</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.openjdk.jmh</groupId>
-      <artifactId>jmh-generator-annprocess</artifactId>
-      <version>1.19</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
 
   <build>
