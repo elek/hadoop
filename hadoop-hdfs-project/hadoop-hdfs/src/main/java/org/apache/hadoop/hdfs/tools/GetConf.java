@@ -36,7 +36,7 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
 import org.apache.hadoop.hdfs.DFSUtil.ConfiguredNNAddress;
-import org.apache.hadoop.ozone.client.OzoneClientUtils;
+//import org.apache.hadoop.ozone.client.OzoneClientUtils;
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.StringUtils;
@@ -104,10 +104,10 @@ public class GetConf extends Configured implements Tool {
           new CommandHandler(DFSConfigKeys.DFS_HOSTS_EXCLUDE));
       map.put(StringUtils.toLowerCase(NNRPCADDRESSES.getName()),
           new NNRpcAddressesCommandHandler());
-      map.put(StringUtils.toLowerCase(KEYSPACEMANAGER.getName()),
-          new KeySpaceManagersCommandHandler());
-      map.put(StringUtils.toLowerCase(STORAGECONTAINERMANAGER.getName()),
-          new StorageContainerManagersCommandHandler());
+//      map.put(StringUtils.toLowerCase(KEYSPACEMANAGER.getName()),
+//          new KeySpaceManagersCommandHandler());
+//      map.put(StringUtils.toLowerCase(STORAGECONTAINERMANAGER.getName()),
+//          new StorageContainerManagersCommandHandler());
       map.put(StringUtils.toLowerCase(CONFKEY.getName()),
           new PrintConfKeyCommandHandler());
     }
@@ -241,34 +241,34 @@ public class GetConf extends Configured implements Tool {
       return 0;
     }
   }
-
-  /**
-   * Handler for {@link Command#STORAGECONTAINERMANAGER}.
-   */
-  static class StorageContainerManagersCommandHandler extends CommandHandler {
-    @Override
-    public int doWorkInternal(GetConf tool, String[] args) throws IOException {
-      Collection<InetSocketAddress> addresses =
-          OzoneClientUtils.getSCMAddresses(tool.getConf());
-      for (InetSocketAddress addr : addresses) {
-        tool.printOut(addr.getHostName());
-      }
-      return 0;
-    }
-  }
-
-  /**
-   * Handler for {@link Command#KEYSPACEMANAGER}.
-   */
-  static class KeySpaceManagersCommandHandler extends CommandHandler {
-    @Override
-    public int doWorkInternal(GetConf tool, String[] args) throws IOException {
-      tool.printOut(OzoneClientUtils.getKsmAddress(tool.getConf())
-          .getHostName());
-      return 0;
-    }
-  }
-  
+//
+//  /**
+//   * Handler for {@link Command#STORAGECONTAINERMANAGER}.
+//   */
+//  static class StorageContainerManagersCommandHandler extends CommandHandler {
+//    @Override
+//    public int doWorkInternal(GetConf tool, String[] args) throws IOException {
+//      Collection<InetSocketAddress> addresses =
+//          OzoneClientUtils.getSCMAddresses(tool.getConf());
+//      for (InetSocketAddress addr : addresses) {
+//        tool.printOut(addr.getHostName());
+//      }
+//      return 0;
+//    }
+//  }
+//
+//  /**
+//   * Handler for {@link Command#KEYSPACEMANAGER}.
+//   */
+//  static class KeySpaceManagersCommandHandler extends CommandHandler {
+//    @Override
+//    public int doWorkInternal(GetConf tool, String[] args) throws IOException {
+//      tool.printOut(OzoneClientUtils.getKsmAddress(tool.getConf())
+//          .getHostName());
+//      return 0;
+//    }
+//  }
+//
   /**
    * Handler for {@link Command#NNRPCADDRESSES}
    * If rpc addresses are defined in configuration, we return them. Otherwise, 
