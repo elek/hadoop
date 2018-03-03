@@ -1,4 +1,5 @@
 <configuration>
+  <property><name>dfs.datanode.plugins</name><value>org.apache.hadoop.ozone.web.ObjectStoreRestPlugin</value></property>
 <property><name>ozone.ksm.address</name><value>localhost</value></property>
 <property><name>ozone.scm.names</name><value>localhost</value></property>
 <property><name>ozone.enabled</name><value>True</value></property>

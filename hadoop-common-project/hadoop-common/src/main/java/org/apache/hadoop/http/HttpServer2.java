@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -206,6 +207,9 @@ public final class HttpServer2 implements FilterContainer {
 
     private boolean xFrameEnabled;
     private XFrameOption xFrameOption = XFrameOption.SAMEORIGIN;
+    private boolean withDefaultServlet = true;
+    private boolean withDefaultApps = true;
+    private boolean withCommonServlets = true;
 
     public Builder setName(String name){
       this.name = name;
@@ -502,6 +506,21 @@ public final class HttpServer2 implements FilterContainer {
 
       return conn;
     }
+
+    public Builder withoutCommonServlets() {
+      withCommonServlets = false;
+      return this;
+    }
+
+    public Builder withoutDefaultServlet() {
+      withDefaultServlet = false;
+      return this;
+    }
+
+    public Builder withoutDefaultApps() {
+      withDefaultApps = false;
+      return this;
+    }
   }
 
   private HttpServer2(final Builder b) throws IOException {
@@ -527,11 +546,13 @@ public final class HttpServer2 implements FilterContainer {
 
     this.findPort = b.findPort;
     this.portRanges = b.portRanges;
-    initializeWebServer(b.name, b.hostName, b.conf, b.pathSpecs);
+    initializeWebServer(b.name, b.hostName, b.conf, b.pathSpecs,
+        b.withDefaultApps, b.withCommonServlets);
   }
 
   private void initializeWebServer(String name, String hostName,
-      Configuration conf, String[] pathSpecs)
+      Configuration conf, String[] pathSpecs, boolean withDefaultApps,
+      boolean withCommonServlets)
       throws IOException {
 
     Preconditions.checkNotNull(webAppContext);
@@ -564,7 +585,9 @@ public final class HttpServer2 implements FilterContainer {
     }
     handlers.addHandler(webAppContext);
     final String appDir = getWebAppsPath(name);
-    addDefaultApps(contexts, appDir, conf);
+    if (withDefaultApps) {
+      addDefaultApps(contexts, appDir, conf);
+    }
     webServer.setHandler(handlers);
 
     Map<String, String> xFrameParams = new HashMap<>();
@@ -581,7 +604,9 @@ public final class HttpServer2 implements FilterContainer {
       }
     }
 
-    addDefaultServlets();
+    if (withCommonServlets) {
+      addDefaultServlets();
+    }
 
     if (pathSpecs != null) {
       for (String path : pathSpecs) {
@@ -599,19 +624,20 @@ public final class HttpServer2 implements FilterContainer {
       AccessControlList adminsAcl, final String appDir) {
     WebAppContext ctx = new WebAppContext();
     ctx.setDefaultsDescriptor(null);
-    ServletHolder holder = new ServletHolder(new DefaultServlet());
-    Map<String, String> params = ImmutableMap. <String, String> builder()
-            .put("acceptRanges", "true")
-            .put("dirAllowed", "false")
-            .put("gzip", "true")
-            .put("useFileMappedBuffer", "true")
-            .build();
-    holder.setInitParameters(params);
-    ctx.setWelcomeFiles(new String[] {"index.html"});
-    ctx.addServlet(holder, "/");
+    if (b.withDefaultServlet) {
+      ServletHolder holder = new ServletHolder(new DefaultServlet());
+      Map<String, String> params =
+          ImmutableMap.<String, String>builder().put("acceptRanges", "true")
+              .put("dirAllowed", "false").put("gzip", "true")
+              .put("useFileMappedBuffer", "true").build();
+      holder.setInitParameters(params);
+      ctx.setWelcomeFiles(new String[] {"index.html"});
+      ctx.addServlet(holder, "/");
+    }
     ctx.setDisplayName(b.name);
     ctx.setContextPath("/");
     ctx.setWar(appDir + "/" + b.name);
+
     String tempDirectory = b.conf.get(HTTP_TEMP_DIR_KEY);
     if (tempDirectory != null && !tempDirectory.isEmpty()) {
       ctx.setTempDirectory(new File(tempDirectory));
@@ -783,6 +809,24 @@ public final class HttpServer2 implements FilterContainer {
     sh.setInitParameter("com.sun.jersey.config.property.resourceConfigClass",
         "com.sun.jersey.api.core.PackagesResourceConfig");
     sh.setInitParameter("com.sun.jersey.config.property.packages", packageName);
+    webAppContext.addServlet(sh, pathSpec);
+  }
+
+  /**
+   * Add a Jersey resource classes.
+   *
+   * @param classes  FQ name of classes.
+   * @param pathSpec The path spec for the servlet
+   */
+  public void addJerseyResourceClasses(final List<String> classes,
+      final String pathSpec) {
+    LOG.info("addJerseyResourcePackage: packageName=" + classes + ", pathSpec="
+        + pathSpec);
+    final ServletHolder sh = new ServletHolder(ServletContainer.class);
+    sh.setInitParameter("com.sun.jersey.config.property.resourceConfigClass",
+        "com.sun.jersey.api.core.ClassNamesResourceConfig");
+    sh.setInitParameter("com.sun.jersey.config.property.classnames",
+        classes.stream().collect(Collectors.joining(";")));
     webAppContext.addServlet(sh, pathSpec);
   }
 
