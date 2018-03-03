@@ -415,8 +415,6 @@ public class DataNode extends ReconfigurableBase
 
   private ScheduledThreadPoolExecutor metricsLoggerTimer;
 
-  private ObjectStoreHandler objectStoreHandler = null;
-
   /**
    * Creates a dummy DataNode for testing purpose.
    */
@@ -962,8 +960,8 @@ public class DataNode extends ReconfigurableBase
     // the DN is started by JSVC, pass it along.
     ServerSocketChannel httpServerChannel = secureResources != null ?
         secureResources.getHttpServerChannel() : null;
-    this.httpServer = new DatanodeHttpServer(getConf(), this, httpServerChannel,
-        this.objectStoreHandler);
+    this.httpServer =
+        new DatanodeHttpServer(getConf(), this, httpServerChannel);
     httpServer.start();
     if (httpServer.getHttpAddress() != null) {
       infoPort = httpServer.getHttpAddress().getPort();
@@ -1422,7 +1420,6 @@ public class DataNode extends ReconfigurableBase
     registerMXBean();
 
     initDataXceiver();
-    initObjectStoreHandler();
     startInfoServer();
     pauseMonitor = new JvmPauseMonitor();
     pauseMonitor.init(getConf());
@@ -1459,19 +1456,6 @@ public class DataNode extends ReconfigurableBase
     if (dnConf.diskStatsEnabled) {
       diskMetrics = new DataNodeDiskMetrics(this,
           dnConf.outliersReportIntervalMs);
-    }
-  }
-
-  /**
-   * Initializes the object store handler.  This must be called before
-   * initialization of the HTTP server.
-   *
-   * @throws IOException if there is an I/O error
-   */
-  private void initObjectStoreHandler() throws IOException {
-    if (this.ozoneEnabled) {
-      this.objectStoreHandler = new ObjectStoreHandler(getConf());
-      LOG.info("ozone is enabled.");
     }
   }
 
@@ -2080,13 +2064,10 @@ public class DataNode extends ReconfigurableBase
 
     // Stop the object store handler
     if (isOzoneEnabled()) {
-      if (this.objectStoreHandler != null) {
-        this.objectStoreHandler.close();
         if(datanodeStateMachine != null &&
             !datanodeStateMachine.isDaemonStopped()) {
           datanodeStateMachine.stopDaemon();
         }
-      }
     }
 
     volumeChecker.shutdownAndWait(1, TimeUnit.SECONDS);

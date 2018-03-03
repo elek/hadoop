@@ -26,8 +26,6 @@ import io.netty.handler.codec.http.HttpRequest;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler;
 import org.apache.hadoop.ozone.client.rest.headers.Header;
-import org.apache.hadoop.ozone.web.netty.ObjectStoreJerseyContainer;
-import org.apache.hadoop.ozone.web.netty.RequestDispatchObjectStoreChannelHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,16 +39,13 @@ class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
   private final InetSocketAddress proxyHost;
   private final Configuration conf;
   private final Configuration confForCreate;
-  private final ObjectStoreJerseyContainer objectStoreJerseyContainer;
 
   URLDispatcher(InetSocketAddress proxyHost, Configuration conf,
-                Configuration confForCreate,
-                ObjectStoreJerseyContainer objectStoreJerseyContainer)
+                Configuration confForCreate)
       throws IOException {
     this.proxyHost = proxyHost;
     this.conf = conf;
     this.confForCreate = confForCreate;
-    this.objectStoreJerseyContainer = objectStoreJerseyContainer;
   }
 
   @Override
@@ -61,14 +56,7 @@ class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
       WebHdfsHandler h = new WebHdfsHandler(conf, confForCreate);
       p.replace(this, WebHdfsHandler.class.getSimpleName(), h);
       h.channelRead0(ctx, req);
-    } else if (isObjectStoreRequest(req)) {
-      RequestDispatchObjectStoreChannelHandler h =
-          new RequestDispatchObjectStoreChannelHandler(
-              this.objectStoreJerseyContainer);
-      p.replace(this,
-          RequestDispatchObjectStoreChannelHandler.class.getSimpleName(), h);
-      h.channelRead0(ctx, req);
-    } else if (!isObjectStoreRequestHeaders(req)){
+    } else {
       SimpleHttpProxyHandler h = new SimpleHttpProxyHandler(proxyHost);
       p.replace(this, SimpleHttpProxyHandler.class.getSimpleName(), h);
       h.channelRead0(ctx, req);
@@ -94,21 +82,6 @@ class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
     return false;
   }
 
-
-  /*
-   * Returns true if the request is to be handled by the object store.
-   *
-   * @param req HTTP request
-   * @return true if the request is to be handled by the object store
-   */
-  private boolean isObjectStoreRequest(HttpRequest req) {
-    if (this.objectStoreJerseyContainer == null) {
-      LOG.debug("ozone : ozone is disabled or when security is enabled, ozone" +
-          " is not supported");
-      return false;
-    }
-    return isObjectStoreRequestHeaders(req);
-  }
 
   /**
    * Returns true if the request is to be handled by WebHDFS.

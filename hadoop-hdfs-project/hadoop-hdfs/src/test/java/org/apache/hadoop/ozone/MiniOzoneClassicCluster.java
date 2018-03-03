@@ -229,7 +229,7 @@ public final class MiniOzoneClassicCluster extends MiniDFSCluster
     // An Ozone request may originate at any DataNode, so pick one at random.
     int dnIndex = new Random().nextInt(getDataNodes().size());
     String uri = String.format("http://127.0.0.1:%d",
-        getDataNodes().get(dnIndex).getInfoPort());
+        getDataNodes().get(dnIndex).getDatanodeId().getOzoneRestPort());
     LOG.info("Creating Ozone client to DataNode {} with URI {} and user {}",
         dnIndex, uri, USER_AUTH);
     try {

@@ -18,17 +18,10 @@
 package org.apache.hadoop.hdfs.server.datanode;
 
 import static org.apache.hadoop.ozone.OzoneConfigKeys.*;
-import static com.sun.jersey.api.core.ResourceConfig.PROPERTY_CONTAINER_REQUEST_FILTERS;
-import static com.sun.jersey.api.core.ResourceConfig.FEATURE_TRACE;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.sun.jersey.api.container.ContainerFactory;
-import com.sun.jersey.api.core.ApplicationAdapter;
 
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.ozone.ksm.protocolPB
@@ -51,10 +44,7 @@ import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.scm.protocolPB
     .StorageContainerLocationProtocolClientSideTranslatorPB;
 import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
-import org.apache.hadoop.ozone.web.handlers.ServiceFilter;
 import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.ObjectStoreApplication;
-import org.apache.hadoop.ozone.web.netty.ObjectStoreJerseyContainer;
 import org.apache.hadoop.ozone.web.storage.DistributedStorageHandler;
 import org.apache.hadoop.ozone.web.localstorage.LocalStorageHandler;
 import org.apache.hadoop.security.UserGroupInformation;
@@ -67,9 +57,8 @@ import org.apache.hadoop.security.UserGroupInformation;
 public final class ObjectStoreHandler implements Closeable {
 
   private static final Logger LOG =
-      LoggerFactory.getLogger(ObjectStoreJerseyContainer.class);
+      LoggerFactory.getLogger(ObjectStoreHandler.class);
 
-  private final ObjectStoreJerseyContainer objectStoreJerseyContainer;
   private final KeySpaceManagerProtocolClientSideTranslatorPB
       keySpaceManagerClient;
   private final StorageContainerLocationProtocolClientSideTranslatorPB
@@ -148,25 +137,7 @@ public final class ObjectStoreHandler implements Closeable {
                 OzoneConsts.OZONE_HANDLER_LOCAL));
       }
     }
-    ApplicationAdapter aa =
-        new ApplicationAdapter(new ObjectStoreApplication());
-    Map<String, Object> settingsMap = new HashMap<>();
-    settingsMap.put(PROPERTY_CONTAINER_REQUEST_FILTERS,
-        ServiceFilter.class.getCanonicalName());
-    settingsMap.put(FEATURE_TRACE, ozoneTrace);
-    aa.setPropertiesAndFeatures(settingsMap);
-    this.objectStoreJerseyContainer = ContainerFactory.createContainer(
-        ObjectStoreJerseyContainer.class, aa);
-    this.objectStoreJerseyContainer.setStorageHandler(storageHandler);
-  }
 
-  /**
-   * Returns the initialized web application container.
-   *
-   * @return initialized web application container
-   */
-  public ObjectStoreJerseyContainer getObjectStoreJerseyContainer() {
-    return this.objectStoreJerseyContainer;
   }
 
   /**
