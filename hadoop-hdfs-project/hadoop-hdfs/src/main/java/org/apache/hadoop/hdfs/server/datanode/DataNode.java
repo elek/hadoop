@@ -79,6 +79,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -973,6 +974,7 @@ public class DataNode extends ReconfigurableBase
   }
 
   private void startPlugins(Configuration conf) {
+    plugins = new ArrayList<>();
     try {
       plugins = conf.getInstances(DFS_DATANODE_PLUGINS_KEY,
           ServicePlugin.class);
@@ -983,6 +985,13 @@ public class DataNode extends ReconfigurableBase
           pluginsValue, e);
       throw e;
     }
+
+    //adding additional plugin s from SPI definitions
+    for (DataNodeServicePlugin plugin :
+        ServiceLoader.load(DataNodeServicePlugin.class)) {
+      plugins.add(plugin);
+    }
+
     for (ServicePlugin p: plugins) {
       try {
         p.start(this);
@@ -1578,6 +1587,11 @@ public class DataNode extends ReconfigurableBase
         streamingAddr.getAddress().getHostAddress(), hostName, 
         storage.getDatanodeUuid(), getXferPort(), getInfoPort(),
             infoSecurePort, getIpcPort());
+    for (ServicePlugin plugin : plugins) {
+      if (plugin instanceof DataNodeServicePlugin) {
+        ((DataNodeServicePlugin) plugin).onDatanodeIdCreation(dnId);
+      }
+    }
     return new DatanodeRegistration(dnId, storageInfo, 
         new ExportedBlockKeys(), VersionInfo.getVersion());
   }
