@@ -71,13 +71,17 @@ public interface RatisTestHelper {
 
     public OzoneRestClient newOzoneRestClient()
         throws OzoneException, URISyntaxException {
-      return RatisTestHelper.newOzoneRestClient(getDatanodeInfoPort());
+      return RatisTestHelper.newOzoneRestClient(getDatanodeOzoneRestPort());
     }
 
     @Override
     public void close() {
       cluster.close();
     }
+
+    public int getDatanodeOzoneRestPort() {
+      return cluster.getDataNodes().get(0).getDatanodeId().getOzoneRestPort();
+     }
   }
 
   static OzoneConfiguration newOzoneConfiguration(
