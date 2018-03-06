@@ -578,6 +578,17 @@
         <artifactId>hadoop-hdls-client</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdls-tools</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-cblock-server</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
 
 
 
