@@ -36,6 +36,9 @@ import org.apache.hadoop.ozone.ksm.protocolPB
 import org.apache.hadoop.ozone.ksm.protocolPB.KeySpaceManagerProtocolPB;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
 import org.apache.hadoop.ozone.OzoneConsts;
+import org.apache.hadoop.ozone.web.ObjectStoreApplication;
+import org.apache.hadoop.ozone.web.handlers.ServiceFilter;
+import org.apache.hadoop.ozone.web.netty.ObjectStoreJerseyContainer;
 import org.apache.hadoop.scm.protocolPB
     .ScmBlockLocationProtocolClientSideTranslatorPB;
 import org.apache.hadoop.scm.protocolPB.ScmBlockLocationProtocolPB;
@@ -51,10 +54,7 @@ import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.scm.protocolPB
     .StorageContainerLocationProtocolClientSideTranslatorPB;
 import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
-import org.apache.hadoop.ozone.web.handlers.ServiceFilter;
 import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.ObjectStoreApplication;
-import org.apache.hadoop.ozone.web.netty.ObjectStoreJerseyContainer;
 import org.apache.hadoop.ozone.web.storage.DistributedStorageHandler;
 import org.apache.hadoop.ozone.web.localstorage.LocalStorageHandler;
 import org.apache.hadoop.security.UserGroupInformation;
@@ -67,7 +67,7 @@ import org.apache.hadoop.security.UserGroupInformation;
 public final class ObjectStoreHandler implements Closeable {
 
   private static final Logger LOG =
-      LoggerFactory.getLogger(ObjectStoreJerseyContainer.class);
+      LoggerFactory.getLogger(ObjectStoreHandler.class);
 
   private final ObjectStoreJerseyContainer objectStoreJerseyContainer;
   private final KeySpaceManagerProtocolClientSideTranslatorPB
