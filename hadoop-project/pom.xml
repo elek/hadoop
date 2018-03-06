@@ -573,6 +573,13 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdls-client</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
@@ -589,6 +596,13 @@
       <dependency>
         <groupId>org.apache.hadoop</groupId>
         <artifactId>hadoop-hdls-datanode-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdls-server-scm</artifactId>
+        <type>test-jar</type>
         <version>${project.version}</version>
       </dependency>
 

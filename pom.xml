@@ -131,6 +131,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <module>hadoop-cloud-storage-project</module>
     <module>hadoop-hdls</module>
     <module>hadoop-ozone</module>
+    <module>hadoop-cblock</module>
   </modules>
 
   <build>

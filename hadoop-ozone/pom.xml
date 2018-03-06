@@ -19,7 +19,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache.hadoop</groupId>
-    <artifactId>hadoop-project</artifactId>
+    <artifactId>hadoop-project-dist</artifactId>
     <version>3.2.0-SNAPSHOT</version>
     <relativePath>../hadoop-project-dist</relativePath>
   </parent>
@@ -34,7 +34,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <module>client</module>
     <module>ozone-manager</module>
   </modules>
-
 
   <dependencies>
     <dependency>
