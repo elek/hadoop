@@ -90,7 +90,7 @@ public class TestVolume {
     cluster = new MiniOzoneClassicCluster.Builder(conf)
         .setHandlerType(OzoneConsts.OZONE_HANDLER_DISTRIBUTED).build();
     DataNode dataNode = cluster.getDataNodes().get(0);
-    final int port = dataNode.getInfoPort();
+    final int port = dataNode.getDatanodeId().getOzoneRestPort();
 
     ozoneRestClient = new OzoneRestClient(
         String.format("http://localhost:%d", port));
