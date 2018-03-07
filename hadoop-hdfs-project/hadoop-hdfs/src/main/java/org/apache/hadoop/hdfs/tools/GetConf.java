@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collection;
 import java.util.Set;
 
 import org.apache.hadoop.HadoopIllegalArgumentException;
@@ -36,6 +37,7 @@ import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
 import org.apache.hadoop.hdfs.DFSUtil.ConfiguredNNAddress;
 //import org.apache.hadoop.ozone.client.OzoneClientUtils;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Tool;
@@ -396,7 +398,7 @@ public class GetConf extends Configured implements Tool {
 
     Configuration conf = new Configuration();
     conf.addResource(new HdfsConfiguration());
-   // conf.addResource(new OzoneConfiguration());
+    conf.addResource(new OzoneConfiguration());
     int res = ToolRunner.run(new GetConf(conf), args);
     System.exit(res);
   }

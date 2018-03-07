@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.ozone.web;
 
-import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 

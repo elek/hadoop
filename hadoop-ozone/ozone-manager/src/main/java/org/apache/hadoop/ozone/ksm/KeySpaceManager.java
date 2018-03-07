@@ -43,7 +43,8 @@ import org.apache.hadoop.ozone.ksm.exceptions.KSMException.ResultCodes;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.NetUtils;
-import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
+import org.apache.hadoop.ozone.client.OzoneClientUtils;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos
     .ServicePort;
 import org.apache.hadoop.ozone.protocol.proto

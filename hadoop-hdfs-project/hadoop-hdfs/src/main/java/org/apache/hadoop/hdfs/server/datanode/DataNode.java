@@ -195,6 +195,7 @@ import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.DNS;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.net.unix.DomainSocket;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.SaslPropertiesResolver;
 import org.apache.hadoop.security.SecurityUtil;
@@ -528,8 +529,7 @@ public class DataNode extends ReconfigurableBase
 
   @Override  // ReconfigurableBase
   protected Configuration getNewConf() {
-    // return new OzoneConfiguration();
-    return new Configuration();
+    return new OzoneConfiguration();
   }
 
   /**
@@ -2698,8 +2698,7 @@ public class DataNode extends ReconfigurableBase
   public static DataNode instantiateDataNode(String args [], Configuration conf,
       SecureResources resources) throws IOException {
     if (conf == null) {
-      // conf = new OzoneConfiguration();
-      conf = new Configuration();
+      conf = new OzoneConfiguration();
     }
     
     if (args != null) {

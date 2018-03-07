@@ -19,7 +19,7 @@
 package org.apache.hadoop.ozone.client;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.ksm.KSMConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
 
@@ -32,6 +32,9 @@ import org.junit.Rule;
 import org.junit.rules.Timeout;
 
 import java.net.InetSocketAddress;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

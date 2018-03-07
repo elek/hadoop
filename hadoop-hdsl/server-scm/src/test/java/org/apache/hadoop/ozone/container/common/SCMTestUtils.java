@@ -26,7 +26,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
+import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
