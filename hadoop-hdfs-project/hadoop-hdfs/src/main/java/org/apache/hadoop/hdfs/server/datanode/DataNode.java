@@ -113,7 +113,7 @@ import org.apache.hadoop.hdfs.HDFSPolicyProvider;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
 //import org.apache.hadoop.ozone.container.common.statemachine.DatanodeStateMachine;
 
-import org.apache.hadoop.hdfs.server.DataNodeService;
+
 import org.apache.hadoop.hdfs.server.datanode.checker.DatasetVolumeChecker;
 import org.apache.hadoop.hdfs.server.datanode.checker.StorageLocationChecker;
 //import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
