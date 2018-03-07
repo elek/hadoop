@@ -48,6 +48,7 @@ import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_METRICS_LOGGER_P
 import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_METRICS_LOGGER_PERIOD_SECONDS_KEY;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
+import org.apache.hadoop.classification.InterfaceAudience.Private;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.protocol.proto.ReconfigurationProtocolProtos.ReconfigurationProtocolService;
 
@@ -982,7 +983,7 @@ public class DataNode extends ReconfigurableBase
       throw e;
     }
 
-    //adding additional plugin s from SPI definitions
+    //adding additional plugins from SPI definitions
     for (DataNodeServicePlugin plugin :
         ServiceLoader.load(DataNodeServicePlugin.class)) {
       plugins.add(plugin);
@@ -1603,14 +1604,12 @@ public class DataNode extends ReconfigurableBase
           + ". Expecting " + storage.getDatanodeUuid());
     }
 
-//    if (isOzoneEnabled()) {
-//      if (datanodeStateMachine == null) {
-//        datanodeStateMachine = new DatanodeStateMachine(
-//            getDatanodeId(),
-//            getConf());
-//        datanodeStateMachine.startDaemon();
-//      }
-//    }
+    for (ServicePlugin plugin : plugins) {
+      if (plugin instanceof DataNodeServicePlugin) {
+        ((DataNodeServicePlugin) plugin)
+            .onDatanodeSuccessfulNamenodeRegisration(bpRegistration);
+      }
+    }
     registerBlockPoolWithSecretManager(bpRegistration, blockPoolId);
   }
 
@@ -3647,5 +3646,15 @@ public class DataNode extends ReconfigurableBase
       volumeInfoList.add(dnStorageInfo);
     }
     return volumeInfoList;
+  }
+
+  @Private
+  public SecureResources getSecureResources() {
+    return secureResources;
+  }
+
+  @Private
+  public Collection<ServicePlugin> getPlugins() {
+    return Collections.unmodifiableList(plugins);
   }
 }

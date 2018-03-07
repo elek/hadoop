@@ -59,6 +59,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import static org.apache.hadoop.ozone.MiniOzoneTestHelper.*;
 import static org.apache.hadoop.ozone.OzoneConfigKeys
     .DFS_CONTAINER_IPC_PORT;
 import static org.apache.hadoop.ozone.OzoneConfigKeys
@@ -162,8 +163,8 @@ public final class MiniOzoneClassicCluster extends MiniDFSCluster
     LOG.info("restarting datanode:{} keepPort:{}", i, keepPort);
     if (keepPort) {
       DataNodeProperties dnProp = dataNodes.get(i);
-      OzoneContainer container =
-          dnProp.getDatanode().getOzoneContainerManager();
+      OzoneContainer container = getOzoneContainer(dnProp
+          .getDatanode());
       Configuration config = dnProp.getConf();
       int currentPort = container.getContainerServerPort();
       config.setInt(DFS_CONTAINER_IPC_PORT, currentPort);
@@ -287,7 +288,8 @@ public final class MiniOzoneClassicCluster extends MiniDFSCluster
       throws TimeoutException, InterruptedException {
     GenericTestUtils.waitFor(() -> {
       DatanodeStateMachine.DatanodeStates state =
-          dataNodes.get(dnIndex).getDatanode().getOzoneStateMachineState();
+          MiniOzoneTestHelper.getStateMachine(dataNodes.get(dnIndex)
+              .getDatanode()).getContext().getState();
       final boolean rebootComplete =
           (state == DatanodeStateMachine.DatanodeStates.RUNNING);
       LOG.info("{} Current state:{}", rebootComplete, state);
@@ -472,6 +474,7 @@ public final class MiniOzoneClassicCluster extends MiniDFSCluster
       conf.set(ScmConfigKeys.OZONE_SCM_HTTP_ADDRESS_KEY, "127.0.0.1:0");
       conf.set(KSMConfigKeys.OZONE_KSM_ADDRESS_KEY, "127.0.0.1:0");
       conf.set(KSMConfigKeys.OZONE_KSM_HTTP_ADDRESS_KEY, "127.0.0.1:0");
+      conf.set(ScmConfigKeys.HDSL_REST_HTTP_ADDRESS_KEY, "127.0.0.1:0");
 
       // Configure KSM and SCM handlers
       conf.setInt(ScmConfigKeys.OZONE_SCM_HANDLER_COUNT_KEY, numOfScmHandlers);

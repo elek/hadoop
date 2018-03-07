@@ -24,8 +24,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   </parent>
   <artifactId>hadoop-hdsl-client</artifactId>
   <version>3.2.0-SNAPSHOT</version>
-  <description>Apache Hadoop hdsl Client libraries</description>
-  <name>Apache Hadoop hdsl Client</name>
+  <description>Apache Hadoop HDSL Client libraries</description>
+  <name>Apache Hadoop HDSL Client</name>
   <packaging>jar</packaging>
 
   <properties>

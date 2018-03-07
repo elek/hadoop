@@ -19,8 +19,11 @@ package org.apache.hadoop.ozone;
 
 import java.io.IOException;
 
+import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.DataNodeServicePlugin;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;
 import org.apache.hadoop.ozone.container.common.statemachine
     .DatanodeStateMachine;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
@@ -28,19 +31,24 @@ import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 public class HdslServerPlugin implements DataNodeServicePlugin {
 
   private DatanodeStateMachine datanodeStateMachine;
+  private DataNode dataNode;
 
   @Override
   public void start(Object service) {
-    DataNode dataNode = (DataNode) service;
+    dataNode = (DataNode) service;
+  }
 
+  @Override
+  public void onDatanodeSuccessfulNamenodeRegisration(
+      DatanodeRegistration dataNodeId) {
     if (OzoneUtils.isOzoneEnabled(dataNode.getConf())) {
       try {
         datanodeStateMachine =
-            new DatanodeStateMachine(dataNode.getDatanodeId(),
+            new DatanodeStateMachine(dataNodeId,
                 dataNode.getConf());
         datanodeStateMachine.startDaemon();
       } catch (IOException e) {
-        throw new RuntimeException("Can't start the hdsl server plugin", e);
+        throw new RuntimeException("Can't start the HDSL server plugin", e);
       }
 
     }
@@ -55,7 +63,10 @@ public class HdslServerPlugin implements DataNodeServicePlugin {
 
   @Override
   public void close() throws IOException {
-
   }
 
+  @InterfaceAudience.Private
+  public DatanodeStateMachine getDatanodeStateMachine() {
+    return datanodeStateMachine;
+  }
 }

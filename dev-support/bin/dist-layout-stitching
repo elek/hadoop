@@ -132,8 +132,13 @@ run copy "${ROOT}/hadoop-hdfs-project/hadoop-hdfs-native-client/target/hadoop-hd
 run copy "${ROOT}/hadoop-hdsl/server-scm/target/hadoop-hdsl-server-scm-${VERSION}" .
 run copy "${ROOT}/hadoop-hdsl/common/target/hadoop-hdsl-common-${VERSION}" .
 run copy "${ROOT}/hadoop-hdsl/server-common/target/hadoop-hdsl-server-common-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/tools/target/hadoop-hdsl-tools-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/server-container/target/hadoop-hdsl-datanode-service-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/ozone-manager/target/hadoop-ozone-ozone-manager-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/common/target/hadoop-ozone-common-${VERSION}" .
+run copy "${ROOT}/hadoop-ozone/tools/target/hadoop-ozone-tools-${VERSION}" .
+run copy "${ROOT}/hadoop-cblock/server/target/hadoop-cblock-server-${VERSION}" .
+run copy "${ROOT}/hadoop-cblock/tools/target/hadoop-cblock-tools-${VERSION}" .
 
 
 run copy "${ROOT}/hadoop-yarn-project/target/hadoop-yarn-project-${VERSION}" .

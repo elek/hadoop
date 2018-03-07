@@ -89,6 +89,18 @@
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdsl-datanode-service</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdsl-tools</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-ozone-tools</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-cblock-tools</artifactId>
+    </dependency>
 
   </dependencies>
 

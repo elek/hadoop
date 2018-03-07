@@ -33,7 +33,8 @@ import io.kubernetes.client.models.V1PersistentVolumeSpec;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.Watch;
 import okio.Buffer;
-import org.apache.hadoop.cblock.cli.CBlockCli;
+
+import org.apache.hadoop.cblock.CblockUtils;
 import org.apache.hadoop.cblock.exception.CBlockException;
 import org.apache.hadoop.cblock.proto.MountVolumeResponse;
 import org.apache.hadoop.cblock.storage.StorageManager;
@@ -185,7 +186,7 @@ public class DynamicProvisioner implements Runnable{
 
             String volumeName = createVolumeName(claim);
 
-            long size = CBlockCli.parseSize(
+            long size = CblockUtils.parseSize(
                 claim.getSpec().getResources().getRequests().get("storage"));
 
             createCBlock(volumeName, size);

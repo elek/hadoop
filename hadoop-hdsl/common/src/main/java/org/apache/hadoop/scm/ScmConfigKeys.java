@@ -122,23 +122,15 @@ public final class ScmConfigKeys {
   public static final int OZONE_SCM_HTTPS_BIND_PORT_DEFAULT = 9877;
 
 
-  public static final String OZONE_hdsl_HTTP_ENABLED_KEY =
-      "ozone.hdsl.http.enabled";
-  public static final String OZONE_hdsl_HTTP_BIND_HOST_KEY =
-      "ozone.hdsl.http-bind-host";
-  public static final String OZONE_hdsl_HTTPS_BIND_HOST_KEY =
-      "ozone.hdsl.https-bind-host";
-  public static final String OZONE_hdsl_HTTP_ADDRESS_KEY =
-      "ozone.hdsl.http-address";
-  public static final String OZONE_hdsl_HTTPS_ADDRESS_KEY =
-      "ozone.hdsl.https-address";
-  public static final String OZONE_hdsl_KEYTAB_FILE =
-      "ozone.hdsl.keytab.file";
-  public static final String OZONE_hdsl_HTTP_BIND_HOST_DEFAULT = "0.0.0.0";
-  public static final int OZONE_hdsl_HTTP_BIND_PORT_DEFAULT = 9880;
-  public static final int OZONE_hdsl_HTTPS_BIND_PORT_DEFAULT = 9881;
+  public static final String HDSL_REST_HTTP_ADDRESS_KEY = "hdsl.rest.http-address";
+  public static final String HDSL_REST_HTTP_ADDRESS_DEFAULT = "0.0.0.0:9880";
+  public static final String HDSL_REST_CSRF_ENABLED_KEY = "hdsl.rest.rest-csrf.enabled";
+  public static final boolean HDSL_REST_CSRF_ENABLED_DEFAULT = false;
+  public static final String HDSL_REST_NETTY_HIGH_WATERMARK = "hdfs.rest.netty.high.watermark";
+  public static final int HDSL_REST_NETTY_HIGH_WATERMARK_DEFAULT = 65536;
+  public static final int HDSL_REST_NETTY_LOW_WATERMARK_DEFAULT = 32768;
+  public static final String HDSL_REST_NETTY_LOW_WATERMARK = "hdfs.rest.netty.low.watermark";
 
-  
   public static final String OZONE_SCM_HANDLER_COUNT_KEY =
       "ozone.scm.handler.count.key";
   public static final int OZONE_SCM_HANDLER_COUNT_DEFAULT = 10;
@@ -267,7 +259,6 @@ public final class ScmConfigKeys {
   public static final String OZONE_SCM_CONTAINER_CLOSE_THRESHOLD =
       "ozone.scm.container.close.threshold";
   public static final float OZONE_SCM_CONTAINER_CLOSE_THRESHOLD_DEFAULT = 0.9f;
-
   /**
    * Never constructed.
    */

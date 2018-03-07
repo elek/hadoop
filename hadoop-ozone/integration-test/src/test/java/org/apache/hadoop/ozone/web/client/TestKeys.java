@@ -29,6 +29,7 @@ import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
+import org.apache.hadoop.ozone.MiniOzoneTestHelper;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
@@ -42,7 +43,8 @@ import org.apache.hadoop.ozone.ksm.helpers.KsmKeyInfo;
 import org.apache.hadoop.ozone.ksm.helpers.KsmVolumeArgs;
 import org.apache.hadoop.ozone.ksm.helpers.KsmBucketInfo;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyLocationInfo;
-import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos.Status;
+import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos
+    .Status;
 import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 import org.apache.hadoop.test.GenericTestUtils;
@@ -92,6 +94,7 @@ public class TestKeys {
 
   /**
    * Create a MiniDFSCluster for testing.
+   *
    * @throws IOException
    */
   @BeforeClass
@@ -156,7 +159,7 @@ public class TestKeys {
    * @return Key composed of multiple parts delimited by "/"
    */
   static String getMultiPartKey(String delimiter) {
-    int numParts = RandomUtils.nextInt(5)  + 1;
+    int numParts = RandomUtils.nextInt(5) + 1;
     String[] nameParts = new String[numParts];
     for (int i = 0; i < numParts; i++) {
       int stringLength = numParts == 1 ? 5 : RandomUtils.nextInt(5);
@@ -195,6 +198,7 @@ public class TestKeys {
     public File getFile() {
       return file;
     }
+
     /**
      * This function is reused in all other tests.
      *
@@ -251,12 +255,12 @@ public class TestKeys {
     Assert.assertEquals(2, keyList.size());
 
     // test new put key with invalid volume/bucket name
-    try{
+    try {
       client.putKey("invalid-volume",
           helper.getBucket().getBucketName(), newkeyName, helper.getFile());
       fail("Put key should have thrown"
           + " when using invalid volume name.");
-    } catch(OzoneException e) {
+    } catch (OzoneException e) {
       GenericTestUtils.assertExceptionContains(
           Status.VOLUME_NOT_FOUND.toString(), e);
     }
@@ -278,7 +282,7 @@ public class TestKeys {
     cluster.restartDataNode(datanodeIdx);
     // refresh the datanode endpoint uri after datanode restart
     DataNode dataNode = cluster.getDataNodes().get(datanodeIdx);
-    final int port = dataNode.getInfoPort();
+    final int port = dataNode.getDatanodeId().getOzoneRestPort();
     client.setEndPoint(String.format("http://localhost:%d", port));
   }
 
@@ -605,8 +609,8 @@ public class TestKeys {
     Assert.assertEquals(20, bucketKeys.totalNumOfKeys());
 
     int numOfCreatedKeys = 0;
-    OzoneContainer cm = ozoneCluster.getDataNodes().get(0)
-        .getOzoneContainerManager();
+    OzoneContainer cm = MiniOzoneTestHelper.getOzoneContainer
+        (ozoneCluster.getDataNodes().get(0));
 
     // Expected to delete chunk file list.
     List<File> expectedChunkFiles = Lists.newArrayList();

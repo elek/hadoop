@@ -24,6 +24,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+
+import org.apache.hadoop.cblock.CblockUtils;
 import org.apache.hadoop.cblock.client.CBlockVolumeClient;
 import org.apache.hadoop.cblock.meta.VolumeInfo;
 import org.apache.hadoop.cblock.protocolPB.CBlockServiceProtocolPB;
@@ -33,6 +35,7 @@ import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +44,6 @@ import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The command line tool class.
@@ -208,38 +209,12 @@ public class CBlockCli extends Configured implements Tool {
     System.exit(res);
   }
 
-  public static long parseSize(String volumeSizeArgs) throws IOException {
-    long multiplier = 1;
 
-    Pattern p = Pattern.compile("([0-9]+)([a-zA-Z]+)");
-    Matcher m = p.matcher(volumeSizeArgs);
-
-    if (!m.find()) {
-      throw new IOException("Invalid volume size args " + volumeSizeArgs);
-    }
-
-    int size = Integer.parseInt(m.group(1));
-    String s = m.group(2);
-
-    if (s.equalsIgnoreCase("MB") ||
-        s.equalsIgnoreCase("Mi")) {
-      multiplier = 1024L * 1024;
-    } else if (s.equalsIgnoreCase("GB") ||
-        s.equalsIgnoreCase("Gi")) {
-      multiplier = 1024L * 1024 * 1024;
-    } else if (s.equalsIgnoreCase("TB") ||
-        s.equalsIgnoreCase("Ti")) {
-      multiplier = 1024L * 1024 * 1024 * 1024;
-    } else {
-      throw new IOException("Invalid volume size args " + volumeSizeArgs);
-    }
-    return size * multiplier;
-  }
 
   private void createVolume(String[] createArgs) throws IOException {
     String userName = createArgs[0];
     String volumeName = createArgs[1];
-    long volumeSize = parseSize(createArgs[2]);
+    long volumeSize = CblockUtils.parseSize(createArgs[2]);
     int blockSize = Integer.parseInt(createArgs[3])*1024;
     localProxy.createVolume(userName, volumeName, volumeSize, blockSize);
   }

@@ -23,6 +23,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.HttpRequest;
+
+import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.classification.InterfaceStability.Evolving;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler;
 
@@ -32,7 +35,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
+@InterfaceAudience.Private
+public class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
   protected static final Logger LOG =
       LoggerFactory.getLogger(URLDispatcher.class);
   private final InetSocketAddress proxyHost;
@@ -61,7 +65,6 @@ class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
       h.channelRead0(ctx, req);
     }
   }
-
 
   /**
    * Returns true if the request is to be handled by WebHDFS.

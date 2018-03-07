@@ -18,13 +18,14 @@
 package org.apache.hadoop.ozone.web;
 
 import java.io.IOException;
+import java.nio.channels.ServerSocketChannel;
 
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.DataNodeServicePlugin;
 import org.apache.hadoop.hdfs.server.datanode.ObjectStoreHandler;
+import org.apache.hadoop.ozone.web.netty.ObjectStoreRestHttpServer;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
-import org.apache.hadoop.util.ServicePlugin;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -38,32 +39,34 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
   private static final Logger LOG =
       LoggerFactory.getLogger(ObjectStoreRestPlugin.class);
 
-  private ObjectStoreRestServer objectStoreRestServer;
-
   private ObjectStoreHandler handler;
 
   private volatile int restServicePort = -1;
+
+  private ObjectStoreRestHttpServer objectStoreRestHttpServer;
 
   @Override
   public void start(Object service) {
     DataNode dataNode = (DataNode) service;
     if (OzoneUtils.isOzoneEnabled(dataNode.getConf())) {
-
       try {
         handler = new ObjectStoreHandler(dataNode.getConf());
+        ServerSocketChannel httpServerChannel =
+            dataNode.getSecureResources() != null ?
+                dataNode.getSecureResources().getHttpServerChannel() :
+                null;
 
-        objectStoreRestServer = new ObjectStoreRestServer(dataNode.getConf(),
-            handler.getStorageHandler());
+        objectStoreRestHttpServer =
+            new ObjectStoreRestHttpServer(dataNode.getConf(), httpServerChannel, handler);
 
-        objectStoreRestServer.start();
-
+        objectStoreRestHttpServer.start();
       } catch (IOException e) {
         throw new RuntimeException("Can't start the Object Store Rest server",
             e);
       }
       synchronized (this) {
         try {
-          restServicePort = objectStoreRestServer.getActualPort();
+          restServicePort = objectStoreRestHttpServer.getHttpAddress().getPort();
         } finally {
           //in case fo waiting for the port information: we can continue.
           this.notify();
@@ -75,9 +78,7 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
   @Override
   public void stop() {
     try {
-      if (objectStoreRestServer != null) {
-        objectStoreRestServer.stop();
-      }
+      handler.close();
     } catch (Exception e) {
       throw new RuntimeException("Can't stop the Object Store Rest server", e);
     }
@@ -85,7 +86,7 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
 
   @Override
   public void close() throws IOException {
-    IOUtils.closeQuietly(objectStoreRestServer);
+    IOUtils.closeQuietly(objectStoreRestHttpServer);
     IOUtils.closeQuietly(handler);
   }
 

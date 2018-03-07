@@ -24,8 +24,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   </parent>
   <artifactId>hadoop-hdsl-common</artifactId>
   <version>3.2.0-SNAPSHOT</version>
-  <description>Apache Hadoop hdsl Common utilities</description>
-  <name>Apache Hadoop hdsl Common</name>
+  <description>Apache Hadoop HDSL Common utilities</description>
+  <name>Apache Hadoop HDSL Common</name>
   <packaging>jar</packaging>
 
   <properties>

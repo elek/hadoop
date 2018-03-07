@@ -1,6 +1,9 @@
 package org.apache.hadoop.cblock;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.net.NetUtils;
@@ -59,4 +62,35 @@ public class CblockUtils {
             .or(DFS_CBLOCK_JSCSI_PORT_DEFAULT));
   }
 
+  /**
+   * Parse size with size prefix string and return in bytes.
+   *
+   */
+  public static long parseSize(String volumeSizeArgs) throws IOException {
+    long multiplier = 1;
+
+    Pattern p = Pattern.compile("([0-9]+)([a-zA-Z]+)");
+    Matcher m = p.matcher(volumeSizeArgs);
+
+    if (!m.find()) {
+      throw new IOException("Invalid volume size args " + volumeSizeArgs);
+    }
+
+    int size = Integer.parseInt(m.group(1));
+    String s = m.group(2);
+
+    if (s.equalsIgnoreCase("MB") ||
+        s.equalsIgnoreCase("Mi")) {
+      multiplier = 1024L * 1024;
+    } else if (s.equalsIgnoreCase("GB") ||
+        s.equalsIgnoreCase("Gi")) {
+      multiplier = 1024L * 1024 * 1024;
+    } else if (s.equalsIgnoreCase("TB") ||
+        s.equalsIgnoreCase("Ti")) {
+      multiplier = 1024L * 1024 * 1024 * 1024;
+    } else {
+      throw new IOException("Invalid volume size args " + volumeSizeArgs);
+    }
+    return size * multiplier;
+  }
 }

@@ -1,4 +1,3 @@
-
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with this
@@ -27,7 +26,6 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.http.HttpConfig;
 import org.apache.hadoop.http.HttpServer2;
-import org.apache.hadoop.http.HttpServer2.Builder;
 import org.apache.hadoop.net.NetUtils;
 
 import com.google.common.base.Optional;
@@ -56,11 +54,6 @@ public abstract class OzoneHttpServer {
   private String name;
 
   public OzoneHttpServer(Configuration conf, String name) throws IOException {
-    this(conf, name, builder -> { });
-  }
-
-  public OzoneHttpServer(Configuration conf, String name,
-      BuilderCustomization customization) throws IOException {
     this.name = name;
     this.conf = conf;
     if (isEnabled()) {
@@ -85,7 +78,6 @@ public abstract class OzoneHttpServer {
 
       builder.configureXFrame(xFrameEnabled).setXFrameOption(xFrameOptionValue);
 
-      customization.customize(builder);
       httpServer = builder.build();
 
     }
@@ -195,29 +187,6 @@ public abstract class OzoneHttpServer {
     }
   }
 
-  /**
-   * Get the actual port of the http server.
-   *
-   * Expected to be called after start/updateConectorAddres.
-   *
-   * @return The actual port as int.
-   */
-  public int getActualPort() {
-    if (policy.isHttpsEnabled()) {
-      String hostPort = conf.get(getHttpsAddressKey());
-      return Integer.parseInt(hostPort.split(":")[1]);
-    } else if (policy.isHttpEnabled()) {
-      String hostPort = conf.get(getHttpAddressKey());
-      return Integer.parseInt(hostPort.split(":")[1]);
-    } else {
-      return -1;
-    }
-  }
-
-  protected HttpServer2 getHttpServer() {
-    return httpServer;
-  }
-
   public InetSocketAddress getHttpAddress() {
     return httpAddress;
   }
@@ -246,8 +215,4 @@ public abstract class OzoneHttpServer {
 
   protected abstract String getEnabledKey();
 
-  @FunctionalInterface
-  public static interface BuilderCustomization {
-    void customize(Builder builder);
-  }
 }

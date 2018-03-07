@@ -24,8 +24,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   </parent>
   <artifactId>hadoop-hdsl-tools</artifactId>
   <version>3.2.0-SNAPSHOT</version>
-  <description>Apache Hadoop hdsl Tools</description>
-  <name>Apache Hadoop hdsl tools</name>
+  <description>Apache Hadoop Hdsl Tools</description>
+  <name>Apache Hadoop HDSL tools</name>
   <packaging>jar</packaging>
 
   <properties>

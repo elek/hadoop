@@ -17,7 +17,6 @@
  */
 package org.apache.hadoop.ozone;
 
-import org.apache.hadoop.cblock.CBlockConfigKeys;
 import org.apache.hadoop.conf.TestConfigurationFieldsBase;
 import org.apache.hadoop.ozone.ksm.KSMConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
@@ -32,7 +31,7 @@ public class TestOzoneConfigurationFields extends TestConfigurationFieldsBase {
     xmlFilename = new String("ozone-default.xml");
     configurationClasses =
         new Class[] {OzoneConfigKeys.class, ScmConfigKeys.class,
-            KSMConfigKeys.class, CBlockConfigKeys.class};
+            KSMConfigKeys.class};
     errorIfMissingConfigProps = true;
     errorIfMissingXmlProps = true;
   }
