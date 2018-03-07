@@ -19,6 +19,7 @@ package org.apache.hadoop.ozone.container.common.statemachine.commandhandler;
 
 import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
+import org.apache.hadoop.ozone.MiniOzoneTestHelper;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.client.ObjectStore;
 import org.apache.hadoop.ozone.client.OzoneClient;
@@ -101,8 +102,8 @@ public class TestCloseContainerHandler {
       String containerName) {
     ContainerData containerData;
     try {
-      containerData = cluster.getDataNodes().get(0).getOzoneContainerManager()
-          .getContainerManager().readContainer(containerName);
+      containerData = MiniOzoneTestHelper.getOzoneContainerManager(cluster
+          .getDataNodes().get(0)).readContainer(containerName);
       return !containerData.isOpen();
     } catch (StorageContainerException e) {
       throw new AssertionError(e);

@@ -921,7 +921,7 @@ public class TestNodeManager {
       DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
       nodeManager.sendHeartbeat(datanodeID, null, reportState);
       String status = nodeManager.getChillModeStatus();
-      Assert.assertThat(status, CoreMatchers.containsString("Still in chill " +
+      Assert.assertThat(status, containsString("Still in chill " +
           "mode, waiting on nodes to report in."));
 
       // Should not exit chill mode since 10 nodes have not heartbeat yet.
@@ -932,7 +932,7 @@ public class TestNodeManager {
       assertTrue(nodeManager.isOutOfChillMode());
       status = nodeManager.getChillModeStatus();
       Assert.assertThat(status,
-          CoreMatchers.containsString("Out of chill mode."));
+          containsString("Out of chill mode."));
 
 
       // Enter back to into chill mode.
@@ -940,7 +940,7 @@ public class TestNodeManager {
       assertFalse(nodeManager.isOutOfChillMode());
       status = nodeManager.getChillModeStatus();
       Assert.assertThat(status,
-          CoreMatchers.containsString("Out of startup chill mode," +
+          containsString("Out of startup chill mode," +
               " but in manual chill mode."));
 
       // Assert that node manager force enter cannot be overridden by nodes HBs.
@@ -958,7 +958,7 @@ public class TestNodeManager {
       assertTrue(nodeManager.isOutOfChillMode());
       status = nodeManager.getChillModeStatus();
       Assert.assertThat(status,
-          CoreMatchers.containsString("Out of chill mode."));
+          containsString("Out of chill mode."));
     }
   }
 

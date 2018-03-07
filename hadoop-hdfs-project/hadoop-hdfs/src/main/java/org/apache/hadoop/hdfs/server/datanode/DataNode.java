@@ -3652,4 +3652,9 @@ public class DataNode extends ReconfigurableBase
   public SecureResources getSecureResources() {
     return secureResources;
   }
+
+  @Private
+  public Collection<ServicePlugin> getPlugins() {
+    return Collections.unmodifiableList(plugins);
+  }
 }

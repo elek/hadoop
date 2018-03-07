@@ -19,6 +19,7 @@ package org.apache.hadoop.ozone;
 
 import java.io.IOException;
 
+import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.DataNodeServicePlugin;
@@ -62,7 +63,10 @@ public class HdslServerPlugin implements DataNodeServicePlugin {
 
   @Override
   public void close() throws IOException {
-
   }
 
+  @InterfaceAudience.Private
+  public DatanodeStateMachine getDatanodeStateMachine() {
+    return datanodeStateMachine;
+  }
 }

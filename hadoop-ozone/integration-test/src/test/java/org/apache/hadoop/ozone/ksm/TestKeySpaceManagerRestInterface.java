@@ -47,6 +47,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
+import static org.apache.hadoop.ozone.KsmUtils.getKsmAddressForClients;
+
 /**
  * This class is to test the REST interface exposed by KeySpaceManager.
  */
@@ -94,7 +97,7 @@ public class TestKeySpaceManagerRestInterface {
     }
 
     InetSocketAddress ksmAddress =
-        OzoneClientUtils.getKsmAddressForClients(conf);
+        getKsmAddressForClients(conf);
     ServiceInfo ksmInfo = serviceMap.get(OzoneProtos.NodeType.KSM);
 
     Assert.assertEquals(ksmAddress.getHostName(), ksmInfo.getHostname());
@@ -104,7 +107,7 @@ public class TestKeySpaceManagerRestInterface {
         ksmInfo.getPort(ServicePort.Type.HTTP));
 
     InetSocketAddress scmAddress =
-        OzoneClientUtils.getScmAddressForClients(conf);
+        getScmAddressForClients(conf);
     ServiceInfo scmInfo = serviceMap.get(OzoneProtos.NodeType.SCM);
 
     Assert.assertEquals(scmAddress.getHostName(), scmInfo.getHostname());
