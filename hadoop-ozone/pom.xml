@@ -44,4 +44,49 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>.gitattributes</exclude>
+            <exclude>.idea/**</exclude>
+
+            <exclude>dev-support/findbugsExcludeFile.xml</exclude>
+            <exclude>dev-support/checkstyle*</exclude>
+            <exclude>dev-support/jdiff/**</exclude>
+            <exclude>dev-support/*tests</exclude>
+            <exclude>src/test/empty-file</exclude>
+            <exclude>src/test/all-tests</exclude>
+            <exclude>src/test/resources/*.tgz</exclude>
+            <exclude>src/test/resources/data*</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>src/test/resources/empty-file</exclude>
+            <exclude>src/main/webapps/datanode/robots.txt</exclude>
+            <exclude>src/main/webapps/hdfs/robots.txt</exclude>
+            <exclude>src/main/webapps/journal/robots.txt</exclude>
+            <exclude>src/main/webapps/secondary/robots.txt</exclude>
+            <exclude>src/main/webapps/router/robots.txt</exclude>
+            <exclude>src/contrib/**</exclude>
+            <exclude>src/site/resources/images/*</exclude>
+            <exclude>webapps/static/bootstrap-3.0.2/**</exclude>
+            <exclude>webapps/static/jquery-1.10.2.min.js</exclude>
+            <exclude>webapps/static/jquery.dataTables.min.js</exclude>
+            <exclude>webapps/static/nvd3-1.8.5.min.css.map</exclude>
+            <exclude>webapps/static/nvd3-1.8.5.min.js</exclude>
+            <exclude>webapps/static/angular-route-1.6.4.min.js
+            </exclude>
+            <exclude>webapps/static/nvd3-1.8.5.min.css</exclude>
+            <exclude>webapps/static/angular-nvd3-1.0.9.min.js</exclude>
+            <exclude>webapps/static/nvd3-1.8.5.min.js.map</exclude>
+            <exclude>webapps/static/angular-1.6.4.min.js</exclude>
+            <exclude>webapps/static/d3-3.5.17.min.js</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
