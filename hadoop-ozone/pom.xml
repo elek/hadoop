@@ -34,6 +34,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <module>client</module>
     <module>ozone-manager</module>
     <module>tools</module>
+    <module>integration-tests</module>
   </modules>
 
   <dependencies>
