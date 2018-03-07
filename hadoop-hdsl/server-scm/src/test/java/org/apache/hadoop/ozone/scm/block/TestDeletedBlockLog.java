@@ -20,7 +20,7 @@ package org.apache.hadoop.ozone.scm.block;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleState;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.ReplicationType;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.ReplicationFactor;

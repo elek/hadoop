@@ -53,9 +53,9 @@ public class ConfServlet extends HttpServlet {
   protected static final String FORMAT_XML = "xml";
   private static final String COMMAND = "cmd";
   private static final Logger LOG = LoggerFactory.getLogger(ConfServlet.class);
-  private transient static final Configuration OZONE_CONFIG = new
-      OzoneConfiguration();
-  private transient Map<String, OzoneConfiguration.Property> propertyMap = null;
+//  private transient static final Configuration OZONE_CONFIG = new
+//      OzoneConfiguration();
+//  private transient Map<String, OzoneConfiguration.Property> propertyMap = null;
 
 
   /**
@@ -129,19 +129,19 @@ public class ConfServlet extends HttpServlet {
       }
 
       Properties properties = config.getAllPropertiesByTags(tagList);
-      if (propertyMap == null) {
-        loadDescriptions();
-      }
-
-      List<OzoneConfiguration.Property> filteredProperties = new ArrayList<>();
-
-      properties.stringPropertyNames().stream().forEach(key -> {
-        if (config.get(key) != null) {
-          propertyMap.get(key).setValue(config.get(key));
-          filteredProperties.add(propertyMap.get(key));
-        }
-      });
-      out.write(gson.toJsonTree(filteredProperties).toString());
+//      if (propertyMap == null) {
+//        loadDescriptions();
+//      }
+//
+//      List<OzoneConfiguration.Property> filteredProperties = new ArrayList<>();
+//
+//      properties.stringPropertyNames().stream().forEach(key -> {
+//        if (config.get(key) != null) {
+//          propertyMap.get(key).setValue(config.get(key));
+//          filteredProperties.add(propertyMap.get(key));
+//        }
+//      });
+//      out.write(gson.toJsonTree(filteredProperties).toString());
       break;
     default:
       throw new IllegalArgumentException(cmd + " is not a valid command.");
@@ -150,23 +150,23 @@ public class ConfServlet extends HttpServlet {
   }
 
   private void loadDescriptions() {
-    OzoneConfiguration config = (OzoneConfiguration) getOzoneConfig();
-    List<OzoneConfiguration.Property> propList = null;
-    propertyMap = new HashMap<>();
-    try {
-      propList = config.readPropertyFromXml(config.getResource("ozone-site"
-          + ".xml"));
-      propList.stream().map(p -> propertyMap.put(p.getName(), p));
-      propList = config.readPropertyFromXml(config.getResource("ozone-default"
-          + ".xml"));
-      propList.stream().forEach(p -> {
-        if (!propertyMap.containsKey(p.getName().trim())) {
-          propertyMap.put(p.getName().trim(), p);
-        }
-      });
-    } catch (Exception e) {
-      LOG.error("Error while reading description from xml files", e);
-    }
+//    OzoneConfiguration config = (OzoneConfiguration) getOzoneConfig();
+//    List<OzoneConfiguration.Property> propList = null;
+//    propertyMap = new HashMap<>();
+//    try {
+//      propList = config.readPropertyFromXml(config.getResource("ozone-site"
+//          + ".xml"));
+//      propList.stream().map(p -> propertyMap.put(p.getName(), p));
+//      propList = config.readPropertyFromXml(config.getResource("ozone-default"
+//          + ".xml"));
+//      propList.stream().forEach(p -> {
+//        if (!propertyMap.containsKey(p.getName().trim())) {
+//          propertyMap.put(p.getName().trim(), p);
+//        }
+//      });
+//    } catch (Exception e) {
+//      LOG.error("Error while reading description from xml files", e);
+//    }
   }
 
   @VisibleForTesting
@@ -205,7 +205,7 @@ public class ConfServlet extends HttpServlet {
   }
 
   private static Configuration getOzoneConfig() {
-    return OZONE_CONFIG;
+    return null; //OZONE_CONFIG;
   }
 
 }

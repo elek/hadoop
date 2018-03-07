@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.hadoop.conf;
+package org.apache.hadoop.ozone.common.conf;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.conf.Configuration;
 
 /**
  * Configuration for ozone.

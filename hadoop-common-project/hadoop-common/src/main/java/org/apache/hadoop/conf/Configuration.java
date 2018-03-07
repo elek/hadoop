@@ -2932,7 +2932,7 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         resources.set(i, ret);
       }
     }
-    this.removeUndeclaredTags(properties);
+    //this.removeUndeclaredTags(properties);
   }
   
   private Resource loadResource(Properties properties,

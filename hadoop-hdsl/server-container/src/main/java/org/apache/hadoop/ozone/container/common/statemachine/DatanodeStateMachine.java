@@ -20,7 +20,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.ozone.common.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.container.common.statemachine.commandhandler
     .CloseContainerHandler;
 import org.apache.hadoop.ozone.container.common.statemachine.commandhandler.CommandDispatcher;

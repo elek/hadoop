@@ -691,7 +691,7 @@
   <property>
     <name>ozone.metadata.dirs</name>
     <value/>
-    <tag>OZONE, KSM, SCM, CONTAINER, REQUIRED, STORAGE</tag>
+    <tag>OZONE, KSM, SCM, CONTAINER, REQUIRED, STORAGE, ISPATH</tag>
     <description>
       Ozone metadata is shared among KSM, which acts as the namespace
       manager for ozone, SCM which acts as the block manager and data nodes
@@ -885,7 +885,7 @@
   <property>
     <name>ozone.scm.container.size.gb</name>
     <value>5</value>
-    <tag>OZONE, PERFORMANCE, MANAGEMENT</tag>
+    <tag>OZONE, PERFORMANCE, MANAGEMENT, NUMERIC, ISPATH, ISFILE</tag>
     <description>
       Default container size used by Ozone. This value is specified
       in GB.
@@ -1079,7 +1079,7 @@
   <property>
     <name>ozone.scm.keytab.file</name>
     <value/>
-    <tag>OZONE, SECURITY</tag>
+    <tag>OZONE, SECURITY, ISFILE</tag>
     <description>
       The keytab file for Kerberos authentication in SCM.
     </description>
@@ -1296,4 +1296,42 @@
       expired (e.g. due to client crash). Default to 24 hours.
     </description>
   </property>
+
+  <property>
+    <name>ozone.open.key.expire.threshold</name>
+    <value>86400</value>
+    <tag>OZONE, KSM, PERFORMANCE</tag>
+    <description>
+      Controls how long an open key operation is considered active. Specifically, if a key
+      has been open longer than the value of this config entry, that open key is considered as
+      expired (e.g. due to client crash). Default to 24 hours.
+    </description>
+  </property>
+
+  <property>
+    <name>ozone.system.tags</name>
+    <value>OZONE,MANAGEMENT,SECURITY,PERFORMANCE,DEBUG,CLIENT,SERVER,KSM,
+      SCM,CRITICAL,RATIS,CONTAINER,REQUIRED,REST,STORAGE,PIPELINE,STANDALONE
+    </value>
+    <final>true</final>
+    <description>
+      Pre defined tags for Ozone.
+    </description>
+  </property>
+
+  <property>
+    <name>ozone.validation.tags</name>
+    <value>REQUIRED,NUMERIC,ISFILE,ISPATH
+    </value>
+  </property>
+
+  <property>
+    <name>ozone.custom.tags</name>
+    <value></value>
+    <description>
+      Ozone users can define there own custom tags here.
+    </description>
+  </property>
+
+
 </configuration>

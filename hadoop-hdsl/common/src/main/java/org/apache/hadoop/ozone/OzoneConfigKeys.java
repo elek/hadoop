@@ -34,6 +34,9 @@ public final class OzoneConfigKeys {
   public static final String DFS_CONTAINER_IPC_PORT =
       "dfs.container.ipc";
   public static final int DFS_CONTAINER_IPC_PORT_DEFAULT = 9859;
+  public static final String OZONE_SYSTEM_TAGS = "ozone.system.tags";
+  public static final String OZONE_CUSTOM_TAGS = "ozone.custom.tags";
+  public static final String OZONE_VALIDATION_TAGS = "ozone.validation.tags";
 
   /**
    *
