@@ -111,12 +111,8 @@ import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.DFSUtilClient;
 import org.apache.hadoop.hdfs.HDFSPolicyProvider;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-//import org.apache.hadoop.ozone.container.common.statemachine.DatanodeStateMachine;
-
-
 import org.apache.hadoop.hdfs.server.datanode.checker.DatasetVolumeChecker;
 import org.apache.hadoop.hdfs.server.datanode.checker.StorageLocationChecker;
-//import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
 import org.apache.hadoop.util.AutoCloseableLock;
 import org.apache.hadoop.hdfs.client.BlockReportOptions;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
@@ -328,7 +324,7 @@ public class DataNode extends ReconfigurableBase
   volatile FsDatasetSpi<? extends FsVolumeSpi> data = null;
   private String clusterId = null;
 
-  final AtomicInteger  xmitsInProgress = new AtomicInteger();
+  final AtomicInteger xmitsInProgress = new AtomicInteger();
   Daemon dataXceiverServer = null;
   DataXceiverServer xserver = null;
   Daemon localDataXceiverServer = null;
@@ -404,8 +400,6 @@ public class DataNode extends ReconfigurableBase
   private final DatasetVolumeChecker volumeChecker;
 
   private final SocketFactory socketFactory;
-
-  private List<DataNodeService> services = new ArrayList<>();
 
   private static Tracer createTracer(Configuration conf) {
     return new Tracer.Builder("DataNode").
@@ -971,7 +965,6 @@ public class DataNode extends ReconfigurableBase
   }
 
   private void startPlugins(Configuration conf) {
-    plugins = new ArrayList<>();
     try {
       plugins = conf.getInstances(DFS_DATANODE_PLUGINS_KEY,
           ServicePlugin.class);
@@ -982,13 +975,6 @@ public class DataNode extends ReconfigurableBase
           pluginsValue, e);
       throw e;
     }
-
-    //adding additional plugins from SPI definitions
-    for (DataNodeServicePlugin plugin :
-        ServiceLoader.load(DataNodeServicePlugin.class)) {
-      plugins.add(plugin);
-    }
-
     for (ServicePlugin p: plugins) {
       try {
         p.start(this);
@@ -1455,15 +1441,6 @@ public class DataNode extends ReconfigurableBase
     if (dnConf.diskStatsEnabled) {
       diskMetrics = new DataNodeDiskMetrics(this,
           dnConf.outliersReportIntervalMs);
-    }
-
-    ServiceLoader<DataNodeService> load =
-        ServiceLoader.load(DataNodeService.class);
-
-    load.forEach(service -> services.add(service));
-
-    for (DataNodeService service : services) {
-      service.init(getConf());
     }
   }
 

@@ -41,7 +41,8 @@ public interface DataNodeServicePlugin extends ServicePlugin{
    *
    * @param dataNodeId
    */
-  default void onDatanodeSuccessfulNamenodeRegisration(DatanodeRegistration dataNodeId) {
+  default void onDatanodeSuccessfulNamenodeRegisration(
+      DatanodeRegistration dataNodeId) {
     //NOOP
   }
 }
