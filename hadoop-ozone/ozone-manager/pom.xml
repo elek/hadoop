@@ -40,7 +40,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdls-server-common</artifactId>
+      <artifactId>hadoop-hdsl-server-common</artifactId>
     </dependency>
 
     <dependency>
@@ -55,7 +55,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdls-common</artifactId>
+      <artifactId>hadoop-hdsl-common</artifactId>
     </dependency>
 
 

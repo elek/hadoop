@@ -129,9 +129,9 @@ run copy "${ROOT}/hadoop-hdfs-project/hadoop-hdfs-nfs/target/hadoop-hdfs-nfs-${V
 run copy "${ROOT}/hadoop-hdfs-project/hadoop-hdfs-client/target/hadoop-hdfs-client-${VERSION}" .
 run copy "${ROOT}/hadoop-hdfs-project/hadoop-hdfs-native-client/target/hadoop-hdfs-native-client-${VERSION}" .
 
-run copy "${ROOT}/hadoop-hdls/server-scm/target/hadoop-hdls-server-scm-${VERSION}" .
-run copy "${ROOT}/hadoop-hdls/common/target/hadoop-hdls-common-${VERSION}" .
-run copy "${ROOT}/hadoop-hdls/server-common/target/hadoop-hdls-server-common-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/server-scm/target/hadoop-hdsl-server-scm-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/common/target/hadoop-hdsl-common-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/server-common/target/hadoop-hdsl-server-common-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/ozone-manager/target/hadoop-ozone-ozone-manager-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/common/target/hadoop-ozone-common-${VERSION}" .
 

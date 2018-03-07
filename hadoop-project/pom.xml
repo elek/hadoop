@@ -569,18 +569,18 @@
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-common</artifactId>
+        <artifactId>hadoop-hdsl-common</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-client</artifactId>
+        <artifactId>hadoop-hdsl-client</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-tools</artifactId>
+        <artifactId>hadoop-hdsl-tools</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -594,25 +594,25 @@
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-server-common</artifactId>
+        <artifactId>hadoop-hdsl-server-common</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-server-scm</artifactId>
+        <artifactId>hadoop-hdsl-server-scm</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-datanode-service</artifactId>
+        <artifactId>hadoop-hdsl-datanode-service</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-hdls-server-scm</artifactId>
+        <artifactId>hadoop-hdsl-server-scm</artifactId>
         <type>test-jar</type>
         <version>${project.version}</version>
       </dependency>

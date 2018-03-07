@@ -23,7 +23,7 @@ import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.ksm.KSMConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
 
-import static org.apache.hadoop.hdls.HdlsUtils.getScmAddressForClients;
+import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
 import static org.apache.hadoop.ozone.KsmUtils.getKsmAddress;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

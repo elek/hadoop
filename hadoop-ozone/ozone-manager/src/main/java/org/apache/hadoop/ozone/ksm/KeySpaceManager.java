@@ -65,9 +65,9 @@ import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.StringUtils;
 
-import static org.apache.hadoop.hdls.HdlsUtils.getScmAddressForBlockClients;
-import static org.apache.hadoop.hdls.HdlsUtils.getScmAddressForClients;
-import static org.apache.hadoop.hdls.HdlsUtils.isOzoneEnabled;
+import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForBlockClients;
+import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
+import static org.apache.hadoop.hdsl.HdslUtils.isOzoneEnabled;
 import static org.apache.hadoop.ozone.KsmUtils.getKsmAddress;
 import static org.apache.hadoop.ozone.web.util.ServerUtils
     .updateRPCListenAddress;

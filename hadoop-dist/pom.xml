@@ -75,11 +75,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdls-server-scm</artifactId>
+      <artifactId>hadoop-hdsl-server-scm</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdls-tools</artifactId>
+      <artifactId>hadoop-hdsl-tools</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -87,7 +87,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdls-datanode-service</artifactId>
+      <artifactId>hadoop-hdsl-datanode-service</artifactId>
     </dependency>
 
   </dependencies>

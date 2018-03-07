@@ -6,8 +6,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.net.NetUtils;
 
 import com.google.common.base.Optional;
-import static org.apache.hadoop.hdls.HdlsUtils.getHostNameFromConfigKeys;
-import static org.apache.hadoop.hdls.HdlsUtils.getPortNumberFromConfigKeys;
+import static org.apache.hadoop.hdsl.HdslUtils.getHostNameFromConfigKeys;
+import static org.apache.hadoop.hdsl.HdslUtils.getPortNumberFromConfigKeys;
 import static org.apache.hadoop.ozone.ksm.KSMConfigKeys.OZONE_KSM_ADDRESS_KEY;
 import static org.apache.hadoop.ozone.ksm.KSMConfigKeys
     .OZONE_KSM_BIND_HOST_DEFAULT;
