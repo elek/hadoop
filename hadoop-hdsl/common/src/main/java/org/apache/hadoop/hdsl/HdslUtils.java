@@ -19,11 +19,9 @@
 package org.apache.hadoop.hdsl;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.scm.ScmConfigKeys;
 

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.common.Storage;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeType;
 

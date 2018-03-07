@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.ozone.container.common.statemachine.commandhandler;
 
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.MiniOzoneTestHelper;
 import org.apache.hadoop.ozone.OzoneConsts;

@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.metrics2.MetricsRecordBuilder;

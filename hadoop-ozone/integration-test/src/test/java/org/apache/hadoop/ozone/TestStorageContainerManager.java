@@ -21,7 +21,7 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;

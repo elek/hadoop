@@ -80,7 +80,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -191,7 +190,6 @@ import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.DNS;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.net.unix.DomainSocket;
-import org.apache.hadoop.conf.OzoneConfiguration;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.SaslPropertiesResolver;
 import org.apache.hadoop.security.SecurityUtil;
@@ -523,7 +521,7 @@ public class DataNode extends ReconfigurableBase
 
   @Override  // ReconfigurableBase
   protected Configuration getNewConf() {
-    return new OzoneConfiguration();
+    return new Configuration();
   }
 
   /**
@@ -2674,10 +2672,7 @@ public class DataNode extends ReconfigurableBase
    */
   public static DataNode instantiateDataNode(String args [], Configuration conf,
       SecureResources resources) throws IOException {
-    if (conf == null) {
-      conf = new OzoneConfiguration();
-    }
-    
+
     if (args != null) {
       // parse generic hadoop options
       GenericOptionsParser hParser = new GenericOptionsParser(conf, args);

@@ -18,7 +18,7 @@
 
 package org.apache.hadoop.ozone.client.rest;
 
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.OzoneAcl;

@@ -18,15 +18,12 @@
 package org.apache.hadoop.utils;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
-import static org.apache.hadoop.ozone.OzoneConfigKeys
-    .OZONE_METADATA_STORE_ROCKSDB_STATISTICS_OFF;
 import org.apache.hadoop.test.GenericTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.management.AttributeNotFoundException;
 import javax.management.MBeanServer;
 import java.io.File;
 import java.lang.management.ManagementFactory;
