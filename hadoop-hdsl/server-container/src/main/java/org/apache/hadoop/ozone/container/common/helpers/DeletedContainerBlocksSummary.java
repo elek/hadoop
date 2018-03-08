@@ -17,7 +17,7 @@
 package org.apache.hadoop.ozone.container.common.helpers;
 
 import com.google.common.collect.Maps;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
 
 import java.util.List;

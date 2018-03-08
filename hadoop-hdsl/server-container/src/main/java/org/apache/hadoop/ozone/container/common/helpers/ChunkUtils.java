@@ -21,7 +21,7 @@ import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.impl.ChunkManagerImpl;
@@ -40,21 +40,21 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CHECKSUM_MISMATCH;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_INTERNAL_ERROR;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_NOT_FOUND;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.INVALID_WRITE_SIZE;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.IO_EXCEPTION;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.OVERWRITE_FLAG_REQUIRED;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNABLE_TO_FIND_CHUNK;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNABLE_TO_FIND_DATA_DIR;
 
 /**

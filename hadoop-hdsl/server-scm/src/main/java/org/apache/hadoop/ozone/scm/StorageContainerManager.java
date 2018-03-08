@@ -47,28 +47,28 @@ import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
-import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCommandResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMHeartbeatResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMNodeAddressList;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMReregisterCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMVersionRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMVersionResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.SendContainerReportProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.Type;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto.DeleteBlockTransactionResult;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCommandResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMHeartbeatResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMNodeAddressList;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMNodeReport;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMReregisterCmdResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMVersionRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMVersionResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SendContainerReportProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCmdType;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto.DeleteBlockTransactionResult;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
 import org.apache.hadoop.ozone.protocolPB.ScmBlockLocationProtocolServerSideTranslatorPB;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolPB;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolServerSideTranslatorPB;
@@ -126,7 +126,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.apache.hadoop.ozone.protocol.proto
+import static org.apache.hadoop.hdsl.protocol.proto
     .ScmBlockLocationProtocolProtos.DeleteScmBlockResult.Result;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .OZONE_SCM_BLOCK_CLIENT_ADDRESS_KEY;
@@ -556,26 +556,26 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
   public SCMCommandResponseProto getCommandResponse(SCMCommand cmd,
       final String datanodID)
       throws IOException {
-    Type type = cmd.getType();
+    SCMCmdType type = cmd.getType();
     SCMCommandResponseProto.Builder builder =
         SCMCommandResponseProto.newBuilder()
         .setDatanodeUUID(datanodID);
     switch (type) {
     case registeredCommand:
-      return builder.setCmdType(Type.registeredCommand)
+      return builder.setCmdType(SCMCmdType.registeredCommand)
           .setRegisteredProto(
               SCMRegisteredCmdResponseProto.getDefaultInstance())
           .build();
     case versionCommand:
-      return builder.setCmdType(Type.versionCommand)
+      return builder.setCmdType(SCMCmdType.versionCommand)
           .setVersionProto(SCMVersionResponseProto.getDefaultInstance())
           .build();
     case sendContainerReport:
-      return builder.setCmdType(Type.sendContainerReport)
+      return builder.setCmdType(SCMCmdType.sendContainerReport)
           .setSendReport(SendContainerReportProto.getDefaultInstance())
           .build();
     case reregisterCommand:
-      return builder.setCmdType(Type.reregisterCommand)
+      return builder.setCmdType(SCMCmdType.reregisterCommand)
           .setReregisterProto(SCMReregisterCmdResponseProto
               .getDefaultInstance())
           .build();
@@ -587,11 +587,11 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
       List<Long> txs = ((DeleteBlocksCommand) cmd).blocksTobeDeleted()
           .stream().map(tx -> tx.getTxID()).collect(Collectors.toList());
       this.getScmBlockManager().getDeletedBlockLog().incrementCount(txs);
-      return builder.setCmdType(Type.deleteBlocksCommand)
+      return builder.setCmdType(SCMCmdType.deleteBlocksCommand)
           .setDeleteBlocksProto(((DeleteBlocksCommand) cmd).getProto())
           .build();
     case closeContainerCommand:
-      return builder.setCmdType(Type.closeContainerCommand)
+      return builder.setCmdType(SCMCmdType.closeContainerCommand)
           .setCloseContainerProto(((CloseContainerCommand)cmd).getProto())
           .build();
     default:
@@ -604,8 +604,8 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
       SCMCommand cmd, SCMNodeAddressList addressList) {
     Preconditions.checkState(cmd.getClass() == RegisteredCommand.class);
     RegisteredCommand rCmd = (RegisteredCommand) cmd;
-    StorageContainerDatanodeProtocolProtos.Type type = cmd.getType();
-    if (type != Type.registeredCommand) {
+    SCMCmdType type = cmd.getType();
+    if (type != SCMCmdType.registeredCommand) {
       throw new IllegalArgumentException("Registered command is not well " +
           "formed. Internal Error.");
     }

@@ -18,10 +18,10 @@
 package org.apache.hadoop.scm.client;
 
 import org.apache.hadoop.classification.InterfaceStability;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ContainerData;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
 
 import java.io.IOException;
 import java.util.EnumSet;

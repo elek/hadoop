@@ -28,8 +28,8 @@ import java.util.List;
 import com.google.protobuf.ByteString;
 
 import org.apache.hadoop.fs.Seekable;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ReadChunkResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ChunkInfo;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ReadChunkResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ChunkInfo;
 import org.apache.hadoop.scm.XceiverClientSpi;
 import org.apache.hadoop.scm.XceiverClientManager;
 

@@ -22,16 +22,17 @@
  * for what changes are allowed for a *unstable* .proto interface.
  */
 
-option java_package = "org.apache.hadoop.ozone.protocol.proto";
+option java_package = "org.apache.hadoop.hdsl.protocol.proto";
 option java_outer_classname = "OzoneProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
-package hadoop.hdfs.ozone;
+package hadoop.hdsl;
+
 import "hdfs.proto";
 
 message PipelineChannel {
     required string leaderID = 1;
-    repeated DatanodeIDProto members = 2;
+    repeated hadoop.hdfs.DatanodeIDProto members = 2;
     optional LifeCycleState state = 3 [default = OPEN];
     optional ReplicationType type = 4 [default = STAND_ALONE];
     optional ReplicationFactor factor = 5 [default = ONE];
@@ -72,7 +73,7 @@ enum NodeState {
     DECOMMISSIONED      = 5;
     RAFT_MEMBER         = 6;
     FREE_NODE           = 7; // Not a member in raft.
-    UNKNOWN             = 8;
+    INVALID             = 8;
 }
 
 enum QueryScope {
@@ -81,7 +82,7 @@ enum QueryScope {
 }
 
 message Node {
-    required DatanodeIDProto nodeID = 1;
+    required hadoop.hdfs.DatanodeIDProto nodeID = 1;
     repeated NodeState nodeStates = 2;
 }
 

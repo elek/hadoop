@@ -19,14 +19,12 @@ package org.apache.hadoop.ozone.container.replication;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
-import org.apache.hadoop.ozone.container.TestUtils
-    .ReplicationDatanodeStateManager;
-import org.apache.hadoop.ozone.container.TestUtils.ReplicationNodeManagerMock;
-import org.apache.hadoop.ozone.container.TestUtils
-    .ReplicationNodePoolManagerMock;
+import org.apache.hadoop.ozone.container.testutils.ReplicationDatanodeStateManager;
+import org.apache.hadoop.ozone.container.testutils.ReplicationNodeManagerMock;
+import org.apache.hadoop.ozone.container.testutils.ReplicationNodePoolManagerMock;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.ozone.scm.container.replication.ContainerSupervisor;
 import org.apache.hadoop.ozone.scm.container.replication.InProgressPool;
@@ -49,7 +47,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.HEALTHY;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.HEALTHY;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .OZONE_SCM_CONTAINER_REPORTS_WAIT_TIMEOUT;
 import static org.apache.hadoop.scm.ScmConfigKeys

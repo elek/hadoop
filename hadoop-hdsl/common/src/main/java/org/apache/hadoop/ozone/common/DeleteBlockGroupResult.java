@@ -17,8 +17,8 @@
  */
 package org.apache.hadoop.ozone.common;
 
-import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos.DeleteScmBlockResult;
-import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos.DeleteScmBlockResult.Result;
+import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.DeleteScmBlockResult;
+import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.DeleteScmBlockResult.Result;
 import org.apache.hadoop.scm.container.common.helpers.DeleteBlockResult;
 
 import java.util.ArrayList;

@@ -17,7 +17,7 @@
 package org.apache.hadoop.ozone.protocolPB;
 
 import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.StorageContainerDatanodeProtocolService;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.StorageContainerDatanodeProtocolService;
 
 /**
  * Protocol used from a datanode to StorageContainerManager.  This extends

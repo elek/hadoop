@@ -18,7 +18,7 @@
 package org.apache.hadoop.scm.container.common.helpers;
 
 
-import static org.apache.hadoop.ozone.protocol.proto
+import static org.apache.hadoop.hdsl.protocol.proto
     .ScmBlockLocationProtocolProtos.DeleteScmBlockResult;
 
 /**

@@ -18,10 +18,10 @@
 
 package org.apache.hadoop.ozone.protocol.commands;
 
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SendContainerReportProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMCmdType;
 
 /**
  * Allows a Datanode to send in the container report.
@@ -51,8 +51,8 @@ public class SendContainerCommand extends SCMCommand<SendContainerReportProto> {
    * @return Type
    */
   @Override
-  public Type getType() {
-    return Type.sendContainerReport;
+  public SCMCmdType getType() {
+    return SCMCmdType.sendContainerReport;
   }
 
   /**

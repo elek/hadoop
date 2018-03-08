@@ -20,10 +20,10 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.protocol.commands.SendContainerCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerInfo;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.ozone.scm.node.NodeManager;
 import org.apache.hadoop.ozone.scm.node.NodePoolManager;
@@ -42,12 +42,12 @@ import java.util.stream.Collectors;
 
 import static com.google.common.util.concurrent.Uninterruptibles
     .sleepUninterruptibly;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .NodeState.HEALTHY;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .NodeState.STALE;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
-    .NodeState.UNKNOWN;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+    .NodeState.INVALID;
 
 /**
  * These are pools that are actively checking for replication status of the
@@ -202,26 +202,26 @@ public final class InProgressPool {
    * @return NodeState.
    */
   private NodeState getNodestate(DatanodeID id) {
-    NodeState  currentState = UNKNOWN;
+    NodeState  currentState = INVALID;
     int maxTry = 100;
     // We need to loop to make sure that we will retry if we get
     // node state unknown. This can lead to infinite loop if we send
     // in unknown node ID. So max try count is used to prevent it.
 
     int currentTry = 0;
-    while (currentState == UNKNOWN && currentTry < maxTry) {
+    while (currentState == INVALID && currentTry < maxTry) {
       // Retry to make sure that we deal with the case of node state not
       // known.
       currentState = nodeManager.getNodeState(id);
       currentTry++;
-      if (currentState == UNKNOWN) {
+      if (currentState == INVALID) {
         // Sleep to make sure that this is not a tight loop.
         sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
       }
     }
-    if (currentState == UNKNOWN) {
+    if (currentState == INVALID) {
       LOG.error("Not able to determine the state of Node: {}, Exceeded max " +
-          "try and node manager returns UNKNOWN state. This indicates we " +
+          "try and node manager returns INVALID state. This indicates we " +
           "are dealing with a node that we don't know about.", id);
     }
     return currentState;

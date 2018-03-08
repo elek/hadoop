@@ -25,9 +25,9 @@ import org.apache.hadoop.hdfs.DFSTestUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.MockNodeManager;
 import org.apache.hadoop.ozone.scm.container.TestContainerMapping;
@@ -43,8 +43,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_CONTAINER_REPORT_INTERVAL;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleEvent.CREATE;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleEvent.CREATED;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleEvent.CREATE;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleEvent.CREATED;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_SIZE_DEFAULT;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_SIZE_GB;
 

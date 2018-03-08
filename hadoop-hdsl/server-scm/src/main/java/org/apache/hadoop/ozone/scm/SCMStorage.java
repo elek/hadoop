@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.common.Storage;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeType;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeType;
 
 import static org.apache.hadoop.ozone.OzoneConsts.SCM_ID;
 import static org.apache.hadoop.ozone.OzoneConsts.STORAGE_DIR;

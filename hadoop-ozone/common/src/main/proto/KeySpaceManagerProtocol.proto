@@ -26,7 +26,7 @@ option java_package = "org.apache.hadoop.ozone.protocol.proto";
 option java_outer_classname = "KeySpaceManagerProtocolProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
-package hadoop.hdfs.ozone;
+package hadoop.ozone;
 
 /**
 This is file contains the protocol to communicate with
@@ -60,7 +60,7 @@ message VolumeInfo {
     required string ownerName = 2;
     required string volume = 3;
     optional uint64 quotaInBytes = 4;
-    repeated KeyValue metadata = 5;
+    repeated hadoop.hdsl.KeyValue metadata = 5;
     repeated OzoneAclInfo volumeAcls = 6;
     required uint64 creationTime = 7;
 }
@@ -161,7 +161,7 @@ message BucketInfo {
     required string bucketName = 2;
     repeated OzoneAclInfo acls = 3;
     required bool isVersionEnabled = 4 [default = false];
-    required StorageTypeProto storageType = 5 [default = DISK];
+    required hadoop.hdfs.StorageTypeProto storageType = 5 [default = DISK];
     required uint64 creationTime = 6;
 }
 
@@ -171,7 +171,7 @@ message BucketArgs {
     repeated OzoneAclInfo addAcls = 3;
     repeated OzoneAclInfo removeAcls = 4;
     optional bool isVersionEnabled = 5;
-    optional StorageTypeProto storageType = 6;
+    optional hadoop.hdfs.StorageTypeProto storageType = 6;
 }
 
 message OzoneAclInfo {
@@ -225,8 +225,8 @@ message KeyArgs {
     required string bucketName = 2;
     required string keyName = 3;
     optional uint64 dataSize = 4;
-    optional hadoop.hdfs.ozone.ReplicationType type = 5;
-    optional hadoop.hdfs.ozone.ReplicationFactor factor = 6;
+    optional hadoop.hdsl.ReplicationType type = 5;
+    optional hadoop.hdsl.ReplicationFactor factor = 6;
 }
 
 message KeyLocation {
@@ -338,7 +338,7 @@ message ServicePort {
 }
 
 message ServiceInfo {
-    required NodeType nodeType = 1;
+    required hadoop.hdsl.NodeType nodeType = 1;
     required string hostname = 2;
     repeated ServicePort servicePorts = 3;
 }

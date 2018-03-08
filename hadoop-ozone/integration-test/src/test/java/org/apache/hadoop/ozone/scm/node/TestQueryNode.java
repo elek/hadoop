@@ -18,8 +18,8 @@ package org.apache.hadoop.ozone.scm.node;
 
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.client.ContainerOperationClient;
 import org.apache.hadoop.test.GenericTestUtils;
@@ -31,10 +31,10 @@ import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .STALE;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .OZONE_SCM_DEADNODE_INTERVAL;

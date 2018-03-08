@@ -30,10 +30,10 @@ import org.apache.hadoop.ozone.container.common.statemachine.StateContext;
 import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto.DeleteBlockTransactionResult;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerBlocksDeletionACKProto.DeleteBlockTransactionResult;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCmdType;
 import org.apache.hadoop.util.Time;
 import org.apache.hadoop.utils.BatchOperation;
 import org.apache.hadoop.utils.MetadataStore;
@@ -65,10 +65,10 @@ public class DeleteBlocksCommandHandler implements CommandHandler {
   @Override
   public void handle(SCMCommand command, OzoneContainer container,
       StateContext context, SCMConnectionManager connectionManager) {
-    if (command.getType() != Type.deleteBlocksCommand) {
+    if (command.getType() != SCMCmdType.deleteBlocksCommand) {
       LOG.warn("Skipping handling command, expected command "
               + "type {} but found {}",
-          Type.deleteBlocksCommand, command.getType());
+          SCMCmdType.deleteBlocksCommand, command.getType());
       return;
     }
     LOG.debug("Processing block deletion command.");
@@ -185,8 +185,8 @@ public class DeleteBlocksCommandHandler implements CommandHandler {
   }
 
   @Override
-  public Type getCommandType() {
-    return Type.deleteBlocksCommand;
+  public SCMCmdType getCommandType() {
+    return SCMCmdType.deleteBlocksCommand;
   }
 
   @Override

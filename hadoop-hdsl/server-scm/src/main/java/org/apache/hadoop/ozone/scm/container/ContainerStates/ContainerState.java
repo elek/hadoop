@@ -20,7 +20,7 @@ package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 
 /**
  * Class that acts as the container state.

@@ -31,7 +31,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
 import static org.apache.hadoop.scm.ScmConfigKeys
@@ -42,7 +42,7 @@ import static org.apache.hadoop.scm.ScmConfigKeys
     .SCM_CONTAINER_CLIENT_MAX_SIZE_KEY;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .SCM_CONTAINER_CLIENT_MAX_SIZE_DEFAULT;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .ReplicationType.RATIS;
 
 /**

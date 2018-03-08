@@ -30,17 +30,17 @@ import org.apache.hadoop.ozone.protocol.commands.ReregisterCommand;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 import org.apache.hadoop.ozone.protocol.commands.SendContainerCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto
     .ErrorCode;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMVersionRequestProto;
-import org.apache.hadoop.ozone.protocol
+import org.apache.hadoop.hdsl.protocol
     .proto.StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol
+import org.apache.hadoop.hdsl.protocol
     .proto.StorageContainerDatanodeProtocolProtos.SCMStorageReport;
 import org.apache.hadoop.ozone.scm.StorageContainerManager;
 import org.apache.hadoop.ozone.scm.VersionInfo;
@@ -75,10 +75,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.HEALTHY;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.STALE;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.UNKNOWN;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.HEALTHY;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.STALE;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.INVALID;
 import static org.apache.hadoop.util.Time.monotonicNow;
 
 /**
@@ -381,7 +381,7 @@ public class SCMNodeManager
       return staleNodeCount.get();
     case DEAD:
       return deadNodeCount.get();
-    case UNKNOWN:
+    case INVALID:
       // This is unknown due to the fact that some nodes can be in
       // transit between the other states. Returning a count for that is not
       // possible. The fact that we have such state is to deal with the fact
@@ -431,7 +431,7 @@ public class SCMNodeManager
       return DEAD;
     }
 
-    return UNKNOWN;
+    return INVALID;
   }
 
   /**
