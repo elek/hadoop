@@ -37,14 +37,11 @@ import org.apache.hadoop.conf.Configuration;
 @InterfaceAudience.Private
 public class OzoneConfiguration extends Configuration {
   static {
-    // adds the default resources
-    Configuration.addDefaultResource("hdfs-default.xml");
-    Configuration.addDefaultResource("hdfs-site.xml");
-    Configuration.addDefaultResource("ozone-default.xml");
-    Configuration.addDefaultResource("ozone-site.xml");
+    activate();
   }
 
   public OzoneConfiguration() {
+    OzoneConfiguration.activate();
   }
 
   public OzoneConfiguration(Configuration conf) {
@@ -152,5 +149,13 @@ public class OzoneConfiguration extends Configuration {
       return (obj instanceof Property) && (((Property) obj).getName())
           .equals(this.getName());
     }
+  }
+
+  public static void activate(){
+    // adds the default resources
+    Configuration.addDefaultResource("hdfs-default.xml");
+    Configuration.addDefaultResource("hdfs-site.xml");
+    Configuration.addDefaultResource("ozone-default.xml");
+    Configuration.addDefaultResource("ozone-site.xml");
   }
 }

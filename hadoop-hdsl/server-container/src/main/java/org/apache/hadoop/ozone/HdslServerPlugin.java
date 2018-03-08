@@ -24,6 +24,7 @@ import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.DataNodeServicePlugin;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.container.common.statemachine
     .DatanodeStateMachine;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
@@ -32,6 +33,10 @@ public class HdslServerPlugin implements DataNodeServicePlugin {
 
   private DatanodeStateMachine datanodeStateMachine;
   private DataNode dataNode;
+
+  public HdslServerPlugin() {
+    OzoneConfiguration.activate();
+  }
 
   @Override
   public void start(Object service) {
