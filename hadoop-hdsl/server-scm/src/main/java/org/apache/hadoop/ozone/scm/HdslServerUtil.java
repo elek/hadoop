@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hdsl.HdslUtils;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
@@ -40,50 +41,10 @@ import static org.apache.hadoop.scm.ScmConfigKeys
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HdslServerUtil {
+public class HdslServerUtil extends HdslUtils{
 
   private static final Logger LOG = LoggerFactory.getLogger(
       HdslServerUtil.class);
-
-  /**
-   * Retrieve the socket addresses of all storage container managers.
-   *
-   * @param conf
-   * @return A collection of SCM addresses
-   * @throws IllegalArgumentException If the configuration is invalid
-   */
-  public static Collection<InetSocketAddress> getSCMAddresses(
-      Configuration conf) throws IllegalArgumentException {
-    Collection<InetSocketAddress> addresses =
-        new HashSet<InetSocketAddress>();
-    Collection<String> names =
-        conf.getTrimmedStringCollection(ScmConfigKeys.OZONE_SCM_NAMES);
-    if (names == null || names.isEmpty()) {
-      throw new IllegalArgumentException(ScmConfigKeys.OZONE_SCM_NAMES
-          + " need to be a set of valid DNS names or IP addresses."
-          + " Null or empty address list found.");
-    }
-
-    final com.google.common.base.Optional<Integer>
-        defaultPort =  com.google.common.base.Optional.of(ScmConfigKeys
-        .OZONE_SCM_DEFAULT_PORT);
-    for (String address : names) {
-      com.google.common.base.Optional<String> hostname =
-          getHostName(address);
-      if (!hostname.isPresent()) {
-        throw new IllegalArgumentException("Invalid hostname for SCM: "
-            + hostname);
-      }
-      com.google.common.base.Optional<Integer> port =
-          getHostPort(address);
-      InetSocketAddress addr = NetUtils.createSocketAddr(hostname.get(),
-          port.or(defaultPort.get()));
-      addresses.add(addr);
-    }
-    return addresses;
-  }
-
-
 
   /**
    * Retrieve the socket address that should be used by DataNodes to connect
