@@ -18,10 +18,10 @@
 package org.apache.hadoop.scm.client;
 
 import com.google.common.base.Preconditions;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ContainerData;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ReadContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ReadContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.XceiverClientSpi;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
@@ -37,8 +37,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleState.ALLOCATED;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleState.OPEN;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.ALLOCATED;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.OPEN;
 
 /**
  * This class provides the client-facing APIs of container operations.

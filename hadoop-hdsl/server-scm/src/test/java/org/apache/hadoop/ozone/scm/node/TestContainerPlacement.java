@@ -26,11 +26,11 @@ import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.ContainerPlacementPolicy;
@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .HEALTHY;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_DB_CACHE_SIZE_DEFAULT;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_DB_CACHE_SIZE_MB;

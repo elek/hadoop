@@ -23,21 +23,21 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
+import org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
+import org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.server.datanode.StorageLocation;
 import org.apache.hadoop.ozone.container.common.helpers.KeyData;
 import org.apache.hadoop.ozone.container.common.helpers.KeyUtils;
 import org.apache.hadoop.ozone.container.common.interfaces.*;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
 import org.apache.hadoop.util.ReflectionUtils;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
-import org.apache.hadoop.hdfs.server.datanode.StorageLocation;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
@@ -69,25 +69,25 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
 import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_DATA_DIR_KEY;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_EXISTS;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_INTERNAL_ERROR;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_NOT_FOUND;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.INVALID_CONFIG;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.IO_EXCEPTION;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.NO_SUCH_ALGORITHM;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNABLE_TO_READ_METADATA_DB;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNSUPPORTED_REQUEST;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
    .Result.ERROR_IN_COMPACT_DB;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNCLOSED_CONTAINER_IO;
 import static org.apache.hadoop.ozone.OzoneConsts.CONTAINER_EXTENSION;
 import static org.apache.hadoop.ozone.OzoneConsts.CONTAINER_META;

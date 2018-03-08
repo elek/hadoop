@@ -21,7 +21,7 @@ package org.apache.hadoop.scm.container.common.helpers;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerID;
 import org.apache.hadoop.util.Time;
 

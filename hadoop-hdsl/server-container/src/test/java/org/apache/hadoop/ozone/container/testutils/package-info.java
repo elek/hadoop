@@ -14,5 +14,5 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.apache.hadoop.ozone.container.TestUtils;
+package org.apache.hadoop.ozone.container.testutils;
 // Helper classes for ozone and container tests.

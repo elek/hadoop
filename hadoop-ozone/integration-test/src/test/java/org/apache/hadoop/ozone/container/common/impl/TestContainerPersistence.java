@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.hdfs.DFSTestUtil;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 import org.apache.hadoop.hdfs.server.datanode.StorageLocation;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
@@ -74,7 +74,7 @@ import static org.apache.hadoop.ozone.container.ContainerTestHelper.getChunk;
 import static org.apache.hadoop.ozone.container.ContainerTestHelper.getData;
 import static org.apache.hadoop.ozone.container.ContainerTestHelper
     .setDataChecksum;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Stage.COMBINED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -28,14 +28,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;

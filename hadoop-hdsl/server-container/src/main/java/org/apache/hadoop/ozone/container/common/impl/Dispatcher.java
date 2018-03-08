@@ -21,12 +21,12 @@ package org.apache.hadoop.ozone.container.common.impl;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Type;
 import org.apache.hadoop.ozone.container.common.helpers.ChunkInfo;
 import org.apache.hadoop.ozone.container.common.helpers.ChunkUtils;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
@@ -47,10 +47,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Result.CLOSED_CONTAINER_IO;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Result.GET_SMALL_FILE_ERROR;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Result.NO_SUCH_ALGORITHM;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Result.PUT_SMALL_FILE_ERROR;
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Result.CLOSED_CONTAINER_IO;
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Result.GET_SMALL_FILE_ERROR;
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Result.NO_SUCH_ALGORITHM;
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Result.PUT_SMALL_FILE_ERROR;
 
 /**
  * Ozone Container dispatcher takes a call from the netty server and routes it

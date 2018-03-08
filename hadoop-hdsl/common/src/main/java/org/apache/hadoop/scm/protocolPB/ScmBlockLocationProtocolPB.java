@@ -19,7 +19,7 @@ package org.apache.hadoop.scm.protocolPB;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.ozone.protocol.proto.ScmBlockLocationProtocolProtos
+import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos
     .ScmBlockLocationProtocolService;
 
 /**

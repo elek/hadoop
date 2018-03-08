@@ -24,10 +24,10 @@
 
 // This file contains protocol buffers that are used to transfer data
 // to and from the datanode.
-option java_package = "org.apache.hadoop.hdfs.ozone.protocol.proto";
+option java_package = "org.apache.hadoop.hdsl.protocol.proto";
 option java_outer_classname = "ContainerProtos";
 option java_generate_equals_and_hash = true;
-package hadoop.hdfs.ozone;
+package hadoop.hdsl;
 import "hdfs.proto";
 import "Ozone.proto";
 

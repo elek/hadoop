@@ -19,7 +19,7 @@
 package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import org.apache.hadoop.ozone.container.ContainerTestHelper;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.scm.exceptions.SCMException;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -43,11 +43,11 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .LifeCycleState.OPEN;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .ReplicationFactor.ONE;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .ReplicationType.STAND_ALONE;
 
 public class BenchmarkContainerStateMap {

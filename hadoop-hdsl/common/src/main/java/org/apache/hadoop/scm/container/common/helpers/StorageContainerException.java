@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.scm.container.common.helpers;
 
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 
 import java.io.IOException;
 

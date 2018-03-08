@@ -22,11 +22,11 @@
  * for what changes are allowed for a *unstable* .proto interface.
  */
 
-option java_package = "org.apache.hadoop.ozone.protocol.proto";
+option java_package = "org.apache.hadoop.hdsl.protocol.proto";
 option java_outer_classname = "ScmBlockLocationProtocolProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
-package hadoop.hdfs;
+package hadoop.hdsl;
 
 import "hdfs.proto";
 import "Ozone.proto";
@@ -53,7 +53,7 @@ message GetScmBlockLocationsResponseProto {
  */
 message ScmLocatedBlockProto {
   required string key = 1;
-  required hadoop.hdfs.ozone.Pipeline pipeline = 2;
+  required hadoop.hdsl.Pipeline pipeline = 2;
 }
 
 /**
@@ -61,8 +61,8 @@ message ScmLocatedBlockProto {
 */
 message AllocateScmBlockRequestProto {
   required uint64 size = 1;
-  required hadoop.hdfs.ozone.ReplicationType type = 2;
-  required hadoop.hdfs.ozone.ReplicationFactor factor = 3;
+  required ReplicationType type = 2;
+  required hadoop.hdsl.ReplicationFactor factor = 3;
   required string owner = 4;
 
 }
@@ -127,7 +127,7 @@ message AllocateScmBlockResponseProto {
   }
   required Error errorCode = 1;
   required string key = 2;
-  required hadoop.hdfs.ozone.Pipeline pipeline = 3;
+  required hadoop.hdsl.Pipeline pipeline = 3;
   required bool createContainer = 4;
   optional string errorMessage = 5;
 }
@@ -161,6 +161,6 @@ service ScmBlockLocationProtocolService {
   /**
    * Gets the scmInfo from SCM.
    */
-  rpc getScmInfo(hadoop.hdfs.ozone.GetScmInfoRequestProto)
-      returns (hadoop.hdfs.ozone.GetScmInfoRespsonseProto);
+  rpc getScmInfo(hadoop.hdsl.GetScmInfoRequestProto)
+      returns (hadoop.hdsl.GetScmInfoRespsonseProto);
 }

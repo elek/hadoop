@@ -19,12 +19,12 @@
 package org.apache.hadoop.scm;
 
 import com.google.common.annotations.VisibleForTesting;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandResponseProto;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
 import java.io.Closeable;

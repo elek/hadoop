@@ -22,15 +22,15 @@ import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.protocol.VersionResponse;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMVersionRequestProto;
 
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
 import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeMetric;
 import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeStat;
@@ -45,10 +45,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .STALE;
 
 /**

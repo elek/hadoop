@@ -24,22 +24,22 @@ import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ipc.ProtobufHelper;
 import org.apache.hadoop.ipc.ProtocolTranslator;
 import org.apache.hadoop.ipc.RPC;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.scm.ScmInfo;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.DeleteContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ListContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ListContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.NodeQueryRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.NodeQueryResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.PipelineRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.PipelineResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMDeleteContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMListContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMListContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.NodeQueryRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.NodeQueryResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.PipelineRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.PipelineResponseProto;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
 import java.io.Closeable;
@@ -136,7 +136,7 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
   @Override
   public List<ContainerInfo> listContainer(String startName, String prefixName,
       int count) throws IOException {
-    ListContainerRequestProto.Builder builder = ListContainerRequestProto
+    SCMListContainerRequestProto.Builder builder = SCMListContainerRequestProto
         .newBuilder();
     if (prefixName != null) {
       builder.setPrefixName(prefixName);
@@ -145,10 +145,10 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
       builder.setStartName(startName);
     }
     builder.setCount(count);
-    ListContainerRequestProto request = builder.build();
+    SCMListContainerRequestProto request = builder.build();
 
     try {
-      ListContainerResponseProto response =
+      SCMListContainerResponseProto response =
           rpcProxy.listContainer(NULL_RPC_CONTROLLER, request);
       List<ContainerInfo> containerList = new ArrayList<>();
       for (OzoneProtos.SCMContainerInfo containerInfoProto : response
@@ -173,7 +173,7 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
       throws IOException {
     Preconditions.checkState(!Strings.isNullOrEmpty(containerName),
         "Container name cannot be null or empty");
-    DeleteContainerRequestProto request = DeleteContainerRequestProto
+    SCMDeleteContainerRequestProto request = SCMDeleteContainerRequestProto
         .newBuilder()
         .setContainerName(containerName)
         .build();

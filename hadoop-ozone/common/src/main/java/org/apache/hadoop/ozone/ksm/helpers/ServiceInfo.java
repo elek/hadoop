@@ -28,7 +28,7 @@ import org.apache.hadoop.ozone.client.rest.response.BucketInfo;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos
     .ServicePort;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeType;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeType;
 
 import java.io.IOException;
 import java.util.ArrayList;

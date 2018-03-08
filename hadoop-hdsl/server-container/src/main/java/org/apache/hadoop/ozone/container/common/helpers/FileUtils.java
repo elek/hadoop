@@ -19,7 +19,7 @@ package org.apache.hadoop.ozone.container.common.helpers;
 
 import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 
 /**
  * File Utils are helper routines used by putSmallFile and getSmallFile

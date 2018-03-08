@@ -21,10 +21,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.LifeCycleState;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.ReplicationType;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.ReplicationFactor;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.Mapping;

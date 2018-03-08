@@ -69,7 +69,7 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys
 import static org.apache.hadoop.ozone.OzoneConfigKeys
     .DFS_CONTAINER_RATIS_IPC_RANDOM_PORT;
 
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .HEALTHY;
 import static org.junit.Assert.assertFalse;
 

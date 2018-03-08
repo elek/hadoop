@@ -48,7 +48,7 @@ import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos
     .ServicePort;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.OzoneAclInfo;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.protocolPB
     .KeySpaceManagerProtocolServerSideTranslatorPB;
 import org.apache.hadoop.scm.ScmInfo;
@@ -93,7 +93,7 @@ import static org.apache.hadoop.ozone.ksm.KSMConfigKeys
 import static org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.KeySpaceManagerService
     .newReflectiveBlockingService;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
     .NodeState.HEALTHY;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 

@@ -19,37 +19,37 @@
 package org.apache.hadoop.scm.storage;
 
 import com.google.protobuf.ByteString;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.ChunkInfo;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ChunkInfo;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .GetKeyRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .GetKeyResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .GetSmallFileRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .GetSmallFileResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.KeyData;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.KeyData;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .PutKeyRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .PutSmallFileRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ReadChunkRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ReadChunkResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos.Type;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .WriteChunkRequestProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ReadContainerResponseProto;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ReadContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.KeyValue;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.KeyValue;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
 
 import java.io.IOException;

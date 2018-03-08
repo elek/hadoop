@@ -36,23 +36,23 @@ import org.apache.hadoop.ozone.container.common.states.endpoint
     .RegisterEndpointTask;
 import org.apache.hadoop.ozone.container.common.states.endpoint
     .VersionEndpointTask;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerNodeIDProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMHeartbeatResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMVersionResponseProto;
 import org.apache.hadoop.ozone.scm.VersionInfo;
 import org.apache.hadoop.test.PathUtils;
@@ -76,7 +76,7 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys
     .OZONE_METADATA_DIRS;
 import static org.apache.hadoop.ozone.container.common.SCMTestUtils
     .getDatanodeID;
-import static org.apache.hadoop.ozone.protocol.proto
+import static org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState.states
     .noContainerReports;
 

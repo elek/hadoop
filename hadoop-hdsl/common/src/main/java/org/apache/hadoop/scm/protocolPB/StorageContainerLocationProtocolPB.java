@@ -19,7 +19,7 @@ package org.apache.hadoop.scm.protocolPB;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.StorageContainerLocationProtocolService;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.StorageContainerLocationProtocolService;
 
 /**
  * Protocol used from an HDFS node to StorageContainerManager.  This extends the

@@ -24,12 +24,12 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeType;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeType;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCmdType;
 import org.apache.hadoop.ozone.scm.SCMStorage;
 import org.apache.hadoop.ozone.scm.StorageContainerManager;
 import org.apache.hadoop.ozone.scm.StorageContainerManager.StartupOption;
@@ -313,7 +313,7 @@ public class TestStorageContainerManager {
 
       if (commands != null) {
         for (SCMCommand cmd : commands) {
-          if (cmd.getType() == Type.deleteBlocksCommand) {
+          if (cmd.getType() == SCMCmdType.deleteBlocksCommand) {
             List<DeletedBlocksTransaction> deletedTXs =
                 ((DeleteBlocksCommand) cmd).blocksTobeDeleted();
             return deletedTXs != null && deletedTXs.size() == limitSize;

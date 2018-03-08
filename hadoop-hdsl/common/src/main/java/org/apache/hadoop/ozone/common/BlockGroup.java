@@ -17,7 +17,7 @@
 
 package org.apache.hadoop.ozone.common;
 
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .ScmBlockLocationProtocolProtos.KeyBlocks;
 
 import java.util.List;

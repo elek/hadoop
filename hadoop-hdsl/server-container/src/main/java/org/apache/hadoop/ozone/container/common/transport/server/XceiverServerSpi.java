@@ -18,7 +18,7 @@
 
 package org.apache.hadoop.ozone.container.common.transport.server;
 
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
 
 import java.io.IOException;
 

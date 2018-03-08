@@ -18,12 +18,12 @@
 package org.apache.hadoop.ozone.protocol.commands;
 
 import com.google.common.base.Preconditions;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMCloseContainerCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type;
-import static org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type.closeContainerCommand;
+import org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMCmdType;
+import static org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMCmdType.closeContainerCommand;
 
 /**
  * Asks datanode to close a container.
@@ -43,7 +43,7 @@ public class CloseContainerCommand
    * @return Type
    */
   @Override
-  public Type getType() {
+  public SCMCmdType getType() {
     return closeContainerCommand;
   }
 

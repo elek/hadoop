@@ -26,25 +26,25 @@ import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerLocationProtocolProtos;
 import org.apache.hadoop.scm.ScmInfo;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
 
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.DeleteContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.DeleteContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ListContainerResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ListContainerRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.PipelineResponseProto;
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerLocationProtocolProtos.PipelineRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.GetContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMDeleteContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMDeleteContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMListContainerResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.SCMListContainerRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.PipelineResponseProto;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.PipelineRequestProto;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 import org.apache.hadoop.scm.protocolPB.StorageContainerLocationProtocolPB;
 
@@ -101,8 +101,8 @@ public final class StorageContainerLocationProtocolServerSideTranslatorPB
   }
 
   @Override
-  public ListContainerResponseProto listContainer(RpcController controller,
-      ListContainerRequestProto request) throws ServiceException {
+  public SCMListContainerResponseProto listContainer(RpcController controller,
+      SCMListContainerRequestProto request) throws ServiceException {
     try {
       String startName = null;
       String prefixName = null;
@@ -121,8 +121,8 @@ public final class StorageContainerLocationProtocolServerSideTranslatorPB
       count = request.getCount();
       List<ContainerInfo> containerList =
           impl.listContainer(startName, prefixName, count);
-      ListContainerResponseProto.Builder builder =
-          ListContainerResponseProto.newBuilder();
+      SCMListContainerResponseProto.Builder builder =
+          SCMListContainerResponseProto.newBuilder();
       for (ContainerInfo container : containerList) {
         builder.addContainers(container.getProtobuf());
       }
@@ -133,12 +133,12 @@ public final class StorageContainerLocationProtocolServerSideTranslatorPB
   }
 
   @Override
-  public DeleteContainerResponseProto deleteContainer(
-      RpcController controller, DeleteContainerRequestProto request)
+  public SCMDeleteContainerResponseProto deleteContainer(
+      RpcController controller, SCMDeleteContainerRequestProto request)
       throws ServiceException {
     try {
       impl.deleteContainer(request.getContainerName());
-      return DeleteContainerResponseProto.newBuilder().build();
+      return SCMDeleteContainerResponseProto.newBuilder().build();
     } catch (IOException e) {
       throw new ServiceException(e);
     }

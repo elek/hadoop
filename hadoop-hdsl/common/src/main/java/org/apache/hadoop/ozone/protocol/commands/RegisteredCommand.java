@@ -18,13 +18,13 @@
 package org.apache.hadoop.ozone.protocol.commands;
 
 import com.google.common.base.Preconditions;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMRegisteredCmdResponseProto
     .ErrorCode;
-import org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMCmdType;
 
 /**
  * Response to Datanode Register call.
@@ -57,8 +57,8 @@ public class RegisteredCommand extends
    * @return Type
    */
   @Override
-  public Type getType() {
-    return Type.registeredCommand;
+  public SCMCmdType getType() {
+    return SCMCmdType.registeredCommand;
   }
 
   /**

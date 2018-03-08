@@ -18,7 +18,7 @@
 
 package org.apache.hadoop.ozone.container.common.interfaces;
 
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
 import org.apache.hadoop.ozone.container.common.helpers.ChunkInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;

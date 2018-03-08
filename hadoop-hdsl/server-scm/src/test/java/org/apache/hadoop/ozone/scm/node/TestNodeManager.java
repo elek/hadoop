@@ -25,12 +25,12 @@ import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
-import org.apache.hadoop.ozone.protocol.proto
+import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
 import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeStat;
 import org.apache.hadoop.scm.ScmConfigKeys;
@@ -54,13 +54,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.ozone.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
     .STALE;
-import static org.apache.hadoop.ozone.protocol.proto
-    .StorageContainerDatanodeProtocolProtos.Type;
+import static org.apache.hadoop.hdsl.protocol.proto
+    .StorageContainerDatanodeProtocolProtos.SCMCmdType;
 
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_DEADNODE_INTERVAL;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_HEARTBEAT_INTERVAL;
@@ -299,7 +299,7 @@ public class TestNodeManager {
                 nodemanager.sendHeartbeat(datanodeID, null,
                     reportState);
             return command.size() == 1 && command.get(0).getType()
-                .equals(Type.reregisterCommand);
+                .equals(SCMCmdType.reregisterCommand);
           }
         }, 100, 3 * 1000);
       } catch (TimeoutException e) {

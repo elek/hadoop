@@ -17,7 +17,7 @@
 
 package org.apache.hadoop.ozone.container.common.statemachine.commandhandler;
 
-import org.apache.hadoop.ozone.protocol.proto.StorageContainerDatanodeProtocolProtos.Type;
+import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCmdType;
 import org.apache.hadoop.ozone.container.common.statemachine.SCMConnectionManager;
 import org.apache.hadoop.ozone.container.common.statemachine.StateContext;
 import org.apache.hadoop.ozone.container.ozoneimpl.OzoneContainer;
@@ -42,7 +42,7 @@ public interface CommandHandler {
    * Returns the command type that this command handler handles.
    * @return Type
    */
-  Type getCommandType();
+  SCMCmdType getCommandType();
 
   /**
    * Returns number of times this handler has been invoked.

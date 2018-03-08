@@ -22,7 +22,7 @@
  * for what changes are allowed for a *unstable* .proto interface.
  */
 
-option java_package = "org.apache.hadoop.ozone.protocol.proto";
+option java_package = "org.apache.hadoop.hdsl.protocol.proto";
 
 option java_outer_classname = "StorageContainerDatanodeProtocolProtos";
 
@@ -30,7 +30,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package hadoop.hdfs;
+package hadoop.hdsl;
 
 import "hdfs.proto";
 
@@ -46,7 +46,7 @@ import "Ozone.proto";
 * registering with the node manager.
 */
 message SCMHeartbeatRequestProto {
-  required DatanodeIDProto datanodeID = 1;
+  required hadoop.hdfs.DatanodeIDProto datanodeID = 1;
   optional SCMNodeReport nodeReport = 2;
   optional ReportState containerReportState = 3;
 }
@@ -77,7 +77,7 @@ all container info in memory all the time.
   */
 message ContainerPersistanceProto {
   required DatanodeContainerState state = 1;
-  required hadoop.hdfs.ozone.Pipeline pipeline = 2;
+  required hadoop.hdsl.Pipeline pipeline = 2;
   required ContainerInfo info = 3;
 }
 
@@ -124,7 +124,7 @@ message ContainerReportsRequestProto {
     fullReport = 0;
     deltaReport = 1;
   }
-  required DatanodeIDProto datanodeID = 1;
+  required hadoop.hdfs.DatanodeIDProto datanodeID = 1;
   repeated ContainerInfo reports = 2;
   required reportType type = 3;
 }
@@ -145,11 +145,11 @@ message SCMStorageReport {
   optional uint64 capacity = 2 [default = 0];
   optional uint64 scmUsed = 3 [default = 0];
   optional uint64 remaining = 4 [default = 0];
-  optional StorageTypeProto storageType = 5 [default = DISK];
+  optional hadoop.hdfs.StorageTypeProto storageType = 5 [default = DISK];
 }
 
 message SCMRegisterRequestProto {
-  required DatanodeIDProto datanodeID = 1;
+  required hadoop.hdfs.DatanodeIDProto datanodeID = 1;
   optional SCMNodeAddressList addressList = 2;
 }
 
@@ -166,7 +166,7 @@ message SCMVersionRequestProto {
 */
 message SCMVersionResponseProto {
   required uint32 softwareVersion = 1;
-  repeated hadoop.hdfs.ozone.KeyValue keys = 2;
+  repeated hadoop.hdsl.KeyValue keys = 2;
 }
 
 message SCMNodeAddressList {
@@ -199,7 +199,7 @@ message SCMReregisterCmdResponseProto {}
  * after the registration is done.
  */
 message ContainerNodeIDProto {
-  required DatanodeIDProto datanodeID = 1;
+  required hadoop.hdfs.DatanodeIDProto datanodeID = 1;
   optional string clusterID = 2;
 }
 
@@ -221,7 +221,7 @@ message SCMCloseContainerCmdResponseProto {
 /**
 Type of commands supported by SCM to datanode protocol.
 */
-enum Type {
+enum SCMCmdType {
   versionCommand = 2;
   registeredCommand = 3;
   sendContainerReport = 4;
@@ -234,7 +234,7 @@ enum Type {
  * These are commands returned by SCM for to the datanode to execute.
  */
 message SCMCommandResponseProto {
-  required Type cmdType = 2; // Type of the command
+  required SCMCmdType cmdType = 2; // Type of the command
   optional SCMRegisteredCmdResponseProto registeredProto = 3;
   optional SCMVersionResponseProto versionProto = 4;
   optional SendContainerReportProto sendReport = 5;

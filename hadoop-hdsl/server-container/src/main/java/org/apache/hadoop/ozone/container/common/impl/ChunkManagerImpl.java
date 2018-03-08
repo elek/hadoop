@@ -19,7 +19,7 @@ package org.apache.hadoop.ozone.container.common.impl;
 
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.fs.FileUtil;
-import org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos;
+import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
@@ -39,9 +39,9 @@ import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.CONTAINER_INTERNAL_ERROR;
-import static org.apache.hadoop.hdfs.ozone.protocol.proto.ContainerProtos
+import static org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .Result.UNSUPPORTED_REQUEST;
 
 /**
