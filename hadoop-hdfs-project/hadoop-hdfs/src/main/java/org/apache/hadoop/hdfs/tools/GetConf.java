@@ -78,10 +78,6 @@ public class GetConf extends Configured implements Tool {
         "gets the exclude file path that defines the datanodes " +
         "that need to decommissioned."),
     NNRPCADDRESSES("-nnRpcAddresses", "gets the namenode rpc addresses"),
-    KEYSPACEMANAGER("-keyspacemanagers",
-        "gets list of ozone key space manager nodes in the cluster"),
-    STORAGECONTAINERMANAGER("-storagecontainermanagers",
-        "gets list of ozone storage container manager nodes in the cluster"),
     CONFKEY("-confKey [key]", "gets a specific key from the configuration");
 
     private static final Map<String, CommandHandler> map;
@@ -228,12 +224,13 @@ public class GetConf extends Configured implements Tool {
    * Handler for {@link Command#SECONDARY}
    */
   static class SecondaryNameNodesCommandHandler extends CommandHandler {
-    @Override public int doWorkInternal(GetConf tool, String[] args)
-        throws IOException {
+    @Override
+    public int doWorkInternal(GetConf tool, String []args) throws IOException {
       tool.printMap(DFSUtil.getSecondaryNameNodeAddresses(tool.getConf()));
       return 0;
     }
   }
+  
   /**
    * Handler for {@link Command#NNRPCADDRESSES}
    * If rpc addresses are defined in configuration, we return them. Otherwise, 
@@ -360,10 +357,8 @@ public class GetConf extends Configured implements Tool {
     if (DFSUtil.parseHelpArgument(args, USAGE, System.out, true)) {
       System.exit(0);
     }
-
-    Configuration conf = new Configuration();
-    conf.addResource(new HdfsConfiguration());
-    int res = ToolRunner.run(new GetConf(conf), args);
+    
+    int res = ToolRunner.run(new GetConf(new HdfsConfiguration()), args);
     System.exit(res);
   }
 }
