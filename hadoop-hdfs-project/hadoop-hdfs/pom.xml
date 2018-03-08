@@ -39,17 +39,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-annotations</artifactId>
-      
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-auth</artifactId>
-      
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-common</artifactId>
-      
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -60,7 +60,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs-client</artifactId>
-      
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
@@ -161,11 +161,16 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -187,7 +192,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.fusesource.leveldbjni</groupId>
       <artifactId>leveldbjni-all</artifactId>
     </dependency>
-
     <!-- 'mvn dependency:analyze' fails to detect use of this dependency -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
@@ -199,30 +203,15 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jctools</groupId>
-      <artifactId>jctools-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>3.8.7</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-test</artifactId>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>io.dropwizard.metrics</groupId>
-          <artifactId>metrics-core</artifactId>
-      </dependency>
     <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -318,7 +307,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <configuration>
               <tasks>
                 <copy file="src/main/resources/hdfs-default.xml" todir="src/site/resources"/>
-                <copy file="src/main/resources/ozone-default.xml" todir="src/site/resources"/>
                 <copy file="src/main/xsl/configuration.xsl" todir="src/site/resources"/>
               </tasks>
             </configuration>
@@ -355,9 +343,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                   <include>QJournalProtocol.proto</include>
                   <include>editlog.proto</include>
                   <include>fsimage.proto</include>
-                  <include>StorageContainerDatanodeProtocol.proto</include>
-                  <include>CBlockServiceProtocol.proto</include>
-                  <include>CBlockClientServerProtocol.proto</include>
                   <include>FederationProtocol.proto</include>
                   <include>RouterProtocol.proto</include>
                   <include>AliasMapProtocol.proto</include>
@@ -436,53 +421,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
               <includes>
                 <include>configuration.xsl</include>
                 <include>hdfs-default.xml</include>
-                <include>ozone-default.xml</include>
               </includes>
               <followSymlinks>false</followSymlinks>
             </fileset>
           </filesets>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.github.kongchen</groupId>
-        <artifactId>swagger-maven-plugin</artifactId>
-        <version>3.1.5</version>
-        <executions>
-          <execution>
-            <phase>compile</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <apiSources>
-            <apiSource>
-              <springmvc>false</springmvc>
-              <swaggerDirectory>target/webapps/static</swaggerDirectory>
-              <swaggerFileName>ozone.swagger</swaggerFileName>
-              <schemes>
-                <scheme>http</scheme>
-              </schemes>
-              <host>localhost:9864</host>
-              <basePath>/</basePath>
-              <locations>
-                <location>org.apache.hadoop.ozone.web.interfaces</location>
-              </locations>
-              <info>
-                <title>HDFS Ozone REST Api</title>
-                <version>${project.version}</version>
-                <contact>
-                  <name>Apache Hadoop project</name>
-                  <url>https://hadoop.apache.org</url>
-                </contact>
-                <license>
-                  <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-                  <name>Apache 2.0</name>
-                </license>
-              </info>
-            </apiSource>
-          </apiSources>
         </configuration>
       </plugin>
     </plugins>
