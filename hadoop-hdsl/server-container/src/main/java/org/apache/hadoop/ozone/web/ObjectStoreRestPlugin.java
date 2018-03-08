@@ -24,6 +24,7 @@ import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.datanode.DataNode;
 import org.apache.hadoop.hdfs.server.datanode.DataNodeServicePlugin;
 import org.apache.hadoop.hdfs.server.datanode.ObjectStoreHandler;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.web.netty.ObjectStoreRestHttpServer;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 
@@ -45,6 +46,10 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
 
   private ObjectStoreRestHttpServer objectStoreRestHttpServer;
 
+  public ObjectStoreRestPlugin() {
+    OzoneConfiguration.activate();
+  }
+
   @Override
   public void start(Object service) {
     DataNode dataNode = (DataNode) service;
@@ -57,7 +62,8 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
                 null;
 
         objectStoreRestHttpServer =
-            new ObjectStoreRestHttpServer(dataNode.getConf(), httpServerChannel, handler);
+            new ObjectStoreRestHttpServer(dataNode.getConf(), httpServerChannel,
+                handler);
 
         objectStoreRestHttpServer.start();
       } catch (IOException e) {
@@ -66,7 +72,8 @@ public class ObjectStoreRestPlugin implements DataNodeServicePlugin {
       }
       synchronized (this) {
         try {
-          restServicePort = objectStoreRestHttpServer.getHttpAddress().getPort();
+          restServicePort =
+              objectStoreRestHttpServer.getHttpAddress().getPort();
         } finally {
           //in case fo waiting for the port information: we can continue.
           this.notify();
