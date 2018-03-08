@@ -80,8 +80,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr
-              ng-repeat="config in $ctrl.configs | filter:$ctrl.tagFilter | filter:search | orderBy:propertyName:reverse">
+      <tr ng-repeat="config in $ctrl.configs | filter:$ctrl.tagFilter | filter:search | orderBy:propertyName:reverse">
         <td style="word-wrap: break-word;">{{config.name}}</td>
         <td style="word-wrap: break-word;">{{config.value}}</td>
         <td style="word-wrap: break-word;">{{config.description}}</td>
