@@ -521,7 +521,7 @@ public class DataNode extends ReconfigurableBase
 
   @Override  // ReconfigurableBase
   protected Configuration getNewConf() {
-    return new Configuration();
+    return new HdfsConfiguration();
   }
 
   /**
@@ -2673,7 +2673,8 @@ public class DataNode extends ReconfigurableBase
    */
   public static DataNode instantiateDataNode(String args [], Configuration conf,
       SecureResources resources) throws IOException {
-
+    if (conf == null)
+      conf = new HdfsConfiguration();
     if (args != null) {
       // parse generic hadoop options
       GenericOptionsParser hParser = new GenericOptionsParser(conf, args);
