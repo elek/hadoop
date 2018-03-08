@@ -79,5 +79,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <type>test-jar</type>
     </dependency>
 
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 </project>
