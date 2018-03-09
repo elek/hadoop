@@ -1296,4 +1296,40 @@
       expired (e.g. due to client crash). Default to 24 hours.
     </description>
   </property>
+
+
+  <property>
+    <name>hdsl.rest.rest-csrf.enabled</name>
+    <value>false</value>
+    <description>
+      If true, then enables Object Store REST server protection against
+      cross-site request forgery (CSRF).
+    </description>
+  </property>
+
+  <property>
+    <name>hdsl.rest.http-address</name>
+    <value>0.0.0.0:9880</value>
+    <description>The http address of Object Store REST server inside the
+      datanode.</description>
+  </property>
+
+
+  <property>
+    <name>hdsl.rest.netty.high.watermark</name>
+    <value>65535</value>
+    <description>
+      High watermark configuration to Netty for Object Store REST server.
+    </description>
+  </property>
+
+  <property>
+    <name>hdsl.rest.netty.low.watermark</name>
+    <value>32768</value>
+    <description>
+      Low watermark configuration to Netty for Object Store REST server.
+    </description>
+  </property>
+
+
 </configuration>

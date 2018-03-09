@@ -126,10 +126,10 @@ public final class ScmConfigKeys {
   public static final String HDSL_REST_HTTP_ADDRESS_DEFAULT = "0.0.0.0:9880";
   public static final String HDSL_REST_CSRF_ENABLED_KEY = "hdsl.rest.rest-csrf.enabled";
   public static final boolean HDSL_REST_CSRF_ENABLED_DEFAULT = false;
-  public static final String HDSL_REST_NETTY_HIGH_WATERMARK = "hdfs.rest.netty.high.watermark";
+  public static final String HDSL_REST_NETTY_HIGH_WATERMARK = "hdsl.rest.netty.high.watermark";
   public static final int HDSL_REST_NETTY_HIGH_WATERMARK_DEFAULT = 65536;
   public static final int HDSL_REST_NETTY_LOW_WATERMARK_DEFAULT = 32768;
-  public static final String HDSL_REST_NETTY_LOW_WATERMARK = "hdfs.rest.netty.low.watermark";
+  public static final String HDSL_REST_NETTY_LOW_WATERMARK = "hdsl.rest.netty.low.watermark";
 
   public static final String OZONE_SCM_HANDLER_COUNT_KEY =
       "ozone.scm.handler.count.key";
