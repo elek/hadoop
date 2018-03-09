@@ -123,11 +123,8 @@ public class TestKeySpaceManagerRestInterface {
     for(ServicePort.Type type : ports.keySet()) {
       switch (type) {
       case HTTP:
-        Assert.assertEquals(datanode.getInfoPort(),
-            (int) ports.get(type));
-        break;
       case HTTPS:
-        Assert.assertEquals(datanode.getInfoSecurePort(),
+        Assert.assertEquals(datanode.getDatanodeId().getOzoneRestPort(),
             (int) ports.get(type));
         break;
       default:
