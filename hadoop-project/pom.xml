@@ -593,6 +593,13 @@
       </dependency>
       <dependency>
         <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-ozone-integration-test</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
         <artifactId>hadoop-cblock-tools</artifactId>
         <version>${project.version}</version>
       </dependency>

@@ -19,9 +19,9 @@ package org.apache.hadoop.cblock;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.hadoop.cblock.meta.VolumeInfo;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.scm.client.ScmClient;
 import org.apache.hadoop.cblock.util.MockStorageClient;
-import org.apache.hadoop.conf.OzoneConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

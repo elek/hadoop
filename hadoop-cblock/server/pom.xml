@@ -34,10 +34,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdsl-server-common</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-ozone-common</artifactId>
@@ -45,7 +47,26 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <dependency>
       <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdsl-common</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdsl-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-ozone-integration-test</artifactId>
+      <scope>test</scope>
+      <type>test-jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <scope>test</scope>
+      <type>test-jar</type>
     </dependency>
 
     <dependency>

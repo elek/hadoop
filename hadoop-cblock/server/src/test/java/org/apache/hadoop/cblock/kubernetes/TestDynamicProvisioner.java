@@ -23,12 +23,13 @@ import io.kubernetes.client.models.V1PersistentVolume;
 import io.kubernetes.client.models.V1PersistentVolumeClaim;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_ISCSI_ADVERTISED_IP;
-import org.apache.hadoop.conf.OzoneConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 
 /**
  * Test the resource generation of Dynamic Provisioner.
