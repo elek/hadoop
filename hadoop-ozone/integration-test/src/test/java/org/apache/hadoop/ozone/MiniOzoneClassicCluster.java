@@ -177,6 +177,7 @@ public final class MiniOzoneClassicCluster extends MiniDFSCluster
 
     try {
       this.waitActive();
+      this.waitFirstBRCompleted(0, 3000);
       waitDatanodeOzoneReady(i);
     } catch (TimeoutException | InterruptedException e) {
       Thread.interrupted();
