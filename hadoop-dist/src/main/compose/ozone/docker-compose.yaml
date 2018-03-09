@@ -45,7 +45,7 @@ services:
          ENSURE_KSM_INITIALIZED: /data/metadata/ksm/current/VERSION
       env_file:
           - ./docker-config
-      command: ["/opt/hadoop/bin/hdfs","ksm"]
+      command: ["/opt/hadoop/bin/oz","ksm"]
    scm:
       image: elek/hadoop-runner:latest
       volumes:
@@ -56,4 +56,4 @@ services:
           - ./docker-config
       environment:
           ENSURE_SCM_INITIALIZED: /data/metadata/scm/current/VERSION
-      command: ["/opt/hadoop/bin/hdfs","scm"]
+      command: ["/opt/hadoop/bin/oz","scm"]
