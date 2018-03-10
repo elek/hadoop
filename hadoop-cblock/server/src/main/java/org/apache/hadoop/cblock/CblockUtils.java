@@ -93,4 +93,14 @@ public class CblockUtils {
     }
     return size * multiplier;
   }
+
+  public static void activateConfigs(){
+    Configuration.addDefaultResource("hdfs-default.xml");
+    Configuration.addDefaultResource("hdfs-site.xml");
+    Configuration.addDefaultResource("ozone-default.xml");
+    Configuration.addDefaultResource("ozone-site.xml");
+    Configuration.addDefaultResource("cblock-default.xml");
+    Configuration.addDefaultResource("cblock-site.xml");
+
+  }
 }

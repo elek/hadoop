@@ -76,6 +76,7 @@ public class LevelDBStore implements MetadataStore {
   }
 
   private void openDB(File dbPath, Options options) throws IOException {
+    dbPath.getParentFile().mkdirs();
     db = JniDBFactory.factory.open(dbPath, options);
     if (LOG.isDebugEnabled()) {
       LOG.debug("LevelDB successfully opened");

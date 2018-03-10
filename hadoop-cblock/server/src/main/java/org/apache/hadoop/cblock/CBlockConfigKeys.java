@@ -23,6 +23,7 @@ import static java.lang.Thread.NORM_PRIORITY;
  * This class contains constants for configuration keys used in CBlock.
  */
 public final class CBlockConfigKeys {
+
   public static final String DFS_CBLOCK_SERVICERPC_ADDRESS_KEY =
       "dfs.cblock.servicerpc-address";
   public static final int DFS_CBLOCK_SERVICERPC_PORT_DEFAULT =

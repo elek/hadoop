@@ -393,6 +393,7 @@ public class CBlockManager implements CBlockServiceProtocol,
   public static void main(String[] args) throws Exception {
     long version = RPC.getProtocolVersion(
         StorageContainerLocationProtocolPB.class);
+    CblockUtils.activateConfigs();
     OzoneConfiguration ozoneConf = new OzoneConfiguration();
     String scmAddress = ozoneConf.get(DFS_CBLOCK_SCM_IPADDRESS_KEY,
         DFS_CBLOCK_SCM_IPADDRESS_DEFAULT);

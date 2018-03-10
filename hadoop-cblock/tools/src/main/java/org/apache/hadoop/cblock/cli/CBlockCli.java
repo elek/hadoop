@@ -195,6 +195,7 @@ public class CBlockCli extends Configured implements Tool {
   }
 
   public static void main(String[] argv) throws Exception {
+    CblockUtils.activateConfigs();
     OzoneConfiguration cblockConf = new OzoneConfiguration();
     RPC.setProtocolEngine(cblockConf, CBlockServiceProtocolPB.class,
         ProtobufRpcEngine.class);

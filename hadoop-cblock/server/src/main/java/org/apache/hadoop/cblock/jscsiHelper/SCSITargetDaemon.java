@@ -23,6 +23,8 @@ import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_ISCSI_ADVERTISED_PORT;
 import static org.apache.hadoop.cblock.CBlockConfigKeys
     .DFS_CBLOCK_ISCSI_ADVERTISED_PORT_DEFAULT;
+
+import org.apache.hadoop.cblock.CblockUtils;
 import org.apache.hadoop.cblock.protocolPB.CBlockClientServerProtocolPB;
 import org.apache.hadoop.cblock.protocolPB.CBlockServiceProtocolPB;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
@@ -59,6 +61,7 @@ import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_DATANODE_PORT_KEY;
  */
 public final class SCSITargetDaemon {
   public static void main(String[] args) throws Exception {
+    CblockUtils.activateConfigs();
     OzoneConfiguration ozoneConf = new OzoneConfiguration();
 
     RPC.setProtocolEngine(ozoneConf, CBlockClientServerProtocolPB.class,
