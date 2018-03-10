@@ -117,10 +117,6 @@ public final class OzoneConfigKeys {
 
   public static final String OZONE_CLIENT_PROTOCOL =
       "ozone.client.protocol";
-  public static final String
-      OZONE_CLIENT_PROTOCOL_RPC = "org.apache.hadoop.ozone.client.rpc.RpcClient";
-  public static final String
-      OZONE_CLIENT_PROTOCOL_REST = "org.apache.hadoop.ozone.client.rpc.RestClient";
 
   // This defines the overall connection limit for the connection pool used in
   // RestClient.
