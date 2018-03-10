@@ -52,6 +52,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +142,8 @@ public class TestBlockDeletingService {
           // offset doesn't matter here
           String chunkName = blockName + "_chunk_" + k;
           File chunk = new File(chunkDir, chunkName);
-          FileUtils.writeStringToFile(chunk, "a chunk");
+          FileUtils.writeStringToFile(chunk, "a chunk",
+              Charset.defaultCharset());
           LOG.info("Creating file {}", chunk.getAbsolutePath());
           // make sure file exists
           Assert.assertTrue(chunk.isFile() && chunk.exists());
