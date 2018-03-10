@@ -18,27 +18,27 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
-import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
-import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.interfaces.UserAuth;
-import org.apache.hadoop.ozone.web.interfaces.Volume;
-import org.apache.hadoop.ozone.web.utils.OzoneUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 
+import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.ozone.OzoneRestUtils;
+import org.apache.hadoop.ozone.client.rest.OzoneException;
+import org.apache.hadoop.ozone.client.rest.headers.Header;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
+import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
+import org.apache.hadoop.ozone.web.interfaces.UserAuth;
+import org.apache.hadoop.ozone.web.interfaces.Volume;
+
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_FUNCTION;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * VolumeHandler handles volume specific HTTP calls.
@@ -98,7 +98,7 @@ public class VolumeHandler implements Volume {
           }
           StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
           fs.createVolume(args);
-          return OzoneUtils.getResponse(args, HTTP_CREATED, "");
+          return OzoneRestUtils.getResponse(args, HTTP_CREATED, "");
         } else {
           throw ErrorTable.newError(ErrorTable.ACCESS_DENIED, args);
         }
@@ -155,7 +155,7 @@ public class VolumeHandler implements Volume {
               fs.setVolumeQuota(args, false);
             }
           }
-          return OzoneUtils.getResponse(args, HTTP_OK, "");
+          return OzoneRestUtils.getResponse(args, HTTP_OK, "");
         } else {
           // Only Admins are allowed to update volumes
           throw ErrorTable.newError(ErrorTable.ACCESS_DENIED, args);
@@ -190,7 +190,7 @@ public class VolumeHandler implements Volume {
         if (auth.isAdmin(args)) {
           StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
           fs.deleteVolume(args);
-          return OzoneUtils.getResponse(args, HTTP_OK, "");
+          return OzoneRestUtils.getResponse(args, HTTP_OK, "");
         } else {
           throw ErrorTable.newError(ErrorTable.ACCESS_DENIED, args);
         }

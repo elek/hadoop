@@ -20,17 +20,28 @@ package org.apache.hadoop.hdsl;
 
 import java.net.InetSocketAddress;
 
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashSet;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.net.NetUtils;
+import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.net.HostAndPort;
+import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_ENABLED;
+import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_ENABLED_DEFAULT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HdslUtils {
+
+
+  private static final Logger LOG = LoggerFactory.getLogger(HdslUtils.class);
 
   /**
    * The service ID of the solitary Ozone SCM service.
@@ -215,7 +226,42 @@ public class HdslUtils {
     }
     return addresses;
   }
-  public static boolean isOzoneEnabled(OzoneConfiguration conf) {
-    return true;
+
+  public static boolean isHdslEnabled(Configuration conf) {
+    String securityEnabled =
+        conf.get(CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHENTICATION,
+            "simple");
+    boolean securityAuthorizationEnabled = conf.getBoolean(
+        CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHORIZATION, false);
+
+    if (securityEnabled.equals("kerberos") || securityAuthorizationEnabled) {
+      LOG.error("Ozone is not supported in a security enabled cluster. ");
+      return false;
+    } else {
+      return conf.getBoolean(OZONE_ENABLED, OZONE_ENABLED_DEFAULT);
+    }
+  }
+
+
+  /**
+   * Get the path for datanode id file.
+   *
+   * @param conf - Configuration
+   * @return the path of datanode id as string
+   */
+  public static String getDatanodeIDPath(Configuration conf) {
+    String dataNodeIDPath = conf.get(ScmConfigKeys.OZONE_SCM_DATANODE_ID);
+    if (dataNodeIDPath == null) {
+      String metaPath = conf.get(OzoneConfigKeys.OZONE_METADATA_DIRS);
+      if (Strings.isNullOrEmpty(metaPath)) {
+        // this means meta data is not found, in theory should not happen at
+        // this point because should've failed earlier.
+        throw new IllegalArgumentException("Unable to locate meta data" +
+            "directory when getting datanode id path");
+      }
+      dataNodeIDPath = Paths.get(metaPath,
+          ScmConfigKeys.OZONE_SCM_DATANODE_ID_PATH_DEFAULT).toString();
+    }
+    return dataNodeIDPath;
   }
 }

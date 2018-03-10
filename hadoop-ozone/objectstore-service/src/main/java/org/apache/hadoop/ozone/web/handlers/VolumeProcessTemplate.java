@@ -18,20 +18,6 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
-import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
-import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.interfaces.UserAuth;
-import org.apache.hadoop.ozone.web.response.ListBuckets;
-import org.apache.hadoop.ozone.web.response.ListVolumes;
-import org.apache.hadoop.ozone.web.response.VolumeInfo;
-import org.apache.hadoop.ozone.web.utils.OzoneUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -41,11 +27,26 @@ import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.NoSuchFileException;
 
+import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.ozone.OzoneRestUtils;
+import org.apache.hadoop.ozone.client.rest.OzoneException;
+import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
+import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
+import org.apache.hadoop.ozone.web.interfaces.UserAuth;
+import org.apache.hadoop.ozone.web.response.ListBuckets;
+import org.apache.hadoop.ozone.web.response.ListVolumes;
+import org.apache.hadoop.ozone.web.response.VolumeInfo;
+import org.apache.hadoop.ozone.web.utils.OzoneUtils;
+
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_COMPONENT;
-import static org.apache.hadoop.ozone.OzoneConsts.OZONE_RESOURCE;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_REQUEST;
+import static org.apache.hadoop.ozone.OzoneConsts.OZONE_RESOURCE;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_USER;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 
 /**
@@ -80,7 +81,7 @@ public abstract class VolumeProcessTemplate {
     UserArgs userArgs  = null;
     try {
       userArgs = new UserArgs(reqID, hostName, request, info, headers);
-      OzoneUtils.validate(request, headers, reqID, volume, hostName);
+      OzoneRestUtils.validate(request, headers, reqID, volume, hostName);
 
       // we use the same logic for both bucket and volume names
       OzoneUtils.verifyResourceName(volume);
@@ -197,7 +198,7 @@ public abstract class VolumeProcessTemplate {
       throws IOException, OzoneException {
     StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
     VolumeInfo info = fs.getVolumeInfo(args);
-    return OzoneUtils.getResponse(args, HTTP_OK, info.toJsonString());
+    return OzoneRestUtils.getResponse(args, HTTP_OK, info.toJsonString());
   }
 
   /**
@@ -233,7 +234,7 @@ public abstract class VolumeProcessTemplate {
           maxKeys, prevKey);
       listArgs.setRootScan(rootScan);
       ListVolumes volumes = fs.listVolumes(listArgs);
-      return OzoneUtils.getResponse(user, HTTP_OK, volumes.toJsonString());
+      return OzoneRestUtils.getResponse(user, HTTP_OK, volumes.toJsonString());
     } catch (IOException ex) {
       LOG.debug("unable to get the volume list for the user.", ex);
       OzoneException exp = ErrorTable.newError(ErrorTable.SERVER_ERROR,
@@ -262,7 +263,7 @@ public abstract class VolumeProcessTemplate {
       ListArgs<VolumeArgs> listArgs = new ListArgs<>(args, prefix,
           maxKeys, prevKey);
       ListBuckets bucketList = fs.listBuckets(listArgs);
-      return OzoneUtils.getResponse(args, HTTP_OK, bucketList.toJsonString());
+      return OzoneRestUtils.getResponse(args, HTTP_OK, bucketList.toJsonString());
     } catch (IOException ex) {
       LOG.debug("unable to get the bucket list for the specified volume.", ex);
       OzoneException exp =

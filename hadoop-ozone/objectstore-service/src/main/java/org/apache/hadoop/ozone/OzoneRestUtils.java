@@ -16,38 +16,12 @@
  *  limitations under the License.
  */
 
-package org.apache.hadoop.ozone.web.utils;
-
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_ENABLED;
-import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_ENABLED_DEFAULT;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
-import org.apache.hadoop.ozone.OzoneConfigKeys;
-import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.client.OzoneClientUtils;
-import org.apache.hadoop.ozone.client.io.LengthInputStream;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
-import org.apache.hadoop.ozone.web.handlers.UserArgs;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
-import org.apache.hadoop.scm.ScmConfigKeys;
-import org.apache.hadoop.util.Time;
+package org.apache.hadoop.ozone;
 
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,18 +30,30 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.ozone.client.OzoneClientUtils;
+import org.apache.hadoop.ozone.client.io.LengthInputStream;
+import org.apache.hadoop.ozone.client.rest.OzoneException;
+import org.apache.hadoop.ozone.client.rest.headers.Header;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
+import org.apache.hadoop.ozone.web.handlers.UserArgs;
+import org.apache.hadoop.util.Time;
+
+import com.google.common.base.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Set of Utility functions used in ozone.
  */
 @InterfaceAudience.Private
-public final class OzoneUtils {
+public final class OzoneRestUtils {
 
-  private static final Logger LOG = LoggerFactory.getLogger(OzoneUtils.class);
+  private static final Logger LOG = LoggerFactory.getLogger(
+      OzoneRestUtils.class);
 
-  public static final String ENCODING_NAME = "UTF-8";
-  public static final Charset ENCODING = Charset.forName(ENCODING_NAME);
 
-  private OzoneUtils() {
+  private OzoneRestUtils() {
     // Never constructed
   }
 
@@ -99,30 +85,6 @@ public final class OzoneUtils {
   }
 
   /**
-   * Verifies that max key length is a valid value.
-   *
-   * @param length
-   *          The max key length to be validated
-   *
-   * @throws IllegalArgumentException
-   */
-  public static void verifyMaxKeyLength(String length)
-      throws IllegalArgumentException {
-    int maxKey = 0;
-    try {
-      maxKey = Integer.parseInt(length);
-    } catch (NumberFormatException nfe) {
-      throw new IllegalArgumentException(
-          "Invalid max key length, the vaule should be digital.");
-    }
-
-    if (maxKey <= 0) {
-      throw new IllegalArgumentException(
-          "Invalid max key length, the vaule should be a positive number.");
-    }
-  }
-
-  /**
    * Returns a random Request ID.
    *
    * Request ID is returned to the client as well as flows through the system
@@ -134,20 +96,7 @@ public final class OzoneUtils {
     return UUID.randomUUID().toString();
   }
 
-  /**
-   * Return host name if possible.
-   *
-   * @return Host Name or localhost
-   */
-  public static String getHostName() {
-    String host = "localhost";
-    try {
-      host = InetAddress.getLocalHost().getHostName();
-    } catch (UnknownHostException e) {
-      // Ignore the error
-    }
-    return host;
-  }
+
 
   /**
    * Basic validate routine to make sure that all the
@@ -252,27 +201,6 @@ public final class OzoneUtils {
   }
 
 
-  /**
-   * Get the path for datanode id file.
-   *
-   * @param conf - Configuration
-   * @return the path of datanode id as string
-   */
-  public static String getDatanodeIDPath(Configuration conf) {
-    String dataNodeIDPath = conf.get(ScmConfigKeys.OZONE_SCM_DATANODE_ID);
-    if (dataNodeIDPath == null) {
-      String metaPath = conf.get(OzoneConfigKeys.OZONE_METADATA_DIRS);
-      if (Strings.isNullOrEmpty(metaPath)) {
-        // this means meta data is not found, in theory should not happen at
-        // this point because should've failed earlier.
-        throw new IllegalArgumentException("Unable to locate meta data" +
-            "directory when getting datanode id path");
-      }
-      dataNodeIDPath = Paths.get(metaPath,
-          ScmConfigKeys.OZONE_SCM_DATANODE_ID_PATH_DEFAULT).toString();
-    }
-    return dataNodeIDPath;
-  }
 
   /**
    * Convert time in millisecond to a human readable format required in ozone.
@@ -289,21 +217,6 @@ public final class OzoneUtils {
   public static long formatDate(String date) throws ParseException {
     Preconditions.checkNotNull(date, "Date string should not be null.");
     return DATE_FORMAT.get().parse(date).getTime();
-  }
-
-  public static boolean isOzoneEnabled(Configuration conf) {
-    String securityEnabled =
-        conf.get(CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHENTICATION,
-            "simple");
-    boolean securityAuthorizationEnabled = conf.getBoolean(
-        CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHORIZATION, false);
-
-    if (securityEnabled.equals("kerberos") || securityAuthorizationEnabled) {
-      LOG.error("Ozone is not supported in a security enabled cluster. ");
-      return false;
-    } else {
-      return conf.getBoolean(OZONE_ENABLED, OZONE_ENABLED_DEFAULT);
-    }
   }
 
 }

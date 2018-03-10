@@ -66,7 +66,7 @@ import org.apache.hadoop.util.StringUtils;
 
 import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForBlockClients;
 import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
-import static org.apache.hadoop.hdsl.HdslUtils.isOzoneEnabled;
+import static org.apache.hadoop.hdsl.HdslUtils.isHdslEnabled;
 import static org.apache.hadoop.ozone.KsmUtils.getKsmAddress;
 import static org.apache.hadoop.ozone.web.util.ServerUtils
     .updateRPCListenAddress;
@@ -339,7 +339,7 @@ public class KeySpaceManager extends ServiceRuntimeInfoImpl
 
   public static KeySpaceManager createKSM(String[] argv,
       OzoneConfiguration conf) throws IOException {
-    if (!isOzoneEnabled(conf)) {
+    if (!isHdslEnabled(conf)) {
       System.err.println("KSM cannot be started in secure mode or when " +
           OZONE_ENABLED + " is set to false");
       System.exit(1);

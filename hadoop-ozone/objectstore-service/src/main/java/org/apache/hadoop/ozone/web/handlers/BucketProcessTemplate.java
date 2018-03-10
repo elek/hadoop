@@ -18,21 +18,6 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
-import org.apache.hadoop.fs.StorageType;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
-import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.interfaces.UserAuth;
-import org.apache.hadoop.ozone.web.response.BucketInfo;
-import org.apache.hadoop.ozone.web.response.ListKeys;
-import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.web.utils.OzoneUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -44,11 +29,26 @@ import java.nio.file.NoSuchFileException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.ozone.OzoneConsts;
+import org.apache.hadoop.ozone.OzoneRestUtils;
+import org.apache.hadoop.ozone.client.rest.OzoneException;
+import org.apache.hadoop.ozone.client.rest.headers.Header;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
+import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
+import org.apache.hadoop.ozone.web.interfaces.UserAuth;
+import org.apache.hadoop.ozone.web.response.BucketInfo;
+import org.apache.hadoop.ozone.web.response.ListKeys;
+import org.apache.hadoop.ozone.web.utils.OzoneUtils;
+
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_COMPONENT;
-import static org.apache.hadoop.ozone.OzoneConsts.OZONE_RESOURCE;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_REQUEST;
+import static org.apache.hadoop.ozone.OzoneConsts.OZONE_RESOURCE;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_USER;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * This class abstracts way the repetitive tasks in
@@ -84,7 +84,7 @@ public abstract class BucketProcessTemplate {
     try {
       userArgs = new UserArgs(reqID, hostName, request, uriInfo, headers);
 
-      OzoneUtils.validate(request, headers, reqID, bucket, hostName);
+      OzoneRestUtils.validate(request, headers, reqID, bucket, hostName);
       OzoneUtils.verifyResourceName(bucket);
 
       UserAuth auth = UserHandlerBuilder.getAuthHandler();
@@ -303,7 +303,7 @@ public abstract class BucketProcessTemplate {
       throws IOException, OzoneException {
     StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
     BucketInfo info = fs.getBucketInfo(args);
-    return OzoneUtils.getResponse(args, HTTP_OK, info.toJsonString());
+    return OzoneRestUtils.getResponse(args, HTTP_OK, info.toJsonString());
   }
 
   /**
@@ -316,7 +316,7 @@ public abstract class BucketProcessTemplate {
   Response getBucketKeysList(ListArgs args) throws IOException, OzoneException {
     StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
     ListKeys objects = fs.listKeys(args);
-    return OzoneUtils.getResponse(args.getArgs(), HTTP_OK,
+    return OzoneRestUtils.getResponse(args.getArgs(), HTTP_OK,
         objects.toJsonString());
   }
 

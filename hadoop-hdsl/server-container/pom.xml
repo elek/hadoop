@@ -51,10 +51,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>hadoop-hdsl-server-scm</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-ozone-ozone-manager</artifactId>
-    </dependency>
+
 
     <dependency>
       <groupId>org.apache.hadoop</groupId>

@@ -446,7 +446,7 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
 
   public static StorageContainerManager createSCM(String[] argv,
       OzoneConfiguration conf) throws IOException {
-    if (!HdslUtils.isOzoneEnabled(conf)) {
+    if (!HdslUtils.isHdslEnabled(conf)) {
       System.err.println("SCM cannot be started in secure mode or when " +
           OZONE_ENABLED + " is set to false");
       System.exit(1);

@@ -30,7 +30,6 @@ import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.scm.cli.container.ContainerCommandHandler;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.client.ContainerOperationClient;
 import org.apache.hadoop.scm.client.ScmClient;
@@ -200,7 +199,7 @@ public class SCMCLI extends OzoneBaseCLI {
 
   @Override
   protected int dispatch(CommandLine cmd, Options opts)
-      throws IOException, OzoneException, URISyntaxException {
+      throws IOException, URISyntaxException {
     OzoneCommandHandler handler = null;
     try {
       if (cmd.hasOption(CONTAINER_CMD)) {

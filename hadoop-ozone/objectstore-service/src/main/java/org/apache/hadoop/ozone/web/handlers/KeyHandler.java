@@ -18,16 +18,6 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
-import org.apache.commons.codec.binary.Hex;
-import org.apache.hadoop.ozone.client.io.LengthInputStream;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
-import org.apache.hadoop.ozone.client.rest.headers.Header;
-import org.apache.hadoop.ozone.web.interfaces.Keys;
-import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.web.response.KeyInfo;
-import org.apache.hadoop.ozone.web.utils.OzoneUtils;
-
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -38,8 +28,18 @@ import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.hadoop.ozone.OzoneRestUtils;
+import org.apache.hadoop.ozone.client.io.LengthInputStream;
+import org.apache.hadoop.ozone.client.rest.OzoneException;
+import org.apache.hadoop.ozone.client.rest.headers.Header;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
+import org.apache.hadoop.ozone.web.interfaces.Keys;
+import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
+import org.apache.hadoop.ozone.web.response.KeyInfo;
+
 import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * KeyHandler deals with basic Key Operations.
@@ -105,7 +105,7 @@ public class KeyHandler implements Keys {
       throws IOException, OzoneException {
     StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
     LengthInputStream stream = fs.newKeyReader(args);
-    return OzoneUtils.getResponse(args, HTTP_OK, stream);
+    return OzoneRestUtils.getResponse(args, HTTP_OK, stream);
   }
 
   /**
@@ -115,7 +115,7 @@ public class KeyHandler implements Keys {
       throws IOException, OzoneException {
     StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
     KeyInfo keyInfo = fs.getKeyInfo(args);
-    return OzoneUtils.getResponse(args, HTTP_OK, keyInfo.toJsonString());
+    return OzoneRestUtils.getResponse(args, HTTP_OK, keyInfo.toJsonString());
   }
 
   /**
@@ -194,7 +194,7 @@ public class KeyHandler implements Keys {
         args.setHash(hashString);
         args.setSize(bytesRead);
         fs.commitKey(args, stream);
-        return OzoneUtils.getResponse(args, HTTP_CREATED, "");
+        return OzoneRestUtils.getResponse(args, HTTP_CREATED, "");
       }
     }.handleCall(volume, bucket, keys, req, headers, info, is);
   }
@@ -238,7 +238,7 @@ public class KeyHandler implements Keys {
           throws IOException, OzoneException, NoSuchAlgorithmException {
         StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
         fs.deleteKey(args);
-        return OzoneUtils.getResponse(args, HTTP_OK, "");
+        return OzoneRestUtils.getResponse(args, HTTP_OK, "");
       }
     }.handleCall(volume, bucket, keys, req, headers, info, null);
   }

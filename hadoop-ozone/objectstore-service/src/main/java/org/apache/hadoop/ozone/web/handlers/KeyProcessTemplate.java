@@ -19,6 +19,8 @@
 package org.apache.hadoop.ozone.web.handlers;
 
 import org.apache.commons.codec.binary.Base64;
+
+import org.apache.hadoop.ozone.OzoneRestUtils;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos;
 import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
 import org.apache.hadoop.ozone.client.rest.OzoneException;
@@ -79,7 +81,7 @@ public abstract class KeyProcessTemplate {
     UserArgs userArgs = null;
     try {
       userArgs = new UserArgs(reqID, hostName, request, info, headers);
-      OzoneUtils.validate(request, headers, reqID, bucket, hostName);
+      OzoneRestUtils.validate(request, headers, reqID, bucket, hostName);
       OzoneUtils.verifyResourceName(bucket);
 
       UserAuth auth = UserHandlerBuilder.getAuthHandler();

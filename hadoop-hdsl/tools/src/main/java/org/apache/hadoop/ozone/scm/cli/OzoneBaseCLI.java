@@ -21,7 +21,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.util.Tool;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ import java.net.URISyntaxException;
 public abstract class OzoneBaseCLI extends Configured implements Tool {
 
   protected abstract int dispatch(CommandLine cmd, Options opts)
-      throws IOException, OzoneException, URISyntaxException;
+      throws IOException, URISyntaxException;
 
   protected abstract CommandLine parseArgs(String[] argv, Options opts)
       throws ParseException;

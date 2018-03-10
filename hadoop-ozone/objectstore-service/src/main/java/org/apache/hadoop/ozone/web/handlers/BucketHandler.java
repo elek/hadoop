@@ -20,6 +20,7 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
+import org.apache.hadoop.ozone.OzoneRestUtils;
 import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
 import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.ozone.client.rest.headers.Header;
@@ -71,7 +72,7 @@ public class BucketHandler implements Bucket {
         args.setVersioning(getVersioning(args));
         args.setStorageType(getStorageType(args));
         fs.createBucket(args);
-        return OzoneUtils.getResponse(args, HTTP_CREATED, "");
+        return OzoneRestUtils.getResponse(args, HTTP_CREATED, "");
       }
     }.handleCall(volume, bucket, req, info, headers);
   }
@@ -118,7 +119,7 @@ public class BucketHandler implements Bucket {
         if (args.getStorageType() != null) {
           fs.setBucketStorageClass(args);
         }
-        return OzoneUtils.getResponse(args, HTTP_OK, "");
+        return OzoneRestUtils.getResponse(args, HTTP_OK, "");
       }
     }.handleCall(volume, bucket, req, info, headers);
   }
@@ -147,7 +148,7 @@ public class BucketHandler implements Bucket {
           throws OzoneException, IOException {
         StorageHandler fs = StorageHandlerBuilder.getStorageHandler();
         fs.deleteBucket(args);
-        return OzoneUtils.getResponse(args, HTTP_OK, "");
+        return OzoneRestUtils.getResponse(args, HTTP_OK, "");
       }
     }.handleCall(volume, bucket, req, info, headers);
   }
