@@ -34,7 +34,7 @@ services:
         - ../..//hadoop-${VERSION}:/opt/hadoop
       ports:
         - 9864
-      command: ["/opt/hadoop/bin/hdfs","datanode"]
+      command: ["/opt/hadoop/bin/oz","datanode"]
    jscsi:
       image: elek/hadoop-runner:o3-refactor
       ports:

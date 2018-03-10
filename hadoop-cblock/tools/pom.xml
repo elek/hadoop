@@ -29,7 +29,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <packaging>jar</packaging>
 
   <properties>
-    <hadoop.component>hdfs</hadoop.component>
+    <hadoop.component>cblock</hadoop.component>
     <is.hadoop.component>true</is.hadoop.component>
   </properties>
 
