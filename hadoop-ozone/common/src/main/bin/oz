@@ -206,6 +206,7 @@ function ozonecmd_case
     ;;
     nfs3)
       HADOOP_SUBCMD_SUPPORTDAEMONIZATION="true"
+      # shellcheck disable=SC2034
       HADOOP_SECURE_CLASSNAME=org.apache.hadoop.hdfs.nfs.nfs3.PrivilegedNfsGatewayStarter
       HADOOP_CLASSNAME=org.apache.hadoop.hdfs.nfs.nfs3.Nfs3
       hadoop_deprecate_envvar HADOOP_SECURE_NFS3_LOG_DIR HADOOP_SECURE_LOG_DIR
@@ -257,6 +258,7 @@ function ozonecmd_case
       HADOOP_CLASSNAME=org.apache.hadoop.util.VersionInfo
     ;;
     zkfc)
+      # shellcheck disable=SC2034
       HADOOP_SUBCMD_SUPPORTDAEMONIZATION="true"
       HADOOP_CLASSNAME='org.apache.hadoop.hdfs.tools.DFSZKFailoverController'
     ;;
@@ -278,6 +280,7 @@ else
 fi
 
 HADOOP_LIBEXEC_DIR="${HADOOP_LIBEXEC_DIR:-$HADOOP_DEFAULT_LIBEXEC_DIR}"
+# shellcheck disable=SC2034
 HADOOP_NEW_CONFIG=true
 if [[ -f "${HADOOP_LIBEXEC_DIR}/hdfs-config.sh" ]]; then
   # shellcheck source=./hadoop-hdfs-project/hadoop-hdfs/src/main/bin/hdfs-config.sh
