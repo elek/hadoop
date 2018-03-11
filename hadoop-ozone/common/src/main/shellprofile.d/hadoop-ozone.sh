@@ -19,6 +19,9 @@ if [[ "${HADOOP_SHELL_EXECNAME}" = oz ]]; then
 fi
 
 
+## @description  Profile for hdsl/cblock/ozone components.
+## @audience     private
+## @stability    evolving
 function _ozone_hadoop_classpath
 {
   #
