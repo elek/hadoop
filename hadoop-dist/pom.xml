@@ -87,7 +87,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdsl-datanode-service</artifactId>
+      <artifactId>hadoop-hdsl-container-service</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

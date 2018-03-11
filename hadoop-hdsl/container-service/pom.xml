@@ -22,7 +22,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <artifactId>hadoop-hdsl</artifactId>
     <version>3.2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>hadoop-hdsl-datanode-service</artifactId>
+  <artifactId>hadoop-hdsl-container-service</artifactId>
   <version>3.2.0-SNAPSHOT</version>
   <description>Apache Hadoop HDSL Container server</description>
   <name>Apache Hadoop HDSL Container server</name>

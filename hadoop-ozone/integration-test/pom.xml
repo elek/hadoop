@@ -48,7 +48,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdsl-datanode-service</artifactId>
+      <artifactId>hadoop-hdsl-container-service</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -86,7 +86,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdsl-datanode-service</artifactId>
+      <artifactId>hadoop-hdsl-container-service</artifactId>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
