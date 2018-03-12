@@ -23,7 +23,7 @@ import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.block.BlockManagerImpl;
 import org.apache.hadoop.ozone.scm.cli.SQLCLI;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
@@ -97,8 +97,8 @@ public class TestContainerSQLCli {
   private HashMap<String, String> blockContainerMap;
 
   private final static long DEFAULT_BLOCK_SIZE = 4 * KB;
-  private static OzoneProtos.ReplicationFactor factor;
-  private static OzoneProtos.ReplicationType type;
+  private static HdslProtos.ReplicationFactor factor;
+  private static HdslProtos.ReplicationType type;
   private static final String containerOwner = "OZONE";
 
 
@@ -113,11 +113,11 @@ public class TestContainerSQLCli {
         SCMContainerPlacementCapacity.class, ContainerPlacementPolicy.class);
     if(conf.getBoolean(ScmConfigKeys.DFS_CONTAINER_RATIS_ENABLED_KEY,
         ScmConfigKeys.DFS_CONTAINER_RATIS_ENABLED_DEFAULT)){
-      factor = OzoneProtos.ReplicationFactor.THREE;
-      type = OzoneProtos.ReplicationType.RATIS;
+      factor = HdslProtos.ReplicationFactor.THREE;
+      type = HdslProtos.ReplicationType.RATIS;
     } else {
-      factor = OzoneProtos.ReplicationFactor.ONE;
-      type = OzoneProtos.ReplicationType.STAND_ALONE;
+      factor = HdslProtos.ReplicationFactor.ONE;
+      type = HdslProtos.ReplicationType.STAND_ALONE;
     }
     cluster = new MiniOzoneClassicCluster.Builder(conf).numDataNodes(2)
         .storageCapacities(new long[] {datanodeCapacities, datanodeCapacities})

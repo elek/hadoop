@@ -19,7 +19,7 @@
 
 package org.apache.hadoop.ozone.protocol;
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.KeyValue;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.KeyValue;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMVersionResponseProto;
 

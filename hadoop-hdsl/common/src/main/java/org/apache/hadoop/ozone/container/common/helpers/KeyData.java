@@ -18,7 +18,7 @@
 package org.apache.hadoop.ozone.container.common.helpers;
 
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -82,8 +82,8 @@ public class KeyData {
     builder.setName(this.getKeyName());
     builder.addAllChunks(this.chunks);
     for (Map.Entry<String, String> entry : metadata.entrySet()) {
-      OzoneProtos.KeyValue.Builder keyValBuilder =
-          OzoneProtos.KeyValue.newBuilder();
+      HdslProtos.KeyValue.Builder keyValBuilder =
+          HdslProtos.KeyValue.newBuilder();
       builder.addMetadata(keyValBuilder.setKey(entry.getKey())
           .setValue(entry.getValue()).build());
     }

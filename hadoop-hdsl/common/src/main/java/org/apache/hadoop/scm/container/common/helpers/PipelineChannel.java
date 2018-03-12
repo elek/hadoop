@@ -21,10 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -82,9 +82,9 @@ public class PipelineChannel {
   }
 
   @JsonIgnore
-  public OzoneProtos.PipelineChannel getProtobufMessage() {
-    OzoneProtos.PipelineChannel.Builder builder =
-        OzoneProtos.PipelineChannel.newBuilder();
+  public HdslProtos.PipelineChannel getProtobufMessage() {
+    HdslProtos.PipelineChannel.Builder builder =
+        HdslProtos.PipelineChannel.newBuilder();
     for (DatanodeID datanode : datanodes.values()) {
       builder.addMembers(datanode.getProtoBufMessage());
     }
@@ -104,7 +104,7 @@ public class PipelineChannel {
   }
 
   public static PipelineChannel getFromProtoBuf(
-      OzoneProtos.PipelineChannel transportProtos) {
+      HdslProtos.PipelineChannel transportProtos) {
     Preconditions.checkNotNull(transportProtos);
     PipelineChannel pipelineChannel =
         new PipelineChannel(transportProtos.getLeaderID(),

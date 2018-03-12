@@ -20,7 +20,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.protocol.commands.SendContainerCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerInfo;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -42,11 +42,11 @@ import java.util.stream.Collectors;
 
 import static com.google.common.util.concurrent.Uninterruptibles
     .sleepUninterruptibly;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .NodeState.HEALTHY;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .NodeState.STALE;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .NodeState.INVALID;
 
 /**

@@ -29,7 +29,7 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
@@ -186,7 +186,7 @@ public class XceiverClient extends XceiverClientSpi {
    * @return - Stand Alone as the type.
    */
   @Override
-  public OzoneProtos.ReplicationType getPipelineType() {
-    return OzoneProtos.ReplicationType.STAND_ALONE;
+  public HdslProtos.ReplicationType getPipelineType() {
+    return HdslProtos.ReplicationType.STAND_ALONE;
   }
 }

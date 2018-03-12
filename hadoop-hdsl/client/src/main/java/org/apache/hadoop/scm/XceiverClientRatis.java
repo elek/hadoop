@@ -23,7 +23,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerCommandRequestProto;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerCommandResponseProto;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.client.OzoneClientUtils;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -98,8 +98,8 @@ public final class XceiverClientRatis extends XceiverClientSpi {
    * @return - Ratis
    */
   @Override
-  public OzoneProtos.ReplicationType getPipelineType() {
-    return OzoneProtos.ReplicationType.RATIS;
+  public HdslProtos.ReplicationType getPipelineType() {
+    return HdslProtos.ReplicationType.RATIS;
   }
 
   private void reinitialize(List<DatanodeID> datanodes, RaftGroup group)

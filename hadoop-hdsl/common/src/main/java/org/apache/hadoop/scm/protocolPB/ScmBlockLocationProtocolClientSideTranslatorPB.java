@@ -26,7 +26,7 @@ import org.apache.hadoop.ipc.ProtocolTranslator;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
 import org.apache.hadoop.ozone.common.BlockGroup;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.DeleteScmKeyBlocksRequestProto;
 import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.AllocateScmBlockRequestProto;
 import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.AllocateScmBlockResponseProto;
@@ -117,7 +117,7 @@ public final class ScmBlockLocationProtocolClientSideTranslatorPB
    */
   @Override
   public AllocatedBlock allocateBlock(long size,
-      OzoneProtos.ReplicationType type, OzoneProtos.ReplicationFactor factor,
+      HdslProtos.ReplicationType type, HdslProtos.ReplicationFactor factor,
       String owner) throws IOException {
     Preconditions.checkArgument(size > 0, "block size must be greater than 0");
 
@@ -181,9 +181,9 @@ public final class ScmBlockLocationProtocolClientSideTranslatorPB
    */
   @Override
   public ScmInfo getScmInfo() throws IOException {
-    OzoneProtos.GetScmInfoRequestProto request =
-        OzoneProtos.GetScmInfoRequestProto.getDefaultInstance();
-    OzoneProtos.GetScmInfoRespsonseProto resp;
+    HdslProtos.GetScmInfoRequestProto request =
+        HdslProtos.GetScmInfoRequestProto.getDefaultInstance();
+    HdslProtos.GetScmInfoRespsonseProto resp;
     try {
       resp = rpcProxy.getScmInfo(NULL_RPC_CONTROLLER, request);
     } catch (ServiceException e) {

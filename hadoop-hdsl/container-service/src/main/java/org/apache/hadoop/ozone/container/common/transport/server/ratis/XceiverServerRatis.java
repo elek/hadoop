@@ -27,7 +27,7 @@ import org.apache.hadoop.ozone.container.common.interfaces.ContainerDispatcher;
 import org.apache.hadoop.ozone.container.common.transport.server
     .XceiverServerSpi;
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.ratis.RaftConfigKeys;
 import org.apache.ratis.conf.RaftProperties;
 import org.apache.ratis.grpc.GrpcConfigKeys;
@@ -208,7 +208,7 @@ public final class XceiverServerRatis implements XceiverServerSpi {
    * @return enum -- {Stand_Alone, Ratis, Chained}
    */
   @Override
-  public OzoneProtos.ReplicationType getServerType() {
-    return OzoneProtos.ReplicationType.RATIS;
+  public HdslProtos.ReplicationType getServerType() {
+    return HdslProtos.ReplicationType.RATIS;
   }
 }

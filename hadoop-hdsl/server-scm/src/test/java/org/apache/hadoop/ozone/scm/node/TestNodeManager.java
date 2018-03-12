@@ -25,7 +25,7 @@ import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -54,10 +54,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .STALE;
 import static org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMCmdType;
@@ -703,7 +703,7 @@ public class TestNodeManager {
    * @return true if we found the expected number.
    */
   private boolean findNodes(NodeManager nodeManager, int count,
-      OzoneProtos.NodeState state) {
+      HdslProtos.NodeState state) {
     return count == nodeManager.getNodeCount(state);
   }
 

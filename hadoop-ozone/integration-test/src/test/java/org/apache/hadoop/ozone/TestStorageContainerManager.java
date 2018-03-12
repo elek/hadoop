@@ -24,9 +24,9 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeType;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.DeletedBlocksTransaction;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMCmdType;
@@ -132,7 +132,7 @@ public class TestStorageContainerManager {
       try {
         Pipeline pipeLine2 = mockScm.allocateContainer(
             xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, "container2", "OZONE");
+            HdslProtos.ReplicationFactor.ONE, "container2", "OZONE");
         if (expectPermissionDenied) {
           fail("Operation should fail, expecting an IOException here.");
         } else {
@@ -145,7 +145,7 @@ public class TestStorageContainerManager {
       try {
         Pipeline pipeLine3 = mockScm.allocateContainer(
             xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, "container3", "OZONE");
+            HdslProtos.ReplicationFactor.ONE, "container3", "OZONE");
 
         if (expectPermissionDenied) {
           fail("Operation should fail, expecting an IOException here.");

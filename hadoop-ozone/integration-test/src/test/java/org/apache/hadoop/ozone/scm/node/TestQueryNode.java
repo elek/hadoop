@@ -18,7 +18,7 @@ package org.apache.hadoop.ozone.scm.node;
 
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.client.ContainerOperationClient;
@@ -31,10 +31,10 @@ import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .STALE;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .OZONE_SCM_DEADNODE_INTERVAL;
@@ -85,9 +85,9 @@ public class TestQueryNode {
 
   @Test
   public void testHealthyNodesCount() throws Exception {
-    OzoneProtos.NodePool pool = scmClient.queryNode(
+    HdslProtos.NodePool pool = scmClient.queryNode(
         EnumSet.of(HEALTHY),
-        OzoneProtos.QueryScope.CLUSTER, "");
+        HdslProtos.QueryScope.CLUSTER, "");
     assertEquals("Expected  live nodes", numOfDatanodes,
         pool.getNodesCount());
   }
@@ -102,7 +102,7 @@ public class TestQueryNode {
         100, 4 * 1000);
 
     int nodeCount = scmClient.queryNode(EnumSet.of(STALE),
-        OzoneProtos.QueryScope.CLUSTER, "").getNodesCount();
+        HdslProtos.QueryScope.CLUSTER, "").getNodesCount();
     assertEquals("Mismatch of expected nodes count", 2, nodeCount);
 
     GenericTestUtils.waitFor(() ->
@@ -111,12 +111,12 @@ public class TestQueryNode {
 
     // Assert that we don't find any stale nodes.
     nodeCount = scmClient.queryNode(EnumSet.of(STALE),
-        OzoneProtos.QueryScope.CLUSTER, "").getNodesCount();
+        HdslProtos.QueryScope.CLUSTER, "").getNodesCount();
     assertEquals("Mismatch of expected nodes count", 0, nodeCount);
 
     // Assert that we find the expected number of dead nodes.
     nodeCount = scmClient.queryNode(EnumSet.of(DEAD),
-        OzoneProtos.QueryScope.CLUSTER, "").getNodesCount();
+        HdslProtos.QueryScope.CLUSTER, "").getNodesCount();
     assertEquals("Mismatch of expected nodes count", 2, nodeCount);
   }
 }

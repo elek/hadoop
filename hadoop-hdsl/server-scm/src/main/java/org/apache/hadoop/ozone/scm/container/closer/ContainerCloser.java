@@ -25,7 +25,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
 import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.node.NodeManager;
 import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
@@ -92,7 +92,7 @@ public class ContainerCloser {
    *
    * @param info - ContainerInfo.
    */
-  public void close(OzoneProtos.SCMContainerInfo info) {
+  public void close(HdslProtos.SCMContainerInfo info) {
 
     if (commandIssued.containsKey(info.getContainerName())) {
       // We check if we issued a close command in last 3 * reportInterval secs.
@@ -127,7 +127,7 @@ public class ContainerCloser {
     // this queue can be emptied by a datanode after a close report is send
     // to SCM. In that case also, data node will ignore this command.
 
-    OzoneProtos.Pipeline pipeline = info.getPipeline();
+    HdslProtos.Pipeline pipeline = info.getPipeline();
     for (HdfsProtos.DatanodeIDProto datanodeID :
         pipeline.getPipelineChannel().getMembersList()) {
       nodeManager.addDatanodeCommand(DatanodeID.getFromProtoBuf(datanodeID),

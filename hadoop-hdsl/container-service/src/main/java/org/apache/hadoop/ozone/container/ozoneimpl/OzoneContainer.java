@@ -35,7 +35,7 @@ import org.apache.hadoop.ozone.container.common.statemachine.background.BlockDel
 import org.apache.hadoop.ozone.container.common.transport.server.XceiverServer;
 import org.apache.hadoop.ozone.container.common.transport.server.ratis.XceiverServerRatis;
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.SCMNodeReport;
@@ -208,7 +208,7 @@ public class OzoneContainer {
     return this.manager.getNodeReport();
   }
 
-  private int getPortbyType(OzoneProtos.ReplicationType replicationType) {
+  private int getPortbyType(HdslProtos.ReplicationType replicationType) {
     for (XceiverServerSpi serverinstance : server) {
       if (serverinstance.getServerType() == replicationType) {
         return serverinstance.getIPCPort();
@@ -223,7 +223,7 @@ public class OzoneContainer {
    * @return Container server IPC port.
    */
   public int getContainerServerPort() {
-    return getPortbyType(OzoneProtos.ReplicationType.STAND_ALONE);
+    return getPortbyType(HdslProtos.ReplicationType.STAND_ALONE);
   }
 
   /**
@@ -232,7 +232,7 @@ public class OzoneContainer {
    * @return Ratis port.
    */
   public int getRatisContainerServerPort() {
-    return getPortbyType(OzoneProtos.ReplicationType.RATIS);
+    return getPortbyType(HdslProtos.ReplicationType.RATIS);
   }
 
   /**

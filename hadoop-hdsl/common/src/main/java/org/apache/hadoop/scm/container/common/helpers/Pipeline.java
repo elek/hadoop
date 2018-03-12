@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 
 import java.io.IOException;
@@ -83,14 +83,14 @@ public class Pipeline {
    * @param pipeline - ProtoBuf definition for the pipeline.
    * @return Pipeline Object
    */
-  public static Pipeline getFromProtoBuf(OzoneProtos.Pipeline pipeline) {
+  public static Pipeline getFromProtoBuf(HdslProtos.Pipeline pipeline) {
     Preconditions.checkNotNull(pipeline);
     PipelineChannel pipelineChannel =
         PipelineChannel.getFromProtoBuf(pipeline.getPipelineChannel());
     return new Pipeline(pipeline.getContainerName(), pipelineChannel);
   }
 
-  public OzoneProtos.ReplicationFactor getFactor() {
+  public HdslProtos.ReplicationFactor getFactor() {
     return pipelineChannel.getFactor();
   }
 
@@ -143,9 +143,9 @@ public class Pipeline {
    * @return Protobuf message
    */
   @JsonIgnore
-  public OzoneProtos.Pipeline getProtobufMessage() {
-    OzoneProtos.Pipeline.Builder builder =
-        OzoneProtos.Pipeline.newBuilder();
+  public HdslProtos.Pipeline getProtobufMessage() {
+    HdslProtos.Pipeline.Builder builder =
+        HdslProtos.Pipeline.newBuilder();
     builder.setContainerName(this.containerName);
     builder.setPipelineChannel(this.pipelineChannel.getProtobufMessage());
     return builder.build();
@@ -194,7 +194,7 @@ public class Pipeline {
    *
    * @return - LifeCycleStates.
    */
-  public OzoneProtos.LifeCycleState getLifeCycleState() {
+  public HdslProtos.LifeCycleState getLifeCycleState() {
     return pipelineChannel.getLifeCycleState();
   }
 
@@ -212,7 +212,7 @@ public class Pipeline {
    *
    * @return type - Standalone, Ratis, Chained.
    */
-  public OzoneProtos.ReplicationType getType() {
+  public HdslProtos.ReplicationType getType() {
     return pipelineChannel.getType();
   }
 

@@ -21,9 +21,9 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
 import org.apache.hadoop.ozone.scm.container.Mapping;
 import org.apache.hadoop.ozone.scm.exceptions.SCMException;
 import org.apache.hadoop.ozone.scm.node.NodeManager;
@@ -265,12 +265,12 @@ public class BlockManagerImpl implements BlockManager, BlockmanagerMXBean {
           containerManager
               .getStateManager()
               .getMatchingContainer(
-                  size, owner, type, factor, OzoneProtos.LifeCycleState
+                  size, owner, type, factor, HdslProtos.LifeCycleState
                       .ALLOCATED);
       if (containerInfo != null) {
         containerManager.updateContainerState(containerInfo.getContainerName(),
-            OzoneProtos.LifeCycleEvent.CREATE);
-        return newBlock(containerInfo, OzoneProtos.LifeCycleState.ALLOCATED);
+            HdslProtos.LifeCycleEvent.CREATE);
+        return newBlock(containerInfo, HdslProtos.LifeCycleState.ALLOCATED);
       }
 
       // Since we found no allocated containers that match our criteria, let us
@@ -278,10 +278,10 @@ public class BlockManagerImpl implements BlockManager, BlockmanagerMXBean {
       containerInfo =
           containerManager
               .getStateManager()
-              .getMatchingContainer(size, owner, type, factor, OzoneProtos
+              .getMatchingContainer(size, owner, type, factor, HdslProtos
                   .LifeCycleState.OPEN);
       if (containerInfo != null) {
-        return newBlock(containerInfo, OzoneProtos.LifeCycleState.OPEN);
+        return newBlock(containerInfo, HdslProtos.LifeCycleState.OPEN);
       }
 
       // We found neither ALLOCATED or OPEN Containers. This generally means
@@ -295,12 +295,12 @@ public class BlockManagerImpl implements BlockManager, BlockmanagerMXBean {
           containerManager
               .getStateManager()
               .getMatchingContainer(
-                  size, owner, type, factor, OzoneProtos.LifeCycleState
+                  size, owner, type, factor, HdslProtos.LifeCycleState
                       .ALLOCATED);
       if (containerInfo != null) {
         containerManager.updateContainerState(containerInfo.getContainerName(),
-            OzoneProtos.LifeCycleEvent.CREATE);
-        return newBlock(containerInfo, OzoneProtos.LifeCycleState.ALLOCATED);
+            HdslProtos.LifeCycleEvent.CREATE);
+        return newBlock(containerInfo, HdslProtos.LifeCycleState.ALLOCATED);
       }
 
       // we have tried all strategies we know and but somehow we are not able
@@ -325,12 +325,12 @@ public class BlockManagerImpl implements BlockManager, BlockmanagerMXBean {
    * @return AllocatedBlock
    */
   private AllocatedBlock newBlock(
-      ContainerInfo containerInfo, OzoneProtos.LifeCycleState state)
+      ContainerInfo containerInfo, HdslProtos.LifeCycleState state)
       throws IOException {
 
     // TODO : Replace this with Block ID.
     String blockKey = UUID.randomUUID().toString();
-    boolean createContainer = (state == OzoneProtos.LifeCycleState.ALLOCATED);
+    boolean createContainer = (state == HdslProtos.LifeCycleState.ALLOCATED);
 
     AllocatedBlock.Builder abb =
         new AllocatedBlock.Builder()
@@ -521,7 +521,7 @@ public class BlockManagerImpl implements BlockManager, BlockmanagerMXBean {
     // sense.
     // We have to get open containers by Replication Type and Replication
     // factor. Hence returning 0 for now.
-    // containers.get(OzoneProtos.LifeCycleState.OPEN).size();
+    // containers.get(HdslProtos.LifeCycleState.OPEN).size();
   }
 
   @Override

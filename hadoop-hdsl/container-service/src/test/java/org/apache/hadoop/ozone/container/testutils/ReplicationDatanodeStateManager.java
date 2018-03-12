@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.HEALTHY;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.HEALTHY;
 
 /**
  * This class  manages the state of datanode

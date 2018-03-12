@@ -24,7 +24,7 @@ import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ipc.ProtobufHelper;
 import org.apache.hadoop.ipc.ProtocolTranslator;
 import org.apache.hadoop.ipc.RPC;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.ScmInfo;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.protocol.StorageContainerLocationProtocol;
@@ -85,8 +85,8 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
    * @throws IOException
    */
   @Override
-  public Pipeline allocateContainer(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, String
+  public Pipeline allocateContainer(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, String
       containerName, String owner) throws IOException {
 
     Preconditions.checkNotNull(containerName, "Container Name cannot be Null");
@@ -151,7 +151,7 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
       SCMListContainerResponseProto response =
           rpcProxy.listContainer(NULL_RPC_CONTROLLER, request);
       List<ContainerInfo> containerList = new ArrayList<>();
-      for (OzoneProtos.SCMContainerInfo containerInfoProto : response
+      for (HdslProtos.SCMContainerInfo containerInfoProto : response
           .getContainersList()) {
         containerList.add(ContainerInfo.fromProtobuf(containerInfoProto));
       }
@@ -191,8 +191,8 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
    * @return List of Datanodes.
    */
   @Override
-  public OzoneProtos.NodePool queryNode(EnumSet<OzoneProtos.NodeState>
-      nodeStatuses, OzoneProtos.QueryScope queryScope, String poolName)
+  public HdslProtos.NodePool queryNode(EnumSet<HdslProtos.NodeState>
+      nodeStatuses, HdslProtos.QueryScope queryScope, String poolName)
       throws IOException {
     // TODO : We support only cluster wide query right now. So ignoring checking
     // queryScope and poolName
@@ -248,8 +248,8 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
    * @throws IOException
    */
   @Override
-  public Pipeline createReplicationPipeline(OzoneProtos.ReplicationType
-      replicationType, OzoneProtos.ReplicationFactor factor, OzoneProtos
+  public Pipeline createReplicationPipeline(HdslProtos.ReplicationType
+      replicationType, HdslProtos.ReplicationFactor factor, HdslProtos
       .NodePool nodePool) throws IOException {
     PipelineRequestProto request = PipelineRequestProto.newBuilder()
         .setNodePool(nodePool)
@@ -277,10 +277,10 @@ public final class StorageContainerLocationProtocolClientSideTranslatorPB
 
   @Override
   public ScmInfo getScmInfo() throws IOException {
-    OzoneProtos.GetScmInfoRequestProto request =
-        OzoneProtos.GetScmInfoRequestProto.getDefaultInstance();
+    HdslProtos.GetScmInfoRequestProto request =
+        HdslProtos.GetScmInfoRequestProto.getDefaultInstance();
     try {
-      OzoneProtos.GetScmInfoRespsonseProto resp = rpcProxy.getScmInfo(
+      HdslProtos.GetScmInfoRespsonseProto resp = rpcProxy.getScmInfo(
           NULL_RPC_CONTROLLER, request);
       ScmInfo.Builder builder = new ScmInfo.Builder()
           .setClusterId(resp.getClusterId())

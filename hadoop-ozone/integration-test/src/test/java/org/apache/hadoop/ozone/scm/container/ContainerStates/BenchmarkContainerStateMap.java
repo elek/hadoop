@@ -19,7 +19,7 @@
 package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import org.apache.hadoop.ozone.container.ContainerTestHelper;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.exceptions.SCMException;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -43,11 +43,11 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .LifeCycleState.OPEN;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .ReplicationFactor.ONE;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .ReplicationType.STAND_ALONE;
 
 public class BenchmarkContainerStateMap {
@@ -77,7 +77,7 @@ public class BenchmarkContainerStateMap {
     int cid = state.containerID.incrementAndGet();
     ContainerInfo containerInfo = new ContainerInfo.Builder()
         .setContainerName(pipeline.getContainerName())
-        .setState(OzoneProtos.LifeCycleState.CLOSED)
+        .setState(HdslProtos.LifeCycleState.CLOSED)
         .setPipeline(null)
         // This is bytes allocated for blocks inside container, not the
         // container size
@@ -114,7 +114,7 @@ public class BenchmarkContainerStateMap {
         try {
           ContainerInfo containerInfo = new ContainerInfo.Builder()
               .setContainerName(pipeline.getContainerName())
-              .setState(OzoneProtos.LifeCycleState.CLOSED)
+              .setState(HdslProtos.LifeCycleState.CLOSED)
               .setPipeline(null)
               // This is bytes allocated for blocks inside container, not the
               // container size
@@ -135,7 +135,7 @@ public class BenchmarkContainerStateMap {
         try {
           ContainerInfo containerInfo = new ContainerInfo.Builder()
               .setContainerName(pipeline.getContainerName())
-              .setState(OzoneProtos.LifeCycleState.OPEN)
+              .setState(HdslProtos.LifeCycleState.OPEN)
               .setPipeline(null)
               // This is bytes allocated for blocks inside container, not the
               // container size
@@ -157,7 +157,7 @@ public class BenchmarkContainerStateMap {
 
         ContainerInfo containerInfo = new ContainerInfo.Builder()
             .setContainerName(pipeline.getContainerName())
-            .setState(OzoneProtos.LifeCycleState.OPEN)
+            .setState(HdslProtos.LifeCycleState.OPEN)
             .setPipeline(null)
             // This is bytes allocated for blocks inside container, not the
             // container size

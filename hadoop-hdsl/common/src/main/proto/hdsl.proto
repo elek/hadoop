@@ -23,7 +23,7 @@
  */
 
 option java_package = "org.apache.hadoop.hdsl.protocol.proto";
-option java_outer_classname = "OzoneProtos";
+option java_outer_classname = "HdslProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
 package hadoop.hdsl;

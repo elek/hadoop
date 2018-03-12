@@ -48,7 +48,7 @@ import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos
     .ServicePort;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.OzoneAclInfo;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.protocolPB
     .KeySpaceManagerProtocolServerSideTranslatorPB;
 import org.apache.hadoop.scm.ScmInfo;
@@ -93,7 +93,7 @@ import static org.apache.hadoop.ozone.ksm.KSMConfigKeys
 import static org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.KeySpaceManagerService
     .newReflectiveBlockingService;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .NodeState.HEALTHY;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
@@ -841,7 +841,7 @@ public final class KeySpaceManager extends ServiceRuntimeInfoImpl
     // When we implement multi-home this call has to be handled properly.
     List<ServiceInfo> services = new ArrayList<>();
     ServiceInfo.Builder ksmServiceInfoBuilder = ServiceInfo.newBuilder()
-        .setNodeType(OzoneProtos.NodeType.KSM)
+        .setNodeType(HdslProtos.NodeType.KSM)
         .setHostname(ksmRpcAddress.getHostName())
         .addServicePort(ServicePort.newBuilder()
                 .setType(ServicePort.Type.RPC)
@@ -866,22 +866,22 @@ public final class KeySpaceManager extends ServiceRuntimeInfoImpl
     InetSocketAddress scmAddr = getScmAddressForClients(
         configuration);
     ServiceInfo.Builder scmServiceInfoBuilder = ServiceInfo.newBuilder()
-        .setNodeType(OzoneProtos.NodeType.SCM)
+        .setNodeType(HdslProtos.NodeType.SCM)
         .setHostname(scmAddr.getHostName())
         .addServicePort(ServicePort.newBuilder()
             .setType(ServicePort.Type.RPC)
             .setValue(scmAddr.getPort()).build());
     services.add(scmServiceInfoBuilder.build());
 
-    List<OzoneProtos.Node> nodes = scmContainerClient.queryNode(
-        EnumSet.of(HEALTHY), OzoneProtos.QueryScope.CLUSTER, "")
+    List<HdslProtos.Node> nodes = scmContainerClient.queryNode(
+        EnumSet.of(HEALTHY), HdslProtos.QueryScope.CLUSTER, "")
         .getNodesList();
 
-    for (OzoneProtos.Node node : nodes) {
+    for (HdslProtos.Node node : nodes) {
       HdfsProtos.DatanodeIDProto datanode = node.getNodeID();
 
       ServiceInfo.Builder dnServiceInfoBuilder = ServiceInfo.newBuilder()
-          .setNodeType(OzoneProtos.NodeType.DATANODE)
+          .setNodeType(HdslProtos.NodeType.DATANODE)
           .setHostname(datanode.getHostName());
 
       dnServiceInfoBuilder.addServicePort(ServicePort.newBuilder()

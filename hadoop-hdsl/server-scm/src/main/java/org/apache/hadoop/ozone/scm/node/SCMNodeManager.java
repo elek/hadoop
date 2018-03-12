@@ -30,7 +30,7 @@ import org.apache.hadoop.ozone.protocol.commands.ReregisterCommand;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 import org.apache.hadoop.ozone.protocol.commands.SendContainerCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -75,10 +75,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.HEALTHY;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.STALE;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.INVALID;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.HEALTHY;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.STALE;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.INVALID;
 import static org.apache.hadoop.util.Time.monotonicNow;
 
 /**

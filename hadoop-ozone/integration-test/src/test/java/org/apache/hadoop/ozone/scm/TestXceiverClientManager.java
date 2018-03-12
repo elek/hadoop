@@ -24,7 +24,7 @@ import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.MiniOzoneCluster;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.XceiverClientSpi;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -116,7 +116,7 @@ public class TestXceiverClientManager {
     String containerName1 = "container" + RandomStringUtils.randomNumeric(10);
     Pipeline pipeline1 =
         storageContainerLocationClient.allocateContainer(
-            clientManager.getType(), OzoneProtos.ReplicationFactor.ONE,
+            clientManager.getType(), HdslProtos.ReplicationFactor.ONE,
             containerName1, containerOwner);
     XceiverClientSpi client1 = clientManager.acquireClient(pipeline1);
     Assert.assertEquals(1, client1.getRefcount());
@@ -127,7 +127,7 @@ public class TestXceiverClientManager {
     Pipeline pipeline2 =
         storageContainerLocationClient.allocateContainer(
             clientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName2, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName2, containerOwner);
     XceiverClientSpi client2 = clientManager.acquireClient(pipeline2);
     Assert.assertEquals(1, client2.getRefcount());
     Assert.assertEquals(containerName2,

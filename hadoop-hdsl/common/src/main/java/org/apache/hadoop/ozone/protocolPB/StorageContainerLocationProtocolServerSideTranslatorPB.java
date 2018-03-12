@@ -26,7 +26,7 @@ import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerLocationProtocolProtos;
 import org.apache.hadoop.scm.ScmInfo;
@@ -150,9 +150,9 @@ public final class StorageContainerLocationProtocolServerSideTranslatorPB
       StorageContainerLocationProtocolProtos.NodeQueryRequestProto request)
       throws ServiceException {
     try {
-      EnumSet<OzoneProtos.NodeState> nodeStateEnumSet = EnumSet.copyOf(request
+      EnumSet<HdslProtos.NodeState> nodeStateEnumSet = EnumSet.copyOf(request
           .getQueryList());
-      OzoneProtos.NodePool datanodes = impl.queryNode(nodeStateEnumSet,
+      HdslProtos.NodePool datanodes = impl.queryNode(nodeStateEnumSet,
           request.getScope(), request.getPoolName());
       return StorageContainerLocationProtocolProtos
           .NodeQueryResponseProto.newBuilder()
@@ -185,12 +185,12 @@ public final class StorageContainerLocationProtocolServerSideTranslatorPB
   }
 
   @Override
-  public OzoneProtos.GetScmInfoRespsonseProto getScmInfo(
-      RpcController controller, OzoneProtos.GetScmInfoRequestProto req)
+  public HdslProtos.GetScmInfoRespsonseProto getScmInfo(
+      RpcController controller, HdslProtos.GetScmInfoRequestProto req)
       throws ServiceException {
     try {
       ScmInfo scmInfo = impl.getScmInfo();
-      return OzoneProtos.GetScmInfoRespsonseProto.newBuilder()
+      return HdslProtos.GetScmInfoRespsonseProto.newBuilder()
           .setClusterId(scmInfo.getClusterId())
           .setScmId(scmInfo.getScmId())
           .build();

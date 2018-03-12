@@ -24,8 +24,8 @@ import java.util.Set;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
 import org.apache.hadoop.ozone.common.BlockGroup;
 import org.apache.hadoop.scm.container.common.helpers.AllocatedBlock;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
 import org.apache.hadoop.scm.ScmInfo;
 
 /**

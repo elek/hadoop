@@ -29,7 +29,7 @@ import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.ksm.helpers.ServiceInfo;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.ServicePort;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -90,14 +90,14 @@ public class TestKeySpaceManagerRestInterface {
         new TypeReference<List<ServiceInfo>>() {};
     List<ServiceInfo> serviceInfos = objectMapper.readValue(
         serviceListJson, serviceInfoReference);
-    Map<OzoneProtos.NodeType, ServiceInfo> serviceMap = new HashMap<>();
+    Map<HdslProtos.NodeType, ServiceInfo> serviceMap = new HashMap<>();
     for (ServiceInfo serviceInfo : serviceInfos) {
       serviceMap.put(serviceInfo.getNodeType(), serviceInfo);
     }
 
     InetSocketAddress ksmAddress =
         getKsmAddressForClients(conf);
-    ServiceInfo ksmInfo = serviceMap.get(OzoneProtos.NodeType.KSM);
+    ServiceInfo ksmInfo = serviceMap.get(HdslProtos.NodeType.KSM);
 
     Assert.assertEquals(ksmAddress.getHostName(), ksmInfo.getHostname());
     Assert.assertEquals(ksmAddress.getPort(),
@@ -107,13 +107,13 @@ public class TestKeySpaceManagerRestInterface {
 
     InetSocketAddress scmAddress =
         getScmAddressForClients(conf);
-    ServiceInfo scmInfo = serviceMap.get(OzoneProtos.NodeType.SCM);
+    ServiceInfo scmInfo = serviceMap.get(HdslProtos.NodeType.SCM);
 
     Assert.assertEquals(scmAddress.getHostName(), scmInfo.getHostname());
     Assert.assertEquals(scmAddress.getPort(),
         scmInfo.getPort(ServicePort.Type.RPC));
 
-    ServiceInfo datanodeInfo = serviceMap.get(OzoneProtos.NodeType.DATANODE);
+    ServiceInfo datanodeInfo = serviceMap.get(HdslProtos.NodeType.DATANODE);
     DataNode datanode = ((MiniOzoneClassicCluster) cluster)
         .getDataNodes().get(0);
     Assert.assertEquals(datanode.getDatanodeHostname(),

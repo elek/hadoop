@@ -26,7 +26,7 @@ import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.VolumeList;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.VolumeInfo;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.util.Time;
 import org.apache.hadoop.utils.BatchOperation;
 import org.slf4j.Logger;
@@ -137,9 +137,9 @@ public class VolumeManagerImpl implements VolumeManager {
 
       BatchOperation batch = new BatchOperation();
       // Write the vol info
-      List<OzoneProtos.KeyValue> metadataList = new LinkedList<>();
+      List<HdslProtos.KeyValue> metadataList = new LinkedList<>();
       for (Map.Entry<String, String> entry : args.getKeyValueMap().entrySet()) {
-        metadataList.add(OzoneProtos.KeyValue.newBuilder()
+        metadataList.add(HdslProtos.KeyValue.newBuilder()
             .setKey(entry.getKey()).setValue(entry.getValue()).build());
       }
       List<OzoneAclInfo> aclList = args.getAclMap().ozoneAclGetProtobuf();

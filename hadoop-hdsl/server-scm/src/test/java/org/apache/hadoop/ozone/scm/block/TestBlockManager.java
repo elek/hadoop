@@ -21,7 +21,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.MockNodeManager;
 import org.apache.hadoop.scm.ScmConfigKeys;
@@ -55,8 +55,8 @@ public class TestBlockManager {
   private static BlockManagerImpl blockManager;
   private static File testDir;
   private final static long DEFAULT_BLOCK_SIZE = 128 * MB;
-  private static OzoneProtos.ReplicationFactor factor;
-  private static OzoneProtos.ReplicationType type;
+  private static HdslProtos.ReplicationFactor factor;
+  private static HdslProtos.ReplicationType type;
   private static String containerOwner = "OZONE";
 
   @Rule
@@ -79,11 +79,11 @@ public class TestBlockManager {
     blockManager = new BlockManagerImpl(conf, nodeManager, mapping, 128);
     if(conf.getBoolean(ScmConfigKeys.DFS_CONTAINER_RATIS_ENABLED_KEY,
         ScmConfigKeys.DFS_CONTAINER_RATIS_ENABLED_DEFAULT)){
-      factor = OzoneProtos.ReplicationFactor.THREE;
-      type = OzoneProtos.ReplicationType.RATIS;
+      factor = HdslProtos.ReplicationFactor.THREE;
+      type = HdslProtos.ReplicationType.RATIS;
     } else {
-      factor = OzoneProtos.ReplicationFactor.ONE;
-      type = OzoneProtos.ReplicationType.STAND_ALONE;
+      factor = HdslProtos.ReplicationFactor.ONE;
+      type = HdslProtos.ReplicationType.STAND_ALONE;
     }
   }
 

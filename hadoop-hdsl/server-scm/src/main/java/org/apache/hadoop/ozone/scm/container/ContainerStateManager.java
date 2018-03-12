@@ -22,11 +22,11 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.common.statemachine.InvalidStateTransitionException;
 import org.apache.hadoop.ozone.common.statemachine.StateMachine;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleEvent;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleEvent;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerID;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerState;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerStateMap;
@@ -113,8 +113,8 @@ public class ContainerStateManager implements Closeable {
   private static final Logger LOG =
       LoggerFactory.getLogger(ContainerStateManager.class);
 
-  private final StateMachine<OzoneProtos.LifeCycleState,
-      OzoneProtos.LifeCycleEvent> stateMachine;
+  private final StateMachine<HdslProtos.LifeCycleState,
+      HdslProtos.LifeCycleEvent> stateMachine;
 
   private final long containerSize;
   private final ConcurrentHashMap<ContainerState, ContainerID> lastUsedMap;
@@ -132,7 +132,7 @@ public class ContainerStateManager implements Closeable {
       Mapping containerMapping) {
 
     // Initialize the container state machine.
-    Set<OzoneProtos.LifeCycleState> finalStates = new HashSet();
+    Set<HdslProtos.LifeCycleState> finalStates = new HashSet();
 
     // These are the steady states of a container.
     finalStates.add(LifeCycleState.OPEN);
@@ -284,8 +284,8 @@ public class ContainerStateManager implements Closeable {
    * @return Container Info.
    * @throws IOException  on Failure.
    */
-  public ContainerInfo allocateContainer(PipelineSelector selector, OzoneProtos
-      .ReplicationType type, OzoneProtos.ReplicationFactor replicationFactor,
+  public ContainerInfo allocateContainer(PipelineSelector selector, HdslProtos
+      .ReplicationType type, HdslProtos.ReplicationFactor replicationFactor,
       final String containerName, String owner) throws
       IOException {
 
@@ -293,7 +293,7 @@ public class ContainerStateManager implements Closeable {
         replicationFactor, containerName);
     ContainerInfo containerInfo = new ContainerInfo.Builder()
         .setContainerName(containerName)
-        .setState(OzoneProtos.LifeCycleState.ALLOCATED)
+        .setState(HdslProtos.LifeCycleState.ALLOCATED)
         .setPipeline(pipeline)
         // This is bytes allocated for blocks inside container, not the
         // container size
@@ -319,7 +319,7 @@ public class ContainerStateManager implements Closeable {
    * @throws SCMException  on Failure.
    */
   public ContainerInfo updateContainerState(ContainerInfo
-      info, OzoneProtos.LifeCycleEvent event) throws SCMException {
+      info, HdslProtos.LifeCycleEvent event) throws SCMException {
     LifeCycleState newState;
     try {
       newState = this.stateMachine.getNextState(info.getState(), event);

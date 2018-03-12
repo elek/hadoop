@@ -19,5 +19,5 @@
 package org.apache.hadoop.ozone.protocol;
 
 /**
- * This package contains classes for Ozone protocol definitions.
+ * This package contains classes for HDSL protocol definitions.
  */

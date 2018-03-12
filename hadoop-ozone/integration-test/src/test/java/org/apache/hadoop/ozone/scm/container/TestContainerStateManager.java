@@ -21,7 +21,7 @@ import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.MiniOzoneCluster;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.StorageContainerManager;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerID;
 import org.apache.hadoop.scm.XceiverClientManager;
@@ -78,7 +78,7 @@ public class TestContainerStateManager {
     ContainerInfo info = stateManager
         .getMatchingContainer(OzoneConsts.GB * 3, containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.ALLOCATED);
+            HdslProtos.LifeCycleState.ALLOCATED);
     Assert.assertEquals(container1, info.getContainerName());
     Assert.assertEquals(OzoneConsts.GB * 3, info.getAllocatedBytes());
     Assert.assertEquals(containerOwner, info.getOwner());
@@ -86,7 +86,7 @@ public class TestContainerStateManager {
         info.getPipeline().getType());
     Assert.assertEquals(xceiverClientManager.getFactor(),
         info.getPipeline().getFactor());
-    Assert.assertEquals(OzoneProtos.LifeCycleState.ALLOCATED, info.getState());
+    Assert.assertEquals(HdslProtos.LifeCycleState.ALLOCATED, info.getState());
 
     // Check there are two containers in ALLOCATED state after allocation
     String container2 = "container" + RandomStringUtils.randomNumeric(5);
@@ -95,7 +95,7 @@ public class TestContainerStateManager {
     int numContainers = stateManager
         .getMatchingContainerIDs(containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.ALLOCATED).size();
+            HdslProtos.LifeCycleState.ALLOCATED).size();
     Assert.assertEquals(2, numContainers);
   }
 
@@ -108,7 +108,7 @@ public class TestContainerStateManager {
           xceiverClientManager.getFactor(), cname + i, containerOwner);
       if (i >= 5) {
         scm.getScmContainerManager()
-            .updateContainerState(cname + i, OzoneProtos.LifeCycleEvent.CREATE);
+            .updateContainerState(cname + i, HdslProtos.LifeCycleEvent.CREATE);
       }
     }
 
@@ -120,11 +120,11 @@ public class TestContainerStateManager {
     int containers = stateManager
         .getMatchingContainerIDs(containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.ALLOCATED).size();
+            HdslProtos.LifeCycleState.ALLOCATED).size();
     Assert.assertEquals(5, containers);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.CREATING).size();
+        HdslProtos.LifeCycleState.CREATING).size();
     Assert.assertEquals(5, containers);
   }
 
@@ -134,9 +134,9 @@ public class TestContainerStateManager {
     scm.allocateContainer(xceiverClientManager.getType(),
         xceiverClientManager.getFactor(), container1, containerOwner);
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
 
     String container2 = "container-56789";
     scm.allocateContainer(xceiverClientManager.getType(),
@@ -145,26 +145,26 @@ public class TestContainerStateManager {
     ContainerInfo info = stateManager
         .getMatchingContainer(OzoneConsts.GB * 3, containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.OPEN);
+            HdslProtos.LifeCycleState.OPEN);
     Assert.assertEquals(container1, info.getContainerName());
 
     info = stateManager
         .getMatchingContainer(OzoneConsts.GB * 3, containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.ALLOCATED);
+            HdslProtos.LifeCycleState.ALLOCATED);
     Assert.assertEquals(container2, info.getContainerName());
 
     scmContainerMapping.updateContainerState(container2,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     scmContainerMapping.updateContainerState(container2,
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
 
     // space has already been allocated in container1, now container 2 should
     // be chosen.
     info = stateManager
         .getMatchingContainer(OzoneConsts.GB * 3, containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.OPEN);
+            HdslProtos.LifeCycleState.OPEN);
     Assert.assertEquals(container2, info.getContainerName());
   }
 
@@ -173,7 +173,7 @@ public class TestContainerStateManager {
     NavigableSet<ContainerID> containerList = stateManager
         .getMatchingContainerIDs(containerOwner,
             xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.ALLOCATED);
+            HdslProtos.LifeCycleState.ALLOCATED);
     int containers = containerList == null ? 0 : containerList.size();
     Assert.assertEquals(0, containers);
 
@@ -184,49 +184,49 @@ public class TestContainerStateManager {
         xceiverClientManager.getFactor(), container1, containerOwner);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.ALLOCATED).size();
+        HdslProtos.LifeCycleState.ALLOCATED).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.CREATING).size();
+        HdslProtos.LifeCycleState.CREATING).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.OPEN).size();
+        HdslProtos.LifeCycleState.OPEN).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping
-        .updateContainerState(container1, OzoneProtos.LifeCycleEvent.FINALIZE);
+        .updateContainerState(container1, HdslProtos.LifeCycleEvent.FINALIZE);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.CLOSING).size();
+        HdslProtos.LifeCycleState.CLOSING).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping
-        .updateContainerState(container1, OzoneProtos.LifeCycleEvent.CLOSE);
+        .updateContainerState(container1, HdslProtos.LifeCycleEvent.CLOSE);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.CLOSED).size();
+        HdslProtos.LifeCycleState.CLOSED).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping
-        .updateContainerState(container1, OzoneProtos.LifeCycleEvent.DELETE);
+        .updateContainerState(container1, HdslProtos.LifeCycleEvent.DELETE);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.DELETING).size();
+        HdslProtos.LifeCycleState.DELETING).size();
     Assert.assertEquals(1, containers);
 
     scmContainerMapping
-        .updateContainerState(container1, OzoneProtos.LifeCycleEvent.CLEANUP);
+        .updateContainerState(container1, HdslProtos.LifeCycleEvent.CLEANUP);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.DELETED).size();
+        HdslProtos.LifeCycleState.DELETED).size();
     Assert.assertEquals(1, containers);
 
     // Allocate container1 and update its state from ALLOCATED -> CREATING ->
@@ -235,12 +235,12 @@ public class TestContainerStateManager {
     scm.allocateContainer(xceiverClientManager.getType(),
         xceiverClientManager.getFactor(), container2, containerOwner);
     scmContainerMapping.updateContainerState(container2,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     scmContainerMapping
-        .updateContainerState(container2, OzoneProtos.LifeCycleEvent.TIMEOUT);
+        .updateContainerState(container2, HdslProtos.LifeCycleEvent.TIMEOUT);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.DELETING).size();
+        HdslProtos.LifeCycleState.DELETING).size();
     Assert.assertEquals(1, containers);
 
     // Allocate container1 and update its state from ALLOCATED -> CREATING ->
@@ -249,16 +249,16 @@ public class TestContainerStateManager {
     scm.allocateContainer(xceiverClientManager.getType(),
         xceiverClientManager.getFactor(), container3, containerOwner);
     scmContainerMapping.updateContainerState(container3,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     scmContainerMapping.updateContainerState(container3,
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
     scmContainerMapping.updateContainerState(container3,
-        OzoneProtos.LifeCycleEvent.FINALIZE);
+        HdslProtos.LifeCycleEvent.FINALIZE);
     scmContainerMapping
-        .updateContainerState(container3, OzoneProtos.LifeCycleEvent.CLOSE);
+        .updateContainerState(container3, HdslProtos.LifeCycleEvent.CLOSE);
     containers = stateManager.getMatchingContainerIDs(containerOwner,
         xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-        OzoneProtos.LifeCycleState.CLOSED).size();
+        HdslProtos.LifeCycleState.CLOSED).size();
     Assert.assertEquals(1, containers);
   }
 
@@ -268,9 +268,9 @@ public class TestContainerStateManager {
     scm.allocateContainer(xceiverClientManager.getType(),
         xceiverClientManager.getFactor(), container1, containerOwner);
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     scmContainerMapping.updateContainerState(container1,
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
 
     Random ran = new Random();
     long allocatedSize = 0;
@@ -281,7 +281,7 @@ public class TestContainerStateManager {
       ContainerInfo info = stateManager
           .getMatchingContainer(size, containerOwner,
               xceiverClientManager.getType(), xceiverClientManager.getFactor(),
-              OzoneProtos.LifeCycleState.OPEN);
+              HdslProtos.LifeCycleState.OPEN);
       Assert.assertEquals(container1, info.getContainerName());
 
       ContainerMapping containerMapping =
@@ -294,8 +294,8 @@ public class TestContainerStateManager {
       // the persisted value should always be equal to allocated size.
       byte[] containerBytes =
           containerMapping.getContainerStore().get(container1.getBytes(utf8));
-      OzoneProtos.SCMContainerInfo infoProto =
-          OzoneProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
+      HdslProtos.SCMContainerInfo infoProto =
+          HdslProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
       ContainerInfo currentInfo = ContainerInfo.fromProtobuf(infoProto);
       Assert.assertEquals(allocatedSize, currentInfo.getAllocatedBytes());
     }

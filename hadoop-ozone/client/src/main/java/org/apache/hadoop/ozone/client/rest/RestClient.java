@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.StorageType;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.ozone.OzoneAcl;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
@@ -190,7 +190,7 @@ public class RestClient implements ClientProtocol {
           serviceListJson, serviceInfoReference);
 
       List<ServiceInfo> dataNodeInfos = services.stream().filter(
-          a -> a.getNodeType().equals(OzoneProtos.NodeType.DATANODE))
+          a -> a.getNodeType().equals(HdslProtos.NodeType.DATANODE))
           .collect(Collectors.toList());
 
       ServiceInfo restServer = selector.getRestServer(dataNodeInfos);

@@ -20,7 +20,7 @@ package org.apache.hadoop.scm.client;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ReadContainerResponseProto;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolProtos.ObjectStageChangeRequestProto;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.XceiverClientSpi;
@@ -37,8 +37,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.ALLOCATED;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.OPEN;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.ALLOCATED;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.OPEN;
 
 /**
  * This class provides the client-facing APIs of container operations.
@@ -189,8 +189,8 @@ public class ContainerOperationClient implements ScmClient {
    * @inheritDoc
    */
   @Override
-  public Pipeline createContainer(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor,
+  public Pipeline createContainer(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor,
       String containerId, String owner) throws IOException {
     XceiverClientSpi client = null;
     try {
@@ -229,8 +229,8 @@ public class ContainerOperationClient implements ScmClient {
    * @throws IOException
    */
   @Override
-  public OzoneProtos.NodePool queryNode(EnumSet<OzoneProtos.NodeState>
-      nodeStatuses, OzoneProtos.QueryScope queryScope, String poolName)
+  public HdslProtos.NodePool queryNode(EnumSet<HdslProtos.NodeState>
+      nodeStatuses, HdslProtos.QueryScope queryScope, String poolName)
       throws IOException {
     return storageContainerLocationClient.queryNode(nodeStatuses, queryScope,
         poolName);
@@ -240,8 +240,8 @@ public class ContainerOperationClient implements ScmClient {
    * Creates a specified replication pipeline.
    */
   @Override
-  public Pipeline createReplicationPipeline(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, OzoneProtos.NodePool nodePool)
+  public Pipeline createReplicationPipeline(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, HdslProtos.NodePool nodePool)
       throws IOException {
     return storageContainerLocationClient.createReplicationPipeline(type,
         factor, nodePool);

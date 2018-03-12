@@ -25,7 +25,7 @@ import org.apache.hadoop.hdsl.protocol.proto.StorageContainerLocationProtocolPro
 import org.apache.hadoop.scm.ScmInfo;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 
 /**
  * ContainerLocationProtocol is used by an HDFS node to find the set of nodes
@@ -37,8 +37,8 @@ public interface StorageContainerLocationProtocol {
    * set of datanodes that should be used creating this container.
    *
    */
-  Pipeline allocateContainer(OzoneProtos.ReplicationType replicationType,
-      OzoneProtos.ReplicationFactor factor, String containerName, String owner)
+  Pipeline allocateContainer(HdslProtos.ReplicationType replicationType,
+      HdslProtos.ReplicationFactor factor, String containerName, String owner)
       throws IOException;
 
   /**
@@ -85,8 +85,8 @@ public interface StorageContainerLocationProtocol {
    * @param nodeStatuses
    * @return List of Datanodes.
    */
-  OzoneProtos.NodePool queryNode(EnumSet<OzoneProtos.NodeState> nodeStatuses,
-      OzoneProtos.QueryScope queryScope, String poolName) throws IOException;
+  HdslProtos.NodePool queryNode(EnumSet<HdslProtos.NodeState> nodeStatuses,
+      HdslProtos.QueryScope queryScope, String poolName) throws IOException;
 
   /**
    * Notify from client when begin or finish creating objects like pipeline
@@ -109,8 +109,8 @@ public interface StorageContainerLocationProtocol {
    * @param nodePool - optional machine list to build a pipeline.
    * @throws IOException
    */
-  Pipeline createReplicationPipeline(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, OzoneProtos.NodePool nodePool)
+  Pipeline createReplicationPipeline(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, HdslProtos.NodePool nodePool)
       throws IOException;
 
   /**

@@ -19,7 +19,7 @@ package org.apache.hadoop.scm.client;
 
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
@@ -111,8 +111,8 @@ public interface ScmClient {
    * @return Pipeline
    * @throws IOException - in case of error.
    */
-  Pipeline createContainer(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor replicationFactor, String containerId,
+  Pipeline createContainer(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor replicationFactor, String containerId,
       String owner) throws IOException;
 
   /**
@@ -123,8 +123,8 @@ public interface ScmClient {
    * @return A set of nodes that meet the requested criteria.
    * @throws IOException
    */
-  OzoneProtos.NodePool queryNode(EnumSet<OzoneProtos.NodeState> nodeStatuses,
-      OzoneProtos.QueryScope queryScope, String poolName) throws IOException;
+  HdslProtos.NodePool queryNode(EnumSet<HdslProtos.NodeState> nodeStatuses,
+      HdslProtos.QueryScope queryScope, String poolName) throws IOException;
 
   /**
    * Creates a specified replication pipeline.
@@ -133,7 +133,7 @@ public interface ScmClient {
    * @param nodePool - Set of machines.
    * @throws IOException
    */
-  Pipeline createReplicationPipeline(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, OzoneProtos.NodePool nodePool)
+  Pipeline createReplicationPipeline(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, HdslProtos.NodePool nodePool)
       throws IOException;
 }

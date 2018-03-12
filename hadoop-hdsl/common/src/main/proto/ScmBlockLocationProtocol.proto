@@ -29,7 +29,7 @@ option java_generate_equals_and_hash = true;
 package hadoop.hdsl;
 
 import "hdfs.proto";
-import "Ozone.proto";
+import "hdsl.proto";
 
 
 // SCM Block protocol

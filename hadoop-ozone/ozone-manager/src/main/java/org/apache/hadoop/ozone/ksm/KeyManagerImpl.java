@@ -72,9 +72,9 @@ import static org.apache.hadoop.ozone
 import static org.apache.hadoop.ozone
     .OzoneConfigKeys.OZONE_SCM_BLOCK_SIZE_IN_MB;
 import org.apache.hadoop.hdsl.protocol
-    .proto.OzoneProtos.ReplicationType;
+    .proto.HdslProtos.ReplicationType;
 import org.apache.hadoop.hdsl.protocol
-    .proto.OzoneProtos.ReplicationFactor;
+    .proto.HdslProtos.ReplicationFactor;
 
 
 /**

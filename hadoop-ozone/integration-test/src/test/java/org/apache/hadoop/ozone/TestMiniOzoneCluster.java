@@ -27,7 +27,7 @@ import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerUtils;
 import org.apache.hadoop.ozone.container.common.statemachine.DatanodeStateMachine;
 import org.apache.hadoop.ozone.container.ozoneimpl.TestOzoneContainer;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.scm.XceiverClient;
@@ -109,9 +109,9 @@ public class TestMiniOzoneCluster {
       DatanodeID dnId = dn.getDatanodeId();
       final PipelineChannel pipelineChannel =
           new PipelineChannel(dnId.getDatanodeUuid(),
-              OzoneProtos.LifeCycleState.OPEN,
-              OzoneProtos.ReplicationType.STAND_ALONE,
-              OzoneProtos.ReplicationFactor.ONE, "test");
+              HdslProtos.LifeCycleState.OPEN,
+              HdslProtos.ReplicationType.STAND_ALONE,
+              HdslProtos.ReplicationFactor.ONE, "test");
       pipelineChannel.addMember(dnId);
       Pipeline pipeline = new Pipeline(containerName, pipelineChannel);
 

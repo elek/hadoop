@@ -31,7 +31,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
 import static org.apache.hadoop.scm.ScmConfigKeys
@@ -42,7 +42,7 @@ import static org.apache.hadoop.scm.ScmConfigKeys
     .SCM_CONTAINER_CLIENT_MAX_SIZE_KEY;
 import static org.apache.hadoop.scm.ScmConfigKeys
     .SCM_CONTAINER_CLIENT_MAX_SIZE_DEFAULT;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos
     .ReplicationType.RATIS;
 
 /**
@@ -186,24 +186,24 @@ public class XceiverClientManager implements Closeable {
    * Returns hard coded 3 as replication factor.
    * @return 3
    */
-  public  OzoneProtos.ReplicationFactor getFactor() {
+  public  HdslProtos.ReplicationFactor getFactor() {
     if(isUseRatis()) {
-      return OzoneProtos.ReplicationFactor.THREE;
+      return HdslProtos.ReplicationFactor.THREE;
     }
-    return OzoneProtos.ReplicationFactor.ONE;
+    return HdslProtos.ReplicationFactor.ONE;
   }
 
   /**
    * Returns the default replication type.
    * @return Ratis or Standalone
    */
-  public OzoneProtos.ReplicationType getType() {
+  public HdslProtos.ReplicationType getType() {
     // TODO : Fix me and make Ratis default before release.
     // TODO: Remove this as replication factor and type are pipeline properties
     if(isUseRatis()) {
-      return OzoneProtos.ReplicationType.RATIS;
+      return HdslProtos.ReplicationType.RATIS;
     }
-    return OzoneProtos.ReplicationType.STAND_ALONE;
+    return HdslProtos.ReplicationType.STAND_ALONE;
   }
 
   /**

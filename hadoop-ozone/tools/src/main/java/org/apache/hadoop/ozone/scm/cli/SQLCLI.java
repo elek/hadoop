@@ -35,8 +35,8 @@ import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos.Buck
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos.KeyInfo;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos.VolumeInfo;
 import org.apache.hadoop.ozone.protocol.proto.KeySpaceManagerProtocolProtos.VolumeList;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.Pipeline;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.Pipeline;
 import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.util.Tool;
@@ -506,7 +506,7 @@ public class SQLCLI  extends Configured implements Tool {
         String containerName = new String(key, encoding);
         ContainerInfo containerInfo = null;
         containerInfo = ContainerInfo.fromProtobuf(
-            OzoneProtos.SCMContainerInfo.PARSER.parseFrom(value));
+            HdslProtos.SCMContainerInfo.PARSER.parseFrom(value));
         Preconditions.checkNotNull(containerInfo);
         try {
           //TODO: include container state to sqllite schema

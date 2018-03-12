@@ -23,7 +23,7 @@ import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
 import org.apache.hadoop.ozone.MiniOzoneCluster;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.ContainerPlacementPolicy;
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.SCMContainerPlacementCapacity;
 import org.apache.hadoop.scm.ScmConfigKeys;
@@ -87,7 +87,7 @@ public class TestContainerSmallFile {
     Pipeline pipeline =
         storageContainerLocationClient.allocateContainer(
             xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     XceiverClientSpi client = xceiverClientManager.acquireClient(pipeline);
     ContainerProtocolCalls.createContainer(client, traceID);
 
@@ -108,7 +108,7 @@ public class TestContainerSmallFile {
     Pipeline pipeline =
         storageContainerLocationClient.allocateContainer(
             xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     XceiverClientSpi client = xceiverClientManager.acquireClient(pipeline);
     ContainerProtocolCalls.createContainer(client, traceID);
 
@@ -130,7 +130,7 @@ public class TestContainerSmallFile {
     Pipeline pipeline =
         storageContainerLocationClient.allocateContainer(
             xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     XceiverClientSpi client = xceiverClientManager.acquireClient(pipeline);
     ContainerProtocolCalls.createContainer(client, traceID);
     ContainerProtocolCalls.writeSmallFile(client, containerName,

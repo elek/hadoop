@@ -57,7 +57,7 @@ import org.apache.hadoop.ozone.OzoneAcl;
 import org.apache.hadoop.ozone.ksm.KSMConfigKeys;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.ServicePort;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.protocolPB.KSMPBHelper;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.scm.XceiverClientManager;
@@ -155,7 +155,7 @@ public class RpcClient implements ClientProtocol {
   private InetSocketAddress getScmAddressForClient() throws IOException {
     List<ServiceInfo> services = keySpaceManagerClient.getServiceList();
     ServiceInfo scmInfo = services.stream().filter(
-        a -> a.getNodeType().equals(OzoneProtos.NodeType.SCM))
+        a -> a.getNodeType().equals(HdslProtos.NodeType.SCM))
         .collect(Collectors.toList()).get(0);
     return NetUtils.createSocketAddr(scmInfo.getHostname()+ ":" +
         scmInfo.getPort(ServicePort.Type.RPC));
@@ -459,8 +459,8 @@ public class RpcClient implements ClientProtocol {
         .setBucketName(bucketName)
         .setKeyName(keyName)
         .setDataSize(size)
-        .setType(OzoneProtos.ReplicationType.valueOf(type.toString()))
-        .setFactor(OzoneProtos.ReplicationFactor.valueOf(factor.getValue()))
+        .setType(HdslProtos.ReplicationType.valueOf(type.toString()))
+        .setFactor(HdslProtos.ReplicationFactor.valueOf(factor.getValue()))
         .build();
 
     OpenKeySession openKey = keySpaceManagerClient.openKey(keyArgs);
@@ -472,8 +472,8 @@ public class RpcClient implements ClientProtocol {
             .setKsmClient(keySpaceManagerClient)
             .setChunkSize(chunkSize)
             .setRequestID(requestId)
-            .setType(OzoneProtos.ReplicationType.valueOf(type.toString()))
-            .setFactor(OzoneProtos.ReplicationFactor.valueOf(factor.getValue()))
+            .setType(HdslProtos.ReplicationType.valueOf(type.toString()))
+            .setFactor(HdslProtos.ReplicationFactor.valueOf(factor.getValue()))
             .build();
     groupOutputStream.addPreallocateBlocks(
         openKey.getKeyInfo().getLatestVersionLocations(),

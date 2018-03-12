@@ -24,7 +24,7 @@ import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos
     .ContainerCommandResponseProto;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
 import java.io.Closeable;
@@ -125,5 +125,5 @@ public abstract class XceiverClientSpi implements Closeable {
    *
    * @return - {Stand_Alone, Ratis or Chained}
    */
-  public abstract OzoneProtos.ReplicationType getPipelineType();
+  public abstract HdslProtos.ReplicationType getPipelineType();
 }

@@ -42,7 +42,7 @@ import org.apache.hadoop.ozone.ksm.KeySpaceManager;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyArgs;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyInfo;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyLocationInfo;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -381,10 +381,10 @@ public class TestOzoneRpcClient {
         .setBucketName(bucketName)
         .setKeyName(keyName)
         .build();
-    OzoneProtos.ReplicationType replicationType =
-        OzoneProtos.ReplicationType.valueOf(type.toString());
-    OzoneProtos.ReplicationFactor replicationFactor =
-        OzoneProtos.ReplicationFactor.valueOf(factor.getValue());
+    HdslProtos.ReplicationType replicationType =
+        HdslProtos.ReplicationType.valueOf(type.toString());
+    HdslProtos.ReplicationFactor replicationFactor =
+        HdslProtos.ReplicationFactor.valueOf(factor.getValue());
     KsmKeyInfo keyInfo = keySpaceManager.lookupKey(keyArgs);
     for (KsmKeyLocationInfo info:
         keyInfo.getLatestVersionLocations().getLocationList()) {

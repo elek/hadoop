@@ -25,7 +25,7 @@ import org.apache.hadoop.hdfs.DFSTestUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
@@ -43,8 +43,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_CONTAINER_REPORT_INTERVAL;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleEvent.CREATE;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleEvent.CREATED;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleEvent.CREATE;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleEvent.CREATED;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_SIZE_DEFAULT;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_SIZE_GB;
 
@@ -88,8 +88,8 @@ public class TestContainerCloser {
     String containerName = "container-" + RandomStringUtils.randomNumeric(5);
 
     ContainerInfo info = mapping.allocateContainer(
-        OzoneProtos.ReplicationType.STAND_ALONE,
-        OzoneProtos.ReplicationFactor.ONE, containerName, "ozone");
+        HdslProtos.ReplicationType.STAND_ALONE,
+        HdslProtos.ReplicationFactor.ONE, containerName, "ozone");
 
     //Execute these state transitions so that we can close the container.
     mapping.updateContainerState(containerName, CREATE);
@@ -136,8 +136,8 @@ public class TestContainerCloser {
     String containerName = "container-" + RandomStringUtils.randomNumeric(5);
 
     ContainerInfo info = mapping.allocateContainer(
-        OzoneProtos.ReplicationType.STAND_ALONE,
-        OzoneProtos.ReplicationFactor.ONE, containerName, "ozone");
+        HdslProtos.ReplicationType.STAND_ALONE,
+        HdslProtos.ReplicationFactor.ONE, containerName, "ozone");
 
     //Execute these state transitions so that we can close the container.
     mapping.updateContainerState(containerName, CREATE);
@@ -182,8 +182,8 @@ public class TestContainerCloser {
     for (int x = 0; x < ContainerCloser.getCleanupWaterMark() + 10; x++) {
       String containerName = "container-" + RandomStringUtils.randomNumeric(7);
       ContainerInfo info = mapping.allocateContainer(
-          OzoneProtos.ReplicationType.STAND_ALONE,
-          OzoneProtos.ReplicationFactor.ONE, containerName, "ozone");
+          HdslProtos.ReplicationType.STAND_ALONE,
+          HdslProtos.ReplicationFactor.ONE, containerName, "ozone");
       mapping.updateContainerState(containerName, CREATE);
       mapping.updateContainerState(containerName, CREATED);
       sendContainerReport(info, 5 * GIGABYTE);

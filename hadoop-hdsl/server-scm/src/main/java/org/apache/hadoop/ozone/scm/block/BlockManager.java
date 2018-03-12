@@ -17,7 +17,7 @@
 
 package org.apache.hadoop.ozone.scm.block;
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.container.common.helpers.AllocatedBlock;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 
@@ -39,8 +39,8 @@ public interface BlockManager extends Closeable {
    * @return AllocatedBlock
    * @throws IOException
    */
-  AllocatedBlock allocateBlock(long size, OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, String owner) throws IOException;
+  AllocatedBlock allocateBlock(long size, HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, String owner) throws IOException;
 
   /**
    *  Give the key to the block, get the pipeline info.

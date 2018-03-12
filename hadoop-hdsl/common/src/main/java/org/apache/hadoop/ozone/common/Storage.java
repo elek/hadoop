@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.FileUtil;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeType;
 import org.apache.hadoop.util.Time;
 
 /**

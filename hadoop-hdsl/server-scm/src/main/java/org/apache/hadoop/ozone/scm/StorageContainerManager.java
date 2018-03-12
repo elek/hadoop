@@ -47,8 +47,8 @@ import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
 import org.apache.hadoop.ozone.protocol.commands.DeleteBlocksCommand;
 import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState;
 import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
@@ -657,19 +657,19 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
    * @param poolName @return List of Datanodes.
    */
   @Override
-  public OzoneProtos.NodePool queryNode(EnumSet<NodeState> nodeStatuses,
-      OzoneProtos.QueryScope queryScope, String poolName) throws IOException {
+  public HdslProtos.NodePool queryNode(EnumSet<NodeState> nodeStatuses,
+      HdslProtos.QueryScope queryScope, String poolName) throws IOException {
 
-    if (queryScope == OzoneProtos.QueryScope.POOL) {
+    if (queryScope == HdslProtos.QueryScope.POOL) {
       throw new IllegalArgumentException("Not Supported yet");
     }
 
     List<DatanodeID> datanodes = queryNode(nodeStatuses);
-    OzoneProtos.NodePool.Builder poolBuilder =
-        OzoneProtos.NodePool.newBuilder();
+    HdslProtos.NodePool.Builder poolBuilder =
+        HdslProtos.NodePool.newBuilder();
 
     for (DatanodeID datanode : datanodes) {
-      OzoneProtos.Node node = OzoneProtos.Node.newBuilder()
+      HdslProtos.Node node = HdslProtos.Node.newBuilder()
           .setNodeID(datanode.getProtoBufMessage())
           .addAllNodeStates(nodeStatuses)
           .build();
@@ -699,18 +699,18 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
       if (op == ObjectStageChangeRequestProto.Op.create) {
         if (stage == ObjectStageChangeRequestProto.Stage.begin) {
           scmContainerManager.updateContainerState(name,
-              OzoneProtos.LifeCycleEvent.CREATE);
+              HdslProtos.LifeCycleEvent.CREATE);
         } else {
           scmContainerManager.updateContainerState(name,
-              OzoneProtos.LifeCycleEvent.CREATED);
+              HdslProtos.LifeCycleEvent.CREATED);
         }
       } else if (op == ObjectStageChangeRequestProto.Op.close) {
         if (stage == ObjectStageChangeRequestProto.Stage.begin) {
           scmContainerManager.updateContainerState(name,
-              OzoneProtos.LifeCycleEvent.FINALIZE);
+              HdslProtos.LifeCycleEvent.FINALIZE);
         } else {
           scmContainerManager.updateContainerState(name,
-              OzoneProtos.LifeCycleEvent.CLOSE);
+              HdslProtos.LifeCycleEvent.CLOSE);
         }
       }
     } //else if (type == ObjectStageChangeRequestProto.Type.pipeline) {
@@ -723,9 +723,9 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
    */
   @Override
   public Pipeline createReplicationPipeline(
-      OzoneProtos.ReplicationType replicationType,
-      OzoneProtos.ReplicationFactor factor,
-      OzoneProtos.NodePool nodePool)
+      HdslProtos.ReplicationType replicationType,
+      HdslProtos.ReplicationFactor factor,
+      HdslProtos.NodePool nodePool)
       throws IOException {
      // TODO: will be addressed in future patch.
     return null;
@@ -801,8 +801,8 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
    * @throws IOException
    */
   @Override
-  public Pipeline allocateContainer(OzoneProtos.ReplicationType replicationType,
-      OzoneProtos.ReplicationFactor replicationFactor, String containerName,
+  public Pipeline allocateContainer(HdslProtos.ReplicationType replicationType,
+      HdslProtos.ReplicationFactor replicationFactor, String containerName,
       String owner) throws IOException {
 
     checkAdminAccess();
@@ -1125,7 +1125,7 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
    */
   @Override
   public AllocatedBlock allocateBlock(long size,
-      OzoneProtos.ReplicationType type, OzoneProtos.ReplicationFactor factor,
+      HdslProtos.ReplicationType type, HdslProtos.ReplicationFactor factor,
       String owner) throws IOException {
     return scmBlockManager.allocateBlock(size, type, factor, owner);
   }

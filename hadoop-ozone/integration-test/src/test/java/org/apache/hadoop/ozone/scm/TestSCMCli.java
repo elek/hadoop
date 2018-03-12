@@ -24,7 +24,7 @@ import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
 import org.apache.hadoop.ozone.container.common.helpers.KeyUtils;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.cli.ResultCode;
 import org.apache.hadoop.ozone.scm.cli.SCMCLI;
 import org.apache.hadoop.scm.XceiverClientManager;
@@ -44,8 +44,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.CLOSED;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.OPEN;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.CLOSED;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.OPEN;
 import static org.apache.hadoop.ozone.scm.cli.ResultCode.EXECUTION_ERROR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -159,7 +159,7 @@ public class TestSCMCli {
     containerName = "non-empty-container";
     pipeline = containerOperationClient
         .createContainer(xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
 
     ContainerData cdata = ContainerData
         .getFromProtBuf(containerOperationClient.readContainer(pipeline), conf);
@@ -201,7 +201,7 @@ public class TestSCMCli {
     containerName = "empty-container";
     pipeline = containerOperationClient
         .createContainer(xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     containerOperationClient.closeContainer(pipeline);
     Assert.assertTrue(containerExist(containerName));
 
@@ -214,7 +214,7 @@ public class TestSCMCli {
     // After the container is deleted,
     // a same name container can now be recreated.
     containerOperationClient.createContainer(xceiverClientManager.getType(),
-        OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+        HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     Assert.assertTrue(containerExist(containerName));
 
     // ****************************************
@@ -263,7 +263,7 @@ public class TestSCMCli {
     cname = "ContainerTestInfo1";
     Pipeline pipeline = containerOperationClient
         .createContainer(xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, cname, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, cname, containerOwner);
     ContainerData data = ContainerData
         .getFromProtBuf(containerOperationClient.readContainer(pipeline), conf);
 
@@ -285,7 +285,7 @@ public class TestSCMCli {
     cname = "ContainerTestInfo2";
     pipeline = containerOperationClient
         .createContainer(xceiverClientManager.getType(),
-            OzoneProtos.ReplicationFactor.ONE, cname, containerOwner);
+            HdslProtos.ReplicationFactor.ONE, cname, containerOwner);
     data = ContainerData
         .getFromProtBuf(containerOperationClient.readContainer(pipeline), conf);
     KeyUtils.getDB(data, conf).put(cname.getBytes(), "someKey".getBytes());
@@ -344,7 +344,7 @@ public class TestSCMCli {
     for (int index = 0; index < 20; index++) {
       String containerName = String.format("%s%02d", prefix, index);
       containerOperationClient.createContainer(xceiverClientManager.getType(),
-          OzoneProtos.ReplicationFactor.ONE, containerName, containerOwner);
+          HdslProtos.ReplicationFactor.ONE, containerName, containerOwner);
     }
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();

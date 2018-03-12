@@ -30,7 +30,7 @@ import org.apache.hadoop.ozone.ksm.helpers.OpenKeySession;
 import org.apache.hadoop.ozone.ksm.protocolPB
     .KeySpaceManagerProtocolClientSideTranslatorPB;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.OzoneConsts.Versioning;
 import org.apache.hadoop.ozone.client.io.ChunkGroupInputStream;
@@ -84,8 +84,8 @@ public final class DistributedStorageHandler implements StorageHandler {
   private final OzoneAcl.OzoneACLRights groupRights;
   private int chunkSize;
   private final boolean useRatis;
-  private final OzoneProtos.ReplicationType type;
-  private final OzoneProtos.ReplicationFactor factor;
+  private final HdslProtos.ReplicationType type;
+  private final HdslProtos.ReplicationFactor factor;
 
   /**
    * Creates a new DistributedStorageHandler.
@@ -107,11 +107,11 @@ public final class DistributedStorageHandler implements StorageHandler {
         ScmConfigKeys.DFS_CONTAINER_RATIS_ENABLED_DEFAULT);
 
     if(useRatis) {
-      type = OzoneProtos.ReplicationType.RATIS;
-      factor = OzoneProtos.ReplicationFactor.THREE;
+      type = HdslProtos.ReplicationType.RATIS;
+      factor = HdslProtos.ReplicationFactor.THREE;
     } else {
-      type = OzoneProtos.ReplicationType.STAND_ALONE;
-      factor = OzoneProtos.ReplicationFactor.ONE;
+      type = HdslProtos.ReplicationType.STAND_ALONE;
+      factor = HdslProtos.ReplicationFactor.ONE;
     }
 
     chunkSize = conf.getInt(ScmConfigKeys.OZONE_SCM_CHUNK_SIZE_KEY,

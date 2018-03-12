@@ -127,8 +127,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                   <include>StorageContainerDatanodeProtocol.proto</include>
                   <include>StorageContainerLocationProtocol.proto</include>
                   <include>DatanodeContainerProtocol.proto</include>
-                  <include>Ozone.proto</include>
-                  <include>KeySpaceManagerProtocol.proto</include>
+                  <include>hdsl.proto</include>
                   <include>ScmBlockLocationProtocol.proto</include>
                 </includes>
               </source>

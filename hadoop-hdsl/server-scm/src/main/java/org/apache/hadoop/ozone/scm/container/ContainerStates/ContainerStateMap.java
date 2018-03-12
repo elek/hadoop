@@ -19,9 +19,9 @@
 package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import com.google.common.base.Preconditions;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
 import org.apache.hadoop.ozone.scm.exceptions.SCMException;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.util.AutoCloseableLock;

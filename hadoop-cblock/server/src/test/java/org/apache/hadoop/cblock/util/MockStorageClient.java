@@ -20,7 +20,7 @@ package org.apache.hadoop.cblock.util;
 import org.apache.hadoop.cblock.meta.ContainerDescriptor;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.client.ScmClient;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -88,7 +88,7 @@ public class MockStorageClient implements ScmClient {
     ContainerInfo container = new ContainerInfo.Builder()
         .setContainerName(containerDescriptor.getContainerID())
         .setPipeline(containerDescriptor.getPipeline())
-        .setState(OzoneProtos.LifeCycleState.ALLOCATED)
+        .setState(HdslProtos.LifeCycleState.ALLOCATED)
         .build();
     containerList.add(container);
     return containerList;
@@ -134,8 +134,8 @@ public class MockStorageClient implements ScmClient {
   }
 
   @Override
-  public Pipeline createContainer(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor replicationFactor, String containerId,
+  public Pipeline createContainer(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor replicationFactor, String containerId,
       String owner) throws IOException {
     int contId = currentContainerId.getAndIncrement();
     ContainerLookUpService.addContainer(Long.toString(contId));
@@ -153,8 +153,8 @@ public class MockStorageClient implements ScmClient {
    * @throws IOException
    */
   @Override
-  public OzoneProtos.NodePool queryNode(EnumSet<OzoneProtos.NodeState>
-      nodeStatuses, OzoneProtos.QueryScope queryScope, String poolName)
+  public HdslProtos.NodePool queryNode(EnumSet<HdslProtos.NodeState>
+      nodeStatuses, HdslProtos.QueryScope queryScope, String poolName)
       throws IOException {
     return null;
   }
@@ -168,8 +168,8 @@ public class MockStorageClient implements ScmClient {
    * @throws IOException
    */
   @Override
-  public Pipeline createReplicationPipeline(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor, OzoneProtos.NodePool nodePool)
+  public Pipeline createReplicationPipeline(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor, HdslProtos.NodePool nodePool)
       throws IOException {
     return null;
   }

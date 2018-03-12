@@ -31,7 +31,7 @@ import com.google.protobuf.ByteString;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ChunkInfo;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.KeyData;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.KeyValue;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.KeyValue;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.XceiverClientSpi;
 

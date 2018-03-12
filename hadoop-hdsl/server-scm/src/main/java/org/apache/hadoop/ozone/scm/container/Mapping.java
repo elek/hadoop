@@ -17,7 +17,7 @@
 package org.apache.hadoop.ozone.scm.container;
 
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
@@ -68,8 +68,8 @@ public interface Mapping extends Closeable {
    * @return - Container Info.
    * @throws IOException
    */
-  ContainerInfo allocateContainer(OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor replicationFactor,
+  ContainerInfo allocateContainer(HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor replicationFactor,
       String containerName, String owner) throws IOException;
 
   /**
@@ -87,8 +87,8 @@ public interface Mapping extends Closeable {
    * @return - new container state
    * @throws IOException
    */
-  OzoneProtos.LifeCycleState updateContainerState(String containerName,
-      OzoneProtos.LifeCycleEvent event) throws IOException;
+  HdslProtos.LifeCycleState updateContainerState(String containerName,
+      HdslProtos.LifeCycleEvent event) throws IOException;
 
   /**
    * Returns the container State Manager.

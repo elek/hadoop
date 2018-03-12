@@ -21,7 +21,7 @@ import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -185,7 +185,7 @@ public class TestContainerMapping {
         containerName,
         containerOwner);
     mapping.updateContainerState(containerInfo.getContainerName(),
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     Thread.sleep(TIMEOUT + 1000);
 
     NavigableSet<ContainerID> deleteContainers = mapping.getStateManager()
@@ -193,13 +193,13 @@ public class TestContainerMapping {
             "OZONE",
             xceiverClientManager.getType(),
             xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.DELETING);
+            HdslProtos.LifeCycleState.DELETING);
     Assert.assertTrue(deleteContainers.contains(containerInfo.containerID()));
 
     thrown.expect(IOException.class);
     thrown.expectMessage("Lease Exception");
     mapping.updateContainerState(containerInfo.getContainerName(),
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
   }
 
   @Test
@@ -280,7 +280,7 @@ public class TestContainerMapping {
             containerOwner,
             xceiverClientManager.getType(),
             xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.CLOSING);
+            HdslProtos.LifeCycleState.CLOSING);
     Assert.assertTrue(
          pendingCloseContainers.contains(updatedContainer.containerID()));
   }
@@ -290,22 +290,22 @@ public class TestContainerMapping {
     String containerName = UUID.randomUUID().toString();
     ContainerInfo info = createContainer(containerName);
     mapping.updateContainerState(containerName,
-        OzoneProtos.LifeCycleEvent.FINALIZE);
+        HdslProtos.LifeCycleEvent.FINALIZE);
     NavigableSet<ContainerID> pendingCloseContainers = mapping.getStateManager()
         .getMatchingContainerIDs(
             containerOwner,
             xceiverClientManager.getType(),
             xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.CLOSING);
+            HdslProtos.LifeCycleState.CLOSING);
     Assert.assertTrue(pendingCloseContainers.contains(info.containerID()));
     mapping.updateContainerState(containerName,
-        OzoneProtos.LifeCycleEvent.CLOSE);
+        HdslProtos.LifeCycleEvent.CLOSE);
     NavigableSet<ContainerID> closeContainers = mapping.getStateManager()
         .getMatchingContainerIDs(
             containerOwner,
             xceiverClientManager.getType(),
             xceiverClientManager.getFactor(),
-            OzoneProtos.LifeCycleState.CLOSED);
+            HdslProtos.LifeCycleState.CLOSED);
     Assert.assertTrue(closeContainers.contains(info.containerID()));
   }
 
@@ -324,9 +324,9 @@ public class TestContainerMapping {
         containerName,
         containerOwner);
     mapping.updateContainerState(containerInfo.getContainerName(),
-        OzoneProtos.LifeCycleEvent.CREATE);
+        HdslProtos.LifeCycleEvent.CREATE);
     mapping.updateContainerState(containerInfo.getContainerName(),
-        OzoneProtos.LifeCycleEvent.CREATED);
+        HdslProtos.LifeCycleEvent.CREATED);
     return containerInfo;
   }
 

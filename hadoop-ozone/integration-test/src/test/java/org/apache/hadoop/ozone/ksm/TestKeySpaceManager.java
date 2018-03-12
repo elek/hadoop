@@ -34,7 +34,7 @@ import org.apache.hadoop.ozone.scm.SCMStorage;
 import org.apache.hadoop.ozone.ksm.helpers.ServiceInfo;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.ServicePort;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.web.handlers.BucketArgs;
 import org.apache.hadoop.ozone.web.handlers.KeyArgs;
 import org.apache.hadoop.ozone.web.handlers.UserArgs;
@@ -1220,7 +1220,7 @@ public class TestKeySpaceManager {
         ksmMetrics.getNumGetServiceLists());
 
     ServiceInfo ksmInfo = services.stream().filter(
-        a -> a.getNodeType().equals(OzoneProtos.NodeType.KSM))
+        a -> a.getNodeType().equals(HdslProtos.NodeType.KSM))
         .collect(Collectors.toList()).get(0);
     InetSocketAddress ksmAddress = new InetSocketAddress(ksmInfo.getHostname(),
         ksmInfo.getPort(ServicePort.Type.RPC));
@@ -1228,7 +1228,7 @@ public class TestKeySpaceManager {
         conf.get(OZONE_KSM_ADDRESS_KEY)), ksmAddress);
 
     ServiceInfo scmInfo = services.stream().filter(
-        a -> a.getNodeType().equals(OzoneProtos.NodeType.SCM))
+        a -> a.getNodeType().equals(HdslProtos.NodeType.SCM))
         .collect(Collectors.toList()).get(0);
     InetSocketAddress scmAddress = new InetSocketAddress(scmInfo.getHostname(),
         scmInfo.getPort(ServicePort.Type.RPC));

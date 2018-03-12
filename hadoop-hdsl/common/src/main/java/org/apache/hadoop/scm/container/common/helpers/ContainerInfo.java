@@ -21,7 +21,7 @@ package org.apache.hadoop.scm.container.common.helpers;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerID;
 import org.apache.hadoop.util.Time;
 
@@ -32,7 +32,7 @@ import java.util.Comparator;
  */
 public class ContainerInfo
     implements Comparator<ContainerInfo>, Comparable<ContainerInfo> {
-  private OzoneProtos.LifeCycleState state;
+  private HdslProtos.LifeCycleState state;
   private Pipeline pipeline;
   // Bytes allocated by SCM for clients.
   private long allocatedBytes;
@@ -48,7 +48,7 @@ public class ContainerInfo
   ContainerInfo(
       long containerID,
       final String containerName,
-      OzoneProtos.LifeCycleState state,
+      HdslProtos.LifeCycleState state,
       Pipeline pipeline,
       long allocatedBytes,
       long usedBytes,
@@ -73,7 +73,7 @@ public class ContainerInfo
   public ContainerInfo() {
   }
 
-  public static ContainerInfo fromProtobuf(OzoneProtos.SCMContainerInfo info) {
+  public static ContainerInfo fromProtobuf(HdslProtos.SCMContainerInfo info) {
     ContainerInfo.Builder builder = new ContainerInfo.Builder();
     builder.setPipeline(Pipeline.getFromProtoBuf(info.getPipeline()));
     builder.setAllocatedBytes(info.getAllocatedBytes());
@@ -95,11 +95,11 @@ public class ContainerInfo
     return containerName;
   }
 
-  public OzoneProtos.LifeCycleState getState() {
+  public HdslProtos.LifeCycleState getState() {
     return state;
   }
 
-  public void setState(OzoneProtos.LifeCycleState state) {
+  public void setState(HdslProtos.LifeCycleState state) {
     this.state = state;
   }
 
@@ -156,9 +156,9 @@ public class ContainerInfo
     allocatedBytes += size;
   }
 
-  public OzoneProtos.SCMContainerInfo getProtobuf() {
-    OzoneProtos.SCMContainerInfo.Builder builder =
-        OzoneProtos.SCMContainerInfo.newBuilder();
+  public HdslProtos.SCMContainerInfo getProtobuf() {
+    HdslProtos.SCMContainerInfo.Builder builder =
+        HdslProtos.SCMContainerInfo.newBuilder();
     builder.setPipeline(getPipeline().getProtobufMessage());
     builder.setAllocatedBytes(getAllocatedBytes());
     builder.setUsedBytes(getUsedBytes());
@@ -268,7 +268,7 @@ public class ContainerInfo
    * Builder class for ContainerInfo.
    */
   public static class Builder {
-    private OzoneProtos.LifeCycleState state;
+    private HdslProtos.LifeCycleState state;
     private Pipeline pipeline;
     private long allocated;
     private long used;
@@ -284,7 +284,7 @@ public class ContainerInfo
       return this;
     }
 
-    public Builder setState(OzoneProtos.LifeCycleState lifeCycleState) {
+    public Builder setState(HdslProtos.LifeCycleState lifeCycleState) {
       this.state = lifeCycleState;
       return this;
     }

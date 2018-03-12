@@ -19,7 +19,7 @@
 package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import org.apache.hadoop.ozone.container.ContainerTestHelper;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 import org.apache.hadoop.util.Time;
@@ -30,10 +30,10 @@ import java.io.IOException;
 import java.util.SortedSet;
 import java.util.UUID;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.CLOSED;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.LifeCycleState.OPEN;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor.ONE;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType.STAND_ALONE;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.CLOSED;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.LifeCycleState.OPEN;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor.ONE;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType.STAND_ALONE;
 
 public class TestContainerStateMap {
   @Test
@@ -45,7 +45,7 @@ public class TestContainerStateMap {
     for (int x = 1; x < 1001; x++) {
       ContainerInfo containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.OPEN)
+          .setState(HdslProtos.LifeCycleState.OPEN)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)
@@ -66,7 +66,7 @@ public class TestContainerStateMap {
     for (int y = currentCount; y < nextMax; y++) {
       ContainerInfo containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.CLOSED)
+          .setState(HdslProtos.LifeCycleState.CLOSED)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)
@@ -104,7 +104,7 @@ public class TestContainerStateMap {
     for (int x = 1; x < 1001; x++) {
       ContainerInfo containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.OPEN)
+          .setState(HdslProtos.LifeCycleState.OPEN)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)
@@ -123,7 +123,7 @@ public class TestContainerStateMap {
     for (int y = currentCount; y < nextMax; y++) {
       ContainerInfo containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.CLOSED)
+          .setState(HdslProtos.LifeCycleState.CLOSED)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)
@@ -140,7 +140,7 @@ public class TestContainerStateMap {
     for (int z = currentCount; z < nextMax; z++) {
       ContainerInfo containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.OPEN)
+          .setState(HdslProtos.LifeCycleState.OPEN)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)
@@ -168,7 +168,7 @@ public class TestContainerStateMap {
     int nextId = currentCount++;
     ContainerInfo containerInfo = new ContainerInfo.Builder()
         .setContainerName(pipeline.getContainerName())
-        .setState(OzoneProtos.LifeCycleState.OPEN)
+        .setState(HdslProtos.LifeCycleState.OPEN)
         .setPipeline(pipeline)
         .setAllocatedBytes(0)
         .setUsedBytes(0)
@@ -198,7 +198,7 @@ public class TestContainerStateMap {
     for (int x = 1; x < 1001; x++) {
       containerInfo = new ContainerInfo.Builder()
           .setContainerName(pipeline.getContainerName())
-          .setState(OzoneProtos.LifeCycleState.OPEN)
+          .setState(HdslProtos.LifeCycleState.OPEN)
           .setPipeline(pipeline)
           .setAllocatedBytes(0)
           .setUsedBytes(0)

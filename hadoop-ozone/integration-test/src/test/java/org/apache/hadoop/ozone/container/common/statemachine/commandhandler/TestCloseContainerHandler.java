@@ -32,7 +32,7 @@ import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyArgs;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyLocationInfo;
 import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_SIZE_GB;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
 import org.apache.hadoop.test.GenericTestUtils;
@@ -73,8 +73,8 @@ public class TestCloseContainerHandler {
     //get the name of a valid container
     KsmKeyArgs keyArgs =
         new KsmKeyArgs.Builder().setVolumeName("test").setBucketName("test")
-            .setType(OzoneProtos.ReplicationType.STAND_ALONE)
-            .setFactor(OzoneProtos.ReplicationFactor.ONE).setDataSize(1024)
+            .setType(HdslProtos.ReplicationType.STAND_ALONE)
+            .setFactor(HdslProtos.ReplicationFactor.ONE).setDataSize(1024)
             .setKeyName("test").build();
 
     KsmKeyLocationInfo ksmKeyLocationInfo =

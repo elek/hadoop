@@ -29,7 +29,7 @@ import io.netty.handler.logging.LoggingHandler;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.container.common.interfaces.ContainerDispatcher;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,8 +92,8 @@ public final class XceiverServer implements XceiverServerSpi {
    * @return enum -- {Stand_Alone, Ratis, Chained}
    */
   @Override
-  public OzoneProtos.ReplicationType getServerType() {
-    return OzoneProtos.ReplicationType.STAND_ALONE;
+  public HdslProtos.ReplicationType getServerType() {
+    return HdslProtos.ReplicationType.STAND_ALONE;
   }
 
   @Override

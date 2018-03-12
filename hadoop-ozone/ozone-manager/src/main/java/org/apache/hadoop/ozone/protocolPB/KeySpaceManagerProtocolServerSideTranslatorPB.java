@@ -98,7 +98,7 @@ import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.ServiceListRequest;
 import org.apache.hadoop.ozone.protocol.proto
     .KeySpaceManagerProtocolProtos.ServiceListResponse;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -322,9 +322,9 @@ public class KeySpaceManagerProtocolServerSideTranslatorPB implements
         LocateKeyResponse.newBuilder();
     try {
       KeyArgs keyArgs = request.getKeyArgs();
-      OzoneProtos.ReplicationType type =
+      HdslProtos.ReplicationType type =
           keyArgs.hasType()? keyArgs.getType() : null;
-      OzoneProtos.ReplicationFactor factor =
+      HdslProtos.ReplicationFactor factor =
           keyArgs.hasFactor()? keyArgs.getFactor() : null;
       KsmKeyArgs ksmKeyArgs = new KsmKeyArgs.Builder()
           .setVolumeName(keyArgs.getVolumeName())

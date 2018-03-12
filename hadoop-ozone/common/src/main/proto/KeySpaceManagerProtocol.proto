@@ -35,7 +35,7 @@ This is similar to Namenode for Ozone.
 */
 
 import "hdfs.proto";
-import "Ozone.proto";
+import "hdsl.proto";
 
 enum Status {
     OK = 1;

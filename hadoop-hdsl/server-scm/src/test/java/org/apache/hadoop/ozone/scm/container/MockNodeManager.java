@@ -22,7 +22,7 @@ import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.protocol.VersionResponse;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -45,10 +45,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState.DEAD;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState.DEAD;
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .HEALTHY;
-import static org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.NodeState
+import static org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState
     .STALE;
 
 /**
@@ -147,7 +147,7 @@ public class MockNodeManager implements NodeManager {
    * @return List of Datanodes that are Heartbeating SCM.
    */
   @Override
-  public List<DatanodeID> getNodes(OzoneProtos.NodeState nodestate) {
+  public List<DatanodeID> getNodes(HdslProtos.NodeState nodestate) {
     if (nodestate == HEALTHY) {
       return healthyNodes;
     }
@@ -170,7 +170,7 @@ public class MockNodeManager implements NodeManager {
    * @return int -- count
    */
   @Override
-  public int getNodeCount(OzoneProtos.NodeState nodestate) {
+  public int getNodeCount(HdslProtos.NodeState nodestate) {
     List<DatanodeID> nodes = getNodes(nodestate);
     if (nodes != null) {
       return nodes.size();
@@ -296,7 +296,7 @@ public class MockNodeManager implements NodeManager {
    * @return Healthy/Stale/Dead.
    */
   @Override
-  public OzoneProtos.NodeState getNodeState(DatanodeID id) {
+  public HdslProtos.NodeState getNodeState(DatanodeID id) {
     return null;
   }
 
@@ -417,7 +417,7 @@ public class MockNodeManager implements NodeManager {
   @Override
   public Map<String, Integer> getNodeCount() {
     Map<String, Integer> nodeCountMap = new HashMap<String, Integer>();
-    for (OzoneProtos.NodeState state : OzoneProtos.NodeState.values()) {
+    for (HdslProtos.NodeState state : HdslProtos.NodeState.values()) {
       nodeCountMap.put(state.toString(), getNodeCount(state));
     }
     return nodeCountMap;

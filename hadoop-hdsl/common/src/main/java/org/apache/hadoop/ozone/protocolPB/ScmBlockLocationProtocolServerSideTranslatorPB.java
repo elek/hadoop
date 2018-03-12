@@ -22,7 +22,7 @@ import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ozone.common.BlockGroup;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto.ScmBlockLocationProtocolProtos.DeleteKeyBlocksResultProto;
 import org.apache.hadoop.scm.container.common.helpers.AllocatedBlock;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
@@ -152,8 +152,8 @@ public final class ScmBlockLocationProtocolServerSideTranslatorPB
   }
 
   @Override
-  public OzoneProtos.GetScmInfoRespsonseProto getScmInfo(
-      RpcController controller, OzoneProtos.GetScmInfoRequestProto req)
+  public HdslProtos.GetScmInfoRespsonseProto getScmInfo(
+      RpcController controller, HdslProtos.GetScmInfoRequestProto req)
       throws ServiceException {
     ScmInfo scmInfo;
     try {
@@ -161,7 +161,7 @@ public final class ScmBlockLocationProtocolServerSideTranslatorPB
     } catch (IOException ex) {
       throw new ServiceException(ex);
     }
-    return OzoneProtos.GetScmInfoRespsonseProto.newBuilder()
+    return HdslProtos.GetScmInfoRespsonseProto.newBuilder()
         .setClusterId(scmInfo.getClusterId())
         .setScmId(scmInfo.getScmId())
         .build();

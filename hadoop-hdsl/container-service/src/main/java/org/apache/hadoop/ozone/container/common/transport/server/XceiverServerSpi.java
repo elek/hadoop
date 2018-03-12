@@ -18,7 +18,7 @@
 
 package org.apache.hadoop.ozone.container.common.transport.server;
 
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 
 import java.io.IOException;
 
@@ -38,6 +38,6 @@ public interface XceiverServerSpi {
    * Returns the Replication type supported by this end-point.
    * @return enum -- {Stand_Alone, Ratis, Chained}
    */
-  OzoneProtos.ReplicationType getServerType();
+  HdslProtos.ReplicationType getServerType();
 
 }

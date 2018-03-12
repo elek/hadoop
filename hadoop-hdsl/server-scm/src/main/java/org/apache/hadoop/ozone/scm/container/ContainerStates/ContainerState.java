@@ -20,15 +20,15 @@ package org.apache.hadoop.ozone.scm.container.ContainerStates;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 
 /**
  * Class that acts as the container state.
  */
 public class ContainerState {
-  private final OzoneProtos.ReplicationType type;
+  private final HdslProtos.ReplicationType type;
   private final String owner;
-  private final OzoneProtos.ReplicationFactor replicationFactor;
+  private final HdslProtos.ReplicationFactor replicationFactor;
 
   /**
    * Constructs a Container Key.
@@ -37,15 +37,15 @@ public class ContainerState {
    * @param type - Replication Type.
    * @param factor - Replication Factors
    */
-  public ContainerState(String owner, OzoneProtos.ReplicationType type,
-      OzoneProtos.ReplicationFactor factor) {
+  public ContainerState(String owner, HdslProtos.ReplicationType type,
+      HdslProtos.ReplicationFactor factor) {
     this.type = type;
     this.owner = owner;
     this.replicationFactor = factor;
   }
 
 
-  public OzoneProtos.ReplicationType getType() {
+  public HdslProtos.ReplicationType getType() {
     return type;
   }
 
@@ -53,7 +53,7 @@ public class ContainerState {
     return owner;
   }
 
-  public OzoneProtos.ReplicationFactor getFactor() {
+  public HdslProtos.ReplicationFactor getFactor() {
     return replicationFactor;
   }
 

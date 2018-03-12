@@ -24,9 +24,9 @@ import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.lease.Lease;
 import org.apache.hadoop.ozone.lease.LeaseException;
 import org.apache.hadoop.ozone.lease.LeaseManager;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationFactor;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos.ReplicationType;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationFactor;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.ReplicationType;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto
@@ -162,7 +162,7 @@ public class ContainerMapping implements Mapping {
             SCMException.ResultCodes.FAILED_TO_FIND_CONTAINER);
       }
 
-      OzoneProtos.SCMContainerInfo temp = OzoneProtos.SCMContainerInfo.PARSER
+      HdslProtos.SCMContainerInfo temp = HdslProtos.SCMContainerInfo.PARSER
           .parseFrom(containerBytes);
       containerInfo = ContainerInfo.fromProtobuf(temp);
       return containerInfo;
@@ -194,7 +194,7 @@ public class ContainerMapping implements Mapping {
       for (Map.Entry<byte[], byte[]> entry : range) {
         ContainerInfo containerInfo =
             ContainerInfo.fromProtobuf(
-                OzoneProtos.SCMContainerInfo.PARSER.parseFrom(
+                HdslProtos.SCMContainerInfo.PARSER.parseFrom(
                     entry.getValue()));
         Preconditions.checkNotNull(containerInfo);
         containerList.add(containerInfo);
@@ -283,8 +283,8 @@ public class ContainerMapping implements Mapping {
    * {@inheritDoc} Used by client to update container state on SCM.
    */
   @Override
-  public OzoneProtos.LifeCycleState updateContainerState(
-      String containerName, OzoneProtos.LifeCycleEvent event) throws
+  public HdslProtos.LifeCycleState updateContainerState(
+      String containerName, HdslProtos.LifeCycleEvent event) throws
       IOException {
     ContainerInfo containerInfo;
     lock.lock();
@@ -299,7 +299,7 @@ public class ContainerMapping implements Mapping {
             SCMException.ResultCodes.FAILED_TO_FIND_CONTAINER);
       }
       containerInfo =
-          ContainerInfo.fromProtobuf(OzoneProtos.SCMContainerInfo.PARSER
+          ContainerInfo.fromProtobuf(HdslProtos.SCMContainerInfo.PARSER
               .parseFrom(containerBytes));
 
       Preconditions.checkNotNull(containerInfo);
@@ -311,7 +311,7 @@ public class ContainerMapping implements Mapping {
         // Register callback to be executed in case of timeout
         containerLease.registerCallBack(() -> {
           updateContainerState(containerName,
-              OzoneProtos.LifeCycleEvent.TIMEOUT);
+              HdslProtos.LifeCycleEvent.TIMEOUT);
           return null;
         });
         break;
@@ -393,10 +393,10 @@ public class ContainerMapping implements Mapping {
       try {
         byte[] containerBytes = containerStore.get(dbKey);
         if (containerBytes != null) {
-          OzoneProtos.SCMContainerInfo knownState =
-              OzoneProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
+          HdslProtos.SCMContainerInfo knownState =
+              HdslProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
 
-          OzoneProtos.SCMContainerInfo newState =
+          HdslProtos.SCMContainerInfo newState =
               reconcileState(datanodeState, knownState);
 
           // FIX ME: This can be optimized, we write twice to memory, where a
@@ -431,11 +431,11 @@ public class ContainerMapping implements Mapping {
    * @param knownState - State inside SCM.
    * @return new SCM State for this container.
    */
-  private OzoneProtos.SCMContainerInfo reconcileState(
+  private HdslProtos.SCMContainerInfo reconcileState(
       StorageContainerDatanodeProtocolProtos.ContainerInfo datanodeState,
-      OzoneProtos.SCMContainerInfo knownState) {
-    OzoneProtos.SCMContainerInfo.Builder builder =
-        OzoneProtos.SCMContainerInfo.newBuilder();
+      HdslProtos.SCMContainerInfo knownState) {
+    HdslProtos.SCMContainerInfo.Builder builder =
+        HdslProtos.SCMContainerInfo.newBuilder();
     builder.setContainerName(knownState.getContainerName());
     builder.setPipeline(knownState.getPipeline());
     // If used size is greater than allocated size, we will be updating
@@ -468,7 +468,7 @@ public class ContainerMapping implements Mapping {
    * @param newState - This is the state we maintain in SCM.
    * @throws IOException
    */
-  private boolean closeContainerIfNeeded(OzoneProtos.SCMContainerInfo newState)
+  private boolean closeContainerIfNeeded(HdslProtos.SCMContainerInfo newState)
       throws IOException {
     float containerUsedPercentage = 1.0f *
         newState.getUsedBytes() / this.size;
@@ -487,10 +487,10 @@ public class ContainerMapping implements Mapping {
         // container to reach. We will know that a container has reached the
         // closed state from container reports. This state change should be
         // invoked once and only once.
-        OzoneProtos.LifeCycleState state = updateContainerState(
+        HdslProtos.LifeCycleState state = updateContainerState(
             scmInfo.getContainerName(),
-            OzoneProtos.LifeCycleEvent.FINALIZE);
-        if (state != OzoneProtos.LifeCycleState.CLOSING) {
+            HdslProtos.LifeCycleEvent.FINALIZE);
+        if (state != HdslProtos.LifeCycleState.CLOSING) {
           LOG.error("Failed to close container {}, reason : Not able " +
                   "to " +
                   "update container state, current container state: {}.",
@@ -511,11 +511,11 @@ public class ContainerMapping implements Mapping {
    * @return true if is in open state, false otherwise
    */
   private boolean shouldClose(ContainerInfo info) {
-    return info.getState() == OzoneProtos.LifeCycleState.OPEN;
+    return info.getState() == HdslProtos.LifeCycleState.OPEN;
   }
 
   private boolean isClosed(ContainerInfo info) {
-    return info.getState() == OzoneProtos.LifeCycleState.CLOSED;
+    return info.getState() == HdslProtos.LifeCycleState.CLOSED;
   }
 
   @VisibleForTesting
@@ -572,8 +572,8 @@ public class ContainerMapping implements Mapping {
         // return info of a deleted container. may revisit this in the future,
         // for now, just skip a not-found container
         if (containerBytes != null) {
-          OzoneProtos.SCMContainerInfo oldInfoProto =
-              OzoneProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
+          HdslProtos.SCMContainerInfo oldInfoProto =
+              HdslProtos.SCMContainerInfo.PARSER.parseFrom(containerBytes);
           ContainerInfo oldInfo = ContainerInfo.fromProtobuf(oldInfoProto);
           ContainerInfo newInfo = new ContainerInfo.Builder()
               .setAllocatedBytes(info.getAllocatedBytes())

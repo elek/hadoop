@@ -21,7 +21,7 @@ package org.apache.hadoop.ozone.container.common.helpers;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos;
-import org.apache.hadoop.hdsl.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.util.Time;
@@ -133,8 +133,8 @@ public class ContainerData {
     builder.setOpen(this.isOpen());
 
     for (Map.Entry<String, String> entry : metadata.entrySet()) {
-      OzoneProtos.KeyValue.Builder keyValBuilder =
-          OzoneProtos.KeyValue.newBuilder();
+      HdslProtos.KeyValue.Builder keyValBuilder =
+          HdslProtos.KeyValue.newBuilder();
       builder.addMetadata(keyValBuilder.setKey(entry.getKey())
           .setValue(entry.getValue()).build());
     }
