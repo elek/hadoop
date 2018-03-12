@@ -81,7 +81,7 @@ public interface RatisTestHelper {
 
     public int getDatanodeOzoneRestPort() {
       return cluster.getDataNodes().get(0).getDatanodeId().getOzoneRestPort();
-     }
+    }
   }
 
   static OzoneConfiguration newOzoneConfiguration(

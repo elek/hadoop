@@ -263,7 +263,8 @@ public abstract class VolumeProcessTemplate {
       ListArgs<VolumeArgs> listArgs = new ListArgs<>(args, prefix,
           maxKeys, prevKey);
       ListBuckets bucketList = fs.listBuckets(listArgs);
-      return OzoneRestUtils.getResponse(args, HTTP_OK, bucketList.toJsonString());
+      return OzoneRestUtils
+          .getResponse(args, HTTP_OK, bucketList.toJsonString());
     } catch (IOException ex) {
       LOG.debug("unable to get the bucket list for the specified volume.", ex);
       OzoneException exp =

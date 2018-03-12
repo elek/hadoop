@@ -29,8 +29,8 @@ import java.io.PrintStream;
 public abstract class OzoneCommandHandler {
 
   private ScmClient scmClient;
-  protected PrintStream out = System.out;
-  protected PrintStream err = System.err;
+  private PrintStream out = System.out;
+  private PrintStream err = System.err;
 
   /**
    * Constructs a handler object.
@@ -76,4 +76,12 @@ public abstract class OzoneCommandHandler {
    * TODO : currently only prints to standard out, may want to change this.
    */
   public abstract void displayHelp();
+
+  public PrintStream getOut() {
+    return out;
+  }
+
+  public PrintStream getErr() {
+    return err;
+  }
 }

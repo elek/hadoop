@@ -30,8 +30,14 @@ import static org.apache.hadoop.ozone.ksm.KSMConfigKeys
     .OZONE_KSM_BIND_HOST_DEFAULT;
 import static org.apache.hadoop.ozone.ksm.KSMConfigKeys.OZONE_KSM_PORT_DEFAULT;
 
+/**
+ * Stateless helper functions for the server and client side of KSM
+ * communication.
+ */
 public class KsmUtils {
 
+  private KsmUtils() {
+  }
 
   /**
    * Retrieve the socket address that is used by KSM.

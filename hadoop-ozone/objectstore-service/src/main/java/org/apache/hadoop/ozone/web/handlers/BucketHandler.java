@@ -20,14 +20,13 @@
 
 package org.apache.hadoop.ozone.web.handlers;
 
+import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.OzoneRestUtils;
-import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
 import org.apache.hadoop.ozone.client.rest.OzoneException;
 import org.apache.hadoop.ozone.client.rest.headers.Header;
+import org.apache.hadoop.ozone.web.exceptions.ErrorTable;
 import org.apache.hadoop.ozone.web.interfaces.Bucket;
 import org.apache.hadoop.ozone.web.interfaces.StorageHandler;
-import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.web.utils.OzoneUtils;
 import org.slf4j.MDC;
 
 import javax.ws.rs.core.HttpHeaders;

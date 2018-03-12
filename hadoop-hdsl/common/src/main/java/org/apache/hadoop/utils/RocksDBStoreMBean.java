@@ -23,24 +23,12 @@ import org.rocksdb.HistogramType;
 import org.rocksdb.Statistics;
 import org.rocksdb.TickerType;
 
-import javax.management.Attribute;
-import javax.management.AttributeList;
-import javax.management.AttributeNotFoundException;
-import javax.management.DynamicMBean;
-import javax.management.InvalidAttributeValueException;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanException;
-import javax.management.MBeanInfo;
-import javax.management.ReflectionException;
-import java.lang.reflect.InvocationTargetException;
+import javax.management.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * Adapter JMX bean to publish all the Rocksdb metrics.
@@ -66,7 +54,7 @@ public class RocksDBStoreMBean implements DynamicMBean {
     for (String histogramAttribute : histogramAttributes) {
       if (attribute.endsWith("_" + histogramAttribute.toUpperCase())) {
         String keyName = attribute
-            .substring(0, attribute.length() - histogramAttribute.length() -1);
+            .substring(0, attribute.length() - histogramAttribute.length() - 1);
         try {
           HistogramData histogram =
               statistics.getHistogramData(HistogramType.valueOf(keyName));

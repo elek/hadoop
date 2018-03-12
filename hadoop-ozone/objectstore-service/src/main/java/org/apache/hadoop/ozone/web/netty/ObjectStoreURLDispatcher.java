@@ -38,8 +38,10 @@ public class ObjectStoreURLDispatcher
       LoggerFactory.getLogger(ObjectStoreURLDispatcher.class);
   private final ObjectStoreJerseyContainer objectStoreJerseyContainer;
 
-  ObjectStoreURLDispatcher(ObjectStoreJerseyContainer objectStoreJerseyContainer)
+  ObjectStoreURLDispatcher(
+      ObjectStoreJerseyContainer objectStoreJerseyContainer)
       throws IOException {
+
     this.objectStoreJerseyContainer = objectStoreJerseyContainer;
   }
 

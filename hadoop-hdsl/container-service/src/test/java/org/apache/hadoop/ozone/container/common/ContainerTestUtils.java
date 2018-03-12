@@ -31,7 +31,13 @@ import org.apache.hadoop.ozone.protocolPB
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolPB;
 import org.apache.hadoop.security.UserGroupInformation;
 
+/**
+ * Helper utility to test containers.
+ */
 public class ContainerTestUtils {
+
+  private ContainerTestUtils() {
+  }
 
   /**
    * Creates an Endpoint class for testing purpose.

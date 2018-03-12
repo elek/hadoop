@@ -17,48 +17,27 @@
 
 package org.apache.hadoop.ozone.scm;
 
-import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
+import com.google.common.base.Optional;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdsl.HdslUtils;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
-
-import com.google.common.base.Optional;
-import static org.apache.hadoop.hdsl.HdslUtils.OZONE_SCM_SERVICE_ID;
-import static org.apache.hadoop.hdsl.HdslUtils.OZONE_SCM_SERVICE_INSTANCE_ID;
-import static org.apache.hadoop.hdsl.HdslUtils.getHostName;
-import static org.apache.hadoop.hdsl.HdslUtils.getHostNameFromConfigKeys;
-import static org.apache.hadoop.hdsl.HdslUtils.getHostPort;
-import static org.apache.hadoop.hdsl.HdslUtils.getPortNumberFromConfigKeys;
-import static org.apache.hadoop.ozone.web.util.ServerUtils.sanitizeUserArgs;
-import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_DEADNODE_INTERVAL;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_DEADNODE_INTERVAL_DEFAULT;
-import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_HEARTBEAT_INTERVAL;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HEARTBEAT_LOG_WARN_DEFAULT;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HEARTBEAT_LOG_WARN_INTERVAL_COUNT;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HEARTBEAT_PROCESS_INTERVAL;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HEARTBEAT_RPC_TIMEOUT;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_HEARTBEAT_RPC_TIMEOUT_DEFAULT;
-import static org.apache.hadoop.scm.ScmConfigKeys.OZONE_SCM_STALENODE_INTERVAL;
-import static org.apache.hadoop.scm.ScmConfigKeys
-    .OZONE_SCM_STALENODE_INTERVAL_DEFAULT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HdslServerUtil extends HdslUtils{
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static org.apache.hadoop.hdsl.HdslUtils.*;
+import static org.apache.hadoop.ozone.web.util.ServerUtils.sanitizeUserArgs;
+import static org.apache.hadoop.scm.ScmConfigKeys.*;
+
+/**
+ * Hdsl stateless helper functions for server side components.
+ */
+public class HdslServerUtil {
 
   private static final Logger LOG = LoggerFactory.getLogger(
       HdslServerUtil.class);
@@ -85,8 +64,8 @@ public class HdslServerUtil extends HdslUtils{
       throw new IllegalArgumentException(
           ScmConfigKeys.OZONE_SCM_CLIENT_ADDRESS_KEY +
               " must be defined. See" +
-              " https://wiki.apache.org/hadoop/Ozone#Configuration for details" +
-              " on configuring Ozone.");
+              " https://wiki.apache.org/hadoop/Ozone#Configuration "
+              + "for details on configuring Ozone.");
     }
 
     // If no port number is specified then we'll just try the defaultBindPort.
@@ -311,7 +290,8 @@ public class HdslServerUtil extends HdslUtils{
    * @return list of SCM service addresses.
    */
   public static Map<String, ? extends Map<String, InetSocketAddress>>
-  getScmServiceRpcAddresses(Configuration conf) {
+      getScmServiceRpcAddresses(Configuration conf) {
+
     final Map<String, InetSocketAddress> serviceInstances = new HashMap<>();
     serviceInstances.put(OZONE_SCM_SERVICE_INSTANCE_ID,
         getScmAddressForDataNodes(conf));

@@ -38,6 +38,9 @@ import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+/**
+ * CLI utility to print out ozone related configuration.
+ */
 public class OzoneGetConf extends Configured implements Tool {
 
   private static final String DESCRIPTION = "oz getconf is utility for "
@@ -56,14 +59,15 @@ public class OzoneGetConf extends Configured implements Tool {
         "gets list of ozone storage container manager nodes in the cluster"),
     CONFKEY("-confKey [key]", "gets a specific key from the configuration");
 
-    private static final Map<String, OzoneGetConf.CommandHandler> map;
+    private static final Map<String, OzoneGetConf.CommandHandler> HANDLERS;
+
     static {
-      map = new HashMap<String, OzoneGetConf.CommandHandler>();
-      map.put(StringUtils.toLowerCase(KEYSPACEMANAGER.getName()),
+      HANDLERS = new HashMap<String, OzoneGetConf.CommandHandler>();
+      HANDLERS.put(StringUtils.toLowerCase(KEYSPACEMANAGER.getName()),
           new KeySpaceManagersCommandHandler());
-      map.put(StringUtils.toLowerCase(STORAGECONTAINERMANAGER.getName()),
+      HANDLERS.put(StringUtils.toLowerCase(STORAGECONTAINERMANAGER.getName()),
           new StorageContainerManagersCommandHandler());
-      map.put(StringUtils.toLowerCase(CONFKEY.getName()),
+      HANDLERS.put(StringUtils.toLowerCase(CONFKEY.getName()),
           new PrintConfKeyCommandHandler());
     }
 
@@ -88,7 +92,7 @@ public class OzoneGetConf extends Configured implements Tool {
     }
 
     public static OzoneGetConf.CommandHandler getHandler(String cmd) {
-      return map.get(StringUtils.toLowerCase(cmd));
+      return HANDLERS.get(StringUtils.toLowerCase(cmd));
     }
   }
 
@@ -107,7 +111,8 @@ public class OzoneGetConf extends Configured implements Tool {
   }
 
   /**
-   * Handler to return value for key corresponding to the {@link OzoneGetConf.Command}
+   * Handler to return value for key corresponding to the
+   * {@link OzoneGetConf.Command}.
    */
   static class CommandHandler {
     String key; // Configuration key to lookup

@@ -101,7 +101,7 @@ import static org.apache.hadoop.util.ExitUtil.terminate;
  * Ozone Keyspace manager is the metadata manager of ozone.
  */
 @InterfaceAudience.LimitedPrivate({"HDFS", "CBLOCK", "OZONE", "HBASE"})
-public class KeySpaceManager extends ServiceRuntimeInfoImpl
+public final class KeySpaceManager extends ServiceRuntimeInfoImpl
     implements KeySpaceManagerProtocol, KSMMXBean {
   private static final Logger LOG =
       LoggerFactory.getLogger(KeySpaceManager.class);

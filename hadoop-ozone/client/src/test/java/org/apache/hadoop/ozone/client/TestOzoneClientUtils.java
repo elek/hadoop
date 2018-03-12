@@ -22,21 +22,17 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.ksm.KSMConfigKeys;
 import org.apache.hadoop.scm.ScmConfigKeys;
-
-import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
-import static org.apache.hadoop.ozone.KsmUtils.getKsmAddress;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import org.junit.Rule;
 import org.junit.rules.Timeout;
 
 import java.net.InetSocketAddress;
 
+import static org.apache.hadoop.hdsl.HdslUtils.getScmAddressForClients;
+import static org.apache.hadoop.ozone.KsmUtils.getKsmAddress;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * This test class verifies the parsing of SCM endpoint config settings.

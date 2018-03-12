@@ -38,6 +38,9 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_ENABLED_DEFAULT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * HDSL specific stateless utility functions.
+ */
 public class HdslUtils {
 
 
@@ -51,6 +54,9 @@ public class HdslUtils {
       "OzoneScmServiceInstance";
 
   private static final int NO_PORT = -1;
+
+  private HdslUtils() {
+  }
 
   /**
    * Retrieve the socket address that should be used by clients to connect

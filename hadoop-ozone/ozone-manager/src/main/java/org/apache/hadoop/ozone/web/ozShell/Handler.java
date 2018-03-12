@@ -32,6 +32,7 @@ import java.net.URISyntaxException;
  * Common interface for command handling.
  */
 public abstract class Handler {
+
   protected OzoneRestClient client;
 
   /**
@@ -73,4 +74,6 @@ public abstract class Handler {
     }
     return ozoneURI.build();
   }
+
+
 }

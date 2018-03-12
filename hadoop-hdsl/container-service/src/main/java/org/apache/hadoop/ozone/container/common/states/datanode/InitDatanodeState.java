@@ -27,7 +27,6 @@ import org.apache.hadoop.ozone.container.common.statemachine.StateContext;
 import org.apache.hadoop.ozone.container.common.states.DatanodeState;
 import org.apache.hadoop.scm.ScmConfigKeys;
 
-import static org.apache.hadoop.ozone.scm.HdslServerUtil.getSCMAddresses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +40,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import static org.apache.hadoop.hdsl.HdslUtils.getSCMAddresses;
 
 /**
  * Init Datanode State is the task that gets run when we are in Init State.

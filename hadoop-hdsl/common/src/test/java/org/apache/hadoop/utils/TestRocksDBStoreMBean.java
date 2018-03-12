@@ -28,6 +28,9 @@ import javax.management.MBeanServer;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 
+/**
+ * Test the JMX interface for the rocksdb metastore implementation.
+ */
 public class TestRocksDBStoreMBean {
 
   @Test
@@ -54,7 +57,7 @@ public class TestRocksDBStoreMBean {
     Object keysWritten = platformMBeanServer
         .getAttribute(metadataStore.getStatMBeanName(), "NUMBER_KEYS_WRITTEN");
 
-    Assert.assertEquals(10l, keysWritten);
+    Assert.assertEquals(10L, keysWritten);
 
     Object dbWriteAverage = platformMBeanServer
         .getAttribute(metadataStore.getStatMBeanName(), "DB_WRITE_AVERAGE");

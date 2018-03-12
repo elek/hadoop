@@ -28,6 +28,9 @@ import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.ozone.container.common.statemachine
     .DatanodeStateMachine;
 
+/**
+ * Datanode service plugin to start the HDSL container services.
+ */
 public class HdslServerPlugin implements DataNodeServicePlugin {
 
   private DatanodeStateMachine datanodeStateMachine;

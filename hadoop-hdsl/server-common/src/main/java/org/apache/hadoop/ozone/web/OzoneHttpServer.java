@@ -17,23 +17,23 @@
 
 package org.apache.hadoop.ozone.web;
 
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-
+import com.google.common.base.Optional;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.http.HttpConfig;
 import org.apache.hadoop.http.HttpServer2;
 import org.apache.hadoop.net.NetUtils;
-
-import com.google.common.base.Optional;
-import static org.apache.hadoop.hdsl.HdslUtils.getHostNameFromConfigKeys;
-import static org.apache.hadoop.hdsl.HdslUtils.getPortNumberFromConfigKeys;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServlet;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
+import static org.apache.hadoop.hdsl.HdslUtils.getHostNameFromConfigKeys;
+import static org.apache.hadoop.hdsl.HdslUtils.getPortNumberFromConfigKeys;
 
 /**
  * Base class for HTTP server of the Ozone related components.
@@ -109,7 +109,7 @@ public abstract class OzoneHttpServer {
         getHostNameFromConfigKeys(conf, bindHostKey);
 
     final Optional<Integer> addressPort =
-      getPortNumberFromConfigKeys(conf, addressKey);
+        getPortNumberFromConfigKeys(conf, addressKey);
 
     final Optional<String> addresHost =
         getHostNameFromConfigKeys(conf, addressKey);

@@ -73,8 +73,8 @@ public class ContainerCommandHandler extends OzoneCommandHandler {
     // execute the sub command, throw exception if no sub command found
     // unless -help option is given.
     if (handler != null) {
-      handler.setOut(this.out);
-      handler.setErr(this.err);
+      handler.setOut(this.getOut());
+      handler.setErr(this.getErr());
       handler.execute(cmd);
     } else {
       displayHelp();

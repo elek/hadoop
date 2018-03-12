@@ -30,11 +30,16 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Generic utilities for all HDSL/Ozone servers.
+ */
 public class ServerUtils {
 
   private static final Logger LOG = LoggerFactory.getLogger(
       ServerUtils.class);
 
+  private ServerUtils() {
+  }
 
   /**
    * Checks that a given value is with a range.

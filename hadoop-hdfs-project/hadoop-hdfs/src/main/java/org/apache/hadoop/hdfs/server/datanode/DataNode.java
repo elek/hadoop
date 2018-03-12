@@ -977,8 +977,7 @@ public class DataNode extends ReconfigurableBase
     }
 
     //adding additional plugins from SPI definitions
-    for (ServicePlugin plugin :
-      ServiceLoader.load(ServicePlugin.class)) {
+    for (ServicePlugin plugin : ServiceLoader.load(ServicePlugin.class)) {
       plugins.add(plugin);
     }
 
@@ -2682,8 +2681,9 @@ public class DataNode extends ReconfigurableBase
    */
   public static DataNode instantiateDataNode(String args [], Configuration conf,
       SecureResources resources) throws IOException {
-    if (conf == null)
+    if (conf == null) {
       conf = new HdfsConfiguration();
+    }
     if (args != null) {
       // parse generic hadoop options
       GenericOptionsParser hParser = new GenericOptionsParser(conf, args);

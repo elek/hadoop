@@ -609,8 +609,8 @@ public class TestKeys {
     Assert.assertEquals(20, bucketKeys.totalNumOfKeys());
 
     int numOfCreatedKeys = 0;
-    OzoneContainer cm = MiniOzoneTestHelper.getOzoneContainer
-        (ozoneCluster.getDataNodes().get(0));
+    OzoneContainer cm = MiniOzoneTestHelper
+        .getOzoneContainer(ozoneCluster.getDataNodes().get(0));
 
     // Expected to delete chunk file list.
     List<File> expectedChunkFiles = Lists.newArrayList();

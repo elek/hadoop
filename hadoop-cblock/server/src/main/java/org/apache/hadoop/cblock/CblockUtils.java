@@ -39,7 +39,13 @@ import static org.apache.hadoop.cblock.CBlockConfigKeys
 import static org.apache.hadoop.hdsl.HdslUtils.getHostNameFromConfigKeys;
 import static org.apache.hadoop.hdsl.HdslUtils.getPortNumberFromConfigKeys;
 
+/**
+ * Generic stateless utility functions for CBlock components.
+ */
 public class CblockUtils {
+
+  private CblockUtils() {
+  }
 
   /**
    * Retrieve the socket address that is used by CBlock Service.

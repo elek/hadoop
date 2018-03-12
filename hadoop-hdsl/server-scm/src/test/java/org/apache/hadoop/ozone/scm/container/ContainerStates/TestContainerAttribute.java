@@ -27,6 +27,9 @@ import org.junit.rules.ExpectedException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Test ContainerAttribute management.
+ */
 public class TestContainerAttribute {
 
   @Rule

@@ -28,6 +28,10 @@ import org.apache.hadoop.util.ServicePlugin;
  * Stateless helper functions for MiniOzone based tests.
  */
 public class MiniOzoneTestHelper {
+
+  private MiniOzoneTestHelper() {
+  }
+
   public static OzoneContainer getOzoneContainer(DataNode dataNode) {
     return findHdslPlugin(dataNode).getDatanodeStateMachine()
         .getContainer();

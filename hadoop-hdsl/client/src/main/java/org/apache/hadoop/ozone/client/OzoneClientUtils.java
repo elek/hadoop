@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,7 +40,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Utility methods for Ozone and Container Clients.
  *
@@ -51,9 +50,14 @@ import org.slf4j.LoggerFactory;
 @InterfaceAudience.Public
 @InterfaceStability.Unstable
 public final class OzoneClientUtils {
+
   private static final Logger LOG = LoggerFactory.getLogger(
       OzoneClientUtils.class);
+
   private static final int NO_PORT = -1;
+
+  private OzoneClientUtils() {
+  }
 
   /**
    * Date format that used in ozone. Here the format is thread safe to use.
@@ -65,9 +69,6 @@ public final class OzoneClientUtils {
         return format.withZone(ZoneId.of(OzoneConsts.OZONE_TIME_ZONE));
       });
 
-
-
-
   /**
    * Returns the cache value to be used for list calls.
    * @param conf Configuration object
@@ -77,9 +78,6 @@ public final class OzoneClientUtils {
     return conf.getInt(OzoneConfigKeys.OZONE_CLIENT_LIST_CACHE_SIZE,
         OzoneConfigKeys.OZONE_CLIENT_LIST_CACHE_SIZE_DEFAULT);
   }
-
-
-
 
   /**
    * @return a default instance of {@link CloseableHttpClient}.
@@ -207,7 +205,7 @@ public final class OzoneClientUtils {
   public static String formatDateTime(long millis) {
     ZonedDateTime dateTime = ZonedDateTime.ofInstant(
         Instant.ofEpochSecond(millis), DATE_FORMAT.get().getZone());
-    return  DATE_FORMAT.get().format(dateTime);
+    return DATE_FORMAT.get().format(dateTime);
   }
 
   /**
@@ -227,6 +225,7 @@ public final class OzoneClientUtils {
   public static int getMaxOutstandingRequests(Configuration config) {
     return config
         .getInt(ScmConfigKeys.SCM_CONTAINER_CLIENT_MAX_OUTSTANDING_REQUESTS,
-            ScmConfigKeys.SCM_CONTAINER_CLIENT_MAX_OUTSTANDING_REQUESTS_DEFAULT);
+            ScmConfigKeys
+                .SCM_CONTAINER_CLIENT_MAX_OUTSTANDING_REQUESTS_DEFAULT);
   }
 }

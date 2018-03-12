@@ -75,7 +75,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A collection of file-processing util methods
+ * A collection of file-processing util methods.
  */
 @InterfaceAudience.Public
 @InterfaceStability.Evolving

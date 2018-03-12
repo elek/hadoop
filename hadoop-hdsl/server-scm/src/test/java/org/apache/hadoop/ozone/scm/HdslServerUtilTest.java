@@ -28,7 +28,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.scm.ScmConfigKeys;
 
-import static org.apache.hadoop.ozone.scm.HdslServerUtil.getSCMAddresses;
+import static org.apache.hadoop.hdsl.HdslUtils.getSCMAddresses;
 import static org.apache.hadoop.ozone.scm.HdslServerUtil
     .getScmAddressForDataNodes;
 import static org.apache.hadoop.ozone.scm.HdslServerUtil
@@ -44,6 +44,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
 
+/**
+ * Test the HDSL server side utilities.
+ */
 public class HdslServerUtilTest {
 
   @Rule

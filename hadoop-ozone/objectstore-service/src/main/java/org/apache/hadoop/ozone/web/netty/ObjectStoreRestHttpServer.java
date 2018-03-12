@@ -214,7 +214,7 @@ public class ObjectStoreRestHttpServer implements Closeable {
      * @param filterName filter name
      * @param parameters mapping of filter initialization parameters
      */
-    public MapBasedFilterConfig(String filterName,
+    MapBasedFilterConfig(String filterName,
         Map<String, String> parameters) {
       this.filterName = filterName;
       this.parameters = parameters;
