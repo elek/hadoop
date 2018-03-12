@@ -82,7 +82,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.ServiceLoader;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -964,7 +963,7 @@ public class DataNode extends ReconfigurableBase
   }
 
   private void startPlugins(Configuration conf) {
-    plugins = new ArrayList<>();
+
     try {
       plugins = conf.getInstances(DFS_DATANODE_PLUGINS_KEY,
           ServicePlugin.class);
@@ -974,11 +973,6 @@ public class DataNode extends ReconfigurableBase
               "Specified list of plugins: {}",
           pluginsValue, e);
       throw e;
-    }
-
-    //adding additional plugins from SPI definitions
-    for (ServicePlugin plugin : ServiceLoader.load(ServicePlugin.class)) {
-      plugins.add(plugin);
     }
 
     for (ServicePlugin p: plugins) {
