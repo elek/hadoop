@@ -34,6 +34,7 @@ import org.apache.hadoop.ozone.container.common.statemachine
 public class HdslServerPlugin implements DataNodeServicePlugin {
 
   private DatanodeStateMachine datanodeStateMachine;
+  
   private DataNode dataNode;
 
   public HdslServerPlugin() {
@@ -46,14 +47,16 @@ public class HdslServerPlugin implements DataNodeServicePlugin {
   }
 
   @Override
-  public void onDatanodeSuccessfulNamenodeRegisration(
+  public synchronized void onDatanodeSuccessfulNamenodeRegisration(
       DatanodeRegistration dataNodeId) {
     if (HdslUtils.isHdslEnabled(dataNode.getConf())) {
       try {
-        datanodeStateMachine =
-            new DatanodeStateMachine(dataNodeId,
-                dataNode.getConf());
-        datanodeStateMachine.startDaemon();
+        if (datanodeStateMachine==null) {
+          datanodeStateMachine =
+              new DatanodeStateMachine(dataNodeId,
+                  dataNode.getConf());
+          datanodeStateMachine.startDaemon();
+        }
       } catch (IOException e) {
         throw new RuntimeException("Can't start the HDSL server plugin", e);
       }
