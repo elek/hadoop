@@ -133,7 +133,7 @@ run copy "${ROOT}/hadoop-hdsl/common/target/hadoop-hdsl-common-${VERSION}" .
 run copy "${ROOT}/hadoop-hdsl/server-common/target/hadoop-hdsl-server-common-${VERSION}" .
 run copy "${ROOT}/hadoop-hdsl/server-scm/target/hadoop-hdsl-server-scm-${VERSION}" .
 run copy "${ROOT}/hadoop-hdsl/tools/target/hadoop-hdsl-tools-${VERSION}" .
-run copy "${ROOT}/hadoop-hdsl/server-container/target/hadoop-hdsl-container-service-${VERSION}" .
+run copy "${ROOT}/hadoop-hdsl/container-service/target/hadoop-hdsl-container-service-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/common/target/hadoop-ozone-common-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/ozone-manager/target/hadoop-ozone-ozone-manager-${VERSION}" .
 run copy "${ROOT}/hadoop-ozone/ozone-client/target/hadoop-ozone-client-${VERSION}" .
@@ -142,6 +142,8 @@ run copy "${ROOT}/hadoop-ozone/objectstore-service/target/hadoop-ozone-objectsto
 run copy "${ROOT}/hadoop-cblock/server/target/hadoop-cblock-server-${VERSION}" .
 run copy "${ROOT}/hadoop-cblock/tools/target/hadoop-cblock-tools-${VERSION}" .
 run cp -r "${ROOT}/hadoop-hdsl/server-common/target/hadoop-hdsl-server-common-${VERSION}/share/hadoop/hdsl/webapps/static" share/hadoop/ozone/webapps/
+run cp -r "${ROOT}/hadoop-hdfs-project/hadoop-hdfs/target/hadoop-hdfs-${VERSION}/share/hadoop/hdfs/webapps/static" share/hadoop/ozone/webapps/
+run cp -r "${ROOT}/hadoop-hdfs-project/hadoop-hdfs/target/hadoop-hdfs-${VERSION}/share/hadoop/hdfs/webapps/static" share/hadoop/hdsl/webapps/
 
 
 run copy "${ROOT}/hadoop-yarn-project/target/hadoop-yarn-project-${VERSION}" .
