@@ -32,7 +32,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modules>
     <module>client</module>
     <module>common</module>
-    <module>server-common</module>
+    <module>framework</module>
     <module>container-service</module>
     <module>server-scm</module>
     <module>tools</module>
