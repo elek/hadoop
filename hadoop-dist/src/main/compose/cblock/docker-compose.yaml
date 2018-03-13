@@ -35,6 +35,8 @@ services:
       ports:
         - 9864
       command: ["/opt/hadoop/bin/oz","datanode"]
+      env_file:
+         - ./docker-config
    jscsi:
       image: elek/hadoop-runner:o3-refactor
       ports:
