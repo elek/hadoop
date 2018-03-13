@@ -17,37 +17,24 @@
  */
 package org.apache.hadoop.hdfs.server.datanode.web;
 
-import static org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler.WEBHDFS_PREFIX;
-
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.HttpRequest;
-
-import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 import java.net.InetSocketAddress;
 
-/**
- * Netty handler to dispatch incommit request to the right subhandler.
- */
-@InterfaceAudience.Private
-public class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
-  protected static final Logger LOG =
-      LoggerFactory.getLogger(URLDispatcher.class);
+import static org.apache.hadoop.hdfs.server.datanode.web.webhdfs.WebHdfsHandler.WEBHDFS_PREFIX;
+
+class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
   private final InetSocketAddress proxyHost;
   private final Configuration conf;
   private final Configuration confForCreate;
 
   URLDispatcher(InetSocketAddress proxyHost, Configuration conf,
-                Configuration confForCreate)
-      throws IOException {
+                Configuration confForCreate) {
     this.proxyHost = proxyHost;
     this.conf = conf;
     this.confForCreate = confForCreate;
@@ -56,8 +43,9 @@ public class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
   @Override
   protected void channelRead0(ChannelHandlerContext ctx, HttpRequest req)
       throws Exception {
+    String uri = req.getUri();
     ChannelPipeline p = ctx.pipeline();
-    if (isWebHdfsRequest(req)) {
+    if (uri.startsWith(WEBHDFS_PREFIX)) {
       WebHdfsHandler h = new WebHdfsHandler(conf, confForCreate);
       p.replace(this, WebHdfsHandler.class.getSimpleName(), h);
       h.channelRead0(ctx, req);
@@ -66,15 +54,5 @@ public class URLDispatcher extends SimpleChannelInboundHandler<HttpRequest> {
       p.replace(this, SimpleHttpProxyHandler.class.getSimpleName(), h);
       h.channelRead0(ctx, req);
     }
-  }
-
-  /**
-   * Returns true if the request is to be handled by WebHDFS.
-   *
-   * @param req HTTP request
-   * @return true if the request is to be handled by WebHDFS
-   */
-  private boolean isWebHdfsRequest(HttpRequest req) {
-    return req.getUri().startsWith(WEBHDFS_PREFIX);
   }
 }

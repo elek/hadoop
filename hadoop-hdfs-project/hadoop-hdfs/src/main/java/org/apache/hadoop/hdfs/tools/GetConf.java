@@ -112,24 +112,24 @@ public class GetConf extends Configured implements Tool {
     public String getName() {
       return cmd.split(" ")[0];
     }
-
+    
     public String getUsage() {
       return cmd;
     }
-
+    
     public String getDescription() {
       return description;
     }
-
+    
     public static CommandHandler getHandler(String cmd) {
       return map.get(StringUtils.toLowerCase(cmd));
     }
   }
-
+  
   static final String USAGE;
   static {
     HdfsConfiguration.init();
-
+    
     /* Initialize USAGE based on Command values */
     StringBuilder usage = new StringBuilder(DESCRIPTION);
     usage.append("\nhadoop getconf \n");
@@ -139,17 +139,17 @@ public class GetConf extends Configured implements Tool {
     }
     USAGE = usage.toString();
   }
-
+  
   /** 
    * Handler to return value for key corresponding to the {@link Command}
    */
   static class CommandHandler {
     String key; // Configuration key to lookup
-
+    
     CommandHandler() {
       this(null);
     }
-
+    
     CommandHandler(String key) {
       this.key = key;
     }
@@ -172,7 +172,7 @@ public class GetConf extends Configured implements Tool {
       }
     }
 
-
+    
     /** Method to be overridden by sub classes for specific behavior */
     int doWorkInternal(GetConf tool, String[] args) throws Exception {
 
@@ -185,7 +185,7 @@ public class GetConf extends Configured implements Tool {
       return -1;
     }
   }
-
+  
   /**
    * Handler for {@link Command#NAMENODE}
    */
@@ -196,7 +196,7 @@ public class GetConf extends Configured implements Tool {
       return 0;
     }
   }
-
+  
   /**
    * Handler for {@link Command#BACKUP}
    */
@@ -230,7 +230,7 @@ public class GetConf extends Configured implements Tool {
       return 0;
     }
   }
-
+  
   /**
    * Handler for {@link Command#NNRPCADDRESSES}
    * If rpc addresses are defined in configuration, we return them. Otherwise, 
@@ -253,7 +253,7 @@ public class GetConf extends Configured implements Tool {
       return -1;
     }
   }
-
+  
   static class PrintConfKeyCommandHandler extends CommandHandler {
     @Override
     protected void checkArgs(String[] args) {
@@ -357,7 +357,7 @@ public class GetConf extends Configured implements Tool {
     if (DFSUtil.parseHelpArgument(args, USAGE, System.out, true)) {
       System.exit(0);
     }
-
+    
     int res = ToolRunner.run(new GetConf(new HdfsConfiguration()), args);
     System.exit(res);
   }
