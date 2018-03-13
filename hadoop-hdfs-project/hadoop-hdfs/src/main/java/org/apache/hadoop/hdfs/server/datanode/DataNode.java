@@ -951,8 +951,8 @@ public class DataNode extends ReconfigurableBase
     // the DN is started by JSVC, pass it along.
     ServerSocketChannel httpServerChannel = secureResources != null ?
         secureResources.getHttpServerChannel() : null;
-    this.httpServer =
-        new DatanodeHttpServer(getConf(), this, httpServerChannel);
+
+    httpServer = new DatanodeHttpServer(getConf(), this, httpServerChannel);
     httpServer.start();
     if (httpServer.getHttpAddress() != null) {
       infoPort = httpServer.getHttpAddress().getPort();
@@ -963,7 +963,6 @@ public class DataNode extends ReconfigurableBase
   }
 
   private void startPlugins(Configuration conf) {
-
     try {
       plugins = conf.getInstances(DFS_DATANODE_PLUGINS_KEY,
           ServicePlugin.class);
@@ -974,7 +973,6 @@ public class DataNode extends ReconfigurableBase
           pluginsValue, e);
       throw e;
     }
-
     for (ServicePlugin p: plugins) {
       try {
         p.start(this);
@@ -1403,7 +1401,6 @@ public class DataNode extends ReconfigurableBase
     
     // global DN settings
     registerMXBean();
-
     initDataXceiver();
     startInfoServer();
     pauseMonitor = new JvmPauseMonitor();
@@ -1589,7 +1586,7 @@ public class DataNode extends ReconfigurableBase
     }
     registerBlockPoolWithSecretManager(bpRegistration, blockPoolId);
   }
-
+  
   /**
    * After the block pool has contacted the NN, registers that block pool
    * with the secret manager, updating it with the secrets provided by the NN.
@@ -1696,11 +1693,11 @@ public class DataNode extends ReconfigurableBase
   BPOfferService getBPOfferService(String bpid){
     return blockPoolManager.get(bpid);
   }
-
+  
   int getBpOsCount() {
     return blockPoolManager.getAllNamenodeThreads().size();
   }
-
+  
   /**
    * Initializes the {@link #data}. The initialization is done only once, when
    * handshake with the the first namenode is completed.
@@ -1988,7 +1985,7 @@ public class DataNode extends ReconfigurableBase
         }
       }
     }
-
+    
     List<BPOfferService> bposArray = (this.blockPoolManager == null)
         ? new ArrayList<BPOfferService>()
         : this.blockPoolManager.getAllNamenodeThreads();
@@ -2032,7 +2029,6 @@ public class DataNode extends ReconfigurableBase
       }
     }
 
-
     volumeChecker.shutdownAndWait(1, TimeUnit.SECONDS);
 
     if (storageLocationChecker != null) {
@@ -2046,7 +2042,7 @@ public class DataNode extends ReconfigurableBase
     // shouldRun is set to false here to prevent certain threads from exiting
     // before the restart prep is done.
     this.shouldRun = false;
-
+    
     // wait reconfiguration thread, if any, to exit
     shutdownReconfigurationTask();
 
@@ -2056,8 +2052,9 @@ public class DataNode extends ReconfigurableBase
       while (true) {
         // When shutting down for restart, wait 2.5 seconds before forcing
         // termination of receiver threads.
-        if (!this.shutdownForUpgrade || (this.shutdownForUpgrade && (
-            Time.monotonicNow() - timeNotified > 1000))) {
+        if (!this.shutdownForUpgrade ||
+            (this.shutdownForUpgrade && (Time.monotonicNow() - timeNotified
+                > 1000))) {
           this.threadGroup.interrupt();
           break;
         }
@@ -2068,8 +2065,7 @@ public class DataNode extends ReconfigurableBase
         }
         try {
           Thread.sleep(sleepMs);
-        } catch (InterruptedException e) {
-        }
+        } catch (InterruptedException e) {}
         sleepMs = sleepMs * 3 / 2; // exponential backoff
         if (sleepMs > 200) {
           sleepMs = 200;
@@ -2095,9 +2091,9 @@ public class DataNode extends ReconfigurableBase
       metrics.setDataNodeActiveXceiversCount(0);
     }
 
-    // IPC server needs to be shutdown late in the process, otherwise
-    // shutdown command response won't get sent.
-    if (ipcServer != null) {
+   // IPC server needs to be shutdown late in the process, otherwise
+   // shutdown command response won't get sent.
+   if (ipcServer != null) {
       ipcServer.stop();
     }
 
@@ -2112,7 +2108,7 @@ public class DataNode extends ReconfigurableBase
         LOG.warn("Received exception in BlockPoolManager#shutDownAll", ie);
       }
     }
-
+    
     if (storage != null) {
       try {
         this.storage.unlockAll();
@@ -2133,11 +2129,9 @@ public class DataNode extends ReconfigurableBase
       MBeans.unregister(dataNodeInfoBeanName);
       dataNodeInfoBeanName = null;
     }
-    if (shortCircuitRegistry != null) {
-      shortCircuitRegistry.shutdown();
-    }
+    if (shortCircuitRegistry != null) shortCircuitRegistry.shutdown();
     LOG.info("Shutdown complete.");
-    synchronized (this) {
+    synchronized(this) {
       // it is already false, but setting it again to avoid a findbug warning.
       this.shouldRun = false;
       // Notify the main thread.
@@ -2675,9 +2669,9 @@ public class DataNode extends ReconfigurableBase
    */
   public static DataNode instantiateDataNode(String args [], Configuration conf,
       SecureResources resources) throws IOException {
-    if (conf == null) {
+    if (conf == null)
       conf = new HdfsConfiguration();
-    }
+    
     if (args != null) {
       // parse generic hadoop options
       GenericOptionsParser hParser = new GenericOptionsParser(conf, args);
@@ -3503,10 +3497,10 @@ public class DataNode extends ReconfigurableBase
     return metricsLoggerTimer;
   }
 
-
   public Tracer getTracer() {
     return tracer;
   }
+
   /**
    * Allows submission of a disk balancer Job.
    * @param planID  - Hash value of the plan.
