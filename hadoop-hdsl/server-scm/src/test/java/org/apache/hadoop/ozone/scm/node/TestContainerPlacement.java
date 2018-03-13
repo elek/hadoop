@@ -32,6 +32,7 @@ import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
+import org.apache.hadoop.ozone.scm.TestUtils;
 import org.apache.hadoop.ozone.scm.container.ContainerMapping;
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.ContainerPlacementPolicy;
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.SCMContainerPlacementCapacity;
@@ -132,7 +133,7 @@ public class TestContainerPlacement {
     ContainerMapping containerManager =
         createContainerManager(conf, nodeManager);
     List<DatanodeID> datanodes =
-        SCMTestUtils.getRegisteredDatanodeIDs(nodeManager, nodeCount);
+        TestUtils.getRegisteredDatanodeIDs(nodeManager, nodeCount);
     try {
       for (DatanodeID datanodeID : datanodes) {
         SCMNodeReport.Builder nrb = SCMNodeReport.newBuilder();

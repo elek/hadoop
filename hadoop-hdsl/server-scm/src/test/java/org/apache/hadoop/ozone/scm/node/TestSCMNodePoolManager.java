@@ -28,6 +28,8 @@ import org.apache.hadoop.ozone.scm.container.placement.algorithms.ContainerPlace
 import org.apache.hadoop.ozone.scm.container.placement.algorithms.SCMContainerPlacementCapacity;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.test.PathUtils;
+
+import static org.apache.hadoop.ozone.scm.TestUtils.getDatanodeIDs;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -77,7 +79,7 @@ public class TestSCMNodePoolManager {
       NodePoolManager npMgr = createNodePoolManager(conf);
 
       final int nodeCount = 4;
-      final List<DatanodeID> nodes = SCMTestUtils.getDatanodeIDs(nodeCount);
+      final List<DatanodeID> nodes = getDatanodeIDs(nodeCount);
       assertEquals(0, npMgr.getNodePools().size());
       for (DatanodeID node: nodes) {
         npMgr.addNode(defaultPool, node);
@@ -109,7 +111,7 @@ public class TestSCMNodePoolManager {
     OzoneConfiguration conf = new OzoneConfiguration();
     final String defaultPool = "DefaultPool";
     final int nodeCount = 4;
-    final List<DatanodeID> nodes = SCMTestUtils.getDatanodeIDs(nodeCount);
+    final List<DatanodeID> nodes = getDatanodeIDs(nodeCount);
 
     try {
       try {

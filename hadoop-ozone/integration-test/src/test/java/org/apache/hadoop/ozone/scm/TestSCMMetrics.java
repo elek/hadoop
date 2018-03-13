@@ -238,7 +238,7 @@ public class TestSCMMetrics {
 
     DatanodeID datanodeID;
     if (datanodeUuid == null) {
-      datanodeID = SCMTestUtils.getDatanodeID();
+      datanodeID = TestUtils.getDatanodeID();
     } else {
       datanodeID = new DatanodeID("null", "null", datanodeUuid, 0, 0, 0, 0);
     }

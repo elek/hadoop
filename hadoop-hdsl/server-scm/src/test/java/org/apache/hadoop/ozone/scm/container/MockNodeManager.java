@@ -19,7 +19,6 @@ package org.apache.hadoop.ozone.scm.container;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.UnregisteredNodeException;
 import org.apache.hadoop.ozone.OzoneConsts;
-import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.ozone.protocol.VersionResponse;
 import org.apache.hadoop.ozone.protocol.commands.SCMCommand;
 import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
@@ -36,6 +35,8 @@ import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeMetric;
 import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeStat;
 import org.apache.hadoop.ozone.scm.node.NodeManager;
 import org.apache.hadoop.ozone.scm.node.NodePoolManager;
+
+import static org.apache.hadoop.ozone.scm.TestUtils.getDatanodeID;
 import org.mockito.Mockito;
 import org.assertj.core.util.Preconditions;
 
@@ -84,7 +85,7 @@ public class MockNodeManager implements NodeManager {
     aggregateStat = new SCMNodeStat();
     if (initializeFakeNodes) {
       for (int x = 0; x < nodeCount; x++) {
-        DatanodeID id = SCMTestUtils.getDatanodeID();
+        DatanodeID id = getDatanodeID();
         populateNodeMetric(id, x);
       }
     }

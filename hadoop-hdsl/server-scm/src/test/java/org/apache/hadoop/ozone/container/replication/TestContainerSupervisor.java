@@ -26,6 +26,7 @@ import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.hdsl.protocol.proto.HdslProtos.NodeState;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.ozone.scm.TestUtils;
 import org.apache.hadoop.ozone.scm.container.replication.ContainerSupervisor;
 import org.apache.hadoop.ozone.scm.container.replication.InProgressPool;
 import org.apache.hadoop.ozone.scm.node.CommandQueue;
@@ -85,7 +86,7 @@ public class TestContainerSupervisor {
     // We are setting up 3 pools with 24 nodes each in this cluster.
     // First we create 72 Datanodes.
     for (int x = 0; x < MAX_DATANODES; x++) {
-      DatanodeID datanode = SCMTestUtils.getDatanodeID();
+      DatanodeID datanode = TestUtils.getDatanodeID();
       datanodes.add(datanode);
       nodeStateMap.put(datanode, HEALTHY);
     }
@@ -244,7 +245,7 @@ public class TestContainerSupervisor {
         LogFactory.getLog(InProgressPool.class));
     GenericTestUtils.setLogLevel(InProgressPool.LOG, Level.DEBUG);
     try {
-      DatanodeID id = SCMTestUtils.getDatanodeID();
+      DatanodeID id = TestUtils.getDatanodeID();
       ((ReplicationNodeManagerMock) (nodeManager)).addNode(id, HEALTHY);
       poolManager.addNode("PoolNew", id);
       GenericTestUtils.waitFor(() ->

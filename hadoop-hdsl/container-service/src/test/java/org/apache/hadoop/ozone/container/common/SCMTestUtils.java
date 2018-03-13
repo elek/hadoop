@@ -20,26 +20,19 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.hdfs.DFSUtil;
-import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
-import org.apache.hadoop.ipc.RPC;
-import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
-import org.apache.hadoop.ozone.protocol.commands.RegisteredCommand;
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos
     .StorageContainerDatanodeProtocolService;
+import org.apache.hadoop.ipc.ProtobufRpcEngine;
+import org.apache.hadoop.ipc.RPC;
+import org.apache.hadoop.ozone.protocol.StorageContainerDatanodeProtocol;
 import org.apache.hadoop.ozone.protocolPB.StorageContainerDatanodeProtocolPB;
 import org.apache.hadoop.ozone.protocolPB
     .StorageContainerDatanodeProtocolServerSideTranslatorPB;
-import org.apache.hadoop.ozone.scm.node.SCMNodeManager;
 
 import com.google.protobuf.BlockingService;
 
@@ -125,70 +118,4 @@ public final class SCMTestUtils {
     return new OzoneConfiguration();
   }
 
-  public static DatanodeID getDatanodeID(SCMNodeManager nodeManager) {
-
-    return getDatanodeID(nodeManager, UUID.randomUUID().toString());
-  }
-
-  /**
-   * Create a new DatanodeID with NodeID set to the string.
-   *
-   * @param uuid - node ID, it is generally UUID.
-   * @return DatanodeID.
-   */
-  public static DatanodeID getDatanodeID(SCMNodeManager nodeManager, String
-      uuid) {
-    DatanodeID tempDataNode = getDatanodeID(uuid);
-    RegisteredCommand command =
-        (RegisteredCommand) nodeManager.register(tempDataNode);
-    return new DatanodeID(command.getDatanodeUUID(), tempDataNode);
-  }
-
-  /**
-   * Get specified number of datanode IDs and registered them with node manager.
-   * @param nodeManager - node manager to register the datanode ids.
-   * @param count - number of datanode IDs needed.
-   * @return
-   */
-  public static List<DatanodeID> getRegisteredDatanodeIDs(
-      SCMNodeManager nodeManager, int count) {
-    ArrayList<DatanodeID> datanodes = new ArrayList<>();
-    for (int i = 0; i < count; i++) {
-      datanodes.add(getDatanodeID(nodeManager));
-    }
-    return datanodes;
-  }
-
-  /**
-   * Get specified number of datanode IDs.
-   * @param count - number of datanode IDs needed.
-   * @return
-   */
-  public static List<DatanodeID> getDatanodeIDs(int count) {
-    ArrayList<DatanodeID> datanodes = new ArrayList<>();
-    for (int i = 0; i < count; i++) {
-      datanodes.add(getDatanodeID());
-    }
-    return datanodes;
-  }
-  /**
-   * Get a datanode ID.
-   *
-   * @return DatanodeID
-   */
-  public static DatanodeID getDatanodeID() {
-    return getDatanodeID(UUID.randomUUID().toString());
-  }
-
-  private static DatanodeID getDatanodeID(String uuid) {
-    Random random = new Random();
-    String ipAddress = random.nextInt(256) + "."
-        + random.nextInt(256) + "."
-        + random.nextInt(256) + "."
-        + random.nextInt(256);
-
-    String hostName = uuid;
-    return new DatanodeID(ipAddress,
-        hostName, uuid, 0, 0, 0, 0);
-  }
 }

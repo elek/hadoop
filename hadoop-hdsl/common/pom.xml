@@ -42,9 +42,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs-client</artifactId>
     </dependency>
+
     <!-- ideally it should be removed. Required by metadata -> batch operation
     and Storage ContainerDatanodeProtocol -->
-
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-hdfs</artifactId>
@@ -124,7 +124,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
               <source>
                 <directory>${basedir}/src/main/proto</directory>
                 <includes>
-                  <include>StorageContainerDatanodeProtocol.proto</include>
                   <include>StorageContainerLocationProtocol.proto</include>
                   <include>DatanodeContainerProtocol.proto</include>
                   <include>hdsl.proto</include>

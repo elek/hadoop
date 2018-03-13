@@ -60,6 +60,7 @@ import org.apache.hadoop.util.Time;
 
 import static org.apache.hadoop.ozone.container.common.ContainerTestUtils
     .createEndpoint;
+import static org.apache.hadoop.ozone.scm.TestUtils.getDatanodeID;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -74,8 +75,6 @@ import java.util.UUID;
 import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_DATA_DIR_KEY;
 import static org.apache.hadoop.ozone.OzoneConfigKeys
     .OZONE_METADATA_DIRS;
-import static org.apache.hadoop.ozone.container.common.SCMTestUtils
-    .getDatanodeID;
 import static org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ReportState.states
     .noContainerReports;
@@ -388,7 +387,7 @@ public class TestEndPoint {
       reportsBuilder.addReports(getRandomContainerReport()
           .getProtoBufMessage());
     }
-    reportsBuilder.setDatanodeID(SCMTestUtils.getDatanodeID()
+    reportsBuilder.setDatanodeID(getDatanodeID()
         .getProtoBufMessage());
     reportsBuilder.setType(StorageContainerDatanodeProtocolProtos
         .ContainerReportsRequestProto.reportType.fullReport);
@@ -457,7 +456,7 @@ public class TestEndPoint {
 
       reportsBuilder.addReports(report.getProtoBufMessage());
     }
-    reportsBuilder.setDatanodeID(SCMTestUtils.getDatanodeID()
+    reportsBuilder.setDatanodeID(getDatanodeID()
         .getProtoBufMessage());
     reportsBuilder.setType(StorageContainerDatanodeProtocolProtos
         .ContainerReportsRequestProto.reportType.fullReport);

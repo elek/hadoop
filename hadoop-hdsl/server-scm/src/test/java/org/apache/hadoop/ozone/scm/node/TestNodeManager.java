@@ -32,10 +32,13 @@ import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMNodeReport;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.SCMStorageReport;
+import org.apache.hadoop.ozone.scm.TestUtils;
 import org.apache.hadoop.ozone.scm.container.placement.metrics.SCMNodeStat;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.test.GenericTestUtils;
 import org.apache.hadoop.test.PathUtils;
+
+import static org.apache.hadoop.ozone.scm.TestUtils.getDatanodeID;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.After;
@@ -150,7 +153,7 @@ public class TestNodeManager {
     try (SCMNodeManager nodeManager = createNodeManager(getConf())) {
       // Send some heartbeats from different nodes.
       for (int x = 0; x < nodeManager.getMinimumChillModeNodes(); x++) {
-        DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+        DatanodeID datanodeID = getDatanodeID(nodeManager);
         nodeManager.sendHeartbeat(datanodeID, null, reportState);
       }
 
@@ -197,7 +200,7 @@ public class TestNodeManager {
 
       // Need 100 nodes to come out of chill mode, only one node is sending HB.
       nodeManager.setMinimumChillModeNodes(100);
-      nodeManager.sendHeartbeat(SCMTestUtils.getDatanodeID(nodeManager),
+      nodeManager.sendHeartbeat(TestUtils.getDatanodeID(nodeManager),
           null, reportState);
       GenericTestUtils.waitFor(() -> nodeManager.waitForHeartbeatProcessed(),
           100, 4 * 1000);
@@ -220,7 +223,7 @@ public class TestNodeManager {
 
     try (SCMNodeManager nodeManager = createNodeManager(getConf())) {
       nodeManager.setMinimumChillModeNodes(3);
-      DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+      DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
 
       // Send 10 heartbeat from same node, and assert we never leave chill mode.
       for (int x = 0; x < 10; x++) {
@@ -250,7 +253,7 @@ public class TestNodeManager {
     conf.getTimeDuration(ScmConfigKeys.OZONE_SCM_HEARTBEAT_PROCESS_INTERVAL,
         100, TimeUnit.MILLISECONDS);
     SCMNodeManager nodeManager = createNodeManager(conf);
-    DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+    DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
     nodeManager.close();
 
     // These should never be processed.
@@ -274,7 +277,7 @@ public class TestNodeManager {
     OzoneConfiguration conf = getConf();
     conf.getTimeDuration(ScmConfigKeys.OZONE_SCM_HEARTBEAT_PROCESS_INTERVAL,
         100, TimeUnit.MILLISECONDS);
-    DatanodeID datanodeID = SCMTestUtils.getDatanodeID();
+    DatanodeID datanodeID = TestUtils.getDatanodeID();
     try (SCMNodeManager nodemanager = createNodeManager(conf)) {
       nodemanager.register(datanodeID);
       List<SCMCommand> command = nodemanager.sendHeartbeat(datanodeID,
@@ -326,7 +329,7 @@ public class TestNodeManager {
     try (SCMNodeManager nodeManager = createNodeManager(conf)) {
 
       for (int x = 0; x < count; x++) {
-        DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+        DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
         nodeManager.sendHeartbeat(datanodeID, null, reportState);
       }
       GenericTestUtils.waitFor(() -> nodeManager.waitForHeartbeatProcessed(),
@@ -415,7 +418,7 @@ public class TestNodeManager {
       List<DatanodeID> nodeList = createNodeSet(nodeManager, nodeCount,
           "Node");
 
-      DatanodeID staleNode = SCMTestUtils.getDatanodeID(nodeManager);
+      DatanodeID staleNode = TestUtils.getDatanodeID(nodeManager);
 
       // Heartbeat once
       nodeManager.sendHeartbeat(staleNode, null, reportState);
@@ -556,11 +559,11 @@ public class TestNodeManager {
      */
     try (SCMNodeManager nodeManager = createNodeManager(conf)) {
       DatanodeID healthyNode =
-          SCMTestUtils.getDatanodeID(nodeManager, "HealthyNode");
+          TestUtils.getDatanodeID(nodeManager, "HealthyNode");
       DatanodeID staleNode =
-          SCMTestUtils.getDatanodeID(nodeManager, "StaleNode");
+          TestUtils.getDatanodeID(nodeManager, "StaleNode");
       DatanodeID deadNode =
-          SCMTestUtils.getDatanodeID(nodeManager, "DeadNode");
+          TestUtils.getDatanodeID(nodeManager, "DeadNode");
       nodeManager.sendHeartbeat(healthyNode, null, reportState);
       nodeManager.sendHeartbeat(staleNode, null, reportState);
       nodeManager.sendHeartbeat(deadNode, null, reportState);
@@ -690,7 +693,7 @@ public class TestNodeManager {
       prefix) {
     List<DatanodeID> list = new LinkedList<>();
     for (int x = 0; x < count; x++) {
-      list.add(SCMTestUtils.getDatanodeID(nodeManager, prefix + x));
+      list.add(TestUtils.getDatanodeID(nodeManager, prefix + x));
     }
     return list;
   }
@@ -918,7 +921,7 @@ public class TestNodeManager {
 
     try (SCMNodeManager nodeManager = createNodeManager(conf)) {
       nodeManager.setMinimumChillModeNodes(10);
-      DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+      DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
       nodeManager.sendHeartbeat(datanodeID, null, reportState);
       String status = nodeManager.getChillModeStatus();
       Assert.assertThat(status, containsString("Still in chill " +
@@ -945,7 +948,7 @@ public class TestNodeManager {
 
       // Assert that node manager force enter cannot be overridden by nodes HBs.
       for (int x = 0; x < 20; x++) {
-        DatanodeID datanode = SCMTestUtils.getDatanodeID(nodeManager);
+        DatanodeID datanode = TestUtils.getDatanodeID(nodeManager);
         nodeManager.sendHeartbeat(datanode, null, reportState);
       }
 
@@ -982,7 +985,7 @@ public class TestNodeManager {
 
     try (SCMNodeManager nodeManager = createNodeManager(conf)) {
       for (int x = 0; x < nodeCount; x++) {
-        DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+        DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
 
         SCMNodeReport.Builder nrb = SCMNodeReport.newBuilder();
         SCMStorageReport.Builder srb = SCMStorageReport.newBuilder();
@@ -1026,7 +1029,7 @@ public class TestNodeManager {
     conf.setTimeDuration(OZONE_SCM_DEADNODE_INTERVAL, 6, SECONDS);
 
     try (SCMNodeManager nodeManager = createNodeManager(conf)) {
-      DatanodeID datanodeID = SCMTestUtils.getDatanodeID(nodeManager);
+      DatanodeID datanodeID = TestUtils.getDatanodeID(nodeManager);
       final long capacity = 2000;
       final long usedPerHeartbeat = 100;
 

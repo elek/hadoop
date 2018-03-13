@@ -20,18 +20,21 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
-import org.apache.hadoop.ozone.container.common.SCMTestUtils;
 import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdsl.protocol.proto
     .StorageContainerDatanodeProtocolProtos.ContainerReportsRequestProto;
+import org.apache.hadoop.ozone.container.common.SCMTestUtils;
+import org.apache.hadoop.ozone.scm.TestUtils;
 import org.apache.hadoop.ozone.scm.container.ContainerStates.ContainerID;
 import org.apache.hadoop.scm.ScmConfigKeys;
 import org.apache.hadoop.scm.XceiverClientManager;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
 import org.apache.hadoop.test.GenericTestUtils;
+
+import static org.apache.hadoop.ozone.scm.TestUtils.getDatanodeID;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -206,7 +209,7 @@ public class TestContainerMapping {
   public void testFullContainerReport() throws IOException {
     String containerName = UUID.randomUUID().toString();
     ContainerInfo info = createContainer(containerName);
-    DatanodeID datanodeID = SCMTestUtils.getDatanodeID();
+    DatanodeID datanodeID = getDatanodeID();
     ContainerReportsRequestProto.reportType reportType =
         ContainerReportsRequestProto.reportType.fullReport;
     List<StorageContainerDatanodeProtocolProtos.ContainerInfo> reports =
@@ -243,7 +246,7 @@ public class TestContainerMapping {
   public void testContainerCloseWithContainerReport() throws IOException {
     String containerName = UUID.randomUUID().toString();
     ContainerInfo info = createContainer(containerName);
-    DatanodeID datanodeID = SCMTestUtils.getDatanodeID();
+    DatanodeID datanodeID = TestUtils.getDatanodeID();
     ContainerReportsRequestProto.reportType reportType =
         ContainerReportsRequestProto.reportType.fullReport;
     List<StorageContainerDatanodeProtocolProtos.ContainerInfo> reports =
