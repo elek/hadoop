@@ -953,6 +953,7 @@ public class DataNode extends ReconfigurableBase
         secureResources.getHttpServerChannel() : null;
     this.httpServer =
         new DatanodeHttpServer(getConf(), this, httpServerChannel);
+
     httpServer.start();
     if (httpServer.getHttpAddress() != null) {
       infoPort = httpServer.getHttpAddress().getPort();
@@ -963,7 +964,6 @@ public class DataNode extends ReconfigurableBase
   }
 
   private void startPlugins(Configuration conf) {
-
     try {
       plugins = conf.getInstances(DFS_DATANODE_PLUGINS_KEY,
           ServicePlugin.class);
@@ -974,7 +974,6 @@ public class DataNode extends ReconfigurableBase
           pluginsValue, e);
       throw e;
     }
-
     for (ServicePlugin p: plugins) {
       try {
         p.start(this);
@@ -1403,7 +1402,6 @@ public class DataNode extends ReconfigurableBase
     
     // global DN settings
     registerMXBean();
-
     initDataXceiver();
     startInfoServer();
     pauseMonitor = new JvmPauseMonitor();
@@ -1696,11 +1694,11 @@ public class DataNode extends ReconfigurableBase
   BPOfferService getBPOfferService(String bpid){
     return blockPoolManager.get(bpid);
   }
-
+  
   int getBpOsCount() {
     return blockPoolManager.getAllNamenodeThreads().size();
   }
-
+  
   /**
    * Initializes the {@link #data}. The initialization is done only once, when
    * handshake with the the first namenode is completed.
@@ -1988,7 +1986,7 @@ public class DataNode extends ReconfigurableBase
         }
       }
     }
-
+    
     List<BPOfferService> bposArray = (this.blockPoolManager == null)
         ? new ArrayList<BPOfferService>()
         : this.blockPoolManager.getAllNamenodeThreads();
@@ -2031,7 +2029,6 @@ public class DataNode extends ReconfigurableBase
         LOG.warn("Exception shutting down DataNode HttpServer", e);
       }
     }
-
 
     volumeChecker.shutdownAndWait(1, TimeUnit.SECONDS);
 
@@ -2112,7 +2109,7 @@ public class DataNode extends ReconfigurableBase
         LOG.warn("Received exception in BlockPoolManager#shutDownAll", ie);
       }
     }
-
+    
     if (storage != null) {
       try {
         this.storage.unlockAll();
@@ -3503,10 +3500,10 @@ public class DataNode extends ReconfigurableBase
     return metricsLoggerTimer;
   }
 
-
   public Tracer getTracer() {
     return tracer;
   }
+
   /**
    * Allows submission of a disk balancer Job.
    * @param planID  - Hash value of the plan.
