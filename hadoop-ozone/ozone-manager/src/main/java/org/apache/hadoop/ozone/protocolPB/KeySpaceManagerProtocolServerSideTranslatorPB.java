@@ -473,9 +473,9 @@ public class KeySpaceManagerProtocolServerSideTranslatorPB implements
         CommitKeyResponse.newBuilder();
     try {
       KeyArgs keyArgs = request.getKeyArgs();
-      OzoneProtos.ReplicationType type =
+      HdslProtos.ReplicationType type =
           keyArgs.hasType()? keyArgs.getType() : null;
-      OzoneProtos.ReplicationFactor factor =
+      HdslProtos.ReplicationFactor factor =
           keyArgs.hasFactor()? keyArgs.getFactor() : null;
       KsmKeyArgs ksmKeyArgs = new KsmKeyArgs.Builder()
           .setVolumeName(keyArgs.getVolumeName())
@@ -501,9 +501,9 @@ public class KeySpaceManagerProtocolServerSideTranslatorPB implements
         AllocateBlockResponse.newBuilder();
     try {
       KeyArgs keyArgs = request.getKeyArgs();
-      OzoneProtos.ReplicationType type =
+      HdslProtos.ReplicationType type =
           keyArgs.hasType()? keyArgs.getType() : null;
-      OzoneProtos.ReplicationFactor factor =
+      HdslProtos.ReplicationFactor factor =
           keyArgs.hasFactor()? keyArgs.getFactor() : null;
       KsmKeyArgs ksmKeyArgs = new KsmKeyArgs.Builder()
           .setVolumeName(keyArgs.getVolumeName())

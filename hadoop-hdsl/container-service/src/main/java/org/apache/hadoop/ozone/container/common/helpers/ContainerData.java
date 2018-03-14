@@ -49,7 +49,7 @@ public class ContainerData {
   private AtomicLong bytesUsed;
   private long maxSize;
   private Long containerID;
-  private OzoneProtos.LifeCycleState state;
+  private HdslProtos.LifeCycleState state;
 
   /**
    * Constructs a  ContainerData Object.
@@ -64,7 +64,7 @@ public class ContainerData {
         ScmConfigKeys.SCM_CONTAINER_CLIENT_MAX_SIZE_DEFAULT) * OzoneConsts.GB;
     this.bytesUsed =  new AtomicLong(0L);
     this.containerID = containerID;
-    this.state = OzoneProtos.LifeCycleState.OPEN;
+    this.state = HdslProtos.LifeCycleState.OPEN;
   }
 
   /**
@@ -259,11 +259,11 @@ public class ContainerData {
     return containerID;
   }
 
-  public synchronized  void setState(OzoneProtos.LifeCycleState state) {
+  public synchronized  void setState(HdslProtos.LifeCycleState state) {
     this.state = state;
   }
 
-  public synchronized OzoneProtos.LifeCycleState getState() {
+  public synchronized HdslProtos.LifeCycleState getState() {
     return this.state;
   }
 
@@ -272,7 +272,7 @@ public class ContainerData {
    * @return - boolean
    */
   public synchronized  boolean isOpen() {
-    return OzoneProtos.LifeCycleState.OPEN == state;
+    return HdslProtos.LifeCycleState.OPEN == state;
   }
 
   /**
@@ -280,7 +280,7 @@ public class ContainerData {
    */
   public synchronized void closeContainer() {
     // TODO: closed or closing here
-    setState(OzoneProtos.LifeCycleState.CLOSED);
+    setState(HdslProtos.LifeCycleState.CLOSED);
 
     // Some thing brain dead for now. name + Time stamp of when we get the close
     // container message.

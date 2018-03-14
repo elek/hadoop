@@ -17,16 +17,19 @@
 package org.apache.hadoop.ozone.ksm;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.hadoop.conf.OzoneConfiguration;
+
+import org.apache.hadoop.hdsl.conf.OzoneConfiguration;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.MiniOzoneClassicCluster;
+import org.apache.hadoop.ozone.MiniOzoneTestHelper;
 import org.apache.hadoop.ozone.OzoneConfigKeys;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ozone.client.*;
 import org.apache.hadoop.ozone.client.io.OzoneOutputStream;
 import org.apache.hadoop.ozone.container.common.helpers.ContainerData;
+import org.apache.hadoop.ozone.container.common.interfaces.ContainerManager;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyArgs;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyLocationInfo;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
 import org.apache.hadoop.ozone.scm.StorageContainerManager;
 import org.apache.hadoop.scm.container.common.helpers.ContainerInfo;
 import org.apache.hadoop.scm.container.common.helpers.StorageContainerException;
@@ -103,8 +106,8 @@ public class TestContainerReportWithKeys {
         .setVolumeName(volumeName)
         .setBucketName(bucketName)
         .setKeyName(keyName)
-        .setType(OzoneProtos.ReplicationType.STAND_ALONE)
-        .setFactor(OzoneProtos.ReplicationFactor.ONE).setDataSize(keySize)
+        .setType(HdslProtos.ReplicationType.STAND_ALONE)
+        .setFactor(HdslProtos.ReplicationFactor.ONE).setDataSize(keySize)
         .build();
 
 
@@ -128,8 +131,9 @@ public class TestContainerReportWithKeys {
       String containerName) {
     ContainerData containerData = null;
     try {
-      containerData = clus.getDataNodes().get(0).getOzoneContainerManager()
-          .getContainerManager().readContainer(containerName);
+      ContainerManager containerManager = MiniOzoneTestHelper
+          .getOzoneContainerManager(clus.getDataNodes().get(0));
+      containerData = containerManager.readContainer(containerName);
     } catch (StorageContainerException e) {
       throw new AssertionError(e);
     }

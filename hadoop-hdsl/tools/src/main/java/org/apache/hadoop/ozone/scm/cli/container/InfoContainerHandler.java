@@ -25,7 +25,7 @@ import org.apache.commons.cli.Options;
 
 import org.apache.hadoop.hdsl.protocol.proto.ContainerProtos.ContainerData;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.ozone.protocol.proto.OzoneProtos;
+import org.apache.hadoop.hdsl.protocol.proto.HdslProtos;
 import org.apache.hadoop.ozone.scm.cli.OzoneCommandHandler;
 import org.apache.hadoop.scm.client.ScmClient;
 import org.apache.hadoop.scm.container.common.helpers.Pipeline;
@@ -77,7 +77,7 @@ public class InfoContainerHandler extends OzoneCommandHandler {
     logOut("Container Name: %s",
         containerData.getName());
     String openStatus =
-        containerData.getState() == OzoneProtos.LifeCycleState.OPEN ? "OPEN" :
+        containerData.getState() == HdslProtos.LifeCycleState.OPEN ? "OPEN" :
             "CLOSED";
     logOut("Container State: %s", openStatus);
     if (!containerData.getHash().isEmpty()) {
