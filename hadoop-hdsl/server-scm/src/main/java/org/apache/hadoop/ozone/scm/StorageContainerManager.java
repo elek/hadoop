@@ -627,7 +627,8 @@ public class StorageContainerManager extends ServiceRuntimeInfoImpl
   }
 
   @VisibleForTesting
-  ContainerInfo getContainerInfo(String containerName) throws IOException {
+  public ContainerInfo getContainerInfo(String containerName)
+      throws IOException {
     return scmContainerManager.getContainer(containerName);
   }
 
