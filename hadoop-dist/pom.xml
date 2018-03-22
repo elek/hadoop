@@ -265,7 +265,7 @@
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-ozone-ozone-manager</artifactId>
-        </dependency>
+        </dependency>v
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdsl-server-scm</artifactId>
