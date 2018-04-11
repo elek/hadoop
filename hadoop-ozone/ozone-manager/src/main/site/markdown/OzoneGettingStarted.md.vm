@@ -22,13 +22,15 @@ API for accessing the store.
 
 Getting Started
 ---------------
-Ozone is a work in progress and currently lives in the hadoop source tree. The subprojects (ozone/hdss) are part of the hadoop source tree but by default not compiled and not part of the official releases. To
+Ozone is a work in progress and currently lives in the hadoop source tree.
+The subprojects (ozone/hdss) are part of the hadoop source tree but by default
+not compiled and not part of the official releases. To
 use it, you have to build a package by yourself and deploy a cluster.
 
 ### Building Ozone
 
 To build Ozone, please checkout the hadoop sources from github. Then
-checkout the trunk branch  build it.
+checkout the trunk branch and build it.
 
 - `git checkout trunk`
 - `mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true -Pdist -Phdds -Dtar -DskipShade`
@@ -121,7 +123,9 @@ place  and not mingled with HDFS settings.
    </property>
 ```
 
-* _*ozone.scm.names*_ Ozone is build on top of container framework. Storage container manager(SCM) is a distributed block service which is used by ozone and other storage services.
+* _*ozone.scm.names*_ Ozone is build on top of container framework. Storage
+ container manager(SCM) is a distributed block service which is used by ozone
+ and other storage services.
  This property allows datanodes to discover where SCM is, so that
  datanodes can send heartbeat to SCM. SCM is designed to be highly available
  and datanodes assume there are multiple instances of SCM which form a highly
@@ -172,8 +176,11 @@ Ozone File System.
     </property>
 ```
 
-
-* _*dfs.datanode.plugin*_ Datanode service plugins: the container manager part of ozone is running inside the datanode as a service plugin. To activate ozone you should define the service plugin implementation class. **Important** It should be added to the **hdfs-site.xml** as the plugin should be activated as part of the normal HDFS Datanode bootstrap.
+* _*dfs.datanode.plugin*_ Datanode service plugins: the container manager part
+ of ozone is running inside the datanode as a service plugin. To activate ozone
+ you should define the service plugin implementation class. **Important**
+ It should be added to the **hdfs-site.xml** as the plugin should be activated
+ as part of the normal HDFS Datanode bootstrap.
 
 ```
     <property>
@@ -237,7 +244,8 @@ Here is a quick summary of settings needed by Ozone.
     </configuration>
 ```
 
-And don't forget to enable the datanode component with adding the following configuration to the hdfs-site.xml:
+And don't forget to enable the datanode component with adding the
+following configuration to the hdfs-site.xml:
 
 ```
     <property>
