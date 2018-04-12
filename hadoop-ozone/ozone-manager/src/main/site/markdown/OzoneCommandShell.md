@@ -25,10 +25,10 @@ The Ozone commands take the following format.
 <name> -root`
 
 The *port* specified in command should match the port mentioned in the config
-property `hdds.rest.http-address`. This property can be set in `hdfs-site.xml`.
+property `hdds.rest.http-address`. This property can be set in `ozone-site.xml`.
 The default value for the port is `9880` and is used in below commands.
 
-The *--root* option is a command line short cut that allows *ozone oz*
+The *-root* option is a command line short cut that allows *ozone oz*
 commands to be run as the user that started the cluster. This is useful to
 indicate that you want the commands to be run as some admin user. The only
 reason for this option is that it makes the life of a lazy developer more
@@ -48,7 +48,7 @@ Volumes can be created only by Admins. Here is an example of creating a volume.
 100TB -root`
 
 The above command creates a volume called `hive` owned by user `bilbo`. The
-`--root` option allows the command to be executed as user `hdfs` which is an
+`-root` option allows the command to be executed as user `hdfs` which is an
 admin in the cluster.
 
 ### Update Volume

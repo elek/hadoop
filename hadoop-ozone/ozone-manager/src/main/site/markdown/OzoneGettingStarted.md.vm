@@ -23,7 +23,7 @@ API for accessing the store.
 Getting Started
 ---------------
 Ozone is a work in progress and currently lives in the hadoop source tree.
-The subprojects (ozone/hdss) are part of the hadoop source tree but by default
+The subprojects (ozone/hdds) are part of the hadoop source tree but by default
 not compiled and not part of the official releases. To
 use it, you have to build a package by yourself and deploy a cluster.
 
@@ -32,8 +32,7 @@ use it, you have to build a package by yourself and deploy a cluster.
 To build Ozone, please checkout the hadoop sources from github. Then
 checkout the trunk branch and build it.
 
-- `git checkout trunk`
-- `mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true -Pdist -Phdds -Dtar -DskipShade`
+`mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true -Pdist -Phdds -Dtar -DskipShade`
 
 skipShade is just to make compilation faster and not really required.
 
@@ -345,5 +344,4 @@ Please file any issues you see under the related issues:
  - [Object store in HDFS: HDFS-7240](https://issues.apache.org/jira/browse/HDFS-7240)
  - [Ozone File System: HDFS-13074](https://issues.apache.org/jira/browse/HDFS-13074)
  - [Building HDFS on top of new storage layer (HDDS): HDFS-10419](https://issues.apache.org/jira/browse/HDFS-10419)
-
 
