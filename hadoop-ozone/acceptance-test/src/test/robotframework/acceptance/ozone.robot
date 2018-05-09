@@ -110,7 +110,8 @@ Execute on
 
 Run docker compose
     [arguments]                     ${command}
-                                    Set Environment Variable    HADOOPDIR                              ${basedir}/../../hadoop-dist/target/hadoop-${version}
+                                    Set Environment Variable    HADOOPDIR                              ${basedir}/../../hadoop-dist/target/hadoop-${hadoopversion}
+                                    Set Environment Variable    OZONEDIR                               ${basedir}/../../hadoop-dist/target/ozone-${hddsversion}
     ${rc}                           ${output} =                 Run And Return Rc And Output           docker-compose -f ${basedir}/target/compose/docker-compose.yaml ${command}
     Should Be Equal As Integers     ${rc}                       0
     [return]                            ${rc}                       ${output}
