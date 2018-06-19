@@ -146,6 +146,10 @@ run copy "${ROOT}/hadoop-ozone/objectstore-service/target/hadoop-ozone-objectsto
 run copy "${ROOT}/hadoop-ozone/client/target/hadoop-ozone-client-${HDDS_VERSION}" .
 run copy "${ROOT}/hadoop-ozone/tools/target/hadoop-ozone-tools-${HDDS_VERSION}" .
 mkdir -p "./share/hadoop/ozonefs"
+ls -lah "${ROOT}"
+ls -lah "${ROOT}/hadoop-ozone/"
+ls -lah "${ROOT}/hadoop-ozone/ozonefs"
+ls -lah "${ROOT}/hadoop-ozone/ozonefs/target"
 cp "${ROOT}/hadoop-ozone/ozonefs/target/hadoop-ozone-filesystem-${HDDS_VERSION}.jar" "./share/hadoop/ozonefs/hadoop-ozone-filesystem.jar"
 # Optional documentation, could be missing
 cp -r "${ROOT}/hadoop-ozone/docs/target/classes/webapps/docs" ./share/hadoop/ozone/webapps/ksm/
