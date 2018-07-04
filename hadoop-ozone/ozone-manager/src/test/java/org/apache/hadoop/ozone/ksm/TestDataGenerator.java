@@ -15,6 +15,8 @@ import org.apache.hadoop.hdds.scm.container.common.helpers.AllocatedBlock;
 import org.apache.hadoop.hdds.scm.protocol.ScmBlockLocationProtocol;
 import org.apache.hadoop.ozone.common.BlockGroup;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
+import org.apache.hadoop.ozone.ksm.exceptions.KSMException;
+import org.apache.hadoop.ozone.ksm.exceptions.KSMException.ResultCodes;
 import org.apache.hadoop.ozone.ksm.helpers.KsmBucketInfo;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyArgs;
 import org.apache.hadoop.ozone.ksm.helpers.KsmKeyArgs.Builder;
@@ -31,6 +33,10 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_METADATA_DIRS;
  */
 public class TestDataGenerator implements ScmBlockLocationProtocol {
 
+  private static final String VOL_PREFIX = "tstvol";
+  private static final String USER = "root";
+  private static final String BUCKET_PREFIX = "bucket";
+  private static final String KEY_PREFIX = "key";
   private Path workingDir;
 
   private AllocatedBlock blockAllocation;
@@ -52,17 +58,24 @@ public class TestDataGenerator implements ScmBlockLocationProtocol {
 
   public void generateData() throws IOException {
     init(workingDir);
-    findExistingContainer();
+    try {
+      setUpBlockAllocationTemplate();
+    } catch (Exception ex) {
+      ex.printStackTrace(System.err);
+      System.err
+          .println("Can't find existing containerid/localid. Using 1l/1l.");
+      blockAllocation =
+          new AllocatedBlock.Builder().setBlockID(new BlockID(1l, 1l))
+              .setShouldCreateContainer(false).build();
+    }
     generate();
   }
 
-  private void findExistingContainer() throws IOException {
+  private void setUpBlockAllocationTemplate() throws IOException {
 
     String volume = selectAVolume();
-    System.out.println(volume);
-
     String bucket = selectABucket(volume);
-    System.out.println(bucket);
+
 
     List<KsmKeyInfo> ksmKeyInfos =
         keyManager.listKeys(volume, bucket, "", "", 10);
@@ -85,41 +98,104 @@ public class TestDataGenerator implements ScmBlockLocationProtocol {
         return;
       }
     }
-    throw new AssertionError("Key doesn't exist to use it as a template.");
+    throw new RuntimeException("Key doesn't exist to use it as a template.");
   }
 
   private void generate() throws IOException {
-    int counter = 0;
-    long start = System.currentTimeMillis();
-    for (int v = 0; v < 1000; v++) {
-      String volumeName = "vol" + v;
-      KsmVolumeArgs args =
-          KsmVolumeArgs.newBuilder().setAdminName("root").setOwnerName("root")
-              .setVolume(volumeName).build();
-      volumeManager.createVolume(args);
+    int maxVol = 1000;
+    int maxBucket = 1000;
+    int maxKey = 10000;
 
-      for (int b = 0; b < 1000; b++) {
-        String bucketName = "bucket" + b;
+    int startVol = -1;
+    int startBucket = -1;
+    int startKey = -1;
+
+    List<KsmVolumeArgs> volumes =
+        volumeManager.listVolumes(USER, VOL_PREFIX, "", maxVol);
+    for (KsmVolumeArgs volume : volumes) {
+      startVol =
+          Integer.parseInt(volume.getVolume().substring(VOL_PREFIX.length()));
+    }
+
+    if (startVol > -1) {
+      List<KsmBucketInfo> buckets = bucketManager
+          .listBuckets(VOL_PREFIX + startVol, "", BUCKET_PREFIX, maxBucket);
+      for (KsmBucketInfo bucket : buckets) {
+        startBucket = Integer
+            .parseInt(bucket.getBucketName().substring(BUCKET_PREFIX.length()));
+      }
+    }
+
+    if (startBucket > -1) {
+      List<KsmKeyInfo> keys = keyManager
+          .listKeys(VOL_PREFIX + startVol, BUCKET_PREFIX + startBucket, "", "",
+              maxKey);
+
+      for (KsmKeyInfo key : keys) {
+        startKey =
+            Integer.parseInt(key.getKeyName().substring(KEY_PREFIX.length()));
+      }
+    }
+
+    startVol = Math.max(startVol, 0);
+    startBucket = Math.max(startBucket, 0);
+    startKey = Math.max(startKey, 0);
+
+    System.out.println(String
+        .format("Starting from vol: %d, bucket: %d, key: %d", startVol,
+            startBucket, startKey));
+
+    int counter =
+        startVol * maxBucket * maxKey + startBucket * maxKey + startKey;
+    long start = System.currentTimeMillis();
+    for (int v = startVol; v < maxVol; v++) {
+      String volumeName = VOL_PREFIX + v;
+
+      try {
+        KsmVolumeArgs args =
+            KsmVolumeArgs.newBuilder().setAdminName(USER).setOwnerName(USER)
+                .setVolume(volumeName).build();
+        volumeManager.createVolume(args);
+      } catch (KSMException ex) {
+        if (ex.getResult() != ResultCodes.FAILED_VOLUME_ALREADY_EXISTS) {
+          throw ex;
+        }
+      }
+      for (int b = startBucket; b < maxBucket; b++) {
+        String bucketName = BUCKET_PREFIX + b;
         KsmBucketInfo bucket =
             KsmBucketInfo.newBuilder().setBucketName(bucketName)
                 .setVolumeName(volumeName).build();
-        bucketManager.createBucket(bucket);
+        try {
+          bucketManager.createBucket(bucket);
+        } catch (KSMException ex) {
+          if (ex.getResult() != ResultCodes.FAILED_BUCKET_ALREADY_EXISTS) {
+            throw ex;
+          }
+        }
+        for (int k = startKey; k < maxKey; k++) {
+          try {
+            String keyName = KEY_PREFIX + k;
+            KsmKeyArgs key = new Builder().setBucketName(bucketName)
+                .setVolumeName(volumeName).setKeyName(keyName)
+                .setDataSize(dataSize).build();
 
-        for (int k = 0; k < 10000; k++) {
-          String keyName = "key" + k;
-          KsmKeyArgs key =
-              new Builder().setBucketName(bucketName).setVolumeName(volumeName)
-                  .setKeyName(keyName).setDataSize(dataSize).build();
-
-          OpenKeySession openKeySession = keyManager.openKey(key);
-          keyManager.commitKey(key, openKeySession.getId());
+            OpenKeySession openKeySession = keyManager.openKey(key);
+            keyManager.commitKey(key, openKeySession.getId());
+          } catch (KSMException ex) {
+            if (ex.getResult() != ResultCodes.FAILED_KEY_ALREADY_EXISTS) {
+              throw ex;
+            }
+          }
           if (++counter % 100000 == 0) {
             float speed =
                 (float) counter / (System.currentTimeMillis() - start) * 1000;
             System.out.println(counter + " " + speed + " key/s " + new Date());
           }
-        }
+          }
+        startKey = 0;
       }
+      startBucket = 0;
     }
     System.out.println(System.currentTimeMillis() - start);
   }
@@ -157,9 +233,9 @@ public class TestDataGenerator implements ScmBlockLocationProtocol {
 
   private String selectAVolume() throws IOException {
     List<KsmVolumeArgs> ksmVolumeArgs =
-        volumeManager.listVolumes("root", "", "", 10);
+        volumeManager.listVolumes(USER, "", "", 10);
     if (ksmVolumeArgs.size() == 0) {
-      throw new AssertionError("No existing volumes");
+      throw new RuntimeException("No existing volumes");
     }
     return ksmVolumeArgs.get(0).getVolume();
   }
@@ -168,7 +244,7 @@ public class TestDataGenerator implements ScmBlockLocationProtocol {
 
     List<KsmBucketInfo> buckets = bucketManager.listBuckets(volume, "", "", 10);
     if (buckets.size() == 0) {
-      throw new AssertionError("No existing buckets on volume " + volume);
+      throw new RuntimeException("No existing buckets on volume " + volume);
     }
     return buckets.get(0).getBucketName();
   }

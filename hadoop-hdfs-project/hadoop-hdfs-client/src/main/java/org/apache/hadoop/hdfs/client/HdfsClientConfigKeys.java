@@ -195,7 +195,7 @@ public interface HdfsClientConfigKeys {
     String DFS_DATANODE_BALANCE_BANDWIDTHPERSEC_KEY =
         "dfs.datanode.balance.bandwidthPerSec";
     //Following keys have no defaults
-    String DFS_DATANODE_DATA_DIR_KEY = "dfs.datanode.data.dir";
+      String DFS_DATANODE_DATA_DIR_KEY = "dfs.datanode.data.dir";
     String DFS_NAMENODE_MAX_OBJECTS_KEY = "dfs.namenode.max.objects";
     String DFS_NAMENODE_NAME_DIR_KEY = "dfs.namenode.name.dir";
     String DFS_NAMENODE_NAME_DIR_RESTORE_KEY = "dfs.namenode.name.dir.restore";
