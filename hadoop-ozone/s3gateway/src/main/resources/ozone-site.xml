@@ -1,0 +1,6 @@
+<configuration>
+  <property>
+    <name>ozone.om.address</name>
+    <value>172.17.0.4</value>
+  </property>
+</configuration>
