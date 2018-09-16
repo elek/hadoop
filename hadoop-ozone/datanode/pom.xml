@@ -14,29 +14,40 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.apache.hadoop</groupId>
     <artifactId>hadoop-ozone</artifactId>
     <version>0.2.1-SNAPSHOT</version>
   </parent>
-  <artifactId>hadoop-ozone-client</artifactId>
-  <version>0.2.1-SNAPSHOT</version>
-  <description>Apache Hadoop Ozone Client</description>
-  <name>Apache Hadoop Ozone Client</name>
+  <artifactId>hadoop-ozone-datanode</artifactId>
+  <name>Apache Hadoop Ozone Datanode</name>
   <packaging>jar</packaging>
-
+  <version>0.2.1-SNAPSHOT</version>
   <properties>
-    <hadoop.component>ozone</hadoop.component>
-    <is.hadoop.component>true</is.hadoop.component>
+    <file.encoding>UTF-8</file.encoding>
+    <downloadSources>true</downloadSources>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-ozone-common</artifactId>
+      <artifactId>hadoop-common</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdds-container-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-ozone-objectstore-service</artifactId>
     </dependency>
   </dependencies>
 </project>
