@@ -26,6 +26,8 @@ execute_tests(){
   docker-compose -f "$COMPOSE_FILE" up -d
   echo "Waiting 30s for cluster start up..."
   sleep 30
+  docker compose ps
+  docker-compose logs
   for TEST in "${TESTS[@]}"; do
      set +e
      docker-compose -f "$COMPOSE_FILE" exec datanode python -m robot "smoketest/$TEST"
