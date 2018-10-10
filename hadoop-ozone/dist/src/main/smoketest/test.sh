@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -ex
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 execute_tests(){
@@ -27,7 +27,7 @@ execute_tests(){
   echo "Waiting 30s for cluster start up..."
   sleep 30
   docker ps
-  docker-compose ps -f "$COMPOSE_FILE"
+  docker-compose -f "$COMPOSE_FILE" ps
   docker-compose -f "$COMPOSE_FILE" logs
   for TEST in "${TESTS[@]}"; do
      set +e
