@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -193,8 +194,7 @@ public class ContainerSet {
     // No need for locking since containerMap is a ConcurrentSkipListMap
     // And we can never get the exact state since close might happen
     // after we iterate a point.
-    List<Container> containers = containerMap.values().stream().collect(
-        Collectors.toList());
+    List<Container> containers = new ArrayList<>(containerMap.values());
 
     ContainerReportsProto.Builder crBuilder =
         ContainerReportsProto.newBuilder();

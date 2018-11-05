@@ -57,6 +57,7 @@ import static org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos.Res
  * Utility methods for chunk operations for KeyValue container.
  */
 public final class ChunkUtils {
+  static final Logger LOG = LoggerFactory.getLogger(ChunkUtils.class);
 
   /** Never constructed. **/
   private ChunkUtils() {
@@ -95,17 +96,21 @@ public final class ChunkUtils {
         verifyChecksum(chunkInfo, data, log);
       }
 
-      long writeTimeStart = Time.monotonicNow();
+      long openTimeStart = Time.monotonicNow();
       file =
           AsynchronousFileChannel.open(chunkFile.toPath(),
               StandardOpenOption.CREATE,
               StandardOpenOption.WRITE,
               StandardOpenOption.SPARSE,
               StandardOpenOption.SYNC);
+      long writeTimeStart = Time.monotonicNow();
       lock = file.lock().get();
       int size = file.write(data, chunkInfo.getOffset()).get();
       // Increment volumeIO stats here.
-      volumeIOStats.incWriteTime(Time.monotonicNow() - writeTimeStart);
+      long writeTime = Time.monotonicNow() - writeTimeStart;
+      LOG.info("file:{} opentime:{} write Time:{}", chunkFile,
+          (writeTimeStart - openTimeStart), (writeTime));
+      volumeIOStats.incWriteTime(writeTime);
       volumeIOStats.incWriteOpCount();
       volumeIOStats.incWriteBytes(size);
       if (size != bufferSize) {

@@ -32,6 +32,7 @@ import org.apache.hadoop.ozone.container.keyvalue.helpers.ChunkUtils;
 import org.apache.hadoop.ozone.container.common.impl.ChunkLayOutVersion;
 import org.apache.hadoop.ozone.container.keyvalue.interfaces.ChunkManager;
 import org.apache.hadoop.ozone.container.common.interfaces.Container;
+import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,19 +72,27 @@ public class ChunkManagerImpl implements ChunkManager {
 
     try {
 
+      long startTimea = Time.monotonicNow();
+
       KeyValueContainerData containerData = (KeyValueContainerData) container
           .getContainerData();
       HddsVolume volume = containerData.getVolume();
       VolumeIOStats volumeIOStats = volume.getVolumeIOStats();
+      long startTimeb = Time.monotonicNow();
+      LOG.info("C1: chunk:{} time:{}", info ,(startTimeb - startTimea));
 
       File chunkFile = ChunkUtils.getChunkFile(containerData, info);
 
+      long startTimec = Time.monotonicNow();
+      LOG.info("C2: chunk:{} time:{}", info ,(startTimec - startTimeb));
+
       boolean isOverwrite = ChunkUtils.validateChunkForOverwrite(
           chunkFile, info);
+
       File tmpChunkFile = getTmpChunkFile(chunkFile, info);
 
-      LOG.debug("writing chunk:{} chunk stage:{} chunk file:{} tmp chunk file",
-          info.getChunkName(), stage, chunkFile, tmpChunkFile);
+      long startTime = Time.monotonicNow();
+      LOG.info("C3: chunk:{} time:{}", info ,(startTime - startTimeb));
 
       switch (stage) {
       case WRITE_DATA:
@@ -117,6 +126,11 @@ public class ChunkManagerImpl implements ChunkManager {
         ChunkUtils.writeData(tmpChunkFile, info, data, volumeIOStats);
         // No need to increment container stats here, as still data is not
         // committed here.
+        LOG.info(
+            "done writing chunk:{} chunk stage:{} chunk file:{} tmp chunk " +
+                "file:{} blockId:{} time:{}", info.getChunkName(), stage,
+            chunkFile,
+            tmpChunkFile, blockID, (Time.monotonicNow() - startTime));
         break;
       case COMMIT_DATA:
         // commit the data, means move chunk data from temporary chunk file

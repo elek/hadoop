@@ -43,6 +43,7 @@ import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos
 import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos
     .ContainerLifeCycleState;
 import org.apache.hadoop.ozone.container.common.interfaces.ContainerDispatcher;
+import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,7 +110,7 @@ public class HddsDispatcher implements ContainerDispatcher {
     Container container = null;
     ContainerType containerType = null;
     ContainerCommandResponseProto responseProto = null;
-    long startTime = System.nanoTime();
+    long startTime1 = Time.monotonicNow();
     ContainerProtos.Type cmdType = msg.getCmdType();
     try {
       long containerID = msg.getContainerID();
@@ -127,11 +128,15 @@ public class HddsDispatcher implements ContainerDispatcher {
     } catch (StorageContainerException ex) {
       return ContainerUtils.logAndReturnError(LOG, ex, msg);
     }
+    long startTime2 = Time.monotonicNow();
+    logWriteChunk(msg, (startTime2 - startTime1), "id1");
     // Small performance optimization. We check if the operation is of type
     // write before trying to send CloseContainerAction.
     if (!HddsUtils.isReadOnly(msg)) {
       sendCloseContainerActionIfNeeded(container);
     }
+    long startTime3 = Time.monotonicNow();
+    logWriteChunk(msg, (startTime3 - startTime2), "id2");
     Handler handler = getHandler(containerType);
     if (handler == null) {
       StorageContainerException ex = new StorageContainerException("Invalid " +
@@ -140,11 +145,24 @@ public class HddsDispatcher implements ContainerDispatcher {
       return ContainerUtils.logAndReturnError(LOG, ex, msg);
     }
     responseProto = handler.handle(msg, container);
+    long startTime4 = Time.monotonicNow();
+    logWriteChunk(msg, (startTime4 - startTime3), "id3");
     if (responseProto != null) {
-      metrics.incContainerOpsLatencies(cmdType, System.nanoTime() - startTime);
+      metrics.incContainerOpsLatencies(cmdType, Time.monotonicNow() - startTime1);
       return responseProto;
     } else {
       return ContainerUtils.unsupportedRequest(msg);
+    }
+  }
+
+  private void logWriteChunk(ContainerCommandRequestProto msg, long elapsed,
+                             String id) {
+    if (msg.getCmdType() == ContainerProtos.Type.WriteChunk) {
+      final ContainerProtos.WriteChunkRequestProto write = msg.getWriteChunk();
+      LOG.info("writeStateMachineData1 writeChunk:" + id + " started with " +
+          "blockId " + write
+          .getBlockID() + " chunkName " + write
+          .getChunkData().getChunkName() + " time:" + elapsed);
     }
   }
 

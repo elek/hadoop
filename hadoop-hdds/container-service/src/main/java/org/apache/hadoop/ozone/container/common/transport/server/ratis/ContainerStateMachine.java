@@ -22,6 +22,7 @@ import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdds.HddsUtils;
 import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos;
 import org.apache.hadoop.ozone.container.common.helpers.BlockData;
+import org.apache.hadoop.util.Time;
 import org.apache.ratis.proto.RaftProtos.StateMachineEntryProto;
 import org.apache.ratis.protocol.RaftGroup;
 import org.apache.ratis.protocol.RaftGroupId;
@@ -299,17 +300,36 @@ public class ContainerStateMachine extends BaseStateMachine {
     CompletableFuture<Message> future =
         createContainerFutureMap.get(containerID);
     CompletableFuture<Message> writeChunkFuture;
+    long start = Time.monotonicNow();
     if (future != null) {
       writeChunkFuture = future.thenApplyAsync(
-          v -> runCommand(requestProto), chunkExecutor);
+          v -> {
+            LOG.info("writeStateMachineData1 writeChunk started with future: " +
+                "blockId " + write
+                .getBlockID() + " logIndex " + entryIndex + " chunkName " + write
+                .getChunkData().getChunkName() + " time:" + (Time.monotonicNow() - start));
+            return runCommand(requestProto);
+            }, chunkExecutor);
     } else {
       writeChunkFuture = CompletableFuture.supplyAsync(
-          () -> runCommand(requestProto), chunkExecutor);
+          () -> {
+            LOG.info("writeStateMachineData2 writeChunk started without " +
+                "future: blockId " + write
+                .getBlockID() + " logIndex " + entryIndex + " chunkName " + write
+                .getChunkData().getChunkName() + " time:" + (Time.monotonicNow() - start));
+          return runCommand(requestProto);
+          }, chunkExecutor);
     }
     writeChunkFutureMap.put(entryIndex, writeChunkFuture);
     // Remove the future once it finishes execution from the
     // writeChunkFutureMap.
-    writeChunkFuture.thenApply(r -> writeChunkFutureMap.remove(entryIndex));
+    writeChunkFuture.thenApply(r -> {
+      writeChunkFutureMap.remove(entryIndex);
+      LOG.info("writeStateMachineData3 writeChunk completed: blockId " + write
+          .getBlockID() + " logIndex " + entryIndex + " chunkName " + write
+          .getChunkData().getChunkName() + " time:" + (Time.monotonicNow() - start));
+      return r;
+    });
     return writeChunkFuture;
   }
 
@@ -332,6 +352,7 @@ public class ContainerStateMachine extends BaseStateMachine {
       final ContainerCommandRequestProto requestProto =
           getRequestProto(getStateMachineData(entry.getStateMachineLogEntry()));
       Type cmdType = requestProto.getCmdType();
+      LOG.info("cmd type:{} log index:{}", cmdType, entry.getIndex());
       switch (cmdType) {
       case CreateContainer:
         return handleCreateContainer(requestProto);
@@ -519,7 +540,12 @@ public class ContainerStateMachine extends BaseStateMachine {
       if (cmdType == Type.CreateContainer) {
         long containerID = requestProto.getContainerID();
         future.thenApply(
-            r -> createContainerFutureMap.remove(containerID).complete(null));
+            r -> {
+              createContainerFutureMap.remove(containerID).complete(null);
+              LOG.info("create Container Transaction completed for container " +
+                  containerID + " log index " + index);
+              return r;
+            });
       }
 
       future.thenAccept(m -> {

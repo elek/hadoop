@@ -106,6 +106,8 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys
     .OZONE_BLOCK_DELETING_SERVICE_TIMEOUT;
 import static org.apache.hadoop.ozone.OzoneConfigKeys
     .OZONE_BLOCK_DELETING_SERVICE_TIMEOUT_DEFAULT;
+
+import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -652,7 +654,7 @@ public class KeyValueHandler extends Handler {
    */
   ContainerCommandResponseProto handleWriteChunk(
       ContainerCommandRequestProto request, KeyValueContainer kvContainer) {
-
+    long start = Time.monotonicNow();
     if (!request.hasWriteChunk()) {
       LOG.debug("Malformed Write Chunk request. trace ID: {}",
           request.getTraceID());
@@ -668,12 +670,17 @@ public class KeyValueHandler extends Handler {
           request.getWriteChunk().getChunkData();
       ChunkInfo chunkInfo = ChunkInfo.getFromProtoBuf(chunkInfoProto);
       Preconditions.checkNotNull(chunkInfo);
+      long start2 = Time.monotonicNow();
+      LOG.info("A: chunk:{} time:{}", chunkInfo ,(start2 - start));
 
       ByteBuffer data = null;
       if (request.getWriteChunk().getStage() == Stage.WRITE_DATA ||
           request.getWriteChunk().getStage() == Stage.COMBINED) {
         data = request.getWriteChunk().getData().asReadOnlyByteBuffer();
       }
+
+      long start3 = Time.monotonicNow();
+      LOG.info("B: chunk:{} time:{}", chunkInfo ,(start3 - start2));
 
       chunkManager.writeChunk(kvContainer, blockID, chunkInfo, data,
           request.getWriteChunk().getStage());
@@ -685,12 +692,16 @@ public class KeyValueHandler extends Handler {
             .getChunkData().getLen());
       }
 
+      long start4 = Time.monotonicNow();
+      LOG.info("C: chunk:{} time:{}", chunkInfo ,(start4 - start3));
+
       if (request.getWriteChunk().getStage() == Stage.COMMIT_DATA
           || request.getWriteChunk().getStage() == Stage.COMBINED) {
         // the openContainerBlockMap should be updated only during
         // COMMIT_STAGE of handling write chunk request.
         openContainerBlockMap.addChunk(blockID, chunkInfoProto);
       }
+      LOG.info("D: chunk:{} time:{}", chunkInfo ,(Time.monotonicNow() - start));
     } catch (StorageContainerException ex) {
       return ContainerUtils.logAndReturnError(LOG, ex, request);
     } catch (IOException ex) {
