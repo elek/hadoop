@@ -12,19 +12,25 @@ pipeline {
             }
             post {
                failure {
-                    pullRequest.createStatus(status: 'error',
+                    script {
+                       pullRequest.createStatus(status: 'error',
                          context: 'continuous-integration/jenkins/pr-merge/build',
                          description: 'Maven build is failed')
+                    }
                }
                unstable {
-                    pullRequest.createStatus(status: 'error',
+                    script  {
+                       pullRequest.createStatus(status: 'error',
                          context: 'continuous-integration/jenkins/pr-merge/build',
                          description: 'Maven build is unstable')
+                    }
                }
                success {
-                    pullRequest.createStatus(status: 'success',
+                    script {
+                       pullRequest.createStatus(status: 'success',
                          context: 'continuous-integration/jenkins/pr-merge/build',
                          description: 'Maven build is OK')
+                    }
                }
             }
         }
@@ -41,19 +47,25 @@ pipeline {
                     }
                     post {
                        failure {
-                            pullRequest.createStatus(status: 'error',
+                            script {
+                               pullRequest.createStatus(status: 'error',
                                  context: 'continuous-integration/jenkins/pr-merge/unit',
                                  description: 'Unit tests are failed.')
+                            }
                        }
                        unstable {
-                            pullRequest.createStatus(status: 'error',
+                            script {
+                               pullRequest.createStatus(status: 'error',
                                  context: 'continuous-integration/jenkins/pr-merge/unit',
                                  description: 'Unit tests are failed.')
+                            }
                        }
                        success {
-                            pullRequest.createStatus(status: 'success',
+                            script {
+                               pullRequest.createStatus(status: 'success',
                                  context: 'continuous-integration/jenkins/pr-merge/unit',
                                  description: 'Unit tests are passed')
+                            }
                        }
                     }
 
@@ -73,19 +85,25 @@ pipeline {
                     }
                     post {
                        failure {
-                            pullRequest.createStatus(status: 'error',
+                            script {
+                               pullRequest.createStatus(status: 'error',
                                  context: 'continuous-integration/jenkins/pr-merge/checkstyle',
                                  description: 'Unit tests are failed.')
+                            }
                        }
                        unstable {
-                            pullRequest.createStatus(status: 'error',
+                            script {
+                               pullRequest.createStatus(status: 'error',
                                  context: 'continuous-integration/jenkins/pr-merge/checkstyle',
                                  description: 'Checkstyle tests are failed.')
+                            }
                        }
                        success {
-                            pullRequest.createStatus(status: 'success',
+                            script {
+                               pullRequest.createStatus(status: 'success',
                                  context: 'continuous-integration/jenkins/pr-merge/checkstyle',
                                  description: 'Checkstyle tests are passed')
+                            }
                        }
                     }
 
