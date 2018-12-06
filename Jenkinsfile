@@ -35,7 +35,8 @@ pipeline {
             }
         }
 
-
+ stage('Checks') {
+ paralel {
          stage('Unit tests') {
                     steps {
                         script {
@@ -109,4 +110,6 @@ pipeline {
 
          }
     }
+}
+}
 }
