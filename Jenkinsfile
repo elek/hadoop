@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+
                 pullRequest.createStatus(status: 'pending',
                          context: 'continuous-integration/jenkins/pr-merge/build',
                          description: 'All tests are passing')
