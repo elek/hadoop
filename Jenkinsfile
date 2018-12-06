@@ -6,15 +6,88 @@ pipeline {
                 script {
                    pullRequest.createStatus(status: 'pending',
                          context: 'continuous-integration/jenkins/pr-merge/build',
-                         description: 'All tests are passing')
+                         description: 'Maven build has been started')
                 }
                 sh 'mvn clean install -DskipTests -DskipShade -Pdist,hdds -Dmaven.javadoc.skip=true -am -pl :hadoop-ozone-dist'
-                script {
-                   pullRequest.createStatus(status: 'success',
+            }
+            post {
+               failure {
+                    pullRequest.createStatus(status: 'error',
                          context: 'continuous-integration/jenkins/pr-merge/build',
-                         description: 'Project is build without any error')
-                }
+                         description: 'Maven build is failed')
+               }
+               unstable {
+                    pullRequest.createStatus(status: 'error',
+                         context: 'continuous-integration/jenkins/pr-merge/build',
+                         description: 'Maven build is unstable')
+               }
+               success {
+                    pullRequest.createStatus(status: 'success',
+                         context: 'continuous-integration/jenkins/pr-merge/build',
+                         description: 'Maven build is OK')
+               }
             }
         }
-    }
+
+
+         stage('Unit tests') {
+                    steps {
+                        script {
+                           pullRequest.createStatus(status: 'pending',
+                                 context: 'continuous-integration/jenkins/pr-merge/unit',
+                                 description: 'Maven build has been started')
+                        }
+                        sh 'mvn test -fae -DskipShade -Pdist,hdds -Dmaven.javadoc.skip=true -am -pl :hadoop-ozone-dist'
+                    }
+                    post {
+                       failure {
+                            pullRequest.createStatus(status: 'error',
+                                 context: 'continuous-integration/jenkins/pr-merge/unit',
+                                 description: 'Unit tests are failed.')
+                       }
+                       unstable {
+                            pullRequest.createStatus(status: 'error',
+                                 context: 'continuous-integration/jenkins/pr-merge/unit',
+                                 description: 'Unit tests are failed.')
+                       }
+                       success {
+                            pullRequest.createStatus(status: 'success',
+                                 context: 'continuous-integration/jenkins/pr-merge/unit',
+                                 description: 'Unit tests are passed')
+                       }
+                    }
+
+         }
+
+
+         stage('Checkstyle') {
+                    steps {
+                        script {
+                           pullRequest.createStatus(status: 'pending',
+                                 context: 'continuous-integration/jenkins/pr-merge/checkstyle',
+                                 description: 'Checkstyle run has been started')
+                        }
+                        sh 'mvn checkstyle:check -f hadoop-hdds/pom.xml'
+                        sh 'mvn checkstyle:check -f hadoop-ozone/pom.xml'
+
+                    }
+                    post {
+                       failure {
+                            pullRequest.createStatus(status: 'error',
+                                 context: 'continuous-integration/jenkins/pr-merge/checkstyle',
+                                 description: 'Unit tests are failed.')
+                       }
+                       unstable {
+                            pullRequest.createStatus(status: 'error',
+                                 context: 'continuous-integration/jenkins/pr-merge/checkstyle',
+                                 description: 'Checkstyle tests are failed.')
+                       }
+                       success {
+                            pullRequest.createStatus(status: 'success',
+                                 context: 'continuous-integration/jenkins/pr-merge/checkstyle',
+                                 description: 'Checkstyle tests are passed')
+                       }
+                    }
+
+         }
 }
