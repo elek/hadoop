@@ -1,9 +1,9 @@
 pipeline {
-    agent { docker 'maven:3-alpine' } 
+    agent { docker 'elek/ozone-build' } 
     stages {
-        stage('Verify') {
+        stage('Build') {
             steps {
-                sh 'mvn -B clean verify'
+                sh 'mvn clean install -DskipTests -DskipShade -Pdist,hdds -Dmaven.javadoc.skip=true -am -pl :hadoop-ozone-dist'
             }
         }
     }
