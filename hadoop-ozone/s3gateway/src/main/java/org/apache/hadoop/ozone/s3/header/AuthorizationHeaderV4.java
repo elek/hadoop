@@ -68,7 +68,7 @@ public class AuthorizationHeaderV4 {
     }
 
     //split the value parts of the authorization header
-    String[] split = authHeader.substring(firstSep + 1).trim().split(",( )*");
+    String[] split = authHeader.substring(firstSep + 1).trim().split(", *");
 
     if (split.length != 3) {
       throw S3ErrorTable.newError(S3ErrorTable.MALFORMED_HEADER, authHeader);
