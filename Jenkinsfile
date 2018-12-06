@@ -36,7 +36,7 @@ pipeline {
         }
 
  stage('Checks') {
- paralel {
+ parallel {
          stage('Unit tests') {
                     steps {
                         script {
