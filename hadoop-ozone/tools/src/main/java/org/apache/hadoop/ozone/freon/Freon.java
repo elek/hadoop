@@ -18,7 +18,10 @@ package org.apache.hadoop.ozone.freon;
 
 import org.apache.hadoop.hdds.cli.GenericCli;
 import org.apache.hadoop.hdds.cli.HddsVersionProvider;
+import org.apache.hadoop.hdds.tracing.TracingUtil;
 
+import io.opentracing.Scope;
+import io.opentracing.util.GlobalTracer;
 import picocli.CommandLine.Command;
 
 /**
@@ -31,6 +34,12 @@ import picocli.CommandLine.Command;
     versionProvider = HddsVersionProvider.class,
     mixinStandardHelpOptions = true)
 public class Freon extends GenericCli {
+
+  @Override
+  public void execute(String[] argv) {
+    TracingUtil.initTrancing("freon");
+    super.execute(argv);
+  }
 
   public static void main(String[] args) {
     new Freon().run(args);

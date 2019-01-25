@@ -20,15 +20,19 @@ package org.apache.hadoop.ozone.web.ozShell;
 
 import org.apache.hadoop.hdds.cli.GenericCli;
 import org.apache.hadoop.hdds.cli.HddsVersionProvider;
+import org.apache.hadoop.hdds.tracing.TracingUtil;
 import org.apache.hadoop.ozone.web.ozShell.bucket.BucketCommands;
 import org.apache.hadoop.ozone.web.ozShell.keys.KeyCommands;
 import org.apache.hadoop.ozone.web.ozShell.s3.S3Commands;
 import org.apache.hadoop.ozone.web.ozShell.volume.VolumeCommands;
 import org.apache.hadoop.ozone.web.ozShell.token.TokenCommands;
 
+import io.opentracing.Scope;
+import io.opentracing.util.GlobalTracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.RunLast;
 
 /**
  * Ozone user interface commands.
@@ -72,6 +76,14 @@ public class Shell extends GenericCli {
 
   // General options
   public static final int DEFAULT_OZONE_PORT = 50070;
+
+  @Override
+  public void execute(String[] argv) {
+    TracingUtil.initTrancing("shell");
+    try (Scope scope = GlobalTracer.get().buildSpan("main").startActive(true)) {
+      super.execute(argv);
+    }
+  }
 
   /**
    * Main for the ozShell Command handling.

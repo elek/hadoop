@@ -22,8 +22,17 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
 import org.apache.hadoop.hdds.conf.OzoneConfiguration;
+import org.apache.hadoop.hdds.tracing.TracingUtil;
 
 import com.google.common.annotations.VisibleForTesting;
+import io.jaegertracing.Configuration;
+import io.jaegertracing.Configuration.CodecConfiguration;
+import io.opentracing.Scope;
+import io.opentracing.Span;
+import io.opentracing.log.Fields;
+import io.opentracing.propagation.Format;
+import io.opentracing.propagation.Format.Builtin;
+import io.opentracing.util.GlobalTracer;
 import picocli.CommandLine;
 import picocli.CommandLine.ExecutionException;
 import picocli.CommandLine.Option;

@@ -21,8 +21,17 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
+import io.opentracing.Scope;
+import io.opentracing.Span;
+import io.opentracing.propagation.Format;
+import io.opentracing.propagation.Format.Builtin;
+import io.opentracing.util.GlobalTracer;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdds.tracing.TracingUtil;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.ProtobufHelper;
 import org.apache.hadoop.ipc.ProtocolTranslator;
@@ -247,8 +256,11 @@ public final class OzoneManagerProtocolClientSideTranslatorPB
    * @param cmdType type of the request
    */
   private OMRequest.Builder createOMRequest(Type cmdType) {
+
+
     return OMRequest.newBuilder()
         .setCmdType(cmdType)
+        .setTraceID(TracingUtil.exportCurrentSpan())
         .setClientId(clientID);
   }
 
@@ -260,10 +272,15 @@ public final class OzoneManagerProtocolClientSideTranslatorPB
    */
   private OMResponse submitRequest(OMRequest omRequest)
       throws IOException {
+    Scope scope =
+        GlobalTracer.get().buildSpan(omRequest.getCmdType().name())
+            .startActive(true);
     try {
       return rpcProxy.submitRequest(NULL_RPC_CONTROLLER, omRequest);
     } catch (ServiceException e) {
       throw ProtobufHelper.getRemoteException(e);
+    } finally {
+      scope.close();
     }
   }
 
