@@ -56,18 +56,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
 
   </properties>
-  <repositories>
-    <repository>
-      <id>apache.snapshots.https</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>apache.snapshots.https</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-    </pluginRepository>
-  </pluginRepositories>
+
+
   <dependencyManagement>
     <dependencies>
 
