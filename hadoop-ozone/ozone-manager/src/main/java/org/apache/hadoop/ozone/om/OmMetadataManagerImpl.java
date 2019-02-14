@@ -59,8 +59,6 @@ import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.HEAD;
-
 /**
  * Ozone metadata manager interface.
  */
