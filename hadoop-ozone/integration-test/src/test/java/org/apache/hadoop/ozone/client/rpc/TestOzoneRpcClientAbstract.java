@@ -108,7 +108,7 @@ public abstract class TestOzoneRpcClientAbstract {
   private static StorageContainerLocationProtocolClientSideTranslatorPB
       storageContainerLocationClient;
 
-  private static final String SCM_ID = UUID.randomUUID().toString();
+  private static String scmId = UUID.randomUUID().toString();
 
   /**
    * Create a MiniOzoneCluster for testing.
@@ -118,7 +118,7 @@ public abstract class TestOzoneRpcClientAbstract {
   static void startCluster(OzoneConfiguration conf) throws Exception {
     cluster = MiniOzoneCluster.newBuilder(conf)
         .setNumDatanodes(10)
-        .setScmId(SCM_ID)
+        .setScmId(scmId)
         .build();
     cluster.waitForClusterToBeReady();
     ozClient = OzoneClientFactory.getRpcClient(conf);
@@ -173,7 +173,7 @@ public abstract class TestOzoneRpcClientAbstract {
   }
 
   public static void setScmId(String scmId){
-    TestOzoneRpcClientAbstract.SCM_ID = scmId;
+    TestOzoneRpcClientAbstract.scmId = scmId;
   }
 
   @Test
@@ -930,7 +930,7 @@ public abstract class TestOzoneRpcClientAbstract {
     String containreBaseDir =
         container.getContainerData().getVolume().getHddsRootDir().getPath();
     File chunksLocationPath = KeyValueContainerLocationUtil
-        .getChunksLocationPath(containreBaseDir, SCM_ID, containerID);
+        .getChunksLocationPath(containreBaseDir, scmId, containerID);
     File chunkFile = new File(chunksLocationPath, chunkName);
 
     // Corrupt the contents of the chunk file
