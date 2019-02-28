@@ -204,14 +204,6 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-ozone-filesystem-lib</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-ozone-filesystem-lib-legacy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-ozone-common</artifactId>
     </dependency>
     <dependency>
@@ -223,4 +215,44 @@
       <artifactId>hadoop-hdds-docs</artifactId>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>with-ozonefs</id>
+      <activation>
+        <property>
+          <name>!without-ozonefs</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-ozone-filesystem-lib</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-ozone-filesystem-lib-legacy</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>coverage-report</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>coverate-report</id>
+                <goals>
+                  <goal>report-aggregate</goal>
+                </goals>
+                <phase>test</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
