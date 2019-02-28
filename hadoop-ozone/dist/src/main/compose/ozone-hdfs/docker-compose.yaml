@@ -36,6 +36,28 @@ services:
          HADOOP_CLASSPATH: /opt/ozone/share/hadoop/ozoneplugin/*.jar
       env_file:
         - ./docker-config
+   resourcemanager:
+      hostname: resourcemanager
+      image: apache/hadoop:${HADOOP_VERSION}
+      ports:
+      - 8088:8088
+      volumes:
+      - ../..:/opt/ozone
+      env_file:
+      - ./docker-config
+      environment:
+        HADOOP_CLASSPATH: /opt/ozone/share/ozone/lib/hadoop-ozone-filesystem-lib-legacy-0.4.0-SNAPSHOT.jar
+      command: ["yarn", "resourcemanager"]
+   nodemanager:
+      image: apache/hadoop:${HADOOP_VERSION}
+      volumes:
+         - ../..:/opt/ozone
+      command: ["yarn","nodemanager"]
+      environment:
+         HADOOP_CLASSPATH: /opt/ozone/share/ozone/lib/hadoop-ozone-filesystem-lib-legacy-0.4.0-SNAPSHOT.jar
+         WAIT_FOR: resourcemanager:8088
+      env_file:
+        - ./docker-config
    ozoneManager:
       image: apache/hadoop-runner
       volumes:
