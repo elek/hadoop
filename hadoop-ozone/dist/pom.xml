@@ -243,7 +243,7 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>coverate-report</id>
+                <id>coverage-report</id>
                 <goals>
                   <goal>report-aggregate</goal>
                 </goals>
