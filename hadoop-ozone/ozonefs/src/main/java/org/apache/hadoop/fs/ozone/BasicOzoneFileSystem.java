@@ -696,8 +696,8 @@ public class BasicOzoneFileSystem extends FileSystem {
     Path qualifiedPath = f.makeQualified(uri, workingDir);
     String key = pathToKey(qualifiedPath);
 
-    return adapter.getFileStatus(key)
-        .makeQualified(uri, qualifiedPath, getUsername(), getUsername());
+    return adapter
+        .getFileStatus(key, uri, qualifiedPath, getUsername(), getUsername());
   }
 
   /**

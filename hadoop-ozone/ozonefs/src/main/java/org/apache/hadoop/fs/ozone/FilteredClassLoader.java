@@ -57,9 +57,13 @@ public class FilteredClassLoader extends URLClassLoader {
     delegatedClasses.add("org.apache.hadoop.fs.ozone.OzoneFSStorageStatistics");
     delegatedClasses.add("org.apache.hadoop.fs.ozone.Statistic");
     delegatedClasses.add("org.apache.hadoop.fs.Seekable");
+    delegatedClasses.add("org.apache.hadoop.fs.Path");
+    delegatedClasses.add("org.apache.hadoop.fs.permission.FsPermission");
+    delegatedClasses.add("org.apache.hadoop.fs.FileStatus");
+//    delegatedClasses.add("org.apache.hadoop.fs.FSProtos");
+//    delegatedClasses.add("org.apache.hadoop.fs.protocolPB.PBHelper");
     this.delegate = parent;
     systemClassLoader = getSystemClassLoader();
-
   }
 
   @Override

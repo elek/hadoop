@@ -18,10 +18,10 @@
 package org.apache.hadoop.fs.ozone;
 
 import org.apache.hadoop.crypto.key.KeyProvider;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.ozone.security.OzoneTokenIdentifier;
 import org.apache.hadoop.security.token.Token;
-
-import org.apache.hadoop.ozone.om.helpers.OzoneFileStatus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,5 +61,6 @@ public interface OzoneClientAdapter {
 
   String getCanonicalServiceName();
 
-  OzoneFileStatus getFileStatus(String pathKey) throws IOException;
+  FileStatus getFileStatus(String key, URI uri, Path qualifiedPath, String user,
+      String group) throws IOException;
 }
