@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.Iterator;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.crypto.key.KeyProvider;
@@ -47,16 +46,23 @@ import org.apache.hadoop.ozone.om.exceptions.OMException;
 import org.apache.hadoop.ozone.om.helpers.OzoneFileStatus;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.security.token.TokenRenewer;
+
+import org.apache.commons.lang3.StringUtils;
+import static org.apache.hadoop.ozone.OzoneConsts.OZONE_URI_DELIMITER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the OzoneFileSystem calls.
+ * Basic Implementation of the OzoneFileSystem calls.
+ * <p>
+ * This is the minimal version which doesn't include any statistics.
+ * <p>
+ * For full featured version use OzoneClientAdapterImpl.
  */
-public class OzoneClientAdapterImpl implements OzoneClientAdapter {
+public class BasicOzoneClientAdapterImpl implements OzoneClientAdapter {
 
   static final Logger LOG =
-      LoggerFactory.getLogger(OzoneClientAdapterImpl.class);
+      LoggerFactory.getLogger(BasicOzoneClientAdapterImpl.class);
 
   private OzoneClient ozoneClient;
   private ObjectStore objectStore;
@@ -64,34 +70,19 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
   private OzoneBucket bucket;
   private ReplicationType replicationType;
   private ReplicationFactor replicationFactor;
-  private OzoneFSStorageStatistics storageStatistics;
   private boolean securityEnabled;
-  /**
-   * Create new OzoneClientAdapter implementation.
-   *
-   * @param volumeStr         Name of the volume to use.
-   * @param bucketStr         Name of the bucket to use
-   * @param storageStatistics Storage statistic (optional, can be null)
-   * @throws IOException In case of a problem.
-   */
-  public OzoneClientAdapterImpl(String volumeStr, String bucketStr,
-      OzoneFSStorageStatistics storageStatistics) throws IOException {
-    this(createConf(), volumeStr, bucketStr, storageStatistics);
-  }
 
   /**
    * Create new OzoneClientAdapter implementation.
    *
-   * @param volumeStr         Name of the volume to use.
-   * @param bucketStr         Name of the bucket to use
+   * @param volumeStr Name of the volume to use.
+   * @param bucketStr Name of the bucket to use
    * @throws IOException In case of a problem.
    */
-  public OzoneClientAdapterImpl(String volumeStr, String bucketStr)
+  public BasicOzoneClientAdapterImpl(String volumeStr, String bucketStr)
       throws IOException {
-    this(createConf(), volumeStr, bucketStr, null);
+    this(createConf(), volumeStr, bucketStr);
   }
-
-
 
   private static OzoneConfiguration createConf() {
     ClassLoader contextClassLoader =
@@ -102,15 +93,15 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
     return conf;
   }
 
-  public OzoneClientAdapterImpl(OzoneConfiguration conf, String volumeStr,
-      String bucketStr, OzoneFSStorageStatistics storageStatistics)
+  public BasicOzoneClientAdapterImpl(OzoneConfiguration conf, String volumeStr,
+      String bucketStr)
       throws IOException {
-    this(null, -1, conf, volumeStr, bucketStr, storageStatistics);
+    this(null, -1, conf, volumeStr, bucketStr);
   }
 
-  public OzoneClientAdapterImpl(String omHost, int omPort,
-      Configuration hadoopConf, String volumeStr, String bucketStr,
-      OzoneFSStorageStatistics storageStatistics) throws IOException {
+  public BasicOzoneClientAdapterImpl(String omHost, int omPort,
+      Configuration hadoopConf, String volumeStr, String bucketStr)
+      throws IOException {
 
     ClassLoader contextClassLoader =
         Thread.currentThread().getContextClassLoader();
@@ -148,13 +139,11 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
       this.bucket = volume.getBucket(bucketStr);
       this.replicationType = ReplicationType.valueOf(replicationTypeConf);
       this.replicationFactor = ReplicationFactor.valueOf(replicationCountConf);
-      this.storageStatistics = storageStatistics;
     } finally {
       Thread.currentThread().setContextClassLoader(contextClassLoader);
     }
 
   }
-
 
   @Override
   public void close() throws IOException {
@@ -163,9 +152,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
 
   @Override
   public InputStream readFile(String key) throws IOException {
-    if (storageStatistics != null) {
-      storageStatistics.incrementCounter(Statistic.OBJECTS_READ, 1);
-    }
+    incrementCounter(Statistic.OBJECTS_READ);
     try {
       return bucket.readFile(key).getInputStream();
     } catch (OMException ex) {
@@ -179,12 +166,14 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
     }
   }
 
+  protected void incrementCounter(Statistic objectsRead) {
+    //noop: Use OzoneClientAdapterImpl which supports statistics.
+  }
+
   @Override
   public OzoneFSOutputStream createFile(String key, boolean overWrite,
       boolean recursive) throws IOException {
-    if (storageStatistics != null) {
-      storageStatistics.incrementCounter(Statistic.OBJECTS_CREATED, 1);
-    }
+    incrementCounter(Statistic.OBJECTS_CREATED);
     try {
       OzoneOutputStream ozoneOutputStream = bucket
           .createFile(key, 0, replicationType, replicationFactor, overWrite,
@@ -203,9 +192,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
 
   @Override
   public void renameKey(String key, String newKeyName) throws IOException {
-    if (storageStatistics != null) {
-      storageStatistics.incrementCounter(Statistic.OBJECTS_RENAMED, 1);
-    }
+    incrementCounter(Statistic.OBJECTS_RENAMED);
     bucket.renameKey(key, newKeyName);
   }
 
@@ -218,9 +205,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
   @Override
   public boolean createDirectory(String keyName) throws IOException {
     LOG.trace("creating dir for key:{}", keyName);
-    if (storageStatistics != null) {
-      storageStatistics.incrementCounter(Statistic.OBJECTS_CREATED, 1);
-    }
+    incrementCounter(Statistic.OBJECTS_CREATED);
     try {
       bucket.createDirectory(keyName);
     } catch (OMException e) {
@@ -242,9 +227,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
   public boolean deleteObject(String keyName) {
     LOG.trace("issuing delete for key" + keyName);
     try {
-      if (storageStatistics != null) {
-        storageStatistics.incrementCounter(Statistic.OBJECTS_DELETED, 1);
-      }
+      incrementCounter(Statistic.OBJECTS_DELETED);
       bucket.deleteKey(keyName);
       return true;
     } catch (IOException ioe) {
@@ -255,9 +238,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
 
   public OzoneFileStatus getFileStatus(String pathKey) throws IOException {
     try {
-      if (storageStatistics != null) {
-        storageStatistics.incrementCounter(Statistic.OBJECTS_QUERY, 1);
-      }
+      incrementCounter(Statistic.OBJECTS_QUERY);
       return bucket.getFileStatus(pathKey);
     } catch (OMException e) {
       if (e.getResult() == OMException.ResultCodes.FILE_NOT_FOUND) {
@@ -270,9 +251,7 @@ public class OzoneClientAdapterImpl implements OzoneClientAdapter {
 
   @Override
   public Iterator<BasicKeyInfo> listKeys(String pathKey) {
-    if (storageStatistics != null) {
-      storageStatistics.incrementCounter(Statistic.OBJECTS_LIST, 1);
-    }
+    incrementCounter(Statistic.OBJECTS_LIST);
     return new IteratorAdapter(bucket.listKeys(pathKey));
   }
 
