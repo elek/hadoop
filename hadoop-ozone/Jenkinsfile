@@ -7,7 +7,7 @@
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/toLICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,83 +15,93 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-node("ubuntu") {
+node("ec2-m4-xlarge-docker") {
     docker.image('elek/ozone-build').pull()
     docker.image('elek/ozone-build').inside("--privileged") {
 
+        stages = new LinkedHashMap<>()
+        results = new LinkedHashMap<>()
+
+
+        stages["build"] = [:]
+
         stage('Checkout') {
-            checkout scm
-            //use this for external Jenkinsfile builds
-            //checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: env.branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-token', url: "https://github.com/${organization}/${repository}.git"]]]
-
+            //checkout scm
+            checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: env.branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-token', url: "https://github.com/${organization}/${repository}.git"]]]
+            sh "rm -rf ./build && mkdir -p ./build"
         }
-
         stage('Clean') {
-            status = sh returnStatus: true, script: 'mvn clean -P hdds -am -pl :hadoop-ozone-dist '
+            status = sh script: 'mvn clean -P hdds -am -pl :hadoop-ozone-dist '
         }
 
-        stageRunner('Author', "author", {})
 
-        stageRunner('Licence', "rat", {
-            archiveArtifacts 'target/rat-aggregated.txt'
-        }, 'artifact/target/rat-aggregated.txt/*view*/')
+        stages.each { name, stagedef ->
+            try {
+                stage(name) {
+                    githubStatus(name, "PENDING", name + " is started")
 
-        stageRunner('Build', "build", {})
+                    outputFile = 'build/' + name + '.out'
+                    script = 'hadoop-ozone/dev-support/checks/' + name + '.sh | tee ' + outputFile
+                    status = sh returnStatus: true, script: "bash -o pipefail -c '" + script + "'"
 
-        stageRunner('Findbugs', "findbugs", {
-            archiveArtifacts 'target/findbugs-all.txt'
+                    if (stagedef.containsKey('post')) {
+                        stagedef['post']()
+                    }
+                    archiveArtifacts artifacts: outputFile
 
-        }, 'artifact/target/findbugs-all.txt/*view*/')
+                    result = createResult(name, status, stagedef.getOrDefault('url', ''))
+                    results.put(name, result)
 
-        stageRunner('Checkstyle', "checkstyle", {
-            checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: '**/checkstyle-errors.xml', unHealthy: ''
-        }, 'checkstyleResult')
+                    githubStatus(name, result.status, result.message, result.url)
 
-        stageRunner('Acceptance', "acceptance", {
-             archiveArtifacts 'hadoop-ozone/dist/target/ozone-0.4.0-SNAPSHOT/smoketest/result/**'
-        })
+                    if (result.get("failed")) {
+                        throw new RuntimeException(message)
+                    }
+                    return true
+                }
+            } catch (RuntimeException ex) {
+                ex.printStackTrace()
+                currentBuild.result = "FAILED"
+            }
 
-        stageRunner('Unit test', "unit", {
-            junit '**/target/surefire-reports/*.xml'
-        }, 'testReport/')
-
+        }
+        sendMail(results)
     }
 
 }
 
-def stageRunner(name, type, processResult, url = '') {
-    try {
-        stage(name) {
-            prStatusStart(type)
-            status = sh returnStatus: true, script: 'hadoop-ozone/dev-support/checks/' + type + '.sh'
-            processResult()
-            prStatusResult(status, type, url)
+def sendMail(results) {
+
+    message = "\n"
+    message += "The following tests are FAILED:\n\n"
+    results.each { name, result ->
+        if (result.failed) {
+            message += "[$name]: $result.message ($result.url)\n\n"
         }
-        return true
-    } catch (RuntimeException ex) {
-        currentBuild.result = "FAILED"
-        return false
     }
-}
-
-def githubStatus(name, status, description, url='') {
-  commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
-  context = 'ci/ozone/' + name
-  if (url) {
-    githubNotify account: 'apache', context: context, credentialsId: 'github-pr-ozone', description: description, repo: 'hadoop', sha: commitId, status: status, targetUrl: url
-  } else {
-    githubNotify account: 'apache', context: context, credentialsId: 'github-pr-ozone', description: description, repo: 'hadoop', sha: commitId, status: status
-  }
-}
-def prStatusStart(name) {
-       githubStatus(name,
-                     "PENDING",
-                     name + " is started")
-
+    message += "\n"
+    message += "The following tests are PASSED:\n\n"
+    results.each { name, result ->
+        if (!result.failed) {
+            message += "[$name]: $result.message ($result.url)\n\n"
+        }
+    }
+    message += "NOTE: this is an experimental build by Marton Elek, after the " +
+            "stabilization it can be moved to the builds.apache.org. Ping me with " +
+            "any questions/comments."
+    echo message
+   // emailext body: message, to: 'ozone-dev@cloudera.com', subject: '[$PROJECT_NAME] - Build # $BUILD_NUMBER - $BUILD_STATUS!'
 
 }
 
-def prStatusResult(responseCode, name, url = '') {
+def githubStatus(name, status, description, url = '') {
+    commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+    context = 'ci/ozone/' + name
+    // githubNotify account: 'apache', context: context, credentialsId: 'github-pr-elek', description: description, repo: 'hadoop', sha: commitId, status: status, targetUrl: url
+}
+
+
+def createResult(name, responseCode, url = '') {
     status = "ERROR"
     desc = "failed"
     if (responseCode == 0) {
@@ -99,18 +109,10 @@ def prStatusResult(responseCode, name, url = '') {
         desc = "passed"
     }
     message = name + " check is " + desc
-        if (url) {
-            githubStatus(name,
-                          status,
-                          message,
-                          env.BUILD_URL + url)
-        } else {
-            githubStatus(name,
-                          status,
-                          message)
-        }
-
-    if (responseCode != 0) {
-        throw new RuntimeException(message)
+    if (!url) {
+        url = "/artifact/build/" + name + ".out/*view*/"
     }
+    url = env.BUILD_URL + url
+    result = ["message": message, "failed": (responseCode != 0), "name": name, "url": url, "status": status]
+    return result
 }
