@@ -26,8 +26,8 @@ node("ec2-m4-xlarge-docker") {
         stages["build"] = [:]
 
         stage('Checkout') {
-            //checkout scm
-            checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: env.branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-token', url: "https://github.com/${organization}/${repository}.git"]]]
+            checkout scm
+            //checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: env.branch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-token', url: "https://github.com/${organization}/${repository}.git"]]]
             sh "rm -rf ./build && mkdir -p ./build"
         }
         stage('Clean') {
