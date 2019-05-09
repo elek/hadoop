@@ -1,0 +1,84 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+name: ozone/secure
+description: Configuration for kerberized Ozone cluster
+---
+- type: Add
+  trigger:
+    metadata:
+      name: config
+  path:
+    - data
+  value:
+    OZONE-SITE.XML_hdds.block.token.enabled: "true"
+    OZONE-SITE.XML_hdds.scm.kerberos.principal: scm/scm@EXAMPLE.COM
+    OZONE-SITE.XML_hdds.scm.kerberos.keytab.file: /etc/security/keytabs/scm.keytab
+    OZONE-SITE.XML_ozone.om.kerberos.principal: om/om@EXAMPLE.COM
+    OZONE-SITE.XML_ozone.om.kerberos.keytab.file: /etc/security/keytabs/om.keytab
+    OZONE-SITE.XML_ozone.s3g.keytab.file: /etc/security/keytabs/HTTP.keytab
+    OZONE-SITE.XML_ozone.s3g.authentication.kerberos.principal: HTTP/s3g@EXAMPLE.COM
+
+    OZONE-SITE.XML_ozone.security.enabled: "true"
+    OZONE-SITE.XML_hdds.scm.http.kerberos.principal: HTTP/scm@EXAMPLE.COM
+    OZONE-SITE.XML_hdds.scm.http.kerberos.keytab.file: /etc/security/keytabs/HTTP.keytab
+    OZONE-SITE.XML_ozone.om.http.kerberos.principal: HTTP/om@EXAMPLE.COM
+    OZONE-SITE.XML_ozone.om.http.kerberos.keytab.file: /etc/security/keytabs/HTTP.keytab
+    HDFS-SITE.XML_dfs.datanode.kerberos.principal: dn/dn@EXAMPLE.COM
+    HDFS-SITE.XML_dfs.datanode.keytab.file: /etc/security/keytabs/dn.keytab
+    HDFS-SITE.XML_dfs.web.authentication.kerberos.principal: HTTP/_HOST@EXAMPLE.COM
+    HDFS-SITE.XML_dfs.web.authentication.kerberos.keytab: /etc/security/keytabs/HTTP.keytab
+    CORE-SITE.XML_dfs.data.transfer.protection: authentication
+    CORE-SITE.XML_hadoop.security.authentication: kerberos
+    CORE-SITE.XML_hadoop.security.auth_to_local: "RULE:[2:$1@$0](.*)s/.*/root/"
+    CORE-SITE.XML_hadoop.security.key.provider.path: "kms://http@kms-0.kms:9600/kms"
+
+    CORE-SITE.XML_hadoop.security.authorization: "true"
+
+    HADOOP-POLICY.XML_ozone.om.security.client.protocol.acl: "*"
+    HADOOP-POLICY.XML_hdds.security.client.datanode.container.protocol.acl: "*"
+    HADOOP-POLICY.XML_hdds.security.client.scm.container.protocol.acl: "*"
+    HADOOP-POLICY.XML_hdds.security.client.scm.block.protocol.acl: "*"
+    HADOOP-POLICY.XML_hdds.security.client.scm.certificate.protocol.acl: "*"
+
+    JAVA_HOME: /usr/lib/jvm/jre
+    JSVC_HOME: /usr/bin
+- type: Add
+  path:
+    - spec
+    - template
+    - spec
+    - "(initC|c)ontainers"
+    - ".*"
+    - volumeMounts
+  value:
+    - name: keytabs
+      mountPath: /etc/security/keytabs
+    - name: krb5conf
+      mountPath: /etc/krb5.conf
+      subPath: krb5.conf
+- type: Add
+  path:
+    - spec
+    - template
+    - spec
+    - volumes
+  value:
+    - name: keytabs
+      configMap:
+        name: keytabs
+    - name: krb5conf
+      configMap:
+        name: krb5
