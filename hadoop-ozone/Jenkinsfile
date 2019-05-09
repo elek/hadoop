@@ -31,7 +31,7 @@ node("ec2-m4-xlarge-docker") {
             sh "rm -rf ./build && mkdir -p ./build"
         }
         stage('Clean') {
-            status = sh script: 'mvn clean -P hdds -am -pl :hadoop-ozone-dist '
+            status = sh script: 'mvn clean -B -P hdds -am -pl :hadoop-ozone-dist '
         }
 
 
