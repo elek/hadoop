@@ -19,11 +19,6 @@ node("ec2-m4-xlarge-docker") {
     docker.image('elek/ozone-build').pull()
     docker.image('elek/ozone-build').inside("--privileged") {
 
-        stages = new LinkedHashMap<>()
-        results = new LinkedHashMap<>()
-
-
-        stages["build"] = [:]
 
         stage('Checkout') {
             checkout scm
@@ -31,41 +26,13 @@ node("ec2-m4-xlarge-docker") {
             sh "rm -rf ./build && mkdir -p ./build"
         }
         stage('Clean') {
-            status = sh script: 'mvn clean -B -P hdds -am -pl :hadoop-ozone-dist '
+            status = sh script: 'mvn clean -B -f pom.ozone.xml'
         }
 
-
-        stages.each { name, stagedef ->
-            try {
-                stage(name) {
-                    githubStatus(name, "PENDING", name + " is started")
-
-                    outputFile = 'build/' + name + '.out'
-                    script = 'hadoop-ozone/dev-support/checks/' + name + '.sh | tee ' + outputFile
-                    status = sh returnStatus: true, script: "bash -o pipefail -c '" + script + "'"
-
-                    if (stagedef.containsKey('post')) {
-                        stagedef['post']()
-                    }
-                    archiveArtifacts artifacts: outputFile
-
-                    result = createResult(name, status, stagedef.getOrDefault('url', ''))
-                    results.put(name, result)
-
-                    githubStatus(name, result.status, result.message, result.url)
-
-                    if (result.get("failed")) {
-                        throw new RuntimeException(message)
-                    }
-                    return true
-                }
-            } catch (RuntimeException ex) {
-                ex.printStackTrace()
-                currentBuild.result = "FAILED"
-            }
-
+        stage('Build') {
+            sh script: 'mvn install -B -f pom.ozone.xml -DskipTests -Pk8s-dev,k8s-dev-push -Ddocker.image=docker-registry.infra.cloudera.com/kubecat-dev/ozone:nightly'
         }
-        sendMail(results)
+
     }
 
 }
