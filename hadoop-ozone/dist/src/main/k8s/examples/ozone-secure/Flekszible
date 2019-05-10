@@ -19,7 +19,7 @@ import:
   - path: ozone
     transformations:
     - type: Image
-      image: "elek/ozone:0.5.0-SNAPSHOT"
+      image: "@docker.image@"
     - type: ozone/secure
     - type: ozone/update
   - path: ozone-secure
