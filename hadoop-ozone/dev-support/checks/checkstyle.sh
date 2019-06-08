@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-mvn -fn checkstyle:check -f pom.ozone.xml
+mvn -B -fn checkstyle:check -f pom.ozone.xml
 
 violations=$(grep -r error --include checkstyle-errors.xml .| wc -l)
 if [[ $violations -gt 0 ]]; then
