@@ -116,9 +116,5 @@ public class TestMiniChaosOzoneCluster implements Runnable {
     CommandLine.run(new TestMiniChaosOzoneCluster(), System.err, args);
   }
 
-  @Test
-  public void testReadWriteWithChaosCluster() {
-    cluster.startChaos(5, 10, TimeUnit.SECONDS);
-    loadGenerator.startIO(1, TimeUnit.MINUTES);
-  }
+
 }
