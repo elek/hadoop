@@ -15,6 +15,9 @@
 # limitations under the License.
 mvn -B -fn checkstyle:check -f pom.ozone.xml
 
+#Print out the exact violations with parsing XML results with sed
+find -name checkstyle-errors.xml | xargs sed  '$!N; /<file.*\n<\/file/d;P;D' | sed '/<\/.*/d;/<checkstyle.*/d;s/<error.*line="\([[:digit:]]*\)".*message="\([^"]\+\).*/ \1: \2/;s/<file name="\([^"]*\)".*/\1/;/<\?xml.*>/d'
+
 violations=$(grep -r error --include checkstyle-errors.xml .| wc -l)
 if [[ $violations -gt 0 ]]; then
     echo "There are $violations checkstyle violations"
