@@ -24,7 +24,6 @@ import org.apache.hadoop.ozone.client.OzoneBucket;
 import org.apache.hadoop.ozone.client.OzoneVolume;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
-import org.junit.Test;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine;
