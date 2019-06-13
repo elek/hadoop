@@ -356,8 +356,8 @@ public class TestDatanodeStateMachine {
 
       //Set the idPath to read only, state machine will fail to write
       // datanodeId file and set the state to shutdown.
-      idPath.getParentFile().mkdirs();
-      idPath.getParentFile().setReadOnly();
+      Assert.assertTrue(idPath.getParentFile().mkdirs());
+      Assert.assertTrue(idPath.getParentFile().setReadOnly());
 
       task.execute(executorService);
       DatanodeStateMachine.DatanodeStates newState =
