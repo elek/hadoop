@@ -15,7 +15,7 @@
 # limitations under the License.
 export MAVEN_OPTS="-Xmx4096m"
 mvn -B install -f pom.ozone.xml -DskipTests
-mvn -B -fn test -f pom.ozone.xml -pl :hadoop-ozone-integration-test
+mvn -B -fn test -f pom.ozone.xml -pl :hadoop-ozone-integration-test,:hadoop-ozone-filesystem
 module_failed_tests=$(find "." -name 'TEST*.xml'\
     | xargs "grep" -l -E "<failure|<error"\
     | awk -F/ '{sub("'"TEST-JUNIT_TEST_OUTPUT_DIR"'",""); sub(".xml",""); print $NF}')
