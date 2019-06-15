@@ -13,7 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+set -x
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 export HADOOP_VERSION=3
-"$DIR/../../dist/target/ozone-*-SNAPSHOT/compose/test-all.sh"
+OZONE_VERSION=$(cat $DIR/../../pom.xml  | grep "<ozone.version>" | sed 's/<[^>]*>//g'|  sed 's/^[ \t]*//')
+"$DIR/../../dist/target/ozone-$OZONE_VERSION/compose/test-all.sh"
 exit $?
