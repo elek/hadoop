@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-
+set -x
 COMPOSE_ENV_NAME=$(basename "$COMPOSE_DIR")
 COMPOSE_FILE=$COMPOSE_DIR/docker-compose.yaml
 RESULT_DIR=${RESULT_DIR:-"$COMPOSE_DIR/result"}
@@ -97,7 +97,6 @@ stop_docker_env(){
 
 ## @description  Generate robot framework reports based on the saved results.
 generate_report(){
-
   if command -v rebot > /dev/null 2>&1; then
      #Generate the combined output and return with the right exit code (note: robot = execute test, rebot = generate output)
      rebot -d "$RESULT_DIR" "$RESULT_DIR/robot-*.xml"
