@@ -23,7 +23,11 @@ package org.apache.hadoop.hdds.scm.server;
 
 import com.google.common.collect.Maps;
 import com.google.protobuf.BlockingService;
+
 import org.apache.hadoop.fs.CommonConfigurationKeys;
+import org.apache.hadoop.hdds.conf.Config;
+import org.apache.hadoop.hdds.conf.ConfigGroup;
+import org.apache.hadoop.hdds.conf.ConfigTag;
 import org.apache.hadoop.hdds.conf.OzoneConfiguration;
 import org.apache.hadoop.hdds.protocol.DatanodeDetails;
 import org.apache.hadoop.hdds.protocol.proto.HddsProtos;
@@ -52,8 +56,10 @@ import org.apache.hadoop.ozone.audit.SCMAction;
 import org.apache.hadoop.ozone.common.BlockGroup;
 import org.apache.hadoop.hdds.client.BlockID;
 import org.apache.hadoop.ozone.common.DeleteBlockGroupResult;
+import org.apache.hadoop.ozone.protocolPB.ProtocolMessageMetrics;
 import org.apache.hadoop.ozone.protocolPB
     .ScmBlockLocationProtocolServerSideTranslatorPB;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +95,8 @@ public class SCMBlockProtocolServer implements
   private final OzoneConfiguration conf;
   private final RPC.Server blockRpcServer;
   private final InetSocketAddress blockRpcAddress;
+  private final ProtocolMessageMetrics
+      protocolMessageMetrics;
 
   /**
    * The RPC server that listens to requests from block service clients.
@@ -103,11 +111,18 @@ public class SCMBlockProtocolServer implements
 
     RPC.setProtocolEngine(conf, ScmBlockLocationProtocolPB.class,
         ProtobufRpcEngine.class);
+
+    protocolMessageMetrics =
+        ProtocolMessageMetrics.create("ScmBlockLocationProtocol",
+            "SCM Block location protocol counters",
+            ScmBlockLocationProtocolProtos.Type.values());
+
     // SCM Block Service RPC.
     BlockingService blockProtoPbService =
         ScmBlockLocationProtocolProtos.ScmBlockLocationProtocolService
             .newReflectiveBlockingService(
-                new ScmBlockLocationProtocolServerSideTranslatorPB(this));
+                new ScmBlockLocationProtocolServerSideTranslatorPB(this,
+                    protocolMessageMetrics));
 
     final InetSocketAddress scmBlockAddress = HddsServerUtil
         .getScmBlockClientBindAddress(conf);
@@ -137,6 +152,7 @@ public class SCMBlockProtocolServer implements
   }
 
   public void start() {
+    protocolMessageMetrics.register();
     LOG.info(
         StorageContainerManager.buildRpcServerStartMessage(
             "RPC server for Block Protocol", getBlockRpcAddress()));
@@ -145,6 +161,7 @@ public class SCMBlockProtocolServer implements
 
   public void stop() {
     try {
+      protocolMessageMetrics.unregister();
       LOG.info("Stopping the RPC server for Block Protocol");
       getBlockRpcServer().stop();
     } catch (Exception ex) {
@@ -185,7 +202,7 @@ public class SCMBlockProtocolServer implements
       );
       throw ex;
     } finally {
-      if(auditSuccess) {
+      if (auditSuccess) {
         AUDIT.logWriteSuccess(
             buildAuditMessageForSuccess(SCMAction.ALLOCATE_BLOCK, auditMap)
         );
@@ -261,7 +278,7 @@ public class SCMBlockProtocolServer implements
   @Override
   public ScmInfo getScmInfo() throws IOException {
     boolean auditSuccess = true;
-    try{
+    try {
       ScmInfo.Builder builder =
           new ScmInfo.Builder()
               .setClusterId(scm.getScmStorageConfig().getClusterID())
@@ -274,7 +291,7 @@ public class SCMBlockProtocolServer implements
       );
       throw ex;
     } finally {
-      if(auditSuccess) {
+      if (auditSuccess) {
         AUDIT.logReadSuccess(
             buildAuditMessageForSuccess(SCMAction.GET_SCM_INFO, null)
         );
@@ -286,7 +303,7 @@ public class SCMBlockProtocolServer implements
   public List<DatanodeDetails> sortDatanodes(List<String> nodes,
       String clientMachine) throws IOException {
     boolean auditSuccess = true;
-    try{
+    try {
       NodeManager nodeManager = scm.getScmNodeManager();
       Node client = nodeManager.getNodeByAddress(clientMachine);
       List<Node> nodeList = new ArrayList();
@@ -299,7 +316,7 @@ public class SCMBlockProtocolServer implements
       List<? extends Node> sortedNodeList = scm.getClusterMap()
           .sortByDistanceCost(client, nodeList, nodes.size());
       List<DatanodeDetails> ret = new ArrayList<>();
-      sortedNodeList.stream().forEach(node -> ret.add((DatanodeDetails)node));
+      sortedNodeList.stream().forEach(node -> ret.add((DatanodeDetails) node));
       return ret;
     } catch (Exception ex) {
       auditSuccess = false;
@@ -308,7 +325,7 @@ public class SCMBlockProtocolServer implements
       );
       throw ex;
     } finally {
-      if(auditSuccess) {
+      if (auditSuccess) {
         AUDIT.logReadSuccess(
             buildAuditMessageForSuccess(SCMAction.SORT_DATANODE, null)
         );
@@ -349,5 +366,41 @@ public class SCMBlockProtocolServer implements
   @Override
   public void close() throws IOException {
     stop();
+  }
+
+  @ConfigGroup(prefix = "ozone.scm.block")
+  public static class Configuration {
+
+    private String bindHost;
+
+    private String address;
+
+    private int port;
+
+    @Config(key = "client.port",
+        defaultValue = "9863",
+        description = "The port number of the Ozone SCM block client service.",
+        tags = ConfigTag.SCM)
+    public void setPort(int port) {
+      this.port = port;
+    }
+
+    @Config(key = "client.address",
+        defaultValue = "${ozone.scm.client.address}",
+        description = "The address of the Ozone SCM block client service. If "
+            + "not defined value of ozone.scm.client.address is used",
+        tags = ConfigTag.SCM)
+    public void setAddress(String address) {
+      this.address = address;
+    }
+
+    @Config(key = "client.bind.host",
+        defaultValue = "0.0.0.0",
+        description = "The hostname or IP address used by the SCM block "
+            + "client  endpoint to bind",
+        tags = ConfigTag.SCM)
+    public void setBindHost(String bindHost) {
+      this.bindHost = bindHost;
+    }
   }
 }

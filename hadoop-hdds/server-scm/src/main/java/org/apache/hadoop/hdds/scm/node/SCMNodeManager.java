@@ -20,6 +20,7 @@ package org.apache.hadoop.hdds.scm.node;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.gson.GsonBuilder;
 import org.apache.hadoop.hdds.protocol.proto
     .StorageContainerDatanodeProtocolProtos;
 import org.apache.hadoop.hdds.protocol.proto
@@ -322,6 +323,12 @@ public class SCMNodeManager implements NodeManager {
   @Override
   public void processNodeReport(DatanodeDetails datanodeDetails,
                                 NodeReportProto nodeReport) {
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("Processing node report from [datanode={}]",datanodeDetails.getHostName());
+    }
+    if (LOG.isTraceEnabled()) {
+      LOG.trace("HB is received from [datanode={}]: <json>{}</json>", datanodeDetails.getHostName(), nodeReport.toString().replaceAll("\n","\\\\n"));
+    }
     try {
       DatanodeInfo datanodeInfo = nodeStateManager.getNode(datanodeDetails);
       if (nodeReport != null) {

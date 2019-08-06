@@ -19,6 +19,7 @@
 package org.apache.hadoop.hdds.scm.node;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.GsonBuilder;
 import org.apache.hadoop.hdds.protocol.DatanodeDetails;
 import org.apache.hadoop.hdds.scm.server.SCMDatanodeHeartbeatDispatcher
     .NodeReportFromDatanode;
@@ -48,7 +49,6 @@ public class NodeReportHandler implements EventHandler<NodeReportFromDatanode> {
     DatanodeDetails dn = nodeReportFromDatanode.getDatanodeDetails();
     Preconditions.checkNotNull(dn, "NodeReport is "
         + "missing DatanodeDetails.");
-    LOGGER.trace("Processing node report for dn: {}", dn);
     nodeManager
         .processNodeReport(dn, nodeReportFromDatanode.getReport());
   }

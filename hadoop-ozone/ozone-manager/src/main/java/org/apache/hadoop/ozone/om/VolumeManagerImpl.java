@@ -35,6 +35,8 @@ import org.apache.hadoop.ozone.security.acl.OzoneObj;
 import org.apache.hadoop.ozone.security.acl.RequestContext;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.utils.db.BatchOperation;
+import org.apache.hadoop.utils.db.Table.KeyValue;
+import org.apache.hadoop.utils.db.TableIterator;
 
 import com.google.common.base.Preconditions;
 import static org.apache.hadoop.ozone.om.OMConfigKeys.OZONE_OM_USER_MAX_VOLUME;
@@ -57,9 +59,9 @@ public class VolumeManagerImpl implements VolumeManager {
   private final int maxUserVolumeCount;
   private final boolean aclEnabled;
 
-
   /**
    * Constructor.
+   *
    * @param conf - Ozone configuration.
    * @throws IOException
    */
@@ -119,6 +121,7 @@ public class VolumeManagerImpl implements VolumeManager {
 
   /**
    * Creates a volume.
+   *
    * @param omVolumeArgs - OmVolumeArgs.
    */
   @Override
@@ -143,16 +146,20 @@ public class VolumeManagerImpl implements VolumeManager {
         LOG.debug("volume:{} already exists", omVolumeArgs.getVolume());
         throw new OMException(ResultCodes.VOLUME_ALREADY_EXISTS);
       }
-
+      TableIterator<String, ? extends KeyValue<String, OmVolumeArgs>> iterator =
+          metadataManager.getVolumeTable().iterator();
+      while (iterator.hasNext()) {
+        KeyValue<String, OmVolumeArgs> next = iterator.next();
+        System.out.println(next.getKey());
+      }
       VolumeList volumeList = addVolumeToOwnerList(omVolumeArgs.getVolume(),
           omVolumeArgs.getOwnerName());
 
       // Set creation time
       omVolumeArgs.setCreationTime(System.currentTimeMillis());
 
-
       createVolumeCommitToDB(omVolumeArgs, volumeList, dbVolumeKey,
-            dbUserKey);
+          dbUserKey);
 
       LOG.debug("created volume:{} user:{}", omVolumeArgs.getVolume(),
           omVolumeArgs.getOwnerName());
@@ -193,7 +200,7 @@ public class VolumeManagerImpl implements VolumeManager {
    * Changes the owner of a volume.
    *
    * @param volume - Name of the volume.
-   * @param owner - Name of the owner.
+   * @param owner  - Name of the owner.
    * @throws IOException
    */
   @Override
@@ -225,7 +232,7 @@ public class VolumeManagerImpl implements VolumeManager {
       VolumeList oldOwnerVolumeList = delVolumeFromOwnerList(volume,
           originalOwner);
 
-      String newOwner =  metadataManager.getUserKey(owner);
+      String newOwner = metadataManager.getUserKey(owner);
       VolumeList newOwnerVolumeList = addVolumeToOwnerList(volume, newOwner);
 
       volumeArgs.setOwnerName(owner);
@@ -244,7 +251,6 @@ public class VolumeManagerImpl implements VolumeManager {
       metadataManager.getLock().releaseLock(VOLUME_LOCK, volume);
     }
   }
-
 
   private void setOwnerCommitToDB(VolumeList oldOwnerVolumeList,
       VolumeList newOwnerVolumeList, OmVolumeArgs newOwnerVolumeArgs,
@@ -269,13 +275,11 @@ public class VolumeManagerImpl implements VolumeManager {
     }
   }
 
-
   /**
    * Changes the Quota on a volume.
    *
    * @param volume - Name of the volume.
-   * @param quota - Quota in bytes.
-   *
+   * @param quota  - Quota in bytes.
    * @throws IOException
    */
   @Override
@@ -309,6 +313,7 @@ public class VolumeManagerImpl implements VolumeManager {
 
   /**
    * Gets the volume information.
+   *
    * @param volume - Volume name.
    * @return VolumeArgs or exception is thrown.
    * @throws IOException
@@ -373,7 +378,6 @@ public class VolumeManagerImpl implements VolumeManager {
       VolumeList newVolumeList = delVolumeFromOwnerList(volume,
           volumeArgs.getOwnerName());
 
-
       deleteVolumeCommitToDB(newVolumeList, volume, owner);
     } catch (IOException ex) {
       if (!(ex instanceof OMException)) {
@@ -388,7 +392,6 @@ public class VolumeManagerImpl implements VolumeManager {
 
     }
   }
-
 
   private void deleteVolumeCommitToDB(VolumeList newVolumeList,
       String volume, String owner) throws IOException {
@@ -410,7 +413,7 @@ public class VolumeManagerImpl implements VolumeManager {
   /**
    * Checks if the specified user with a role can access this volume.
    *
-   * @param volume - volume
+   * @param volume  - volume
    * @param userAcl - user acl which needs to be checked for access
    * @return true if the user has access for the volume, false otherwise
    * @throws IOException
@@ -574,7 +577,7 @@ public class VolumeManagerImpl implements VolumeManager {
    * Acls to be set for given Ozone object. This operations reset ACL for given
    * object to list of ACLs provided in argument.
    *
-   * @param obj Ozone object.
+   * @param obj  Ozone object.
    * @param acls List of acls.
    * @throws IOException if there is error.
    */
@@ -658,7 +661,7 @@ public class VolumeManagerImpl implements VolumeManager {
    * Check access for given ozoneObject.
    *
    * @param ozObject object for which access needs to be checked.
-   * @param context Context object encapsulating all user related information.
+   * @param context  Context object encapsulating all user related information.
    * @return true if user has access else false.
    */
   @Override

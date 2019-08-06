@@ -33,6 +33,10 @@ import org.apache.hadoop.hdds.scm.container.placement.algorithms
     .ContainerPlacementPolicy;
 import org.apache.hadoop.hdds.scm.events.SCMEvents;
 import org.apache.hadoop.hdds.server.events.EventPublisher;
+import org.apache.hadoop.metrics2.MetricsCollector;
+import org.apache.hadoop.metrics2.MetricsInfo;
+import org.apache.hadoop.metrics2.MetricsSource;
+import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.ozone.lock.LockManager;
 import org.apache.hadoop.ozone.protocol.commands.CloseContainerCommand;
 import org.apache.hadoop.ozone.protocol.commands.CommandForDatanode;
@@ -44,6 +48,7 @@ import org.apache.hadoop.util.Time;
 
 import static org.apache.hadoop.hdds.conf.ConfigTag.*;
 import org.apache.ratis.util.Preconditions;
+import org.bouncycastle.jcajce.provider.drbg.DRBG.Default;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +61,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -66,10 +73,11 @@ import java.util.stream.Collectors;
  * that the containers are properly replicated. Replication Manager deals only
  * with Quasi Closed / Closed container.
  */
-public class ReplicationManager {
+public class ReplicationManager implements MetricsSource {
 
   private static final Logger LOG =
       LoggerFactory.getLogger(ReplicationManager.class);
+  public static final String METRICS_SOURCE_NAME = "SCMReplicationManager";
 
   /**
    * Reference to the ContainerManager.
@@ -124,22 +132,22 @@ public class ReplicationManager {
   /**
    * Constructs ReplicationManager instance with the given configuration.
    *
-   * @param conf OzoneConfiguration
-   * @param containerManager ContainerManager
+   * @param conf               OzoneConfiguration
+   * @param containerManager   ContainerManager
    * @param containerPlacement ContainerPlacementPolicy
-   * @param eventPublisher EventPublisher
+   * @param eventPublisher     EventPublisher
    */
   public ReplicationManager(final ReplicationManagerConfiguration conf,
-                            final ContainerManager containerManager,
-                            final ContainerPlacementPolicy containerPlacement,
+      final ContainerManager containerManager,
+      final ContainerPlacementPolicy containerPlacement,
       final EventPublisher eventPublisher,
       final LockManager lockManager) {
     this.containerManager = containerManager;
     this.containerPlacement = containerPlacement;
     this.eventPublisher = eventPublisher;
     this.lockManager = lockManager;
-    this.inflightReplication = new HashMap<>();
-    this.inflightDeletion = new HashMap<>();
+    this.inflightReplication = new ConcurrentHashMap<>();
+    this.inflightDeletion = new ConcurrentHashMap<>();
     this.replicationMonitor = new Thread(this::run);
     this.replicationMonitor.setName("ReplicationMonitor");
     this.replicationMonitor.setDaemon(true);
@@ -152,6 +160,10 @@ public class ReplicationManager {
    */
   public synchronized void start() {
     if (!running) {
+      DefaultMetricsSystem.instance().register(METRICS_SOURCE_NAME,
+          "SCM Replication manager (closed container replication) related "
+              + "metrics",
+          this);
       LOG.info("Starting Replication Monitor Thread.");
       running = true;
       replicationMonitor.start();
@@ -173,8 +185,8 @@ public class ReplicationManager {
    * Process all the containers immediately.
    */
   @VisibleForTesting
-  @SuppressFBWarnings(value="NN_NAKED_NOTIFY",
-      justification="Used only for testing")
+  @SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
+      justification = "Used only for testing")
   synchronized void processContainersNow() {
     notify();
   }
@@ -184,6 +196,7 @@ public class ReplicationManager {
    */
   public synchronized void stop() {
     if (running) {
+      DefaultMetricsSystem.instance().unregisterSource(METRICS_SOURCE_NAME);
       LOG.info("Stopping Replication Monitor Thread.");
       running = false;
       notify();
@@ -204,7 +217,7 @@ public class ReplicationManager {
             containerManager.getContainerIDs();
         containerIds.forEach(this::processContainer);
 
-        LOG.info("Replication Monitor Thread took {} milliseconds for" +
+        LOG.debug("Replication Monitor Thread took {} milliseconds for" +
                 " processing {} containers.", Time.monotonicNow() - start,
             containerIds.size());
 
@@ -320,9 +333,9 @@ public class ReplicationManager {
   /**
    * Reconciles the InflightActions for a given container.
    *
-   * @param container Container to update
+   * @param container       Container to update
    * @param inflightActions inflightReplication (or) inflightDeletion
-   * @param filter filter to check if the operation is completed
+   * @param filter          filter to check if the operation is completed
    */
   private void updateInflightAction(final ContainerInfo container,
       final Map<ContainerID, List<InflightAction>> inflightActions,
@@ -341,16 +354,16 @@ public class ReplicationManager {
 
   /**
    * Returns true if the container is healthy according to ReplicationMonitor.
-   *
+   * <p>
    * According to ReplicationMonitor container is considered healthy if
    * it has exact number of replicas in the same state as the container.
    *
    * @param container Container to check
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    * @return true if the container is healthy, false otherwise
    */
   private boolean isContainerHealthy(final ContainerInfo container,
-                                     final Set<ContainerReplica> replicas) {
+      final Set<ContainerReplica> replicas) {
     return container.getReplicationFactor().getNumber() == replicas.size() &&
         replicas.stream().allMatch(
             r -> compareState(container.getState(), r.getState()));
@@ -360,7 +373,7 @@ public class ReplicationManager {
    * Checks if the container is under replicated or not.
    *
    * @param container Container to check
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    * @return true if the container is under replicated, false otherwise
    */
   private boolean isContainerUnderReplicated(final ContainerInfo container,
@@ -373,7 +386,7 @@ public class ReplicationManager {
    * Checks if the container is over replicated or not.
    *
    * @param container Container to check
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    * @return true if the container if over replicated, false otherwise
    */
   private boolean isContainerOverReplicated(final ContainerInfo container,
@@ -386,12 +399,12 @@ public class ReplicationManager {
    * Returns the replication count of the given container. This also
    * considers inflight replication and deletion.
    *
-   * @param id ContainerID
+   * @param id       ContainerID
    * @param replicas Set of existing replicas
    * @return number of estimated replicas for this container
    */
   private int getReplicaCount(final ContainerID id,
-                              final Set<ContainerReplica> replicas) {
+      final Set<ContainerReplica> replicas) {
     return replicas.size()
         + inflightReplication.getOrDefault(id, Collections.emptyList()).size()
         - inflightDeletion.getOrDefault(id, Collections.emptyList()).size();
@@ -402,7 +415,7 @@ public class ReplicationManager {
    * originNodeId are in QUASI_CLOSED state.
    *
    * @param container Container to check
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    * @return true if we can force close the container, false otherwise
    */
   private boolean canForceCloseContainer(final ContainerInfo container,
@@ -422,15 +435,15 @@ public class ReplicationManager {
    * Force close the container replica(s) with highest sequence Id.
    *
    * <p>
-   *   Note: We should force close the container only if >50% (quorum)
-   *   of replicas with unique originNodeId are in QUASI_CLOSED state.
+   * Note: We should force close the container only if >50% (quorum)
+   * of replicas with unique originNodeId are in QUASI_CLOSED state.
    * </p>
    *
    * @param container ContainerInfo
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    */
   private void forceCloseContainer(final ContainerInfo container,
-                                   final Set<ContainerReplica> replicas) {
+      final Set<ContainerReplica> replicas) {
     Preconditions.assertTrue(container.getState() ==
         LifeCycleState.QUASI_CLOSED);
 
@@ -444,7 +457,7 @@ public class ReplicationManager {
         .orElse(-1L);
 
     LOG.info("Force closing container {} with BCSID {}," +
-        " which is in QUASI_CLOSED state.",
+            " which is in QUASI_CLOSED state.",
         container.containerID(), sequenceId);
 
     quasiClosedReplicas.stream()
@@ -460,10 +473,12 @@ public class ReplicationManager {
    * and send replicate container command to the identified datanode(s).
    *
    * @param container ContainerInfo
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    */
   private void handleUnderReplicatedContainer(final ContainerInfo container,
       final Set<ContainerReplica> replicas) {
+    LOG.debug("Handling underreplicated container: {}",
+        container.getContainerID());
     try {
       final ContainerID id = container.containerID();
       final List<DatanodeDetails> deletionInFlight = inflightDeletion
@@ -474,7 +489,7 @@ public class ReplicationManager {
       final List<DatanodeDetails> source = replicas.stream()
           .filter(r ->
               r.getState() == State.QUASI_CLOSED ||
-              r.getState() == State.CLOSED)
+                  r.getState() == State.CLOSED)
           .filter(r -> !deletionInFlight.contains(r.getDatanodeDetails()))
           .sorted((r1, r2) -> r2.getSequenceId().compareTo(r1.getSequenceId()))
           .map(ContainerReplica::getDatanodeDetails)
@@ -518,7 +533,7 @@ public class ReplicationManager {
    * identified datanode(s).
    *
    * @param container ContainerInfo
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    */
   private void handleOverReplicatedContainer(final ContainerInfo container,
       final Set<ContainerReplica> replicas) {
@@ -570,7 +585,7 @@ public class ReplicationManager {
    * based on state of the replica.
    *
    * @param container ContainerInfo
-   * @param replicas Set of ContainerReplicas
+   * @param replicas  Set of ContainerReplicas
    */
   private void handleUnstableContainer(final ContainerInfo container,
       final Set<ContainerReplica> replicas) {
@@ -627,17 +642,17 @@ public class ReplicationManager {
    * datanode.
    *
    * @param container Container to be closed
-   * @param datanode The datanode on which the container
+   * @param datanode  The datanode on which the container
    *                  has to be closed
-   * @param force Should be set to true if we want to close a
-   *               QUASI_CLOSED container
+   * @param force     Should be set to true if we want to close a
+   *                  QUASI_CLOSED container
    */
   private void sendCloseCommand(final ContainerInfo container,
-                                final DatanodeDetails datanode,
-                                final boolean force) {
+      final DatanodeDetails datanode,
+      final boolean force) {
 
-    LOG.info("Sending close container command for container {}" +
-            " to datanode {}.", container.containerID(), datanode);
+    LOG.debug("Sending close container command for container {}" +
+        " to datanode {}.", container.containerID(), datanode);
 
     CloseContainerCommand closeContainerCommand =
         new CloseContainerCommand(container.getContainerID(),
@@ -651,15 +666,15 @@ public class ReplicationManager {
    * datanode.
    *
    * @param container Container to be replicated
-   * @param datanode The destination datanode to replicate
-   * @param sources List of source nodes from where we can replicate
+   * @param datanode  The destination datanode to replicate
+   * @param sources   List of source nodes from where we can replicate
    */
   private void sendReplicateCommand(final ContainerInfo container,
-                                    final DatanodeDetails datanode,
-                                    final List<DatanodeDetails> sources) {
+      final DatanodeDetails datanode,
+      final List<DatanodeDetails> sources) {
 
     LOG.info("Sending replicate container command for container {}" +
-            " to datanode {}", container.containerID(), datanode);
+        " to datanode {}", container.containerID(), datanode);
 
     final ContainerID id = container.containerID();
     final ReplicateContainerCommand replicateCommand =
@@ -674,15 +689,15 @@ public class ReplicationManager {
    * datanode.
    *
    * @param container Container to be deleted
-   * @param datanode The datanode on which the replica should be deleted
-   * @param force Should be set to true to delete an OPEN replica
+   * @param datanode  The datanode on which the replica should be deleted
+   * @param force     Should be set to true to delete an OPEN replica
    */
   private void sendDeleteCommand(final ContainerInfo container,
-                                 final DatanodeDetails datanode,
-                                 final boolean force) {
+      final DatanodeDetails datanode,
+      final boolean force) {
 
     LOG.info("Sending delete container command for container {}" +
-            " to datanode {}", container.containerID(), datanode);
+        " to datanode {}", container.containerID(), datanode);
 
     final ContainerID id = container.containerID();
     final DeleteContainerCommand deleteCommand =
@@ -695,13 +710,13 @@ public class ReplicationManager {
   /**
    * Creates CommandForDatanode with the given SCMCommand and fires
    * DATANODE_COMMAND event to event queue.
-   *
+   * <p>
    * Tracks the command using the given tracker.
    *
    * @param datanode Datanode to which the command has to be sent
-   * @param command SCMCommand to be sent
-   * @param tracker Tracker which tracks the inflight actions
-   * @param <T> Type of SCMCommand
+   * @param command  SCMCommand to be sent
+   * @param tracker  Tracker which tracks the inflight actions
+   * @param <T>      Type of SCMCommand
    */
   private <T extends GeneratedMessage> void sendAndTrackDatanodeCommand(
       final DatanodeDetails datanode,
@@ -717,11 +732,11 @@ public class ReplicationManager {
    * Compares the container state with the replica state.
    *
    * @param containerState ContainerState
-   * @param replicaState ReplicaState
+   * @param replicaState   ReplicaState
    * @return true if the state matches, false otherwise
    */
   private static boolean compareState(final LifeCycleState containerState,
-                                      final State replicaState) {
+      final State replicaState) {
     switch (containerState) {
     case OPEN:
       return replicaState == State.OPEN;
@@ -740,6 +755,16 @@ public class ReplicationManager {
     }
   }
 
+  @Override
+  public void getMetrics(MetricsCollector collector, boolean all) {
+    collector.addRecord(ReplicationManager.class.getSimpleName())
+        .addGauge(ReplicationManagerMetrics.INFLIGHT_REPLICATION,
+            inflightReplication.size())
+        .addGauge(ReplicationManagerMetrics.INFLIGHT_DELETION,
+            inflightDeletion.size())
+        .endRecord();
+  }
+
   /**
    * Wrapper class to hold the InflightAction with its start time.
    */
@@ -749,7 +774,7 @@ public class ReplicationManager {
     private final long time;
 
     private InflightAction(final DatanodeDetails datanode,
-                           final long time) {
+        final long time) {
       this.datanode = datanode;
       this.time = time;
     }
@@ -812,6 +837,31 @@ public class ReplicationManager {
 
     public long getEventTimeout() {
       return eventTimeout;
+    }
+  }
+
+  public enum ReplicationManagerMetrics implements MetricsInfo {
+
+    INFLIGHT_REPLICATION("Tracked inflight container replication requests."),
+    INFLIGHT_DELETION("Tracked inflight container deletion requests.");
+
+    private final String desc;
+
+    ReplicationManagerMetrics(String desc) {
+      this.desc = desc;
+    }
+
+    @Override
+    public String description() {
+      return desc;
+    }
+
+    @Override
+    public String toString() {
+      return new StringJoiner(", ", this.getClass().getSimpleName() + "{", "}")
+          .add("name=" + name())
+          .add("description=" + desc)
+          .toString();
     }
   }
 }
