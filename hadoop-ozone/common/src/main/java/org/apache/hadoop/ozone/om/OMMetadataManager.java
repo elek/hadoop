@@ -34,6 +34,7 @@ import org.apache.hadoop.utils.db.DBStore;
 import org.apache.hadoop.utils.db.Table;
 
 import com.google.common.annotations.VisibleForTesting;
+import org.apache.ratis.thirdparty.com.google.protobuf.MapEntry;
 
 /**
  * OM metadata manager interface.
@@ -327,4 +328,11 @@ public interface OMMetadataManager {
    */
   <KEY, VALUE> long countEstimatedRowsInTable(Table<KEY, VALUE> table)
       throws IOException;
+
+  /**
+   * Return the existing upload keys which includes volumeName, bucketName,
+   * keyName and uploadId.
+   */
+  List<String> getMultipartUploadKeys(String volumeName,
+      String bucketName, String prefix) throws IOException;
 }

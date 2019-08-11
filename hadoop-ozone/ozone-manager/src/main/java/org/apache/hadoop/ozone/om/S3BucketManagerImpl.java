@@ -81,9 +81,9 @@ public class S3BucketManagerImpl implements S3BucketManager {
     Preconditions.checkArgument(Strings.isNotBlank(userName), "User name " +
         "cannot be null or empty.");
 
-    Preconditions.checkArgument(bucketName.length() >=3 &&
-        bucketName.length() < 64, "Length of the S3 Bucket is not correct.");
-
+    if (bucketName.length() > 64 || bucketName.length() < 3) {
+      LOG.warn("Length of the S3 Bucket is not correct. " + bucketName);
+    }
 
     // TODO: Decide if we want to enforce S3 Bucket Creation Rules in this
     // code path?
@@ -217,9 +217,12 @@ public class S3BucketManagerImpl implements S3BucketManager {
     Preconditions.checkArgument(
         Strings.isNotBlank(s3BucketName),
         "Bucket name cannot be null or empty.");
-    Preconditions.checkArgument(s3BucketName.length() >=3 &&
-        s3BucketName.length() < 64,
-        "Length of the S3 Bucket is not correct.");
+    //    Preconditions.checkArgument(s3BucketName.length() >=3 &&
+    //        s3BucketName.length() < 64,
+    //        "Length of the S3 Bucket is not correct.");
+    if (s3BucketName.length() > 64 || s3BucketName.length() < 3) {
+      LOG.warn("Length of the S3 Bucket is not correct. " + s3BucketName);
+    }
     omMetadataManager.getLock().acquireLock(S3_BUCKET_LOCK, s3BucketName);
     try {
       String mapping = omMetadataManager.getS3Table().get(s3BucketName);

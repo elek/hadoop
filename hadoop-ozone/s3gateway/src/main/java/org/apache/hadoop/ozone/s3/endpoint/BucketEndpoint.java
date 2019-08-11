@@ -17,6 +17,7 @@
  */
 package org.apache.hadoop.ozone.s3.endpoint;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -30,6 +31,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
@@ -40,8 +42,10 @@ import java.util.Iterator;
 import org.apache.hadoop.hdds.client.ReplicationType;
 import org.apache.hadoop.ozone.client.OzoneBucket;
 import org.apache.hadoop.ozone.client.OzoneKey;
+import org.apache.hadoop.ozone.client.OzoneMultipartUploadList;
 import org.apache.hadoop.ozone.om.exceptions.OMException;
 import org.apache.hadoop.ozone.om.exceptions.OMException.ResultCodes;
+import org.apache.hadoop.ozone.s3.HeaderPreprocessor;
 import org.apache.hadoop.ozone.s3.commontypes.KeyMetadata;
 import org.apache.hadoop.ozone.s3.endpoint.MultiDeleteRequest.DeleteObject;
 import org.apache.hadoop.ozone.s3.endpoint.MultiDeleteResponse.DeletedObject;
@@ -53,7 +57,6 @@ import org.apache.hadoop.ozone.s3.util.S3StorageType;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.StringUtils;
-
 import static org.apache.hadoop.ozone.s3.util.OzoneS3Util.getVolumeName;
 import static org.apache.hadoop.ozone.s3.util.S3Consts.ENCODING_TYPE;
 import org.apache.http.HttpStatus;
@@ -88,6 +91,7 @@ public class BucketEndpoint extends EndpointBase {
       @QueryParam("browser") String browser,
       @QueryParam("continuation-token") String continueToken,
       @QueryParam("start-after") String startAfter,
+      @QueryParam("uploads") String uploads,
       @Context HttpHeaders hh) throws OS3Exception, IOException {
 
     if (browser != null) {
@@ -97,6 +101,10 @@ public class BucketEndpoint extends EndpointBase {
             MediaType.TEXT_HTML_TYPE)
             .build();
 
+    }
+
+    if (uploads != null) {
+      return listMultipartUploads(bucketName, prefix);
     }
 
     if (prefix == null) {
@@ -209,6 +217,24 @@ public class BucketEndpoint extends EndpointBase {
 
   }
 
+  public Response listMultipartUploads(
+      @PathParam("bucket") String bucketName,
+      @QueryParam("prefix") String prefix)
+      throws OS3Exception, IOException {
+
+    OzoneBucket bucket = getBucket(bucketName);
+
+    OzoneMultipartUploadList ozoneMultipartUploadList =
+        bucket.listMultpartUploads(prefix);
+
+    ListMultipartUploadsResult result = new ListMultipartUploadsResult();
+    result.setBucket(bucketName);
+
+    ozoneMultipartUploadList.getUploads().forEach(upload -> result.addUpload(
+        new ListMultipartUploadsResult.Upload(upload.getKeyName(),
+            upload.getUploadId(), upload.getCreationTime())));
+    return Response.ok(result).build();
+  }
   /**
    * Rest endpoint to check the existence of a bucket.
    * <p>

@@ -1079,6 +1079,13 @@ public class RestClient implements ClientProtocol {
         "support this operation.");
   }
 
+  @Override
+  public OzoneMultipartUploadList listMultipartUploads(String volumename,
+      String bucketName, String prefix) throws IOException {
+    throw new UnsupportedOperationException("Ozone REST protocol does not " +
+        "support this operation.");
+  }
+
   /**
    * Get CanonicalServiceName for ozone delegation token.
    * @return Canonical Service Name of ozone delegation token.

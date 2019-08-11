@@ -22,7 +22,7 @@ import org.apache.hadoop.ozone.om.helpers.OmKeyInfo;
 import org.apache.hadoop.ozone.om.helpers.OmKeyLocationInfo;
 import org.apache.hadoop.ozone.om.helpers.OmKeyLocationInfoGroup;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartKeyInfo;
-import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadList;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadCompleteList;
 import org.apache.hadoop.ozone.om.ratis.utils.OzoneManagerDoubleBufferHelper;
 import org.apache.hadoop.ozone.om.request.key.OMKeyRequest;
 import org.apache.hadoop.ozone.om.response.OMClientResponse;
@@ -104,7 +104,7 @@ public class S3MultipartUploadCompleteRequest extends OMKeyRequest {
         .setSuccess(true);
     OMClientResponse omClientResponse = null;
     IOException exception = null;
-    OmMultipartUploadList multipartUploadList = null;
+    OmMultipartUploadCompleteList multipartUploadList = null;
     try {
       // check Acl
       if (ozoneManager.getAclsEnabled()) {
@@ -118,7 +118,7 @@ public class S3MultipartUploadCompleteRequest extends OMKeyRequest {
         partsMap.put(part.getPartNumber(), part.getPartName());
       }
 
-      multipartUploadList = new OmMultipartUploadList(partsMap);
+      multipartUploadList = new OmMultipartUploadCompleteList(partsMap);
 
       acquiredLock = omMetadataManager.getLock().acquireLock(BUCKET_LOCK,
           volumeName, bucketName);

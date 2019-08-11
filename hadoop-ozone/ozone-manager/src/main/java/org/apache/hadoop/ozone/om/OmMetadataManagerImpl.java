@@ -43,7 +43,9 @@ import org.apache.hadoop.ozone.om.exceptions.OMException.ResultCodes;
 import org.apache.hadoop.ozone.om.helpers.OmBucketInfo;
 import org.apache.hadoop.ozone.om.helpers.OmKeyInfo;
 import org.apache.hadoop.ozone.om.helpers.OmKeyLocationInfoGroup;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartInfo;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartKeyInfo;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartUpload;
 import org.apache.hadoop.ozone.om.helpers.OmPrefixInfo;
 import org.apache.hadoop.ozone.om.helpers.OmVolumeArgs;
 import org.apache.hadoop.ozone.om.helpers.OzoneFSUtils;
@@ -60,6 +62,7 @@ import org.apache.hadoop.utils.db.TableIterator;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import org.apache.avro.generic.GenericData.Array;
 import org.apache.commons.lang3.StringUtils;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_OPEN_KEY_EXPIRE_THRESHOLD_SECONDS;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_OPEN_KEY_EXPIRE_THRESHOLD_SECONDS_DEFAULT;
@@ -70,6 +73,8 @@ import org.apache.hadoop.utils.db.TypedTable;
 import org.apache.hadoop.utils.db.cache.CacheKey;
 import org.apache.hadoop.utils.db.cache.CacheValue;
 import org.apache.hadoop.utils.db.cache.TableCacheImpl;
+
+import org.apache.ratis.thirdparty.com.google.protobuf.MapEntry;
 import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,7 +113,9 @@ public class OmMetadataManagerImpl implements OMMetadataManager {
    * |-------------------------------------------------------------------|
    * | dTokenTable        | s3g_access_key_id -> s3Secret                |
    * |-------------------------------------------------------------------|
-   * | prefixInfoTable     | prefix -> PrefixInfo                       |
+   * | prefixInfoTable    | prefix -> PrefixInfo                         |
+   * |-------------------------------------------------------------------|
+   * |  multipartInfoTable| /volumeName/bucketName/keyName/uploadId ->...|
    * |-------------------------------------------------------------------|
    */
 
@@ -417,9 +424,7 @@ public class OmMetadataManagerImpl implements OMMetadataManager {
   public String getMultipartKey(String volume, String bucket, String key,
                                 String
                                     uploadId) {
-    String multipartKey =  OM_KEY_PREFIX + volume + OM_KEY_PREFIX + bucket +
-        OM_KEY_PREFIX + key + OM_KEY_PREFIX + uploadId;
-    return multipartKey;
+    return OmMultipartUpload.getDbKey(volume, bucket, key, uploadId);
   }
 
   /**
@@ -824,6 +829,27 @@ public class OmMetadataManagerImpl implements OMMetadataManager {
       count = table.getEstimatedKeyCount();
     }
     return count;
+  }
+
+  @Override
+  public List<String> getMultipartUploadKeys(
+      String volumeName, String bucketName, String prefix) throws IOException {
+    List<String> response = new ArrayList<>();
+    TableIterator<String, ? extends KeyValue<String, OmMultipartKeyInfo>>
+        iterator = getMultipartInfoTable().iterator();
+
+    String prefixKey = OmMultipartUpload.getDbKey(volumeName, bucketName, prefix);
+    iterator.seek(prefixKey);
+
+    while (iterator.hasNext()) {
+      KeyValue<String, OmMultipartKeyInfo> entry = iterator.next();
+      if (entry.getKey().startsWith(prefixKey)) {
+        response.add(entry.getKey());
+      } else {
+        break;
+      }
+    }
+    return response;
   }
 
   @Override

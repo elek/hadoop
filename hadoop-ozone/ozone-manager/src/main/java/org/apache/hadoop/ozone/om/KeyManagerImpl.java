@@ -19,9 +19,11 @@ package org.apache.hadoop.ozone.om;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,6 +60,8 @@ import org.apache.hadoop.ozone.OzoneAcl;
 import org.apache.hadoop.ozone.OzoneConsts;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.hdds.protocol.proto.HddsProtos.BlockTokenSecretProto.AccessModeProto;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartUpload;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadList;
 import org.apache.hadoop.ozone.om.helpers.OmPrefixInfo;
 import org.apache.hadoop.ozone.om.helpers.OmVolumeArgs;
 import org.apache.hadoop.ozone.om.helpers.OzoneFileStatus;
@@ -71,7 +75,7 @@ import org.apache.hadoop.ozone.om.helpers.OmMultipartCommitUploadPartInfo;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartInfo;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartKeyInfo;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadCompleteInfo;
-import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadList;
+import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadCompleteList;
 import org.apache.hadoop.ozone.om.helpers.OmMultipartUploadListParts;
 import org.apache.hadoop.ozone.om.helpers.OmPartInfo;
 import org.apache.hadoop.ozone.om.helpers.OpenKeySession;
@@ -95,6 +99,7 @@ import org.apache.hadoop.utils.db.BatchOperation;
 import org.apache.hadoop.utils.db.DBStore;
 import org.apache.hadoop.utils.db.CodecRegistry;
 import org.apache.hadoop.utils.db.RDBStore;
+import org.apache.hadoop.utils.db.Table.KeyValue;
 import org.apache.hadoop.utils.db.TableIterator;
 import org.apache.hadoop.utils.db.Table;
 
@@ -113,6 +118,7 @@ import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_KEY_PREALLOCATION_BL
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_KEY_PREALLOCATION_BLOCKS_MAX_DEFAULT;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_SCM_BLOCK_SIZE;
 import static org.apache.hadoop.ozone.OzoneConfigKeys.OZONE_SCM_BLOCK_SIZE_DEFAULT;
+import static org.apache.hadoop.ozone.OzoneConsts.OM_KEY_PREFIX;
 import static org.apache.hadoop.ozone.OzoneConsts.OM_MULTIPART_MIN_SIZE;
 import static org.apache.hadoop.ozone.OzoneConsts.OZONE_URI_DELIMITER;
 import static org.apache.hadoop.ozone.om.exceptions.OMException.ResultCodes.BUCKET_NOT_FOUND;
@@ -126,6 +132,8 @@ import static org.apache.hadoop.ozone.om.lock.OzoneManagerLock.Resource.BUCKET_L
 import static org.apache.hadoop.ozone.security.acl.OzoneObj.ResourceType.KEY;
 import static org.apache.hadoop.util.Time.monotonicNow;
 
+import org.apache.ratis.thirdparty.com.google.protobuf.MapEntry;
+import org.eclipse.jetty.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1081,7 +1089,7 @@ public class KeyManagerImpl implements KeyManager {
   @Override
   @SuppressWarnings("methodlength")
   public OmMultipartUploadCompleteInfo completeMultipartUpload(
-      OmKeyArgs omKeyArgs, OmMultipartUploadList multipartUploadList)
+      OmKeyArgs omKeyArgs, OmMultipartUploadCompleteList multipartUploadList)
       throws IOException {
     Preconditions.checkNotNull(omKeyArgs);
     Preconditions.checkNotNull(multipartUploadList);
@@ -1301,6 +1309,60 @@ public class KeyManagerImpl implements KeyManager {
 
   }
 
+  @Override
+  public OmMultipartUploadList listMultipartUploads(String volumeName,
+      String bucketName, String prefix) throws OMException {
+    Preconditions.checkNotNull(volumeName);
+    Preconditions.checkNotNull(bucketName);
+    String multipartKey = metadataManager.getMultipartKey(volumeName,
+        bucketName, prefix, "");
+
+    metadataManager.getLock().acquireLock(BUCKET_LOCK, volumeName, bucketName);
+    try {
+
+      List<String> multipartUploadKeys =
+          metadataManager
+              .getMultipartUploadKeys(volumeName, bucketName, prefix);
+
+      List<OmMultipartUpload> collect = multipartUploadKeys.stream()
+          .map(OmMultipartUpload::from)
+          .map(upload -> {
+            String dbKey = metadataManager
+                .getOzoneKey(upload.getVolumeName(),
+                    upload.getBucketName(),
+                    upload.getKeyName());
+            try {
+              Table<String, OmKeyInfo> openKeyTable =
+                  metadataManager.getOpenKeyTable();
+
+              OmKeyInfo omKeyInfo =
+                  openKeyTable.get(upload.getDbKey());
+              upload.setCreationTime(
+                  Instant.ofEpochMilli(omKeyInfo.getCreationTime()));
+            } catch (IOException e) {
+              LOG.warn(
+                  "Open key entry for multipart upload record can be read  {}",
+                  dbKey);
+            }
+            return upload;
+          })
+          .collect(Collectors.toList());
+
+      OmMultipartUploadList omMultipartUploadList =
+          new OmMultipartUploadList(collect);
+
+      return omMultipartUploadList;
+
+    } catch (IOException ex) {
+      LOG.error("List Multipart Uploads Failed: volume: " + volumeName +
+          "bucket: " + bucketName + "prefix: " + prefix, ex);
+      throw new OMException(ex.getMessage(), ResultCodes
+          .LIST_MULTIPART_UPLOAD_PARTS_FAILED);
+    } finally {
+      metadataManager.getLock().releaseLock(BUCKET_LOCK, volumeName,
+          bucketName);
+    }
+  }
 
   @Override
   public OmMultipartUploadListParts listParts(String volumeName,
@@ -1329,8 +1391,16 @@ public class KeyManagerImpl implements KeyManager {
             multipartKeyInfo.getPartKeyInfoMap();
         Iterator<Map.Entry<Integer, PartKeyInfo>> partKeyInfoMapIterator =
             partKeyInfoMap.entrySet().iterator();
-        HddsProtos.ReplicationType replicationType =
-            partKeyInfoMap.firstEntry().getValue().getPartKeyInfo().getType();
+
+        OmKeyInfo omKeyInfo =
+            metadataManager.getOpenKeyTable().get(multipartKey);
+
+        if (omKeyInfo == null) {
+          throw new IllegalStateException(
+              "Open key is missing for multipart upload " + multipartKey);
+        }
+
+        HddsProtos.ReplicationType replicationType = omKeyInfo.getType();
         int count = 0;
         List<OmPartInfo> omPartInfoList = new ArrayList<>();
 

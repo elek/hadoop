@@ -200,3 +200,59 @@ Test Multipart Upload with the simplified aws s3 cp API
                         Execute AWSS3Cli        cp s3://${BUCKET}/mpyawscli /tmp/part1.result
                         Execute AWSS3Cli        rm s3://${BUCKET}/mpyawscli
                         Compare files           /tmp/part1        /tmp/part1.result
+
+Test Multipart Upload list
+    ${result} =         Execute AWSS3APICli     create-multipart-upload --bucket ${BUCKET} --key listtest/key1
+    ${uploadID1} =      Execute and checkrc     echo '${result}' | jq -r '.UploadId'    0
+                        Should contain          ${result}    ${BUCKET}
+                        Should contain          ${result}    listtest/key1
+                        Should contain          ${result}    UploadId
+
+    ${result} =         Execute AWSS3APICli     create-multipart-upload --bucket ${BUCKET} --key listtest/key2
+    ${uploadID2} =      Execute and checkrc     echo '${result}' | jq -r '.UploadId'    0
+                        Should contain          ${result}    ${BUCKET}
+                        Should contain          ${result}    listtest/key2
+                        Should contain          ${result}    UploadId
+
+    ${result} =         Execute AWSS3APICli     list-multipart-uploads --bucket ${BUCKET} --prefix listtest
+                        Should contain          ${result}    ${uploadID1}
+                        Should contain          ${result}    ${uploadID2}
+
+    ${count} =          Execute and checkrc      echo '${result}' | jq -r '.Uploads | length'  0
+                        Should Be Equal          ${count}     2 
+
+Test Multipart Upload Put With Copy
+    Run Keyword         Create Random file      5
+    ${result} =         Execute AWSS3APICli     put-object --bucket ${BUCKET} --key copytest/source --body /tmp/part1
+
+
+    ${result} =         Execute AWSS3APICli     create-multipart-upload --bucket ${BUCKET} --key copytest/destination
+ 
+    ${uploadID} =       Execute and checkrc      echo '${result}' | jq -r '.UploadId'    0
+                        Should contain           ${result}    ${BUCKET}
+                        Should contain           ${result}    UploadId
+ 
+    ${result} =         Execute AWSS3APICli      upload-part-copy --bucket ${BUCKET} --key copytest/destination --upload-id ${uploadID} --part-number 1 --copy-source ${BUCKET}/copytest/source
+                        Should contain           ${result}    ${BUCKET}
+                        Should contain           ${result}    ETag
+                        Should contain           ${result}    LastModified
+    ${eTag1} =          Execute and checkrc      echo '${result}' | jq -r '.CopyPartResult.ETag'   0
+
+ 
+                        Execute AWSS3APICli     complete-multipart-upload --upload-id ${uploadID} --bucket ${BUCKET} --key copytest/destination --multipart-upload 'Parts=[{ETag=${eTag1},PartNumber=1}]'
+                        Execute AWSS3APICli     get-object --bucket ${BUCKET} --key copytest/destination /tmp/part-result
+
+                        Compare files           /tmp/part1        /tmp/part-result
+
+
+#robot --loglevel DEBUG -v SECURITY_ENABLED:false -t "Test Multipart Upload List" smoketest/s3/MultipartUpload.robot
+
+#robot --loglevel DEBUG -v SECURITY_ENABLED:false -t "Test Multipart Upload Put With Copy" smoketest/s3/MultipartUpload.robot
+
+#robot --loglevel DEBUG -v SECURITY_ENABLED:true -t "Test Multipart Upload" smoketest/s3/MultipartUpload.robot
+#robot -v SECURITY_ENABLED:true smoketest/s3/MultipartUpload.robot
+
+#aws s3api --endpoint http://s3g:9878 create-bucket --bucket bucket1
+#aws s3api --endpoint http://s3g:9878 create-multipart-upload --bucket bucket1 --key key1
+#aws s3api --endpoint http://s3g:9878 upload-part --bucket bucket1 --key key1 --upload-id 1baef551-3953-4e77-bbd2-d0a7ddfa1fe4-102593987328999585 --part-number 1 --body README.txt
+#aws s3api --endpoint http://s3g:9878 complete-multipart-upload --bucket bucket1 --key key1 --upload-id 1baef551-3953-4e77-bbd2-d0a7ddfa1fe4-102593987328999585 --multipart-upload 'Parts=[{ETag=/s3e3a869e5c87238a997b36147eea1aafe/bucket1/key1102593991298580642,PartNumber=1}]'
