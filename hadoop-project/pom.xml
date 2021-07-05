@@ -2070,7 +2070,8 @@
       <id>hbase1</id>
       <activation>
         <property>
-          <name>!hbase.profile</name>
+          <name>hbase.profile</name>
+          <value>1.0</value>
         </property>
       </activation>
       <properties>
@@ -2096,8 +2097,7 @@
       <id>hbase2</id>
       <activation>
         <property>
-          <name>hbase.profile</name>
-          <value>2.0</value>
+          <name>!hbase.profile</name>
         </property>
       </activation>
       <properties>
